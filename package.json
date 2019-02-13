@@ -1,10 +1,19 @@
 {
   "name": "vuetning",
-  "version": "0.1.0",
+  "version": "0.0.0",
+  "main": ".dist/vuetning.common.js",
   "private": true,
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
