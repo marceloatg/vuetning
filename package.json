@@ -1,8 +1,11 @@
 {
   "name": "vuetning",
+  "description": "Salesforce Lightning Design System framework for Vue.js 2",
+  "author": "Marcelo A. T. Gomes <marceloatg@outlook.com>",
+  "license": "MIT",
   "version": "0.0.0",
+  "private": false,
   "main": ".dist/vuetning.common.js",
-  "private": true,
   "files": [
     "dist/*",
     "src/*",
