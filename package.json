@@ -1,11 +1,24 @@
 {
   "name": "vuetning",
   "description": "Salesforce Lightning Design System framework for Vue.js 2",
+  "version": "0.0.0",
+  "main": ".dist/vuetning.common.js",
   "author": "Marcelo A. T. Gomes <marceloatg@outlook.com>",
   "license": "MIT",
-  "version": "0.0.0",
   "private": false,
-  "main": ".dist/vuetning.common.js",
+  "keywords": [
+    "vue",
+    "slds",
+    "lightning",
+    "salesforce"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArcthosCompany/Vuetning"
+  },
+  "bugs": {
+    "url": "https://github.com/ArcthosCompany/Vuetning/issues"
+  },
   "files": [
     "dist/*",
     "src/*",
