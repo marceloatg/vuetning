@@ -40,21 +40,14 @@
                 }
             },
         },
-        data() {
-            return {
-                backgroundColor: null,
-            }
+        computed: {
+            backgroundColor() {
+                if (this.iconName == null) return;
+
+                const category = this.iconName.split(':')[0];
+                const name = this.iconName.split(':')[1];
+                return `slds-icon-${category}-${name}`;
+            },
         },
-        mounted() {
-            const classes = this.$el.classList;
-
-            for (let i = 0; i < classes.length; i++) {
-                if (classes[i].startsWith('slds-icon-')) return;
-            }
-
-            const category = this.iconName.split(':')[0];
-            const name = this.iconName.split(':')[1];
-            this.backgroundColor = `slds-icon-${category}-${name}`;
-        }
     }
 </script>

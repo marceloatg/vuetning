@@ -1,5 +1,5 @@
 <!--
-    @Description: An illustration is an image and inline text that work in tandem to communicate a store in a more friendly way.
+    @Description: An illustration is an src and inline text that work in tandem to communicate a store in a more friendly way.
     @Documentation: https://www.lightningdesignsystem.com/components/illustration/
 -->
 
@@ -28,7 +28,7 @@
     export default {
         name: 'Illustration',
         props: {
-            image: {
+            src: {
                 type: String,
                 note: 'Image path.'
             },

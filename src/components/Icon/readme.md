@@ -13,9 +13,9 @@ Icons provide visual context and enhance usability.
 ## Background Color
 To change a background color for action, custom, or standard icons, use composed class names:
 
-`.slds-icon-[sprite name]-[icon name]`
+`.slds-icon-[category]-[icon]`
 
-If no class following the above patter is present, the Icon component will automatically assign one based on its nameIcon prop.
+If no class following the above format is present, the Icon component will automatically assign one based on its nameIcon prop.
 
 ## Examples
 

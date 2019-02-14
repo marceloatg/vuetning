@@ -1,6 +1,17 @@
 <template>
     <div id="app">
         <slds-button text="Vuetning"/>
+        <br>
+        <br>
+        <slds-avatar src="/assets/images/avatar1.jpg"/>
+        <slds-avatar src="/assets/images/avatar1.jpg" variant="circle" class="slds-m-left_medium"/>
+        <slds-avatar initials="MA" fallback-icon-name="standard:account" class="slds-m-left_medium"/>
+        <slds-avatar initials="MA" fallback-icon-name="standard:lead" variant="circle" class="slds-m-left_medium"/>
+        <slds-avatar initials="MA" fallback-icon-name="standard:lead" variant="circle" :inverse="true" class="slds-m-left_medium"/>
+        <br><br>
+        <slds-icon icon-name="utility:down" variant="default" size="small"/>
+        <slds-icon icon-name="utility:check" variant="success"/>
+        <slds-icon icon-name="standard:account" size="large"/>
     </div>
 </template>
 

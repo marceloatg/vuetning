@@ -1,59 +1,37 @@
-<!--
-    @Description: An avatar component represents an object or entity.
-    @Documentation: https://www.lightningdesignsystem.com/components/avatar/
--->
-
 <template>
-    <span class="slds-avatar"
-          :class="[{'slds-avatar_circle': circle}, 'slds-avatar_' + size]">
+    <span class="slds-avatar" :class="[`slds-avatar_${variant}`, 'slds-avatar_' + size]">
 
         <!-- Initials -->
         <abbr v-if="initials !== null"
-              class="slds-avatar__initials slds-icon-standard-account"
-              :class="{'slds-avatar__initials_inverse': inverse}"
-              :title="title">
+              class="slds-avatar__initials"
+              :class="[backgroundColor, {'slds-avatar__initials_inverse': inverse}]">
             {{ initials }}
         </abbr>
 
         <!-- Image -->
-        <img v-else alt="Avatar" :src="image" :title="title"/>
+        <img v-else alt="Avatar" :src="src"/>
 
     </span>
 </template>
 
 <script>
     export default {
-        name: 'Avatar',
         props: {
-            image: {
+            fallbackIconName: {
                 type: String,
                 default: null,
-                note: 'Avatar image source path.'
             },
             initials: {
                 type: String,
                 default: null,
-                note: 'Used for initials inside an avatar.'
-            },
-            title: {
-                type: String,
-                default: '',
-                note: 'Image title.'
             },
             inverse: {
                 type: Boolean,
                 default: false,
-                note: 'Used for initials inside an avatar.'
-            },
-            circle: {
-                type: Boolean,
-                default: false,
-                note: 'Make avatar a circle.'
             },
             size: {
                 type: String,
                 default: 'medium',
-                note: 'Size modifier for avatar. Check the validator for available options.',
                 validator(value) {
                     return [
                         'x-small',
@@ -62,11 +40,30 @@
                         'large'
                     ].indexOf(value) !== -1
                 }
-            }
-        }
+            },
+            src: {
+                type: String,
+                default: null,
+            },
+            variant: {
+                type: String,
+                default: 'square',
+                validator(value) {
+                    return [
+                        'square',
+                        'circle'
+                    ].indexOf(value) !== -1
+                }
+            },
+        },
+        computed: {
+            backgroundColor() {
+                if (this.fallbackIconName == null) return;
+
+                const category = this.fallbackIconName.split(':')[0];
+                const name = this.fallbackIconName.split(':')[1];
+                return `slds-icon-${category}-${name}`;
+            },
+        },
     }
 </script>
-
-<style scoped lang="scss">
-
-</style>
