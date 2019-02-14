@@ -10,17 +10,10 @@
             iconName: {
                 type: String,
                 required: true,
-                note:
-                    'The Lightning Design System name of the icon. ' +
-                    'Names are written in the format "utility:down" where "utility" is the category, and "down" is the specific icon to be displayed.'
             },
             size: {
                 type: String,
                 default: 'medium',
-                note:
-                    'The size of the icon. ' +
-                    'Options include xx-small, x-small, small, medium, or large. ' +
-                    'The default is medium.',
                 validator(value) {
                     return [
                         'xx-small',
@@ -34,10 +27,6 @@
             variant: {
                 type: String,
                 default: 'none',
-                note:
-                    'The variant changes the appearance of a utility icon. ' +
-                    'Accepted variants include inverse, warning, and error. ' +
-                    'Use the inverse variant to implement a white fill in utility icons on dark backgrounds.',
                 validator(value) {
                     return [
                         'none',
