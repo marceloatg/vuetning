@@ -56,11 +56,13 @@
             label: {
                 type: String,
             },
-
+            showSpinner: {
+                type: Boolean,
+                default: false,
+            },
             variant: {
                 type: String,
                 default: 'neutral',
-                note: 'Button variant. Check the validator for available options.',
                 validator(value) {
                     return [
                         'bare',
@@ -69,14 +71,10 @@
                         'outline-brand',
                         'destructive',
                         'label-destructive',
+                        'inverse',
                         'success',
                     ].indexOf(value) !== -1
                 }
-            },
-            showSpinner: {
-                type: Boolean,
-                default: false,
-                note: 'Set the spinner as visible and hide the button label and icon.'
             },
         },
         computed: {
