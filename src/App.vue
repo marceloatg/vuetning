@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <slds-button text="Vuetning"/>
+        <slds-button label="My button"/>
+        <slds-button label="Add" icon-name="utility:add"/>
+        <slds-button label="Delete" icon-name="utility:delete" icon-position="right"/>
         <br>
         <br>
         <slds-avatar src="/assets/images/avatar1.jpg"/>

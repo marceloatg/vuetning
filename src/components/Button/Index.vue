@@ -1,28 +1,24 @@
-<!--
-    @Description: Buttons are clickable items used to perform an action.
-    @Documentation: https://www.lightningdesignsystem.com/components/buttons/
--->
-
 <template>
-    <button class="slds-button"
+    <button type="button"
+            class="slds-button"
             :class="['slds-button_' + variant, {'slds-not-clickable': showSpinner}]"
             v-bind="disabledAttribute"
-            @click="$emit('click')">
+            @click.stop="$emit('click')">
 
         <!-- Text for right icon -->
         <span v-if="iconPosition === 'right'" :class="{'slds-hidden': showSpinner}">
-            {{ text }}
+            {{ label }}
         </span>
 
         <!-- Icon -->
         <slds-svg v-if="hasIcon"
-                  :icon-name="`${iconCategory}:${iconName}`"
+                  :icon-name="iconName"
                   class="slds-button__icon"
                   :class="['slds-button__icon_' + iconPosition, {'slds-hidden': showSpinner}]"/>
 
         <!-- Text for left icon -->
         <span v-if="iconPosition === 'left'" :class="{'slds-hidden': showSpinner}">
-            {{ text }}
+            {{ label }}
         </span>
 
         <!-- Spinner -->
@@ -40,11 +36,27 @@
     export default {
         name: 'Button',
         props: {
-            text: {
-                type: String,
-                default: '',
-                note: 'Button text'
+            disabled: {
+                type: Boolean,
+                default: false,
             },
+            iconName: {
+                type: String,
+            },
+            iconPosition: {
+                type: String,
+                default: 'left',
+                validator(value) {
+                    return [
+                        'left',
+                        'right',
+                    ].indexOf(value) !== -1
+                }
+            },
+            label: {
+                type: String,
+            },
+
             variant: {
                 type: String,
                 default: 'neutral',
@@ -56,49 +68,23 @@
                         'brand',
                         'outline-brand',
                         'destructive',
-                        'text-destructive',
+                        'label-destructive',
                         'success',
                     ].indexOf(value) !== -1
                 }
             },
-            disabled: {
-                type: Boolean,
-                default: false,
-                note: 'Use a disabled attribute when a button can’t be clicked.'
-            },
             showSpinner: {
                 type: Boolean,
                 default: false,
-                note: 'Set the spinner as visible and hide the button text and icon.'
+                note: 'Set the spinner as visible and hide the button label and icon.'
             },
-            iconCategory: {
-                type: String,
-                default: null,
-                note: 'Button icon category.'
-            },
-            iconName: {
-                type: String,
-                default: null,
-                note: 'Button icon name.'
-            },
-            iconPosition: {
-                type: String,
-                default: 'left',
-                note: 'Button icon position. Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'left',
-                        'right',
-                    ].indexOf(value) !== -1
-                }
-            }
         },
         computed: {
             disabledAttribute() {
                 return this.disabled ? {['disabled']: 'disabled'} : {};
             },
             hasIcon() {
-                return (this.iconCategory != null && this.iconName != null)
+                return (this.iconName != null)
             }
         },
     }
