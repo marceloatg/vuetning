@@ -17,6 +17,16 @@ To change a background color for action, custom, or standard icons, use composed
 
 If no class following the above patter is present, the Icon component will automatically assign one based on its nameIcon prop.
 
+## Examples
+
+```vue
+<slds-icon icon-name="utility:down"/>
+
+<slds-icon icon-name="utility:check" variant="success"/>
+
+<slds-icon icon-name="standard:account" size="large"/>
+```
+
 ## Salesforce documentation
 [SLDS documentation](https://www.lightningdesignsystem.com/components/icons/)<br>
 [Aura documentation](https://developer.salesforce.com/docs/component-library/bundle/lightning:icon)<br>
