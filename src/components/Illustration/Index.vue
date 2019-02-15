@@ -6,7 +6,7 @@
 <template>
     <div class="slds-illustration" :class="['slds-illustration_' + size]">
 
-        <img :src="image" class="slds-illustration__svg"/>
+        <img :src="src" class="slds-illustration__svg"/>
 
         <div class="slds-text-longform">
 

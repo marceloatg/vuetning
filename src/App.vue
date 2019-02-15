@@ -4,7 +4,7 @@
         <slds-button label="My brand button" variant="brand"/>
         <slds-button label="Add" icon-name="utility:add"/>
         <slds-button label="Delete" icon-name="utility:delete" icon-position="right"/>
-        <slds-button label="My button" :show-spinner="true"/>
+        <slds-button label="My button" :spinner-active="true"/>
         <br>
         <br>
         <slds-avatar src="/assets/images/avatar1.jpg"/>

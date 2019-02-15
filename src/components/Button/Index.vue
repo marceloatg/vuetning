@@ -1,12 +1,12 @@
 <template>
     <button type="button"
             class="slds-button"
-            :class="['slds-button_' + variant, {'slds-not-clickable': showSpinner}]"
+            :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
             v-bind="disabledAttribute"
             @click.stop="$emit('click')">
 
         <!-- Text for right icon -->
-        <span v-if="iconPosition === 'right'" :class="{'slds-hidden': showSpinner}">
+        <span v-if="iconPosition === 'right'" :class="{'slds-hidden': spinnerActive}">
             {{ label }}
         </span>
 
@@ -14,15 +14,15 @@
         <slds-svg v-if="hasIcon"
                   :icon-name="iconName"
                   class="slds-button__icon"
-                  :class="['slds-button__icon_' + iconPosition, {'slds-hidden': showSpinner}]"/>
+                  :class="['slds-button__icon_' + iconPosition, {'slds-hidden': spinnerActive}]"/>
 
         <!-- Text for left icon -->
-        <span v-if="iconPosition === 'left'" :class="{'slds-hidden': showSpinner}">
+        <span v-if="iconPosition === 'left'" :class="{'slds-hidden': spinnerActive}">
             {{ label }}
         </span>
 
         <!-- Spinner -->
-        <div v-if="showSpinner">
+        <div v-if="spinnerActive">
             <div class="slds-spinner slds-spinner_x-small" :class="['slds-spinner-variant_' + variant]">
                 <div class="slds-spinner__dot-a"></div>
                 <div class="slds-spinner__dot-b"></div>
@@ -56,7 +56,7 @@
             label: {
                 type: String,
             },
-            showSpinner: {
+            spinnerActive: {
                 type: Boolean,
                 default: false,
             },
