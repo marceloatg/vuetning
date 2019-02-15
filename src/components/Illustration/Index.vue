@@ -26,7 +26,6 @@
 
 <script>
     export default {
-        name: 'Illustration',
         props: {
             src: {
                 type: String,

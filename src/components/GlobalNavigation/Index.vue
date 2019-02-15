@@ -122,7 +122,6 @@
 
 <script>
     export default {
-        name: "GlobalNavigation",
         props: {
             appName: {
                 type: String,

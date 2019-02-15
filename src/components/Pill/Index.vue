@@ -28,7 +28,6 @@
 
 <script>
     export default {
-        name: 'Pill',
         props: {
             label: {
                 type: String,

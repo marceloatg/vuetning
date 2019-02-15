@@ -34,7 +34,6 @@
 
 <script>
     export default {
-        name: 'Button',
         props: {
             disabled: {
                 type: Boolean,

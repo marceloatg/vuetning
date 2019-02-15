@@ -118,7 +118,6 @@
 
 <script>
     export default {
-        name: 'Picklist',
         props: {
             label: {
                 type: String,

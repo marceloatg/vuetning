@@ -24,7 +24,6 @@
 
 <script>
     export default {
-        name: "TrialBar",
         props: {
             daysLeft: {
                 type: Number,

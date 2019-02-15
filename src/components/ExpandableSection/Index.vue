@@ -4,10 +4,10 @@
 -->
 
 <template>
-    <div class="slds-section" :class="[{'slds-is-open': isOpen || !collapsable}]">
+    <div class="slds-section" :class="[{'slds-is-open': isOpen || !collapsible}]">
 
         <!-- Button title -->
-        <h3 v-if="collapsable" class="slds-section__title">
+        <h3 v-if="collapsible" class="slds-section__title">
             <button class="slds-button slds-section__title-action" @click="toggle">
 
                 <slds-svg icon-name="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
@@ -36,14 +36,13 @@
 
 <script>
     export default {
-        name: "ExpandableSection",
         props: {
             title: {
                 type: String,
                 required: true,
                 note: 'Title of an expandable section.'
             },
-            collapsable: {
+            collapsible: {
                 type: Boolean,
                 default: true,
                 note: 'Indicates if the content can be collapsed or not.'

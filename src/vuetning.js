@@ -8,7 +8,7 @@ import SldsBrandBand from './components/BrandBand/Index'
 import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCombobox from './components/Combobox/Index'
-import SldsDataTable from "./components/DataTable/Index";
+import SldsDataTable from './components/DataTable/Index';
 import SldsGlobalHeader from './components/GlobalHeader/Index'
 import SldsGlobalNavigation from './components/GlobalNavigation/Index'
 import SldsIcon from './components/Icon/Index'
