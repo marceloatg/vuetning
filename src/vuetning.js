@@ -4,11 +4,13 @@ import Vue from 'vue'
 import SldsAlert from './components/Alert/Index'
 import SldsAvatar from './components/Avatar/Index'
 import SldsBadge from './components/Badge/Index'
+import SldsBrandBand from './components/BrandBand/Index'
 import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCombobox from './components/Combobox/Index'
-import SldsDataTable from "./components/DataTable/Index";
+import SldsDataTable from './components/DataTable/Index';
 import SldsGlobalHeader from './components/GlobalHeader/Index'
+import SldsGlobalNavigation from './components/GlobalNavigation/Index'
 import SldsIcon from './components/Icon/Index'
 import SldsIllustration from './components/Illustration/Index'
 import SldsMenu from './components/Menu/Index'
@@ -24,11 +26,13 @@ const Components = {
     SldsAlert,
     SldsAvatar,
     SldsBadge,
+    SldsBrandBand,
     SldsButton,
     SldsButtonIcon,
     SldsCombobox,
     SldsDataTable,
     SldsGlobalHeader,
+    SldsGlobalNavigation,
     SldsIcon,
     SldsIllustration,
     SldsMenu,

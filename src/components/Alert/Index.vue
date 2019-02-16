@@ -32,7 +32,6 @@
 
 <script>
     export default {
-        name: "Alert",
         props: {
             theme: {
                 type: String,

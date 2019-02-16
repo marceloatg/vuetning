@@ -45,7 +45,7 @@
                 if (this.iconName == null) return;
 
                 const category = this.iconName.split(':')[0];
-                const name = this.iconName.split(':')[1];
+                const name = this.iconName.split(':')[1].replace('_', '-');
                 return `slds-icon-${category}-${name}`;
             },
         },

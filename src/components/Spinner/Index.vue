@@ -22,7 +22,6 @@
 
 <script>
     export default {
-        name: 'Spinner',
         props: {
             variant: {
                 type: String,

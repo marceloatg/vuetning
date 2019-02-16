@@ -25,7 +25,6 @@
 
 <script>
     export default {
-        name: "GlobalHeader",
         props: {
             name: {
                 type: String,

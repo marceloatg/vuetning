@@ -145,7 +145,6 @@
 <script>
 
     export default {
-        name: 'DataTable',
         props: {
             columns: {
                 type: Array,

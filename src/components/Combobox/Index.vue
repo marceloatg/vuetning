@@ -89,7 +89,6 @@
 
 <script>
     export default {
-        name: 'Combobox',
         props: {
             label: {
                 type: String,

@@ -23,7 +23,6 @@
 
 <script>
     export default {
-        name: 'ButtonIcon',
         props: {
             iconName: {
                 type: String,
