@@ -40,14 +40,31 @@
                 }
             },
         },
-        computed: {
-            backgroundColor() {
+        data() {
+            return {
+                backgroundColor: null,
+            }
+        },
+        methods: {
+            parseBackgroundColor() {
+                const classes = this.$el.classList;
+
+                for (let i = 0; i < classes.length; i++) {
+                    if (classes[i].startsWith('slds-icon-')) return;
+                }
+
                 if (this.iconName == null) return;
 
                 const category = this.iconName.split(':')[0];
                 const name = this.iconName.split(':')[1].replace(/_/g, "-");
                 return `slds-icon-${category}-${name}`;
             },
+        },
+        mounted() {
+            this.backgroundColor = this.parseBackgroundColor();
+        },
+        updated() {
+            this.backgroundColor = this.parseBackgroundColor();
         },
     }
 </script>

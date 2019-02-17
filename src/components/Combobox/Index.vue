@@ -40,8 +40,7 @@
 
                     <!-- Options -->
                     <transition enter-active-class="animated fadeIn quicker"
-                                leave-active-class="animated fadeOut quicker"
-                                v-on:leave="onTransitionLeave">
+                                leave-active-class="animated fadeOut quicker">
                         <div v-show="isOpen"
                              class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
                              :class="[`slds-dropdown_${orientation}`]"
@@ -143,9 +142,6 @@
             this.$emit('input', this.selected.key);
         },
         methods: {
-            onTransitionLeave() {
-                console.log('onTransitionLeave')
-            },
             open() {
                 this.isOpen = true;
             },
