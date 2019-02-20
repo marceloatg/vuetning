@@ -23,7 +23,7 @@
                         <input role="textbox"
                                type="text"
                                :placeholder="placeholder"
-                               :value="selected.label"
+                               :value="selectedLabel"
                                autocomplete="off"
                                readonly
                                class="slds-input slds-combobox__input"
@@ -40,68 +40,38 @@
                     </div>
 
                     <!-- Options -->
-                       <div v-show="isOpen" role="listbox">
-                            <ul role="presentation"
-                                class="slds-listbox slds-listbox_vertical slds-dropdown"
-                                :class="[`slds-dropdown_${length}`]">
+                    <div v-show="isOpen" role="listbox">
+                        <ul role="presentation"
+                            class="slds-listbox slds-listbox_vertical slds-dropdown"
+                            :class="[`slds-dropdown_${length}`]">
 
-                                <template v-for="option in options">
+                            <template v-for="option in options">
 
-                                    <!-- Heading -->
-                                    <li :key="option.value"
-                                        v-if="option.group != null"
-                                        role="presentation"
-                                        class="slds-listbox__item">
+                                <slds-picklist-heading v-if="option.group != null"
+                                                       :key="option.value"
+                                                       :group="option.group"/>
 
-                                        <div role="presentation" class="slds-media slds-listbox__option slds-listbox__option_plain">
-                                            <h3 role="presentation" class="slds-listbox__option-header">
-                                                {{ option.group }}
-                                            </h3>
-                                        </div>
+                                <slds-picklist-option v-else
+                                                      :key="option.value"
+                                                      :label="option.label"
+                                                      :value="option.value"
+                                                      :is-selected="option.value === selectedValue"
+                                                      @selected="onSelect"/>
 
-                                    </li>
+                            </template>
 
-                                    <!-- Option -->
-                                    <li :key="option.value"
-                                        v-else
-                                        role="presentation"
-                                        class="slds-listbox__item"
-                                        @mousedown="select(option)">
-
-                                        <div role="option"
-                                             class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
-                                             :class="[{'slds-is-selected': selected.value === option.value}]">
-
-                                            <!-- Figure -->
-                                            <span class="slds-media__figure">
-                                                <slds-svg icon-name="utility:check" class="slds-icon slds-icon_x-small slds-listbox__icon-selected"/>
-                                            </span>
-
-                                            <!-- Body -->
-                                            <span class="slds-media__body">
-                                                <span class="slds-truncate" :title="option.label">
-                                                    {{ option.label }}
-                                                </span>
-                                            </span>
-
-                                        </div>
-
-                                    </li>
-
-                                </template>
-
-                                <!-- Spinner -->
-                                <li v-if="spinnerActive" role="presentation" class="slds-listbox__item">
-                                    <div class="slds-align_absolute-center slds-p-top_medium">
-                                        <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
-                                            <div class="slds-spinner__dot-a"></div>
-                                            <div class="slds-spinner__dot-b"></div>
-                                        </div>
+                            <!-- Spinner -->
+                            <li v-if="spinnerActive" role="presentation" class="slds-listbox__item">
+                                <div class="slds-align_absolute-center slds-p-top_medium">
+                                    <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+                                        <div class="slds-spinner__dot-a"></div>
+                                        <div class="slds-spinner__dot-b"></div>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
 
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
 
 
                 </div>
@@ -117,7 +87,14 @@
 </template>
 
 <script>
+    import SldsPicklistOption from "./Option";
+    import SldsPicklistHeading from "./Heading";
+
     export default {
+        components: {
+            SldsPicklistHeading,
+            SldsPicklistOption
+        },
         props: {
             label: {
                 type: String,
@@ -177,7 +154,8 @@
         },
         data() {
             return {
-                selected: {},
+                selectedValue: null,
+                selectedLabel: null,
                 isOpen: false,
                 hasError: false,
                 helpMessage: 'Help message',
@@ -207,14 +185,19 @@
                         break;
                 }
             },
-            select(option) {
-                this.selected = option;
-                this.$emit('input', this.selected.value);
+            onSelect(value, label) {
+                this.selectedValue = value;
+                this.selectedLabel = label;
+                this.$emit('input', value);
             },
         },
         created() {
-            if (this.option !== null) this.selected = this.option;
-            this.$emit('input', this.selected.value);
+            if (this.option !== null) {
+                this.selectedValue = this.option.value;
+                this.selectedLabel = this.option.label;
+            }
+
+            this.$emit('input', this.selectedValue);
         },
     }
 </script>
