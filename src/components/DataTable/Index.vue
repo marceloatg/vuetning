@@ -95,7 +95,7 @@
 </template>
 
 <script>
-    import SldsRow from './Row.vue';
+    import SldsRow from './Row';
 
     export default {
         components: {
