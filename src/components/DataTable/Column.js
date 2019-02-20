@@ -50,6 +50,9 @@ export default class Column {
     // The default is true.
     resizable = true;
 
+    // Specifies the current X translation of a resizer.
+    resizerTranslation = 0;
+
     // Specifies whether the column can be sorted.
     // The default is true.
     sortable = true;

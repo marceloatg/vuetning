@@ -42,8 +42,8 @@
 
                                         <!-- Sort icon -->
                                         <span v-if="column.sortable" class="slds-icon_container slds-icon-utility-arrowdown">
-                                        <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
-                                    </span>
+                                            <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+                                        </span>
 
                                     </div>
                                 </a>
@@ -56,8 +56,8 @@
 
                                     <!-- Handle -->
                                     <span class="slds-resizable__handle"
-                                          draggable="true"
-                                          @dragend="onDragEnd(column, $event)">
+                                          :style="{transform: `translateX(${column.resizerTranslation}px)`}"
+                                          @mousedown.prevent.stop="onResizerMouseDown(column, $event)">
 
                                         <!-- Divider -->
                                         <span class="slds-resizable__divider"></span>
@@ -126,7 +126,7 @@
                             <slds-menu v-if="column.type === 'action'" :items="column.actions" size="small" position="right"/>
 
                             <slds-button v-else-if="column.type === 'button'"
-                                         :text="column.typeAttributes.label"
+                                         :label="column.typeAttributes.label"
                                          :variant="column.typeAttributes.variant"
                                          :class="column.typeAttributes.class"/>
 
@@ -149,20 +149,20 @@
             columns: {
                 type: Array,
                 required: true,
-                note: "Array of the columns object that's used to define the data types. " +
-                    "Required properties include 'label', 'dataKey', and 'type'. " +
-                    "The default type is 'text'.",
             },
             rows: {
                 type: Array,
                 required: true,
-                note: "The array of data to be displayed.",
             },
         },
         data() {
             return {
                 tableWidth: null,
                 scrollLeft: 0,
+                column: null,
+                startX: null,
+                currentX: null,
+                touchingResizer: false,
             }
         },
         methods: {
@@ -176,21 +176,65 @@
                     column.left = column.offsetLeft - scrollLeft;
                 }
             },
-            onDragEnd(column, event) {
-                let offset = event.offsetX;
+            onResizerMouseDown(column, event) {
+                this.column = column;
+                this.startX = event.pageX;
+                this.currentX = this.startX;
+                this.touchingResizer = true;
 
-                if (column.initialWidth + event.offsetX < column.minimumWidth) {
-                    offset = column.minimumWidth - column.initialWidth;
-                    if (offset === 0) return;
+                document.body.addEventListener("mousemove", this.onResizerMove);
+                document.body.addEventListener("mouseup", this.onResizerMoveEnd);
+                document.body.addEventListener("mouseleave", this.onResizerMoveEnd);
+
+            },
+            onResizerMove() {
+                if (!this.touchingResizer) return;
+                if (this.currentX === event.pageX) return;
+
+                this.currentX = event.pageX;
+                const delta = this.currentX - this.startX;
+
+                this.resizing(delta);
+            },
+            resizing(delta) {
+                if (this.column.initialWidth + delta < this.column.minimumWidth) {
+                    delta = this.column.minimumWidth - this.column.initialWidth;
                 }
 
-                this.tableWidth += offset;
-                column.initialWidth += offset;
+                this.column.resizerTranslation = delta;
+            },
+            onResizerMoveEnd() {
+                if (!this.touchingResizer) return;
 
-                let index = this.columns.indexOf(column);
+                this.touchingResizer = false;
+                document.body.removeEventListener("mousemove", this.onResizerMove);
+                document.body.removeEventListener("mouseup", this.onResizerMoveEnd);
+                document.body.removeEventListener("mouseleave", this.onResizerMoveEnd);
+
+                const delta = this.currentX - this.startX;
+                this.resize(delta);
+            },
+            resize(delta) {
+
+                // Apply column width validations to delta
+                if (this.column.initialWidth + delta < this.column.minimumWidth) {
+                    delta = this.column.minimumWidth - this.column.initialWidth;
+
+                    if (delta === 0) {
+                        this.column = null;
+                        return;
+                    }
+                }
+
+                // Update table and column widths
+                this.tableWidth += delta;
+                this.column.initialWidth += delta;
+                this.column.resizerTranslation = 0;
+
+                let index = this.columns.indexOf(this.column);
                 for (++index; index < this.columns.length; index++) {
-                    this.columns[index].left += offset;
-                    this.columns[index].offsetLeft += offset;
+                    this.columns[index].left += delta;
+                    this.columns[index].offsetLeft += delta;
                 }
             },
         },
@@ -249,7 +293,7 @@
             overflow: auto;
 
             .slds-resizable__handle {
-                cursor: w-resize;
+                will-change: transform;
             }
         }
     }

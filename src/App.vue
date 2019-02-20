@@ -23,15 +23,20 @@
 
         <!-- Global content -->
         <div class="slds-global-content">
-            <slds-button label="Teste"/>
+            <components/>
         </div>
 
     </div>
 </template>
 
 <script>
+    import Components from "./views/Components";
+
     export default {
         name: 'app',
+        components: {
+            Components
+        },
         data() {
             return {
                 trial: {
