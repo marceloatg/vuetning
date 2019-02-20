@@ -16,125 +16,23 @@
 
                     <th class="" scope="col" style="width: 60px;">
                         <div class="slds-cell-fixed">
-                            <div class="slds-truncate slds-assistive-text" title="Errors">Errors</div>
+                            <div class="slds-truncate slds-assistive-text" title="Errors">
+                                Errors
+                            </div>
                         </div>
                     </th>
 
-                    <template v-for="column in columns">
+                    <slds-column v-for="column in columns"
+                                 :key="column.fieldName"
+                                 :column="column"
+                                 @resize="onResize"/>
 
-                        <!-- Resizable column -->
-                        <th :key="column.fieldName"
-                            v-if="column.resizable"
-                            scope="col"
-                            class="slds-is-resizable"
-                            :class="[{'slds-is-sortable': column.sortable}]"
-                            :style="{ width: `${column.initialWidth}px` }">
-                            <div class="slds-cell-fixed" :style="{ width: `${column.initialWidth}px`, left: `${column.left}px` }">
-
-                                <!-- Column name -->
-                                <a class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
-                                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
-
-                                        <!-- Label -->
-                                        <span class="slds-truncate" :title="column.label">
-                                            {{ column.label }}
-                                        </span>
-
-                                        <!-- Sort icon -->
-                                        <span v-if="column.sortable" class="slds-icon_container slds-icon-utility-arrowdown">
-                                        <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
-                                    </span>
-
-                                    </div>
-                                </a>
-
-                                <!-- Column resizer -->
-                                <div v-if="column.resizable" class="slds-resizable">
-
-                                    <!-- Input -->
-                                    <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text"/>
-
-                                    <!-- Handle -->
-                                    <span class="slds-resizable__handle"
-                                          draggable="true"
-                                          @dragend="onDragEnd(column, $event)">
-
-                                        <!-- Divider -->
-                                        <span class="slds-resizable__divider"></span>
-
-                                    </span>
-
-                                </div>
-
-                            </div>
-                        </th>
-
-                        <!-- Fixed column -->
-                        <th :key="column.fieldName" v-else scope="col"
-                            :style="{ width: `${column.fixedWidth}px` }">
-                            <div class="slds-cell-fixed" :style="{ left: `${column.left}px` }">
-                                <div class="slds-truncate" :title="column.label" style="display: flex;padding: .25rem .5rem;height: 2rem;align-items: center;">
-                                    {{ column.label }}
-                                </div>
-                            </div>
-                        </th>
-
-                    </template>
                 </tr>
                 </thead>
 
                 <!-- Body -->
                 <tbody>
-                <tr v-for="(row, index) in rows" :key="`${index}-${row.id}`" aria-selected="false" class="slds-hint-parent">
-
-                    <td class="slds-cell-edit slds-cell-error" role="gridcell">
-                        <button id="error-01" class="slds-button slds-button_icon slds-button_icon-error slds-m-horizontal_xxx-small slds-hidden" aria-hidden="true" tabindex="-1" title="Item 1 has errors">
-                            <slds-svg icon-name="utility:error" class="slds-button__icon"/>
-                        </button>
-                        <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
-                    </td>
-
-                    <td v-for="(column, index) in columns" :key="index"
-                        class="slds-cell-edit" role="gridcell"
-                        :style="{'text-align': column.textAlign}">
-
-                        <!-- Output types -->
-                        <span v-if="column.getDataCategory() === 'output'" class="slds-grid slds-grid_align-spread">
-
-                            <!-- Text types -->
-                            <span v-if="column.type === 'text'" class="slds-truncate" :title="row[column.fieldName]">
-                                {{ row[column.fieldName] }}
-                            </span>
-
-                            <a v-else-if="column.type === 'link'" class="slds-truncate" :title="row[column.fieldName]">
-                                {{ row[column.fieldName] }}
-                            </a>
-
-                            <!-- Copy to clipboard button -->
-                            <slds-button-icon v-if="column.hasCopyButton"
-                                              icon-name="utility:copy_to_clipboard"
-                                              container="none"
-                                              class="slds-cell-edit__button slds-m-left_x-small"
-                                              icon-class="slds-button__icon_hint slds-button__icon_edit"
-                                              title="Copy to clipboard"/>
-
-                        </span>
-
-                        <!-- Input types -->
-                        <span v-else class="slds-truncate" :title="row[column.fieldName]">
-
-                            <slds-menu v-if="column.type === 'action'" :items="column.actions" size="small" position="right"/>
-
-                            <slds-button v-else-if="column.type === 'button'"
-                                         :text="column.typeAttributes.label"
-                                         :variant="column.typeAttributes.variant"
-                                         :class="column.typeAttributes.class"/>
-
-                        </span>
-
-                    </td>
-
-                </tr>
+                <slds-row v-for="row in rows" :key="row.id" :row="row" :columns="columns"/>
                 </tbody>
 
             </table>
@@ -143,20 +41,22 @@
 </template>
 
 <script>
+    import SldsColumn from './Column';
+    import SldsRow from './Row';
 
     export default {
+        components: {
+            SldsColumn,
+            SldsRow,
+        },
         props: {
             columns: {
                 type: Array,
                 required: true,
-                note: "Array of the columns object that's used to define the data types. " +
-                    "Required properties include 'label', 'dataKey', and 'type'. " +
-                    "The default type is 'text'.",
             },
             rows: {
                 type: Array,
                 required: true,
-                note: "The array of data to be displayed.",
             },
         },
         data() {
@@ -176,23 +76,15 @@
                     column.left = column.offsetLeft - scrollLeft;
                 }
             },
-            onDragEnd(column, event) {
-                let offset = event.offsetX;
-
-                if (column.initialWidth + event.offsetX < column.minimumWidth) {
-                    offset = column.minimumWidth - column.initialWidth;
-                    if (offset === 0) return;
-                }
-
-                this.tableWidth += offset;
-                column.initialWidth += offset;
+            onResize(column, delta) {
+                this.tableWidth += delta;
 
                 let index = this.columns.indexOf(column);
                 for (++index; index < this.columns.length; index++) {
-                    this.columns[index].left += offset;
-                    this.columns[index].offsetLeft += offset;
+                    this.columns[index].left += delta;
+                    this.columns[index].offsetLeft += delta;
                 }
-            },
+            }
         },
         mounted() {
             // Settings table width to prevent abnormal behavior when resizing window
@@ -249,7 +141,7 @@
             overflow: auto;
 
             .slds-resizable__handle {
-                cursor: w-resize;
+                will-change: transform;
             }
         }
     }

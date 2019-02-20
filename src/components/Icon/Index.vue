@@ -63,8 +63,5 @@
         mounted() {
             this.backgroundColor = this.parseBackgroundColor();
         },
-        updated() {
-            this.backgroundColor = this.parseBackgroundColor();
-        },
     }
 </script>
