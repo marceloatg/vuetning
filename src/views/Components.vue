@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import Column from "../components/DataTable/Column";
+    import Column from "../classes/Column";
     import TableView from "./TableView/Index";
 
     export default {

@@ -17,6 +17,11 @@
         components: {
             SldsCell
         },
+        data() {
+            return {
+                selected: false,
+            }
+        },
         props: {
             columns: {
                 type: Array,
