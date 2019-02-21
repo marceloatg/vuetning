@@ -1,1 +1,1 @@
-#Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-alpha-red.svg)  ![testing](https://img.shields.io/badge/testing-untested-red.svg) ![documentation](https://img.shields.io/badge/documentation-undocumented-red.svg)
+# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-alpha-red.svg)  ![testing](https://img.shields.io/badge/testing-untested-red.svg) ![documentation](https://img.shields.io/badge/documentation-undocumented-red.svg)
