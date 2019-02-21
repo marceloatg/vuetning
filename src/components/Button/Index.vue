@@ -3,7 +3,7 @@
             class="slds-button"
             :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
             v-bind="disabledAttribute"
-            @click.stop="$emit('click')">
+            @click.stop="onClick">
 
         <!-- Text for right icon -->
         <span v-if="iconPosition === 'right'" :class="{'slds-hidden': spinnerActive}">
@@ -82,6 +82,12 @@
             },
             hasIcon() {
                 return (this.iconName != null)
+            }
+        },
+        methods: {
+            onClick() {
+                if (this.spinnerActive || this.disabled) return;
+                this.$emit('click');
             }
         },
     }
