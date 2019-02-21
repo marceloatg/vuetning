@@ -1,41 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-
-// Import lightning components
-import SldsAlert from './components/Alert/Index'
-import SldsAvatar from './components/Avatar/Index'
-import SldsBadge from './components/Badge/Index'
-import SldsBrandBand from './components/BrandBand/Index'
-import SldsButton from './components/Button/Index'
-import SldsButtonIcon from './components/ButtonIcon/Index'
-import SldsCombobox from './components/Combobox/Index'
-import SldsDataTable from './components/DataTable/Index';
-import SldsGlobalHeader from './components/GlobalHeader/Index'
-import SldsGlobalNavigation from './components/GlobalNavigation/Index'
-import SldsIcon from './components/Icon/Index'
-import SldsIllustration from './components/Illustration/Index'
-import SldsMenu from './components/Menu/Index'
-import SldsPicklist from './components/Picklist/Index'
-import SldsPill from './components/Pill/Index'
-import SldsSection from './components/ExpandableSection/Index'
-import SldsSpinner from './components/Spinner/Index'
-import SldsSvg from './shared/Svg'
-import SldsTrialBar from './components/TrialBar/Index'
-
-Vue.component('slds-alert', SldsAlert);
-Vue.component('slds-avatar', SldsAvatar);
-Vue.component('slds-badge', SldsBadge);
-Vue.component('slds-brand-band', SldsBrandBand);
-Vue.component('slds-button', SldsButton);
-Vue.component('slds-button-icon', SldsButtonIcon);
-Vue.component('slds-data-table', SldsDataTable);
-Vue.component('slds-global-header', SldsGlobalHeader);
-Vue.component('slds-global-navigation', SldsGlobalNavigation);
-Vue.component('slds-icon', SldsIcon);
-Vue.component('slds-illustration', SldsIllustration);
-Vue.component('slds-menu', SldsMenu);
-Vue.component('slds-picklist', SldsPicklist);
-Vue.component('slds-svg', SldsSvg);
+import './vuetning'
 
 Vue.config.productionTip = false;
 
