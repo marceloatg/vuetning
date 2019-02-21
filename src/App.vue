@@ -23,7 +23,7 @@
 
         <!-- Global content -->
         <div class="slds-global-content">
-            <components/>
+            <picklists/>
         </div>
 
     </div>
@@ -31,11 +31,13 @@
 
 <script>
     import Components from "./views/Components";
+    import Picklists from "./views/Picklists";
 
     export default {
         name: 'app',
         components: {
-            Components
+            Components,
+            Picklists
         },
         data() {
             return {

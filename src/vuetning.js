@@ -13,39 +13,33 @@ import SldsGlobalHeader from './components/GlobalHeader/Index'
 import SldsGlobalNavigation from './components/GlobalNavigation/Index'
 import SldsIcon from './components/Icon/Index'
 import SldsIllustration from './components/Illustration/Index'
+import SldsInput from './components/Input/Index'
 import SldsMenu from './components/Menu/Index'
 import SldsPicklist from './components/Picklist/Index'
 import SldsPill from './components/Pill/Index'
-import SldsSection from './components/ExpandableSection/Index'
+import SldsExpandableSection from './components/ExpandableSection/Index'
 import SldsSpinner from './components/Spinner/Index'
 import SldsSvg from './shared/Svg'
 import SldsTrialBar from './components/TrialBar/Index'
 
 // Registering lightning components
-const Components = {
-    SldsAlert,
-    SldsAvatar,
-    SldsBadge,
-    SldsBrandBand,
-    SldsButton,
-    SldsButtonIcon,
-    SldsCombobox,
-    SldsDataTable,
-    SldsGlobalHeader,
-    SldsGlobalNavigation,
-    SldsIcon,
-    SldsIllustration,
-    SldsMenu,
-    SldsPicklist,
-    SldsPill,
-    SldsSection,
-    SldsSpinner,
-    SldsSvg,
-    SldsTrialBar,
-};
-
-Object.keys(Components).forEach(name => {
-    Vue.component(name, Components[name]);
-});
-
-export default Components;
+Vue.component('slds-alert', SldsAlert);
+Vue.component('slds-avatar', SldsAvatar);
+Vue.component('slds-brand-band', SldsBrandBand);
+Vue.component('slds-badge', SldsBadge);
+Vue.component('slds-button', SldsButton);
+Vue.component('slds-button-icon', SldsButtonIcon);
+Vue.component('slds-combobox', SldsCombobox);
+Vue.component('slds-data-table', SldsDataTable);
+Vue.component('slds-global-header', SldsGlobalHeader);
+Vue.component('slds-global-navigation', SldsGlobalNavigation);
+Vue.component('slds-icon', SldsIcon);
+Vue.component('slds-illustration', SldsIllustration);
+Vue.component('slds-input', SldsInput);
+Vue.component('slds-menu', SldsMenu);
+Vue.component('slds-picklist', SldsPicklist);
+Vue.component('slds-pill', SldsPill);
+Vue.component('slds-expandable-section', SldsExpandableSection);
+Vue.component('slds-spinner', SldsSpinner);
+Vue.component('slds-svg', SldsSvg);
+Vue.component('slds-trial-bar', SldsTrialBar);

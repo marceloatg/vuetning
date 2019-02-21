@@ -10,9 +10,6 @@
             iconName: {
                 type: String,
                 required: true,
-                note:
-                    'The Lightning Design System name of the icon. ' +
-                    'Names are written in the format "utility:down" where "utility" is the category, and "down" is the specific icon to be displayed.'
             },
         },
         computed: {

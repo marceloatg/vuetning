@@ -161,7 +161,7 @@
                         break;
                 }
             },
-            select(option) {
+            onSelect(option) {
                 this.selected = option;
                 this.isOpen = false;
                 this.$emit('input', this.selected.key);
