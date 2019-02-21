@@ -43,6 +43,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.14.1",
     "eslint-plugin-vue": "^5.2.2",
+    "jest-teamcity-reporter": "^0.9.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.6"
@@ -74,6 +75,7 @@
     "not ie <= 8"
   ],
   "jest": {
+    "testResultsProcessor": "jest-teamcity-reporter",
     "moduleFileExtensions": [
       "js",
       "jsx",
