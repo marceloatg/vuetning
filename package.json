@@ -53,7 +53,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es6": true
     },
     "extends": [
       "plugin:vue/essential",
@@ -65,12 +66,6 @@
     "parserOptions": {
       "parser": "babel-eslint"
     }
-  },
-  "eslint-teamcity": {
-    "reporter": "inspections",
-    "report-name": "ESLint Violations",
-    "error-statistics-name": "ESLint Error Count",
-    "warning-statistics-name": "ESLint Warning Count"
   },
   "postcss": {
     "plugins": {
