@@ -1,4 +1,4 @@
-# Button
+# Button ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-partial-yellow.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
 
 Buttons are clickable items used to perform an action.
 

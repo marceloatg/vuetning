@@ -1,4 +1,4 @@
-import {mount, shallowMount} from '@vue/test-utils'
+import {shallowMount} from '@vue/test-utils'
 import SldsButton from '../../src/components/Button/Index'
 
 describe('SldsButton', () => {
@@ -50,7 +50,7 @@ describe('SldsButton', () => {
         });
 
         // trigger click
-        wrapper.find('button').trigger('click');
+        wrapper.find('button').trigger('click')
 
         // assert event has not been emitted
         expect(wrapper.emitted().click).toBeFalsy();
