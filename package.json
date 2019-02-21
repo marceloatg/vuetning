@@ -27,7 +27,7 @@
     "build": "vue-cli-service build",
     "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
     "lint": "vue-cli-service lint",
-    "lint:teamcity": "eslint app/src --format './node_modules/eslint-teamcity/index.js'",
+    "lint:teamcity": "vue-cli-service lint --format C:\\Git\\Ursus\\vuetning\\node_modules\\eslint-teamcity\\index.js",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
