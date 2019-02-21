@@ -74,6 +74,7 @@
     "not ie <= 8"
   ],
   "jest": {
+    "testResultsProcessor": "jest-teamcity-reporter",
     "moduleFileExtensions": [
       "js",
       "jsx",
