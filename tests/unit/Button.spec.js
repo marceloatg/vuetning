@@ -1,7 +1,7 @@
 import {mount, shallowMount} from '@vue/test-utils'
 import SldsButton from '../../src/components/Button/Index'
 
-describe('Index.vue', () => {
+describe('SldsButton', () => {
     it('renders props.label when passed', () => {
 
         // shallow mount the button setting a label
