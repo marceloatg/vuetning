@@ -27,7 +27,7 @@
     "build": "vue-cli-service build",
     "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
     "lint": "vue-cli-service lint",
-    "lint:teamcity": "vue-cli-service lint --format .\\node_modules\\eslint-teamcity\\index.js",
+    "lint:teamcity": "vue-cli-service lint --format ./node_modules/eslint-teamcity/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
@@ -65,6 +65,12 @@
     "parserOptions": {
       "parser": "babel-eslint"
     }
+  },
+  "eslint-teamcity": {
+    "reporter": "inspections",
+    "report-name": "ESLint Violations",
+    "error-statistics-name": "ESLint Error Count",
+    "warning-statistics-name": "ESLint Warning Count"
   },
   "postcss": {
     "plugins": {

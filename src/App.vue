@@ -30,13 +30,13 @@
 </template>
 
 <script>
-    import Components from "./views/Components";
+    //import Components from "./views/Components";
     import Picklists from "./views/Picklists";
 
     export default {
         name: 'app',
         components: {
-            Components,
+            //Components,
             Picklists
         },
         data() {
