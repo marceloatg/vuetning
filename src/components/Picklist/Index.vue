@@ -96,20 +96,40 @@
             SldsPicklistOption
         },
         props: {
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
             label: {
                 type: String,
             },
-            placeholder: {
-                type: String,
-                default: 'Select an option',
+            length: {
+                type: [String, Number],
+                default: 'fluid',
+                validator(value) {
+                    return [
+                        'fluid',
+                        5,
+                        7,
+                        10,
+                    ].indexOf(value) !== -1
+                },
+            },
+            option: {
+                type: Object,
+                default: () => null,
             },
             options: {
                 type: Array,
                 required: true,
             },
-            option: {
-                type: Object,
-                default: () => null,
+            placeholder: {
+                type: String,
+                default: 'Select an option',
+            },
+            required: {
+                type: Boolean,
+                default: false,
             },
             size: {
                 type: String,
@@ -127,26 +147,6 @@
                     ].indexOf(value) !== -1
                 },
             },
-            length: {
-                type: [String, Number],
-                default: 'fluid',
-                validator(value) {
-                    return [
-                        'fluid',
-                        5,
-                        7,
-                        10,
-                    ].indexOf(value) !== -1
-                },
-            },
-            required: {
-                type: Boolean,
-                default: false,
-            },
-            disabled: {
-                type: Boolean,
-                default: false,
-            },
             spinnerActive: {
                 type: Boolean,
                 default: false,
@@ -154,11 +154,11 @@
         },
         data() {
             return {
-                selectedValue: null,
-                selectedLabel: null,
-                isOpen: false,
                 hasError: false,
                 helpMessage: 'Help message',
+                isOpen: false,
+                selectedValue: null,
+                selectedLabel: null,
             }
         },
         computed: {
