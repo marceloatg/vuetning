@@ -43,7 +43,7 @@
                     <div v-show="isOpen" role="listbox">
                         <ul role="presentation"
                             class="slds-listbox slds-listbox_vertical slds-dropdown"
-                            :class="[`slds-dropdown_${length}`]">
+                            :class="[`slds-dropdown_${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]">
 
                             <template v-for="option in options">
 
@@ -123,6 +123,16 @@
                 type: Array,
                 required: true,
             },
+            orientation: {
+                type: String,
+                default: 'downwards',
+                validator(value) {
+                    return [
+                        'downwards',
+                        'upwards',
+                    ].indexOf(value) !== -1
+                }
+            },
             placeholder: {
                 type: String,
                 default: 'Select an option',
@@ -192,11 +202,10 @@
             },
         },
         created() {
-            if (this.option !== null) {
-                this.selectedValue = this.option.value;
-                this.selectedLabel = this.option.label;
-            }
+            if (this.option === null) return;
 
+            this.selectedValue = this.option.value;
+            this.selectedLabel = this.option.label;
             this.$emit('input', this.selectedValue);
         },
     }
