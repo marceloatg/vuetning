@@ -35,37 +35,23 @@
         </div>
 
         <!-- Footer -->
-        <div class="table-view_footer slds-grid slds-grid_align-spread">
-
-            <div class="slds-col">
-                <span style="display: inline-flex;">
-                    <span style="line-height: 32px;">Rows per page</span>
-                    <slds-picklist :options="rowsPerPage"
-                                   :option="rowsPerPage[0]"
-                                   orientation="bottom"
-                                   class="slds-m-left_x-small"
-                                   style="width: 100px;"/>
-                </span>
-            </div>
-
-            <div class="slds-col">
-                <span>
-                    Rows per page
-                </span>
-            </div>
-
-        </div>
+        <table-view-footer :rowsPerPageOptions="rowsPerPageOptions"
+                           :rows-per-page="rowsPerPageOptions[0]"
+                           :total-pages="10"
+                           :current-page="currentPage"
+                           @pagechanged="onPageChanged"/>
 
     </main>
 </template>
 
 <script>
+    import TableViewFooter from './Footer'
     import TableViewHeader from './Header'
 
     export default {
-        name: 'TableView',
         components: {
-            TableViewHeader: TableViewHeader,
+            TableViewFooter,
+            TableViewHeader,
         },
         props: {
             model: {
@@ -76,11 +62,12 @@
         },
         data() {
             return {
+                currentPage: 1,
                 refreshing: false,
-                rowsPerPage: [
-                    {key: 100, value: '100',},
-                    {key: 50, value: '50',},
-                    {key: 25, value: '25',},
+                rowsPerPageOptions: [
+                    {value: 100, label: '100',},
+                    {value: 50, label: '50',},
+                    {value: 25, label: '25',},
                 ],
             }
         },
@@ -104,6 +91,11 @@
                     listViews: this.model.listViews,
                     count: this.model.rows.length,
                 };
+            },
+        },
+        methods: {
+            onPageChanged(page) {
+                this.currentPage = page;
             },
         },
     }
