@@ -4,20 +4,22 @@
         <div class="slds-col">
             <span class="rows-per-page">
 
-                <span>Rows per page</span>
+                <span>
+                    Rows per page
+                </span>
 
                 <slds-picklist :options="rowsPerPageOptions"
                                :option="rowsPerPage"
                                orientation="upwards"
-                               class="slds-m-left_x-small"
-                               style="width: 100px;"/>
+                               size="xx-small"
+                               class="slds-m-left_x-small"/>
             </span>
         </div>
 
         <div class="slds-col">
-            <span>
-                Rows per page
-            </span>
+            <slds-pagination :totalPages="totalPages"
+                             :currentPage="currentPage"
+                             @pagechanged="onPageChanged"/>
         </div>
 
     </div>
@@ -26,6 +28,10 @@
 <script>
     export default {
         props: {
+            currentPage: {
+                type: Number,
+                required: true
+            },
             rowsPerPageOptions: {
                 type: Array,
                 required: true,
@@ -33,6 +39,15 @@
             rowsPerPage: {
                 type: Object,
                 required: true,
+            },
+            totalPages: {
+                type: Number,
+                required: true,
+            },
+        },
+        methods: {
+            onPageChanged(page) {
+                this.$emit('pagechanged', page);
             },
         },
     }

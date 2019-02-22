@@ -35,7 +35,11 @@
         </div>
 
         <!-- Footer -->
-        <table-view-footer :rowsPerPageOptions="rowsPerPageOptions" :rows-per-page="rowsPerPageOptions[0]"/>
+        <table-view-footer :rowsPerPageOptions="rowsPerPageOptions"
+                           :rows-per-page="rowsPerPageOptions[0]"
+                           :total-pages="10"
+                           :current-page="currentPage"
+                           @pagechanged="onPageChanged"/>
 
     </main>
 </template>
@@ -58,6 +62,7 @@
         },
         data() {
             return {
+                currentPage: 1,
                 refreshing: false,
                 rowsPerPageOptions: [
                     {value: 100, label: '100',},
@@ -86,6 +91,11 @@
                     listViews: this.model.listViews,
                     count: this.model.rows.length,
                 };
+            },
+        },
+        methods: {
+            onPageChanged(page) {
+                this.currentPage = page;
             },
         },
     }
