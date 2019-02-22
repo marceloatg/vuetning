@@ -23,21 +23,22 @@
 
         <!-- Global content -->
         <div class="slds-global-content">
-            <picklists/>
+            <!--<picklists/>-->
+            <components/>
         </div>
 
     </div>
 </template>
 
 <script>
-    //import Components from "./views/Components";
-    import Picklists from "./views/Picklists";
+    import Components from "./views/Components";
+    //import Picklists from "./views/Picklists";
 
     export default {
         name: 'app',
         components: {
-            //Components,
-            Picklists
+            Components,
+            //Picklists
         },
         data() {
             return {
