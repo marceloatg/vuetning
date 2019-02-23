@@ -13,6 +13,10 @@
                 {{ cell }}
             </a>
 
+            <a v-else-if="column.type === 'email'" :href="`mailto:${cell}`" class="slds-truncate" :title="cell">
+                <slds-icon icon-name="utility:email" size="x-small" variant="default"/> {{ cell }}
+            </a>
+
             <!-- Copy to clipboard button -->
             <slds-button-icon v-if="column.hasCopyButton"
                               icon-name="utility:copy_to_clipboard"
