@@ -10,7 +10,7 @@
 
                     <!-- Figure -->
                     <div class="slds-media__figure">
-                        <slds-icon :icon-name="figure.name"/>
+                        <slds-icon :icon-name="figure.name" :class="figure.color"/>
                     </div>
 
                     <!-- Body -->
@@ -81,24 +81,21 @@
 <script>
     export default {
         props: {
-            model: {
+            count: {
+                type: Number,
+                required: true,
+            },
+            figure: {
                 type: Object,
                 required: true,
-                note: 'Table view header model.',
             },
-        },
-        computed: {
-            figure() {
-                return this.model.figure;
+            listViews: {
+                type: String,
+                required: true,
             },
-            title() {
-                return this.model.title;
-            },
-            listViews() {
-                return this.model.listViews;
-            },
-            count() {
-                return this.model.count;
+            title: {
+                type: String,
+                required: true,
             },
         },
     }

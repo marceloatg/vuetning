@@ -2,7 +2,7 @@
     <main class="table-view" ref="tableView">
 
         <!-- Header -->
-        <table-view-header :model="headerModel">
+        <table-view-header :count="count" :figure="figure" :list-views="listViews" :title="title">
 
             <template slot="actions">
                 <slot name="header-actions"></slot>
@@ -54,10 +54,29 @@
             TableViewHeader,
         },
         props: {
-            model: {
+            columns: {
+                type: Array,
+                required: true,
+            },
+            figure: {
                 type: Object,
                 required: true,
-                note: 'Table view model.',
+            },
+            initialized: {
+                type: Boolean,
+                required: true,
+            },
+            listViews: {
+                type: String,
+                required: true,
+            },
+            rows: {
+                type: Array,
+                required: true,
+            },
+            title: {
+                type: String,
+                required: true,
             },
         },
         data() {
@@ -72,25 +91,11 @@
             }
         },
         computed: {
-            initialized() {
-                return this.model.initialized;
-            },
-            columns() {
-                return this.model.columns;
-            },
-            rows() {
-                return this.model.rows;
+            count() {
+                return this.rows.length;
             },
             isEmpty() {
                 return this.model.rows.length === 0;
-            },
-            headerModel() {
-                return {
-                    figure: this.model.figure,
-                    title: this.model.title,
-                    listViews: this.model.listViews,
-                    count: this.model.rows.length,
-                };
             },
         },
         methods: {
