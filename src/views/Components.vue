@@ -33,8 +33,12 @@
                     }),
                     new Column('name', 'Name', 'link'),
                     new Column('email', 'Email', 'email'),
-                    new Column('verified', 'Verified', 'text'),
-                    new Column('blocked', 'Blocked', 'text'),
+                    new Column('verified', 'Verified', 'boolean', {
+                        hasCopyButton: false,
+                    }),
+                    new Column('blocked', 'Blocked', 'boolean', {
+                        hasCopyButton: false,
+                    }),
                     new Column('profile.label', 'Profile', 'text'),
                     new Column('usedStorage', 'Used storage', 'text'),
                     new Column('actions', '', 'action', {

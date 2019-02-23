@@ -121,7 +121,6 @@ export default class Column {
     getDataCategory() {
         switch (this.type) {
             case 'action':
-            case 'boolean':
             case 'button':
             case 'button-icon':
                 return 'input';
