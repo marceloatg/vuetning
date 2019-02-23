@@ -34,6 +34,7 @@
 
 <script>
     export default {
+        name: 'SldsButton',
         props: {
             disabled: {
                 type: Boolean,

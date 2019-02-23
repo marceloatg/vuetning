@@ -20,7 +20,11 @@
     "url": "https://github.com/ArcthosCompany/Vuetning/issues"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
