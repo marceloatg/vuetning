@@ -38,6 +38,7 @@ Since vuetning globally register its components, you can start using them out of
 * [Illustration](/src/components/Illustration)
 * [Input](/src/components/Input)
 * [Menu](/src/components/Menu)
+* [Pagination](/src/components/Pagination)
 * [Picklist](/src/components/Picklist)
 * [Pill](/src/components/Pill)
 * [Spinner](/src/components/Spinner)
