@@ -6,9 +6,9 @@
                           @click.stop="onClickPreviousPage"/>
 
         <slds-button v-for="page in pages"
-                     :key="page.index"
-                     :label="`${page.index}`"
-                     :variant="buttonVariant(page.index)"
+                     :key="page"
+                     :label="`${page}`"
+                     :variant="buttonVariant(page)"
                      @click="onClickPage(page)"/>
 
         <slds-button-icon icon-name="utility:chevronright"
@@ -34,11 +34,6 @@
                 required: true
             },
         },
-        data() {
-            return {
-                ellipsisStyle: 'padding-left: 12px;padding-right: 12px;',
-            }
-        },
         computed: {
             endPage() {
                 return Math.min(this.startPage + this.range - 1, this.totalPages);
@@ -51,20 +46,12 @@
             },
             pages() {
                 const pages = [];
-
-                for (let i = this.startPage; i <= this.endPage; i += 1) {
-                    pages.push({index: i, disabled: i === this.currentPage});
-                }
-
+                for (let i = this.startPage; i <= this.endPage; i += 1) pages.push(i);
                 return pages;
             },
             startPage() {
                 if (this.currentPage === 1) return 1;
-
-                if (this.currentPage === this.totalPages) {
-                    return this.totalPages - this.range + 1;
-                }
-
+                if (this.currentPage === this.totalPages) return this.totalPages - this.range + 1;
                 return this.currentPage - 1;
             },
         },
@@ -73,14 +60,14 @@
                 this.$emit('pagechanged', this.currentPage - 1);
             },
             onClickPage(page) {
-                if (page.disabled) return;
-                this.$emit('pagechanged', page.index);
+                if (page === this.currentPage) return;
+                this.$emit('pagechanged', page);
             },
             onClickNextPage() {
                 this.$emit('pagechanged', this.currentPage + 1);
             },
-            buttonVariant(index) {
-                if (index === this.currentPage) return 'brand';
+            buttonVariant(page) {
+                if (page === this.currentPage) return 'brand';
                 return 'neutral';
             },
         }
