@@ -5,7 +5,10 @@
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
         </td>
 
-        <slds-cell v-for="(column, index) in columns" :key="index" :column="column" :cell="row[column.fieldName]"/>
+        <slds-cell v-for="(column, index) in columns"
+                   :key="index"
+                   :column="column"
+                   :cell="cell(column.fieldName)"/>
 
     </tr>
 </template>
@@ -30,6 +33,18 @@
             row: {
                 type: Object,
                 required: true
+            },
+        },
+        methods: {
+            cell(fieldName) {
+                const fields = fieldName.split('.');
+                let cell = this.row[fields[0]];
+
+                for (let i = 1; i < fields.length; i++) {
+                    cell = cell[fields[i]];
+                }
+
+                return cell;
             },
         },
     }

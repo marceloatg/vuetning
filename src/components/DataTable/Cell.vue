@@ -1,10 +1,9 @@
 <template>
-    <td class="slds-cell-edit" role="gridcell" :style="{'text-align': column.textAlign}">
+    <td class="slds-cell-edit" :style="{'text-align': column.textAlign}">
 
-        <!-- Output types -->
+        <!-- Text types -->
         <span v-if="column.getDataCategory() === 'output'" class="slds-grid slds-grid_align-spread">
 
-            <!-- Text types -->
             <span v-if="column.type === 'text'" class="slds-truncate" :title="cell">
                 {{ cell }}
             </span>
@@ -12,6 +11,19 @@
             <a v-else-if="column.type === 'link'" class="slds-truncate" :title="cell">
                 {{ cell }}
             </a>
+
+            <a v-else-if="column.type === 'email'" :href="`mailto:${cell}`" class="slds-truncate" :title="cell">
+                <slds-icon icon-name="utility:email" size="x-small" variant="default"/>
+                {{ cell }}
+            </a>
+
+            <span v-else-if="column.type === 'boolean'">
+                <slds-icon v-if="cell" icon-name="utility:check" variant="default" size="x-small"/>
+            </span>
+
+            <span v-else-if="column.type === 'avatar'">
+                <slds-avatar :src="cell" variant="circle"/>
+            </span>
 
             <!-- Copy to clipboard button -->
             <slds-button-icon v-if="column.hasCopyButton"
