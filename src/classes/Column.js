@@ -81,6 +81,7 @@ export default class Column {
 
         if (type == null) throw 'Property "type" is required.';
         switch (type) {
+            case 'avatar':
             case 'action':
             case 'boolean':
             case 'button':
