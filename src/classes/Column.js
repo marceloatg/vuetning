@@ -117,16 +117,4 @@ export default class Column {
         if (this.minimumWidth < 100) this.resizable = 100;
         if (this.fixedWidth !== undefined) this.resizable = false;
     }
-
-    getDataCategory() {
-        switch (this.type) {
-            case 'action':
-            case 'button':
-            case 'button-icon':
-                return 'input';
-
-            default:
-                return 'output';
-        }
-    }
 }

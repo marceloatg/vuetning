@@ -91,6 +91,42 @@
                         "label": "Administrator"
                     },
                     "usedStorage": 0
+                }, {
+                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
+                    "name": "John Doe",
+                    "email": "johndoe@arcthos.com",
+                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "verified": true,
+                    "blocked": false,
+                    "profile": {
+                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                        "label": "Administrator"
+                    },
+                    "usedStorage": 0
+                }, {
+                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c7",
+                    "name": "John Doe",
+                    "email": "johndoe@arcthos.com",
+                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "verified": true,
+                    "blocked": false,
+                    "profile": {
+                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                        "label": "Administrator"
+                    },
+                    "usedStorage": 0
+                }, {
+                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c8",
+                    "name": "John Doe",
+                    "email": "johndoe@arcthos.com",
+                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "verified": true,
+                    "blocked": false,
+                    "profile": {
+                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                        "label": "Administrator"
+                    },
+                    "usedStorage": 0
                 }],
                 title: 'Users',
             }

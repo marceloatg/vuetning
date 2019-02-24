@@ -25,6 +25,7 @@
                     <slds-column v-for="column in columns"
                                  :key="column.fieldName"
                                  :column="column"
+                                 :type="column.type"
                                  @resize="onResize"/>
 
                 </tr>

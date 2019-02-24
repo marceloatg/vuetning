@@ -66,7 +66,28 @@
             column: {
                 type: Object,
                 required: true,
-            }
+            },
+            type: {
+                type: String,
+                required: true,
+                validator(value) {
+                    return [
+                        'avatar',
+                        'action',
+                        'boolean',
+                        'button',
+                        'button-icon',
+                        'currency',
+                        'date',
+                        'email',
+                        'link',
+                        'number',
+                        'percent',
+                        'text',
+                        'url',
+                    ].indexOf(value) !== -1
+                },
+            },
         },
         data() {
             return {

@@ -2,7 +2,7 @@
     <td class="slds-cell-edit" :style="{'text-align': column.textAlign}">
 
         <!-- Text types -->
-        <span v-if="column.getDataCategory() === 'output'" class="slds-grid slds-grid_align-spread">
+        <span v-if="isOutput" class="slds-grid slds-grid_align-spread">
 
             <span v-if="column.type === 'text'" class="slds-truncate" :title="cell">
                 {{ cell }}
@@ -60,6 +60,22 @@
             column: {
                 type: Object,
                 required: true,
+            },
+        },
+        data() {
+            return {}
+        },
+        computed: {
+            isOutput() {
+                switch (this.column.type) {
+                    case 'action':
+                    case 'button':
+                    case 'button-icon':
+                        return false;
+
+                    default:
+                        return true;
+                }
             },
         },
     }
