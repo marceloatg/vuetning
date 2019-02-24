@@ -38,6 +38,7 @@
                     }),
                     new Column('blocked', 'Blocked', 'boolean', {
                         hasCopyButton: false,
+                        sortable: false,
                     }),
                     new Column('profile.label', 'Profile', 'text'),
                     new Column('usedStorage', 'Used storage', 'text'),

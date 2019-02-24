@@ -4,7 +4,7 @@
     <th v-if="column.resizable"
         scope="col"
         class="slds-is-resizable"
-        :class="[{'slds-is-sortable': column.sortable}]"
+        :class="[{'slds-is-sortable': sortable}]"
         :style="{ width: `${column.initialWidth}px` }">
         <div class="slds-cell-fixed"
              :style="{ width: `${column.initialWidth}px`, left: `${column.left}px` }">
@@ -19,7 +19,7 @@
                     </span>
 
                     <!-- Sort icon -->
-                    <span v-if="column.sortable" class="slds-icon_container slds-icon-utility-arrowdown">
+                    <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowdown">
                         <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
                     </span>
 
@@ -94,6 +94,21 @@
                 startX: null,
                 currentX: null,
                 touchingResizer: false,
+            }
+        },
+        computed: {
+            sortable() {
+                switch (this.type) {
+                    case 'avatar':
+                    case 'action':
+                    case 'button':
+                    case 'button-icon':
+                        return false;
+
+                    default:
+                        if (this.column.sortable != null) return this.column.sortable;
+                        return true;
+                }
             }
         },
         methods: {
