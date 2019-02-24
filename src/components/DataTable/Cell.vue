@@ -4,24 +4,24 @@
         <!-- Text types -->
         <span v-if="isOutput" class="slds-grid slds-grid_align-spread">
 
-            <span v-if="column.type === 'text'" class="slds-truncate" :title="cell">
+            <span v-if="type === 'text'" class="slds-truncate" :title="cell">
                 {{ cell }}
             </span>
 
-            <a v-else-if="column.type === 'link'" class="slds-truncate" :title="cell">
+            <a v-else-if="type === 'link'" class="slds-truncate" :title="cell">
                 {{ cell }}
             </a>
 
-            <a v-else-if="column.type === 'email'" :href="`mailto:${cell}`" class="slds-truncate" :title="cell">
+            <a v-else-if="type === 'email'" :href="`mailto:${cell}`" class="slds-truncate" :title="cell">
                 <slds-icon icon-name="utility:email" size="x-small" variant="default"/>
                 {{ cell }}
             </a>
 
-            <span v-else-if="column.type === 'boolean'">
+            <span v-else-if="type === 'boolean'">
                 <slds-icon v-if="cell" icon-name="utility:check" variant="default" size="x-small"/>
             </span>
 
-            <span v-else-if="column.type === 'avatar'">
+            <span v-else-if="type === 'avatar'">
                 <slds-avatar :src="cell" variant="circle"/>
             </span>
 
@@ -38,9 +38,9 @@
         <!-- Input types -->
         <span v-else class="slds-truncate" :title="cell">
 
-            <slds-menu v-if="column.type === 'action'" :items="column.actions" size="small" position="right"/>
+            <slds-menu v-if="type === 'action'" :items="column.actions" size="small" position="right"/>
 
-            <slds-button v-else-if="column.type === 'button'"
+            <slds-button v-else-if="type === 'button'"
                          :label="column.typeAttributes.label"
                          :variant="column.typeAttributes.variant"
                          :class="column.typeAttributes.class"/>
@@ -61,13 +61,34 @@
                 type: Object,
                 required: true,
             },
+            type: {
+                type: String,
+                required: true,
+                validator(value) {
+                    return [
+                        'avatar',
+                        'action',
+                        'boolean',
+                        'button',
+                        'button-icon',
+                        'currency',
+                        'date',
+                        'email',
+                        'link',
+                        'number',
+                        'percent',
+                        'text',
+                        'url',
+                    ].indexOf(value) !== -1
+                },
+            },
         },
         data() {
             return {}
         },
         computed: {
             hasCopyButton() {
-                switch (this.column.type) {
+                switch (this.type) {
                     case 'avatar':
                     case 'action':
                     case 'boolean':
@@ -81,7 +102,7 @@
                 }
             },
             isOutput() {
-                switch (this.column.type) {
+                switch (this.type) {
                     case 'action':
                     case 'button':
                     case 'button-icon':

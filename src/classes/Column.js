@@ -21,8 +21,7 @@ export default class Column {
     // Specifies the width of a column in pixels and makes the column non-resizable.
     fixedWidth;
 
-    // Specifies whether a column has the 'copy to clipboard' button.
-    // The default is true.
+    // OK
     hasCopyButton = true;
 
     // The Lightning Design System icon.
@@ -53,17 +52,14 @@ export default class Column {
     // Specifies the current X translation of a resizer.
     resizerTranslation = 0;
 
-    // Specifies whether the column can be sorted.
-    // The default is true.
+    // OK
     sortable = true;
 
     // Specifies rows text alignment.
     // The default is left.
     textAlign = 'left';
 
-    // Required.
-    // The data type to be used for data formatting.
-    // For more information, see DataType.
+    // OK
     type;
 
     // Provides custom formatting with component attributes for the data type.

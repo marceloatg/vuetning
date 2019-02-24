@@ -8,6 +8,7 @@
         <slds-cell v-for="(column, index) in columns"
                    :key="index"
                    :column="column"
+                   :type="column.type"
                    :cell="cell(column.fieldName)"/>
 
     </tr>
