@@ -4,7 +4,7 @@
     <th v-if="column.resizable"
         scope="col"
         class="slds-is-resizable"
-        :class="[{'slds-is-sortable': sortable}]"
+        :class="[{'slds-is-sortable': isSortable}]"
         :style="{ width: `${column.initialWidth}px` }">
         <div class="slds-cell-fixed"
              :style="{ width: `${column.initialWidth}px`, left: `${column.left}px` }">
@@ -60,33 +60,14 @@
 </template>
 
 <script>
+    import SldsColumn from './Column';
+
     export default {
-        name: "SldsColumn",
+        extends: SldsColumn,
         props: {
             column: {
                 type: Object,
                 required: true,
-            },
-            type: {
-                type: String,
-                required: true,
-                validator(value) {
-                    return [
-                        'avatar',
-                        'action',
-                        'boolean',
-                        'button',
-                        'button-icon',
-                        'currency',
-                        'date',
-                        'email',
-                        'link',
-                        'number',
-                        'percent',
-                        'text',
-                        'url',
-                    ].indexOf(value) !== -1
-                },
             },
         },
         data() {
@@ -94,21 +75,6 @@
                 startX: null,
                 currentX: null,
                 touchingResizer: false,
-            }
-        },
-        computed: {
-            sortable() {
-                switch (this.type) {
-                    case 'avatar':
-                    case 'action':
-                    case 'button':
-                    case 'button-icon':
-                        return false;
-
-                    default:
-                        if (this.column.sortable != null) return this.column.sortable;
-                        return true;
-                }
             }
         },
         methods: {
@@ -170,7 +136,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

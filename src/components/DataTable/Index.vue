@@ -22,11 +22,23 @@
                         </div>
                     </th>
 
-                    <slds-column v-for="column in columns"
-                                 :key="column.fieldName"
-                                 :column="column"
-                                 :type="column.type"
-                                 @resize="onResize"/>
+                    <template v-for="column in columns">
+
+                        <slds-resizable-column v-if="isColumnResizable(column)"
+                                               :key="column.fieldName"
+                                               :column="column"
+                                               :sortable="column.sortable"
+                                               :type="column.type"
+                                               @resize="onResize"/>
+
+                        <slds-fixed-column v-else
+                                           :key="column.fieldName"
+                                           :column="column"
+                                           :sortable="column.sortable"
+                                           :type="column.type"/>
+
+                    </template>
+
 
                 </tr>
                 </thead>
@@ -42,12 +54,14 @@
 </template>
 
 <script>
-    import SldsColumn from './Column';
+    import SldsFixedColumn from './Column/FixedColumn';
+    import SldsResizableColumn from './Column/ResizableColumn';
     import SldsRow from './Row';
 
     export default {
         components: {
-            SldsColumn,
+            SldsFixedColumn,
+            SldsResizableColumn,
             SldsRow,
         },
         props: {
@@ -67,6 +81,10 @@
             }
         },
         methods: {
+            isColumnResizable(column) {
+                if (column.resizable != null) return column.resizable;
+                return true;
+            },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
 
