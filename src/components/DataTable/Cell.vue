@@ -26,7 +26,7 @@
             </span>
 
             <!-- Copy to clipboard button -->
-            <slds-button-icon v-if="column.hasCopyButton"
+            <slds-button-icon v-if="hasCopyButton"
                               icon-name="utility:copy_to_clipboard"
                               container="none"
                               class="slds-cell-edit__button slds-m-left_x-small"
@@ -66,6 +66,20 @@
             return {}
         },
         computed: {
+            hasCopyButton() {
+                switch (this.column.type) {
+                    case 'avatar':
+                    case 'action':
+                    case 'boolean':
+                    case 'button':
+                    case 'button-icon':
+                        return false;
+
+                    default:
+                        if (this.column.hasCopyButton != null) return this.column.hasCopyButton;
+                        return true;
+                }
+            },
             isOutput() {
                 switch (this.column.type) {
                     case 'action':
