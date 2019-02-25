@@ -35,15 +35,19 @@
                         <!-- Item -->
                         <li :key="item.name" v-else class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="0">
+
                                 <span class="slds-truncate" :title="item.label">
-                                    <slds-svg v-if="item.leftIcon !== undefined"
-                                              :icon-name="`${item.leftIcon.category}:${item.leftIcon.name}`"
-                                              class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
+                                    <slds-svg
+                                            v-if="item.leftIconName !== undefined"
+                                            :icon-name="item.leftIconName"
+                                            class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
                                     {{ item.label }}
                                 </span>
-                                <slds-svg v-if="item.rightIcon !== undefined"
-                                          :icon-name="`${item.rightIcon.category}:${item.rightIcon.name}`"
-                                          class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-left_small slds-shrink-none"/>
+
+                                <slds-svg
+                                        v-if="item.rightIconName !== undefined"
+                                        :icon-name="item.rightIconName"
+                                        class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-left_small slds-shrink-none"/>
                             </a>
                         </li>
 

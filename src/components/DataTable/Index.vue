@@ -112,16 +112,22 @@
             this.tableWidth = table.offsetWidth;
 
             // Calculating column widths
-            let totalFixedWidth = Commons.LINE_COUNTER_WIDTH;
-            let resizableColumns = 0;
+            let knownWidth = Commons.LINE_COUNTER_WIDTH;
+            let unknownWidthColumns = 0;
 
             for (let column of this.columns) {
-                if (column.resizable) resizableColumns++;
-                else totalFixedWidth += column.fixedWidth != null ? column.fixedWidth : Commons.DEFAULT_FIXED_WIDTH;
+                if (column.resizable) {
+                    if (column.initialWidth == null) unknownWidthColumns++;
+                    else knownWidth += column.initialWidth;
+                }
+                else {
+                    if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
+                    else knownWidth += column.fixedWidth;
+                }
             }
 
             const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
-            const initialWidth = Math.floor((rowWidth - totalFixedWidth) / resizableColumns);
+            const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
 
             for (let column of this.columns) {
                 if (!column.resizable) continue;
