@@ -31,7 +31,7 @@
 
                 <!-- Handle -->
                 <span class="slds-resizable__handle"
-                      :style="{transform: `translateX(${column.resizerTranslation}px)`}"
+                      :style="{transform: `translateX(${resizerTranslation}px)`}"
                       @mousedown.prevent.stop="onResizerMouseDown(column, $event)">
 
                     <!-- Divider -->
@@ -61,6 +61,7 @@
                 startX: null,
                 currentX: null,
                 touchingResizer: false,
+                resizerTranslation: 0,
             }
         },
         methods: {
@@ -88,7 +89,7 @@
                     delta = this.column.minimumWidth - this.column.initialWidth;
                 }
 
-                this.column.resizerTranslation = delta;
+                this.resizerTranslation = delta;
             },
             onResizerMoveEnd() {
                 if (!this.touchingResizer) return;
@@ -111,7 +112,7 @@
 
                 // Update table and column widths
                 this.column.initialWidth += delta;
-                this.column.resizerTranslation = 0;
+                this.resizerTranslation = 0;
 
                 this.$emit('resize', this.column, delta);
             },

@@ -45,9 +45,6 @@ export default class Column {
     // OK
     resizable = true;
 
-    // Specifies the current X translation of a resizer.
-    resizerTranslation = 0;
-
     // OK
     sortable = true;
 
