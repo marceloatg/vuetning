@@ -41,10 +41,12 @@
                     fieldName: 'verified',
                     label: 'Verified',
                     type: 'boolean',
+                    initialWidth: 100,
                 }, {
                     fieldName: 'blocked',
                     label: 'Blocked',
                     type: 'boolean',
+                    initialWidth: 100,
                 }, {
                     fieldName: 'profile.label',
                     label: 'Profile',
