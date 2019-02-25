@@ -4,6 +4,9 @@
             left: {
                 type: Number,
             },
+            label: {
+                type: String,
+            },
             sortable: {
                 type: Boolean,
                 default: true,

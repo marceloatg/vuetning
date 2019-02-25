@@ -11,8 +11,8 @@
                 <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
 
                     <!-- Label -->
-                    <span class="slds-truncate" :title="column.label">
-                        {{ column.label }}
+                    <span class="slds-truncate" :title="label">
+                        {{ label }}
                     </span>
 
                     <!-- Sort icon -->

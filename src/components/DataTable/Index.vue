@@ -27,6 +27,7 @@
                         <slds-resizable-column v-if="isColumnResizable(column)"
                                                :key="column.fieldName"
                                                :column="column"
+                                               :label="column.label"
                                                :left="column.left"
                                                :sortable="column.sortable"
                                                :type="column.type"
@@ -36,6 +37,7 @@
                                            :key="column.fieldName"
                                            :column="column"
                                            :fixedWidth="column.fixedWidth"
+                                           :label="column.label"
                                            :left="column.left"
                                            :sortable="column.sortable"
                                            :type="column.type"/>

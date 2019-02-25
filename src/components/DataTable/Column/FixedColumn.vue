@@ -1,8 +1,8 @@
 <template>
     <th scope="col" :style="{ width: `${fixedWidth}px` }">
         <div class="slds-cell-fixed" :style="{ left: `${left}px` }">
-            <div :title="column.label" class="slds-truncate">
-                {{ column.label }}
+            <div :title="label" class="slds-truncate">
+                {{ label }}
             </div>
         </div>
     </th>
@@ -15,10 +15,6 @@
     export default {
         extends: SldsColumn,
         props: {
-            column: {
-                type: Object,
-                required: true,
-            },
             fixedWidth: {
                 type: Number,
                 default: Commons.DEFAULT_FIXED_WIDTH,

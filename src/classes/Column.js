@@ -29,8 +29,7 @@ export default class Column {
     // or within 100px and 1000px if they are not provided.
     initialWidth;
 
-    // Required.
-    // The text label displayed in the column header.
+    // OK
     label;
 
     // OK
