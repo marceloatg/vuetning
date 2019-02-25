@@ -7,8 +7,11 @@
 
         <slds-cell v-for="(column, index) in columns"
                    :key="index"
-                   :column="column"
+                   :actions="column.actions"
+                   :has-copy-button="hasCopyButton(column)"
+                   :text-align="column.textAlign"
                    :type="column.type"
+                   :type-attributes="column.typeAttributes"
                    :cell="cell(column.fieldName)"/>
 
     </tr>
@@ -47,10 +50,20 @@
 
                 return cell;
             },
+            hasCopyButton(column){
+                switch (column.type) {
+                    case 'avatar':
+                    case 'action':
+                    case 'boolean':
+                    case 'button':
+                    case 'button-icon':
+                        return false;
+
+                    default:
+                        if (column.hasCopyButton != null) return column.hasCopyButton;
+                        return true;
+                }
+            },
         },
     }
 </script>
-
-<style scoped>
-
-</style>

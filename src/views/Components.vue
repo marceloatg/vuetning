@@ -16,7 +16,6 @@
 </template>
 
 <script>
-    import Column from "../classes/Column";
     import SldsTableView from "./TableView/Index";
 
     export default {
@@ -30,51 +29,58 @@
                     fieldName: 'picture',
                     resizable: false,
                     type: 'avatar',
-                },
-                    new Column('name', 'Name', 'link'),
-                    new Column('email', 'Email', 'email'),
-                    new Column('verified', 'Verified', 'boolean'),
-                    new Column('blocked', 'Blocked', 'boolean', {
-                        hasCopyButton: false,
-                        sortable: false,
-                    }),
-                    new Column('profile.label', 'Profile', 'text', {
-                        hasCopyButton: false,
-                    }),
-                    new Column('usedStorage', 'Used storage', 'text'),
-                    new Column('actions', '', 'action', {
-                        hasCopyButton: false,
-                        resizable: false,
-                        sortable: false,
-                        fixedWidth: 52,
-                        actions: [
-                            {
-                                label: 'Edit',
-                                name: 'edit',
-                                leftIcon: {
-                                    category: 'utility',
-                                    name: 'edit',
-                                },
-                            },
-                            {
-                                label: 'Block',
-                                name: 'block',
-                                leftIcon: {
-                                    category: 'utility',
-                                    name: 'ban',
-                                },
-                            },
-                            {
-                                label: 'Delete',
-                                name: 'delete',
-                                leftIcon: {
-                                    category: 'utility',
-                                    name: 'delete',
-                                },
-                            },
-                        ]
-                    }),
-                ],
+                }, {
+                    fieldName: 'name',
+                    label: 'Name',
+                    type: 'link',
+                }, {
+                    fieldName: 'email',
+                    label: 'Email',
+                    type: 'email',
+                }, {
+                    fieldName: 'verified',
+                    label: 'Verified',
+                    type: 'boolean',
+                }, {
+                    fieldName: 'blocked',
+                    label: 'Blocked',
+                    type: 'boolean',
+                }, {
+                    fieldName: 'profile.label',
+                    label: 'Profile',
+                    type: 'text',
+                }, {
+                    fieldName: 'usedStorage',
+                    label: 'Used storage',
+                    type: 'text',
+                }, {
+                    fieldName: 'actions',
+                    type: 'action',
+                    resizable: false,
+                    fixedWidth: 52,
+                    actions: [{
+                        label: 'Edit',
+                        name: 'edit',
+                        leftIcon: {
+                            category: 'utility',
+                            name: 'edit',
+                        },
+                    }, {
+                        label: 'Block',
+                        name: 'block',
+                        leftIcon: {
+                            category: 'utility',
+                            name: 'ban',
+                        },
+                    }, {
+                        label: 'Delete',
+                        name: 'delete',
+                        leftIcon: {
+                            category: 'utility',
+                            name: 'delete',
+                        },
+                    }]
+                }],
                 figure: {
                     name: 'standard:customers',
                     color: 'slds-icon-standard-customers',
@@ -135,7 +141,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

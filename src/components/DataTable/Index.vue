@@ -46,8 +46,7 @@
                                            :type="column.type"/>
 
                     </template>
-
-
+                    
                 </tr>
                 </thead>
 
@@ -86,7 +85,6 @@
         data() {
             return {
                 tableWidth: null,
-                scrollLeft: 0,
             }
         },
         methods: {
@@ -96,13 +94,11 @@
             },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
+                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
 
-                if (this.scrollLeft === scrollLeft) return;
-                this.scrollLeft = scrollLeft;
-
-                for (let column of this.columns) {
-                    column.left = column.offsetLeft - scrollLeft;
-                }
+                /* Magic... */
+                this.onResize(0, 1);
+                this.onResize(0, -1);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;

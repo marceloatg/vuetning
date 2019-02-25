@@ -1,5 +1,5 @@
 <template>
-    <td class="slds-cell-edit" :style="{'text-align': column.textAlign}">
+    <td class="slds-cell-edit" :style="{'text-align': textAlign}">
 
         <!-- Text types -->
         <span v-if="isOutput" class="slds-grid slds-grid_align-spread">
@@ -38,12 +38,12 @@
         <!-- Input types -->
         <span v-else class="slds-truncate" :title="cell">
 
-            <slds-menu v-if="type === 'action'" :items="column.actions" size="small" position="right"/>
+            <slds-menu v-if="type === 'action'" :items="actions" size="small" position="right"/>
 
             <slds-button v-else-if="type === 'button'"
-                         :label="column.typeAttributes.label"
-                         :variant="column.typeAttributes.variant"
-                         :class="column.typeAttributes.class"/>
+                         :label="typeAttributes.label"
+                         :variant="typeAttributes.variant"
+                         :class="typeAttributes.class"/>
 
         </span>
 
@@ -54,12 +54,18 @@
     export default {
         name: 'SldsCell',
         props: {
+            actions: {
+                type: Array,
+            },
             cell: {
                 required: true,
             },
-            column: {
-                type: Object,
-                required: true,
+            hasCopyButton: {
+                type: Boolean
+            },
+            textAlign: {
+                type: String,
+                default: 'left',
             },
             type: {
                 type: String,
@@ -82,25 +88,11 @@
                     ].indexOf(value) !== -1
                 },
             },
-        },
-        data() {
-            return {}
+            typeAttributes: {
+                type: Object,
+            },
         },
         computed: {
-            hasCopyButton() {
-                switch (this.type) {
-                    case 'avatar':
-                    case 'action':
-                    case 'boolean':
-                    case 'button':
-                    case 'button-icon':
-                        return false;
-
-                    default:
-                        if (this.column.hasCopyButton != null) return this.column.hasCopyButton;
-                        return true;
-                }
-            },
             isOutput() {
                 switch (this.type) {
                     case 'action':
