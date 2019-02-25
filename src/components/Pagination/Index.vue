@@ -9,6 +9,7 @@
                      :key="page"
                      :label="`${page}`"
                      :variant="buttonVariant(page)"
+                     :style="{padding: '0 12px'}"
                      @click="onClickPage(page)"/>
 
         <slds-button-icon icon-name="utility:chevronright"

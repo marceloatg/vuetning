@@ -14,7 +14,7 @@
                 <thead>
                 <tr class="slds-line-height_reset">
 
-                    <th class="" scope="col" style="width: 60px;">
+                    <th scope="col" style="width: 60px;">
                         <div class="slds-cell-fixed">
                             <div class="slds-truncate slds-assistive-text" title="Errors">
                                 Errors
@@ -22,10 +22,30 @@
                         </div>
                     </th>
 
-                    <slds-column v-for="column in columns"
-                                 :key="column.fieldName"
-                                 :column="column"
-                                 @resize="onResize"/>
+                    <template v-for="(column, index) in columns">
+
+                        <slds-resizable-column v-if="isColumnResizable(column)"
+                                               :key="column.fieldName"
+                                               :column="column"
+                                               :index="index"
+                                               :initial-width="column.initialWidth"
+                                               :label="column.label"
+                                               :left="column.left"
+                                               :minimum-width="column.minimumWidth"
+                                               :sortable="column.sortable"
+                                               :type="column.type"
+                                               @resize="onResize"/>
+
+                        <slds-fixed-column v-else
+                                           :key="column.fieldName"
+                                           :column="column"
+                                           :fixedWidth="column.fixedWidth"
+                                           :label="column.label"
+                                           :left="column.left"
+                                           :sortable="column.sortable"
+                                           :type="column.type"/>
+
+                    </template>
 
                 </tr>
                 </thead>
@@ -41,12 +61,15 @@
 </template>
 
 <script>
-    import SldsColumn from './Column';
+    import Commons from './commons'
+    import SldsFixedColumn from './Column/FixedColumn';
+    import SldsResizableColumn from './Column/ResizableColumn';
     import SldsRow from './Row';
 
     export default {
         components: {
-            SldsColumn,
+            SldsFixedColumn,
+            SldsResizableColumn,
             SldsRow,
         },
         props: {
@@ -62,24 +85,21 @@
         data() {
             return {
                 tableWidth: null,
-                scrollLeft: 0,
             }
         },
         methods: {
+            isColumnResizable(column) {
+                if (column.resizable == null) this.$set(column, 'resizable', true);
+                return column.resizable;
+            },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
-
-                if (this.scrollLeft === scrollLeft) return;
-                this.scrollLeft = scrollLeft;
-
-                for (let column of this.columns) {
-                    column.left = column.offsetLeft - scrollLeft;
-                }
+                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
             },
-            onResize(column, delta) {
+            onResize(index, delta) {
+                this.columns[index].initialWidth += delta;
                 this.tableWidth += delta;
 
-                let index = this.columns.indexOf(column);
                 for (++index; index < this.columns.length; index++) {
                     this.columns[index].left += delta;
                     this.columns[index].offsetLeft += delta;
@@ -92,12 +112,12 @@
             this.tableWidth = table.offsetWidth;
 
             // Calculating column widths
-            let totalFixedWidth = 60;
+            let totalFixedWidth = Commons.LINE_COUNTER_WIDTH;
             let resizableColumns = 0;
 
             for (let column of this.columns) {
                 if (column.resizable) resizableColumns++;
-                else totalFixedWidth += column.fixedWidth;
+                else totalFixedWidth += column.fixedWidth != null ? column.fixedWidth : Commons.DEFAULT_FIXED_WIDTH;
             }
 
             const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
@@ -105,14 +125,14 @@
 
             for (let column of this.columns) {
                 if (!column.resizable) continue;
-                if (column.initialWidth === undefined) column.initialWidth = initialWidth;
+                if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
             }
 
             // Saving column offset left values as a data attribute
             const cells = this.$el.getElementsByClassName('slds-cell-fixed');
             for (let index = 1; index < cells.length; index++) {
-                this.columns[index - 1].offsetLeft = cells[index].offsetLeft;
-                this.columns[index - 1].left = cells[index].offsetLeft;
+                this.$set(this.columns[index - 1], 'offsetLeft', cells[index].offsetLeft);
+                this.$set(this.columns[index - 1], 'left', cells[index].offsetLeft);
             }
 
             // Adding scroll event listener

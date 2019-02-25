@@ -1,29 +1,90 @@
 <template>
     <tr class="slds-hint-parent">
 
-        <td class="slds-cell-edit slds-cell-error slds-text-align_center" role="gridcell">
+        <td class="slds-cell-edit slds-cell-error slds-text-align_center">
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
         </td>
 
-        <slds-cell v-for="(column, index) in columns"
-                   :key="index"
-                   :column="column"
-                   :cell="cell(column.fieldName)"/>
+        <template v-for="(column, index) in columns">
+
+            <slds-cell-action
+                    v-if="column.type === 'action'"
+                    :align="column.align"
+                    :key="index"
+                    :type-attributes="column.typeAttributes"/>
+
+            <slds-cell-avatar
+                    v-else-if="column.type === 'avatar'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :key="index"/>
+
+            <slds-cell-boolean
+                    v-else-if="column.type === 'boolean'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :key="index"/>
+
+            <slds-cell-button
+                    v-else-if="column.type === 'button'"
+                    :align="column.align"
+                    :key="index"
+                    :type-attributes="column.typeAttributes"/>
+
+            <slds-cell-email
+                    v-else-if="column.type === 'email'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :has-copy-button="column.hasCopyButton"
+                    :key="index"/>
+
+            <slds-cell-link
+                    v-else-if="column.type === 'link'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :has-copy-button="column.hasCopyButton"
+                    :key="index"/>
+
+            <slds-cell-number
+                    v-else-if="column.type === 'number'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :has-copy-button="column.hasCopyButton"
+                    :key="index"
+                    :type-attributes="column.typeAttributes"/>
+
+            <slds-cell-text
+                    v-else-if="column.type === 'text'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :has-copy-button="column.hasCopyButton"
+                    :key="index"/>
+
+        </template>
 
     </tr>
 </template>
 
 <script>
-    import SldsCell from './Cell';
+    import SldsCellAction from './Cell/Action';
+    import SldsCellAvatar from './Cell/Avatar';
+    import SldsCellBoolean from './Cell/Boolean';
+    import SldsCellButton from './Cell/Button';
+    import SldsCellEmail from './Cell/Email';
+    import SldsCellLink from './Cell/Link';
+    import SldsCellNumber from './Cell/Number';
+    import SldsCellText from './Cell/Text';
 
     export default {
         components: {
-            SldsCell
-        },
-        data() {
-            return {
-                selected: false,
-            }
+            SldsCellAction,
+            SldsCellAvatar,
+            SldsCellBoolean,
+            SldsCellButton,
+            SldsCellEmail,
+            SldsCellLink,
+            SldsCellNumber,
+            SldsCellText,
         },
         props: {
             columns: {
@@ -35,8 +96,13 @@
                 required: true
             },
         },
+        data() {
+            return {
+                selected: false,
+            }
+        },
         methods: {
-            cell(fieldName) {
+            getCell(fieldName) {
                 const fields = fieldName.split('.');
                 let cell = this.row[fields[0]];
 
@@ -49,7 +115,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>
