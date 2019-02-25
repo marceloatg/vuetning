@@ -26,7 +26,7 @@
         data() {
             return {
                 columns: [{
-                    fieldName: 'picture',
+                    fieldName: 'avatar',
                     resizable: false,
                     type: 'avatar',
                 }, {
@@ -58,28 +58,30 @@
                     type: 'action',
                     resizable: false,
                     fixedWidth: 52,
-                    actions: [{
-                        label: 'Edit',
-                        name: 'edit',
-                        leftIcon: {
-                            category: 'utility',
+                    typeAttributes: {
+                        rowActions: [{
+                            label: 'Edit',
                             name: 'edit',
-                        },
-                    }, {
-                        label: 'Block',
-                        name: 'block',
-                        leftIcon: {
-                            category: 'utility',
-                            name: 'ban',
-                        },
-                    }, {
-                        label: 'Delete',
-                        name: 'delete',
-                        leftIcon: {
-                            category: 'utility',
+                            leftIcon: {
+                                category: 'utility',
+                                name: 'edit',
+                            },
+                        }, {
+                            label: 'Block',
+                            name: 'block',
+                            leftIcon: {
+                                category: 'utility',
+                                name: 'ban',
+                            },
+                        }, {
+                            label: 'Delete',
                             name: 'delete',
-                        },
-                    }]
+                            leftIcon: {
+                                category: 'utility',
+                                name: 'delete',
+                            },
+                        }]
+                    }
                 }],
                 figure: {
                     name: 'standard:customers',
@@ -91,7 +93,11 @@
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
                     "name": "John Doe",
                     "email": "johndoe@arcthos.com",
-                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "avatar": {
+                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                        "initials": "JD",
+                        "fallbackIconName": "standard:user",
+                    },
                     "verified": true,
                     "blocked": false,
                     "profile": {
@@ -103,7 +109,11 @@
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
                     "name": "John Doe",
                     "email": "johndoe@arcthos.com",
-                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "avatar": {
+                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                        "initials": "JD",
+                        "fallbackIconName": "standard:user",
+                    },
                     "verified": true,
                     "blocked": false,
                     "profile": {
@@ -115,7 +125,11 @@
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c7",
                     "name": "John Doe",
                     "email": "johndoe@arcthos.com",
-                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "avatar": {
+                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                        "initials": "JD",
+                        "fallbackIconName": "standard:user",
+                    },
                     "verified": true,
                     "blocked": false,
                     "profile": {
@@ -127,7 +141,11 @@
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c8",
                     "name": "John Doe",
                     "email": "johndoe@arcthos.com",
-                    "picture": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                    "avatar": {
+                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                        "initials": "JD",
+                        "fallbackIconName": "standard:user",
+                    },
                     "verified": true,
                     "blocked": false,
                     "profile": {
