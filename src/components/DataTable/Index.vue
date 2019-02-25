@@ -90,8 +90,8 @@
         },
         methods: {
             isColumnResizable(column) {
-                if (column.resizable != null) return column.resizable;
-                return true;
+                if (column.resizable == null) column.resizable = true;
+                return column.resizable;
             },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
@@ -120,7 +120,7 @@
             this.tableWidth = table.offsetWidth;
 
             // Calculating column widths
-            let totalFixedWidth = 60;
+            let totalFixedWidth = Commons.LINE_COUNTER_WIDTH;
             let resizableColumns = 0;
 
             for (let column of this.columns) {
@@ -133,7 +133,7 @@
 
             for (let column of this.columns) {
                 if (!column.resizable) continue;
-                if (column.initialWidth === undefined) column.initialWidth = initialWidth;
+                if (column.initialWidth == null) column.initialWidth = initialWidth;
             }
 
             // Saving column offset left values as a data attribute
