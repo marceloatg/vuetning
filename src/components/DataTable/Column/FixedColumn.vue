@@ -1,6 +1,6 @@
 <template>
     <th scope="col" :style="{ width: `${fixedWidth}px` }">
-        <div class="slds-cell-fixed" :style="{ left: `${column.left}px` }">
+        <div class="slds-cell-fixed" :style="{ left: `${left}px` }">
             <div :title="column.label" class="slds-truncate">
                 {{ column.label }}
             </div>

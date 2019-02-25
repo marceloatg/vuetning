@@ -1,6 +1,9 @@
 <script>
     export default {
         props: {
+            left: {
+                type: Number,
+            },
             sortable: {
                 type: Boolean,
                 default: true,

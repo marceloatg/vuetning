@@ -14,7 +14,7 @@
                 <thead>
                 <tr class="slds-line-height_reset">
 
-                    <th class="" scope="col" style="width: 60px;">
+                    <th scope="col" style="width: 60px;">
                         <div class="slds-cell-fixed">
                             <div class="slds-truncate slds-assistive-text" title="Errors">
                                 Errors
@@ -27,6 +27,7 @@
                         <slds-resizable-column v-if="isColumnResizable(column)"
                                                :key="column.fieldName"
                                                :column="column"
+                                               :left="column.left"
                                                :sortable="column.sortable"
                                                :type="column.type"
                                                @resize="onResize"/>
@@ -35,6 +36,7 @@
                                            :key="column.fieldName"
                                            :column="column"
                                            :fixedWidth="column.fixedWidth"
+                                           :left="column.left"
                                            :sortable="column.sortable"
                                            :type="column.type"/>
 

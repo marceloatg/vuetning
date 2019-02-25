@@ -1,13 +1,10 @@
 <template>
-
-    <!-- Resizable column -->
-    <th v-if="column.resizable"
-        scope="col"
+    <th scope="col"
         class="slds-is-resizable"
         :class="[{'slds-is-sortable': isSortable}]"
         :style="{ width: `${column.initialWidth}px` }">
         <div class="slds-cell-fixed"
-             :style="{ width: `${column.initialWidth}px`, left: `${column.left}px` }">
+             :style="{ width: `${column.initialWidth}px`, left: `${left}px` }">
 
             <!-- Column name -->
             <a class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
@@ -46,17 +43,6 @@
 
         </div>
     </th>
-
-    <!-- Fixed column -->
-    <th :key="column.fieldName" v-else scope="col"
-        :style="{ width: `${column.fixedWidth}px` }">
-        <div class="slds-cell-fixed" :style="{ left: `${column.left}px` }">
-            <div class="slds-truncate" :title="column.label" style="display: flex;padding: .25rem .5rem;height: 2rem;align-items: center;">
-                {{ column.label }}
-            </div>
-        </div>
-    </th>
-
 </template>
 
 <script>
@@ -120,11 +106,7 @@
                 // Apply column width validations to delta
                 if (this.column.initialWidth + delta < this.column.minimumWidth) {
                     delta = this.column.minimumWidth - this.column.initialWidth;
-
-                    if (delta === 0) {
-                        this.column = null;
-                        return;
-                    }
+                    if (delta === 0) return;
                 }
 
                 // Update table and column widths

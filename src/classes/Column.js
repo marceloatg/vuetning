@@ -33,7 +33,7 @@ export default class Column {
     // The text label displayed in the column header.
     label;
 
-    // Column left absolute position.
+    // OK
     left;
 
     // The minimum width of the column when it's initialized, which must be within the minColumnWidth and maxColumnWidth values,
