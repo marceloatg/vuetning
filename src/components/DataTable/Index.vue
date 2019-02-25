@@ -27,6 +27,7 @@
                         <slds-resizable-column v-if="isColumnResizable(column)"
                                                :key="column.fieldName"
                                                :column="column"
+                                               :initial-width="column.initialWidth"
                                                :label="column.label"
                                                :left="column.left"
                                                :minimum-width="column.minimumWidth"
@@ -103,6 +104,7 @@
                 }
             },
             onResize(column, delta) {
+                column.initialWidth += delta;
                 this.tableWidth += delta;
 
                 let index = this.columns.indexOf(column);

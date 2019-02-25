@@ -2,9 +2,9 @@
     <th scope="col"
         class="slds-is-resizable"
         :class="[{'slds-is-sortable': isSortable}]"
-        :style="{ width: `${column.initialWidth}px` }">
+        :style="{ width: `${initialWidth}px` }">
         <div class="slds-cell-fixed"
-             :style="{ width: `${column.initialWidth}px`, left: `${left}px` }">
+             :style="{ width: `${initialWidth}px`, left: `${left}px` }">
 
             <!-- Column name -->
             <a class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
@@ -32,7 +32,7 @@
                 <!-- Handle -->
                 <span class="slds-resizable__handle"
                       :style="{transform: `translateX(${resizerTranslation}px)`}"
-                      @mousedown.prevent.stop="onResizerMouseDown(column, $event)">
+                      @mousedown.prevent.stop="onResizerMouseDown">
 
                     <!-- Divider -->
                     <span class="slds-resizable__divider"></span>
@@ -56,6 +56,9 @@
                 type: Object,
                 required: true,
             },
+            initialWidth: {
+                type: Number,
+            },
             minimumWidth: {
                 type: Number,
                 default: Commons.DEFAULT_MINIMUM_WIDTH,
@@ -70,8 +73,7 @@
             }
         },
         methods: {
-            onResizerMouseDown(column, event) {
-                this.column = column;
+            onResizerMouseDown(event) {
                 this.startX = event.pageX;
                 this.currentX = this.startX;
                 this.touchingResizer = true;
@@ -90,10 +92,7 @@
                 this.resizing(delta);
             },
             resizing(delta) {
-                if (this.column.initialWidth + delta < this.minimumWidth) {
-                    delta = this.minimumWidth - this.column.initialWidth;
-                }
-
+                if (this.initialWidth + delta < this.minimumWidth) delta = this.minimumWidth - this.initialWidth;
                 this.resizerTranslation = delta;
             },
             onResizerMoveEnd() {
@@ -110,16 +109,14 @@
             resize(delta) {
 
                 // Apply column width validations to delta
-                if (this.column.initialWidth + delta < this.minimumWidth) {
-                    delta = this.minimumWidth - this.column.initialWidth;
+                if (this.initialWidth + delta < this.minimumWidth) {
+                    delta = this.minimumWidth - this.initialWidth;
                     if (delta === 0) return;
                 }
 
-                // Update table and column widths
-                this.column.initialWidth += delta;
-                this.resizerTranslation = 0;
-
+                // Emit resize event with delta
                 this.$emit('resize', this.column, delta);
+                this.resizerTranslation = 0;
             },
         },
     }
