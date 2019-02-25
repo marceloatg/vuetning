@@ -3,17 +3,13 @@ export default class Column {
     // Future
     actions;
 
-    // Provides additional customization, such as horizontal alignment or appending an icon to the output.
-    // For more information about alignment, see Aligning Data in a Column.
-    // For more information about adding icons, see Appending an Icon to Column Data.
+    // Future
     cellAttributes;
 
     // Future
     editable = false;
 
-    // Required.
-    // The name that binds the columns properties to the associated data.
-    // Each columns property must correspond to an item in the data array.
+    // OK
     fieldName;
 
     // OK

@@ -44,6 +44,7 @@
                     new Column('usedStorage', 'Used storage', 'text'),
                     new Column('actions', '', 'action', {
                         hasCopyButton: false,
+                        resizable: false,
                         sortable: false,
                         fixedWidth: 52,
                         actions: [

@@ -21,11 +21,6 @@
         components: {
             SldsCell
         },
-        data() {
-            return {
-                selected: false,
-            }
-        },
         props: {
             columns: {
                 type: Array,
@@ -35,6 +30,11 @@
                 type: Object,
                 required: true
             },
+        },
+        data() {
+            return {
+                selected: false,
+            }
         },
         methods: {
             cell(fieldName) {

@@ -24,7 +24,7 @@
             </a>
 
             <!-- Column resizer -->
-            <div v-if="column.resizable" class="slds-resizable">
+            <div class="slds-resizable">
 
                 <!-- Input -->
                 <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text"/>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+    import Commons from '../commons'
     import SldsColumn from './Column';
 
     export default {
@@ -54,6 +55,10 @@
             column: {
                 type: Object,
                 required: true,
+            },
+            minimumWidth: {
+                type: Number,
+                default: Commons.DEFAULT_MINIMUM_WIDTH,
             },
         },
         data() {
@@ -85,8 +90,8 @@
                 this.resizing(delta);
             },
             resizing(delta) {
-                if (this.column.initialWidth + delta < this.column.minimumWidth) {
-                    delta = this.column.minimumWidth - this.column.initialWidth;
+                if (this.column.initialWidth + delta < this.minimumWidth) {
+                    delta = this.minimumWidth - this.column.initialWidth;
                 }
 
                 this.resizerTranslation = delta;
@@ -105,8 +110,8 @@
             resize(delta) {
 
                 // Apply column width validations to delta
-                if (this.column.initialWidth + delta < this.column.minimumWidth) {
-                    delta = this.column.minimumWidth - this.column.initialWidth;
+                if (this.column.initialWidth + delta < this.minimumWidth) {
+                    delta = this.minimumWidth - this.column.initialWidth;
                     if (delta === 0) return;
                 }
 

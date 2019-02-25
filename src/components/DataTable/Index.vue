@@ -29,6 +29,7 @@
                                                :column="column"
                                                :label="column.label"
                                                :left="column.left"
+                                               :minimum-width="column.minimumWidth"
                                                :sortable="column.sortable"
                                                :type="column.type"
                                                @resize="onResize"/>
