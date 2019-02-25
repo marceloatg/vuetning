@@ -1,6 +1,6 @@
 <template>
-    <td class="slds-cell-edit" :style="{'text-align': align}">
-        <span class="slds-grid slds-grid_align-spread">
+    <td class="slds-cell-edit">
+        <span class="slds-grid" :class="alignment">
 
             <span :title="cell" class="slds-truncate">
                 {{ cell }}
@@ -19,12 +19,11 @@
 </template>
 
 <script>
+    import SldsCell from './Index'
+
     export default {
+        extends: SldsCell,
         props: {
-            align: {
-                type: String,
-                default: 'left',
-            },
             cell: {
                 type: String,
                 required: true,

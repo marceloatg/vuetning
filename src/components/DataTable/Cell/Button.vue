@@ -1,23 +1,18 @@
 <template>
-    <td class="slds-cell-edit" :style="{'text-align': align}">
-        <slds-button
-                :label="typeAttributes.label"
-                :variant="typeAttributes.variant"
-                :class="typeAttributes.class"/>
+    <td class="slds-cell-edit">
+        <span class="slds-grid" :class="alignment">
+            <slds-button
+                    :label="typeAttributes.label"
+                    :variant="typeAttributes.variant"
+                    :class="typeAttributes.class"/>
+        </span>
     </td>
 </template>
 
 <script>
+    import SldsCell from './Index'
+
     export default {
-        props: {
-            align: {
-                type: String,
-                default: 'left',
-            },
-            typeAttributes: {
-                type: Object,
-                required: true,
-            },
-        },
+        extends: SldsCell,
     }
 </script>

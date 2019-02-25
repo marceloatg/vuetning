@@ -52,9 +52,12 @@
                 }, {
                     fieldName: 'usedStorage',
                     label: 'Used storage',
-                    type: 'text',
+                    type: 'number',
+                    align: 'right',
+                    typeAttributes: {
+                        decimalPlaces: 2,
+                    }
                 }, {
-                    fieldName: 'actions',
                     type: 'action',
                     resizable: false,
                     fixedWidth: 52,
@@ -81,7 +84,7 @@
                                 name: 'delete',
                             },
                         }]
-                    }
+                    },
                 }],
                 figure: {
                     name: 'standard:customers',
@@ -104,7 +107,7 @@
                         "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                         "label": "Administrator"
                     },
-                    "usedStorage": 0
+                    "usedStorage": 100000000
                 }, {
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
                     "name": "John Doe",
@@ -120,7 +123,7 @@
                         "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                         "label": "Administrator"
                     },
-                    "usedStorage": 0
+                    "usedStorage": null
                 }, {
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c7",
                     "name": "John Doe",
@@ -136,7 +139,7 @@
                         "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                         "label": "Administrator"
                     },
-                    "usedStorage": 0
+                    "usedStorage": 12345.67
                 }, {
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c8",
                     "name": "John Doe",
@@ -152,7 +155,10 @@
                         "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                         "label": "Administrator"
                     },
-                    "usedStorage": 0
+                    "usedStorage": {
+                        "label": "95,37 MB",
+                        "value": 100002693
+                    }
                 }],
                 title: 'Users',
             }

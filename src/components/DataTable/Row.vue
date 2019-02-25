@@ -11,7 +11,7 @@
                     v-if="column.type === 'action'"
                     :align="column.align"
                     :key="index"
-                    :typeAttributes="column.typeAttributes"/>
+                    :type-attributes="column.typeAttributes"/>
 
             <slds-cell-avatar
                     v-else-if="column.type === 'avatar'"
@@ -29,7 +29,7 @@
                     v-else-if="column.type === 'button'"
                     :align="column.align"
                     :key="index"
-                    :typeAttributes="column.typeAttributes"/>
+                    :type-attributes="column.typeAttributes"/>
 
             <slds-cell-email
                     v-else-if="column.type === 'email'"
@@ -44,6 +44,14 @@
                     :cell="getCell(column.fieldName)"
                     :has-copy-button="column.hasCopyButton"
                     :key="index"/>
+
+            <slds-cell-number
+                    v-else-if="column.type === 'number'"
+                    :align="column.align"
+                    :cell="getCell(column.fieldName)"
+                    :has-copy-button="column.hasCopyButton"
+                    :key="index"
+                    :type-attributes="column.typeAttributes"/>
 
             <slds-cell-text
                     v-else-if="column.type === 'text'"
@@ -64,6 +72,7 @@
     import SldsCellButton from './Cell/Button';
     import SldsCellEmail from './Cell/Email';
     import SldsCellLink from './Cell/Link';
+    import SldsCellNumber from './Cell/Number';
     import SldsCellText from './Cell/Text';
 
     export default {
@@ -74,6 +83,7 @@
             SldsCellButton,
             SldsCellEmail,
             SldsCellLink,
+            SldsCellNumber,
             SldsCellText,
         },
         props: {
