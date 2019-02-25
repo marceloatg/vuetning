@@ -65,24 +65,15 @@
                         rowActions: [{
                             label: 'Edit',
                             name: 'edit',
-                            leftIcon: {
-                                category: 'utility',
-                                name: 'edit',
-                            },
+                            leftIconName: 'utility:edit',
                         }, {
                             label: 'Block',
                             name: 'block',
-                            leftIcon: {
-                                category: 'utility',
-                                name: 'ban',
-                            },
+                            leftIconName: 'utility:ban',
                         }, {
                             label: 'Delete',
                             name: 'delete',
-                            leftIcon: {
-                                category: 'utility',
-                                name: 'delete',
-                            },
+                            leftIconName: 'utility:delete',
                         }]
                     },
                 }],
