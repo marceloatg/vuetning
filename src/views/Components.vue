@@ -26,11 +26,11 @@
         },
         data() {
             return {
-                columns: [
-                    new Column('picture', '', 'avatar', {
-                        hasCopyButton: false,
-                        fixedWidth: 48,
-                    }),
+                columns: [{
+                    fieldName: 'picture',
+                    resizable: false,
+                    type: 'avatar',
+                },
                     new Column('name', 'Name', 'link'),
                     new Column('email', 'Email', 'email'),
                     new Column('verified', 'Verified', 'boolean'),

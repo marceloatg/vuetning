@@ -1,7 +1,7 @@
 <template>
-    <th scope="col" :style="{ width: `${column.fixedWidth}px` }">
+    <th scope="col" :style="{ width: `${fixedWidth}px` }">
         <div class="slds-cell-fixed" :style="{ left: `${column.left}px` }">
-            <div class="slds-truncate" :title="column.label" style="display: flex;padding: .25rem .5rem;height: 2rem;align-items: center;">
+            <div :title="column.label" class="slds-truncate">
                 {{ column.label }}
             </div>
         </div>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+    import Commons from '../commons'
     import SldsColumn from './Column';
 
     export default {
@@ -18,6 +19,23 @@
                 type: Object,
                 required: true,
             },
+            fixedWidth: {
+                type: Number,
+                default: Commons.DEFAULT_FIXED_WIDTH,
+            },
         },
     }
 </script>
+
+<style scoped lang="scss">
+    th {
+        > div {
+            > div {
+                display: flex;
+                padding: .25rem .5rem;
+                height: 2rem;
+                align-items: center;
+            }
+        }
+    }
+</style>

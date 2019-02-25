@@ -34,6 +34,7 @@
                         <slds-fixed-column v-else
                                            :key="column.fieldName"
                                            :column="column"
+                                           :fixedWidth="column.fixedWidth"
                                            :sortable="column.sortable"
                                            :type="column.type"/>
 
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+    import Commons from './commons'
     import SldsFixedColumn from './Column/FixedColumn';
     import SldsResizableColumn from './Column/ResizableColumn';
     import SldsRow from './Row';
@@ -116,7 +118,7 @@
 
             for (let column of this.columns) {
                 if (column.resizable) resizableColumns++;
-                else totalFixedWidth += column.fixedWidth;
+                else totalFixedWidth += column.fixedWidth != null ? column.fixedWidth : Commons.DEFAULT_FIXED_WIDTH;
             }
 
             const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;

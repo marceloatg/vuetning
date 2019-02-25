@@ -1,7 +1,6 @@
 export default class Column {
 
-    // Appends a dropdown menu of actions to a column.
-    // You must pass in a list of label-name pairs.
+    // Future
     actions;
 
     // Provides additional customization, such as horizontal alignment or appending an icon to the output.
@@ -9,8 +8,7 @@ export default class Column {
     // For more information about adding icons, see Appending an Icon to Column Data.
     cellAttributes;
 
-    // Specifies whether a column supports inline editing.
-    // The default is false.
+    // Future
     editable = false;
 
     // Required.
@@ -18,13 +16,13 @@ export default class Column {
     // Each columns property must correspond to an item in the data array.
     fieldName;
 
-    // Specifies the width of a column in pixels and makes the column non-resizable.
+    // OK
     fixedWidth;
 
     // OK
     hasCopyButton = true;
 
-    // The Lightning Design System icon.
+    // Future
     icon;
 
     // The width of the column when it's initialized, which must be within the minColumnWidth and maxColumnWidth values,
@@ -45,8 +43,7 @@ export default class Column {
     /// Column left offset.
     offsetLeft;
 
-    // Specifies whether the column can be resizable.
-    // The default is true.
+    // OK
     resizable = true;
 
     // Specifies the current X translation of a resizer.
