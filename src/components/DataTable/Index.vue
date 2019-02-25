@@ -46,7 +46,7 @@
                                            :type="column.type"/>
 
                     </template>
-                    
+
                 </tr>
                 </thead>
 
@@ -89,16 +89,12 @@
         },
         methods: {
             isColumnResizable(column) {
-                if (column.resizable == null) column.resizable = true;
+                if (column.resizable == null) this.$set(column, 'resizable', true);
                 return column.resizable;
             },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
-
-                /* Magic... */
-                this.onResize(0, 1);
-                this.onResize(0, -1);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;
@@ -129,14 +125,14 @@
 
             for (let column of this.columns) {
                 if (!column.resizable) continue;
-                if (column.initialWidth == null) column.initialWidth = initialWidth;
+                if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
             }
 
             // Saving column offset left values as a data attribute
             const cells = this.$el.getElementsByClassName('slds-cell-fixed');
             for (let index = 1; index < cells.length; index++) {
-                this.columns[index - 1].offsetLeft = cells[index].offsetLeft;
-                this.columns[index - 1].left = cells[index].offsetLeft;
+                this.$set(this.columns[index - 1], 'offsetLeft', cells[index].offsetLeft);
+                this.$set(this.columns[index - 1], 'left', cells[index].offsetLeft);
             }
 
             // Adding scroll event listener
