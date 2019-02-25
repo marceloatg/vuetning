@@ -52,8 +52,8 @@
     export default {
         extends: SldsColumn,
         props: {
-            column: {
-                type: Object,
+            index: {
+                type: Number,
                 required: true,
             },
             initialWidth: {
@@ -115,7 +115,7 @@
                 }
 
                 // Emit resize event with delta
-                this.$emit('resize', this.column, delta);
+                this.$emit('resize', this.index, delta);
                 this.resizerTranslation = 0;
             },
         },

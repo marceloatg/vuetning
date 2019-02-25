@@ -22,11 +22,12 @@
                         </div>
                     </th>
 
-                    <template v-for="column in columns">
+                    <template v-for="(column, index) in columns">
 
                         <slds-resizable-column v-if="isColumnResizable(column)"
                                                :key="column.fieldName"
                                                :column="column"
+                                               :index="index"
                                                :initial-width="column.initialWidth"
                                                :label="column.label"
                                                :left="column.left"
@@ -103,11 +104,10 @@
                     column.left = column.offsetLeft - scrollLeft;
                 }
             },
-            onResize(column, delta) {
-                column.initialWidth += delta;
+            onResize(index, delta) {
+                this.columns[index].initialWidth += delta;
                 this.tableWidth += delta;
 
-                let index = this.columns.indexOf(column);
                 for (++index; index < this.columns.length; index++) {
                     this.columns[index].left += delta;
                     this.columns[index].offsetLeft += delta;
