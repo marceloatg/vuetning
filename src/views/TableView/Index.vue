@@ -8,7 +8,7 @@
             :list-views="listViews"
             :title="title">
 
-            <template slot="actions">
+            <template #actions>
                 <slot name="header-actions"/>
             </template>
 

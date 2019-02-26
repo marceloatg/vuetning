@@ -7,11 +7,13 @@
         :rows="rows"
         :title="title">
 
-        <div slot="header-actions" class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-            <div class="slds-button-group">
-                <slds-button label="Create" icon-name="utility:add"/>
+        <template #header-actions>
+            <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+                <div class="slds-button-group">
+                    <slds-button label="Create" icon-name="utility:add"/>
+                </div>
             </div>
-        </div>
+        </template>
 
     </slds-table-view>
 </template>
