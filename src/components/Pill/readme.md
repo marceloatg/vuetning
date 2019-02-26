@@ -23,6 +23,29 @@ A pill represents an object that can be viewed with or without an icon
 | click  | name      | Fired when a clickable pill is clicked.<br>Passes as argument the pill name. |
 | remove | name      | Fired when the remove button is clicked.<br>Passes as argument the pill name. |
 
+## Examples
+
+```vue
+<slds-pill label="My pill"/>
+
+<slds-pill label="Unclickable pill" :clickable="false"/>
+
+<slds-pill label="Pill with error" :has-error="true"/>
+
+<slds-pill label="Pill with icon">
+    <template #icon>
+        <slds-icon icon-name="standard:account"/>
+    </template>
+</slds-pill>
+
+<slds-pill label="Pill with avatar">
+    <template #icon>
+        <slds-avatar src="my-image.png" initials="MG" fallback-icon-name="standard:user"/>
+    </template>
+</slds-pill>
+
+```
+
 ## Salesforce documentation
 [SLDS documentation](https://www.lightningdesignsystem.com/components/pills/)<br>
 [Aura documentation](https://developer.salesforce.com/docs/component-library/bundle/lightning:pill)<br>
