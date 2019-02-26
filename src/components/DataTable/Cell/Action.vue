@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import SldsCell from './Index'
+    import SldsCell from './Cell'
 
     export default {
         extends: SldsCell,
