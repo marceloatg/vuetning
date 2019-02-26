@@ -5,7 +5,7 @@
 
 <template>
     <span class="slds-badge" :class="['slds-badge_' + color]" :title="title">
-        {{(iconPosition === 'right') ? text : '' }}
+        {{ (iconPosition === 'right') ? text : '' }}
         <span
             v-if="hasIcon"
             class="slds-badge__icon"
@@ -13,7 +13,7 @@
             <span class="slds-icon_container slds-current-color">
                 <slds-svg :icon-name="`${iconCategory}:${iconName}`" class="slds-icon slds-icon_xx-small"/>
             </span>
-        </span>{{(iconPosition === 'left') ? text : '' }}
+        </span>{{ (iconPosition === 'left') ? text : '' }}
     </span>
 </template>
 

@@ -39,6 +39,7 @@ module.exports = {
                 "allowFirstLine": false
             }
         }],
+        "vue/mustache-interpolation-spacing": ["warn", "always"],
         "vue/name-property-casing": ["error", "PascalCase"],
         "vue/v-on-style": ["error", "shorthand"],
     },
