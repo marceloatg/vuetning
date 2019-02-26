@@ -18,6 +18,11 @@ module.exports = {
             "endTag": "never",
             "selfClosingTag": "never"
         }],
+        "vue/html-indent": ["warn", 4, {
+            "attribute": 1,
+            "baseIndent": 1,
+            "alignAttributesVertically": true,
+        }],
         "vue/html-self-closing": ["error", {
             "html": {
                 "void": "never",
@@ -26,6 +31,13 @@ module.exports = {
             },
             "svg": "always",
             "math": "always"
+        }],
+        "vue/max-attributes-per-line": ["warn", {
+            "singleline": 3,
+            "multiline": {
+                "max": 1,
+                "allowFirstLine": false
+            }
         }],
         "vue/name-property-casing": ["error", "PascalCase"],
         "vue/v-on-style": ["error", "shorthand"],

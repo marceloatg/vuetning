@@ -5,12 +5,13 @@
         <slds-trial-bar :days-left="trial.daysLeft" v-if="trial.showBar"/>
 
         <!-- Alert -->
-        <slds-alert :theme="alert.theme"
-                    :icon-category="alert.iconCategory"
-                    :icon-name="alert.iconName"
-                    :message="alert.message"
-                    :class="[{'slds-hide': !alert.show}]"
-                    @close="closeAlert"/>
+        <slds-alert
+            :theme="alert.theme"
+            :icon-category="alert.iconCategory"
+            :icon-name="alert.iconName"
+            :message="alert.message"
+            :class="[{'slds-hide': !alert.show}]"
+            @close="closeAlert"/>
 
         <!-- Global header -->
         <slds-global-header name="Arcthos"/>

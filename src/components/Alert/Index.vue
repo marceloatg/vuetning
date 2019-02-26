@@ -4,9 +4,10 @@
 -->
 
 <template>
-    <div role="alert"
-         class="slds-notify slds-notify_alert slds-theme_alert-texture"
-         :class="['slds-theme_' + theme]">
+    <div
+        role="alert"
+        class="slds-notify slds-notify_alert slds-theme_alert-texture"
+        :class="['slds-theme_' + theme]">
 
         <!-- Icon -->
         <span v-if="hasIcon" class="slds-icon_container slds-icon-utility-user slds-m-right_x-small">
@@ -19,12 +20,13 @@
 
         <!-- Close button -->
         <div class="slds-notify__close">
-            <slds-button-icon icon-name="utility:close"
-                              variant="inverse"
-                              container="bare"
-                              size="small"
-                              title="Close"
-                              @click="$emit('close')"/>
+            <slds-button-icon
+                icon-name="utility:close"
+                variant="inverse"
+                container="bare"
+                size="small"
+                title="Close"
+                @click="$emit('close')"/>
         </div>
 
     </div>

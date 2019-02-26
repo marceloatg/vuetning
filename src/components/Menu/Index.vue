@@ -7,47 +7,62 @@
     <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
         <!-- Button -->
-        <slds-button-icon icon-name="utility:down"
-                          :size="size"
-                          @click="toggle"
-                          @blur="close"
-                          @keyup="keyUp"/>
+        <slds-button-icon
+            icon-name="utility:down"
+            :size="size"
+            @click="toggle"
+            @blur="close"
+            @keyup="keyUp"/>
 
         <!-- Items -->
         <transition enter-active-class="animated fadeIn quicker" leave-active-class="animated fadeOut quicker">
-            <div v-if="isOpen"
-                 class="slds-dropdown"
-                 :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]">
+            <div
+                v-if="isOpen"
+                class="slds-dropdown"
+                :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]">
                 <ul class="slds-dropdown__list" role="menu">
 
                     <template v-for="item in items">
 
                         <!-- Heading -->
-                        <li :key="item.name" v-if="item.type === 'heading'" class="slds-dropdown__header slds-truncate" :title="item.label" role="separator">
+                        <li
+                            :key="item.name"
+                            v-if="item.type === 'heading'"
+                            class="slds-dropdown__header slds-truncate"
+                            :title="item.label"
+                            role="separator">
                             <span>
                                 {{ item.label }}
                             </span>
                         </li>
 
                         <!-- Separator -->
-                        <li :key="item.name" v-else-if="item.type === 'separator'" class="slds-has-divider_top-space" role="separator"/>
+                        <li
+                            :key="item.name"
+                            v-else-if="item.type === 'separator'"
+                            class="slds-has-divider_top-space"
+                            role="separator"/>
 
                         <!-- Item -->
-                        <li :key="item.name" v-else class="slds-dropdown__item" role="presentation">
+                        <li
+                            :key="item.name"
+                            v-else
+                            class="slds-dropdown__item"
+                            role="presentation">
                             <a role="menuitem" tabindex="0">
 
                                 <span class="slds-truncate" :title="item.label">
                                     <slds-svg
-                                            v-if="item.leftIconName !== undefined"
-                                            :icon-name="item.leftIconName"
-                                            class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
+                                        v-if="item.leftIconName !== undefined"
+                                        :icon-name="item.leftIconName"
+                                        class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
                                     {{ item.label }}
                                 </span>
 
                                 <slds-svg
-                                        v-if="item.rightIconName !== undefined"
-                                        :icon-name="item.rightIconName"
-                                        class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-left_small slds-shrink-none"/>
+                                    v-if="item.rightIconName !== undefined"
+                                    :icon-name="item.rightIconName"
+                                    class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-left_small slds-shrink-none"/>
                             </a>
                         </li>
 

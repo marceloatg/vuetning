@@ -2,10 +2,10 @@
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
             <slds-avatar
-                    :src="cell.src"
-                    :fallback-icon-name="cell.fallbackIconName"
-                    :initials="cell.initials"
-                    variant="circle"/>
+                :src="cell.src"
+                :fallback-icon-name="cell.fallbackIconName"
+                :initials="cell.initials"
+                variant="circle"/>
         </span>
     </td>
 </template>

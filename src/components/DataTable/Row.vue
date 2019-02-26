@@ -8,57 +8,57 @@
         <template v-for="(column, index) in columns">
 
             <slds-cell-action
-                    v-if="column.type === 'action'"
-                    :align="column.align"
-                    :key="index"
-                    :type-attributes="column.typeAttributes"/>
+                v-if="column.type === 'action'"
+                :align="column.align"
+                :key="index"
+                :type-attributes="column.typeAttributes"/>
 
             <slds-cell-avatar
-                    v-else-if="column.type === 'avatar'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :key="index"/>
+                v-else-if="column.type === 'avatar'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :key="index"/>
 
             <slds-cell-boolean
-                    v-else-if="column.type === 'boolean'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :key="index"/>
+                v-else-if="column.type === 'boolean'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :key="index"/>
 
             <slds-cell-button
-                    v-else-if="column.type === 'button'"
-                    :align="column.align"
-                    :key="index"
-                    :type-attributes="column.typeAttributes"/>
+                v-else-if="column.type === 'button'"
+                :align="column.align"
+                :key="index"
+                :type-attributes="column.typeAttributes"/>
 
             <slds-cell-email
-                    v-else-if="column.type === 'email'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :has-copy-button="column.hasCopyButton"
-                    :key="index"/>
+                v-else-if="column.type === 'email'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"/>
 
             <slds-cell-link
-                    v-else-if="column.type === 'link'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :has-copy-button="column.hasCopyButton"
-                    :key="index"/>
+                v-else-if="column.type === 'link'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"/>
 
             <slds-cell-number
-                    v-else-if="column.type === 'number'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :has-copy-button="column.hasCopyButton"
-                    :key="index"
-                    :type-attributes="column.typeAttributes"/>
+                v-else-if="column.type === 'number'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"
+                :type-attributes="column.typeAttributes"/>
 
             <slds-cell-text
-                    v-else-if="column.type === 'text'"
-                    :align="column.align"
-                    :cell="getCell(column.fieldName)"
-                    :has-copy-button="column.hasCopyButton"
-                    :key="index"/>
+                v-else-if="column.type === 'text'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"/>
 
         </template>
 

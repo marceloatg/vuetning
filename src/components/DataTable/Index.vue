@@ -6,53 +6,60 @@
 <template>
     <div class="slds-table_header-fixed_container">
         <div class="slds-table_edit_container slds-is-static slds-scrollable_area">
-            <table class="slds-table slds-no-cell-focus slds-table_bordered slds-table_header-fixed slds-table_edit slds-table_fixed-layout slds-table_resizable-cols"
-                   :style="{ width: `${tableWidth}px` }"
-                   role="grid">
+            <table
+                class="slds-table slds-no-cell-focus slds-table_bordered slds-table_header-fixed slds-table_edit slds-table_fixed-layout slds-table_resizable-cols"
+                :style="{ width: `${tableWidth}px` }"
+                role="grid">
 
                 <!-- Head -->
                 <thead>
-                <tr class="slds-line-height_reset">
+                    <tr class="slds-line-height_reset">
 
-                    <th scope="col" style="width: 60px;">
-                        <div class="slds-cell-fixed">
-                            <div class="slds-truncate slds-assistive-text" title="Errors">
-                                Errors
+                        <th scope="col" style="width: 60px;">
+                            <div class="slds-cell-fixed">
+                                <div class="slds-truncate slds-assistive-text" title="Errors">
+                                    Errors
+                                </div>
                             </div>
-                        </div>
-                    </th>
+                        </th>
 
-                    <template v-for="(column, index) in columns">
+                        <template v-for="(column, index) in columns">
 
-                        <slds-resizable-column v-if="isColumnResizable(column)"
-                                               :key="column.fieldName"
-                                               :column="column"
-                                               :index="index"
-                                               :initial-width="column.initialWidth"
-                                               :label="column.label"
-                                               :left="column.left"
-                                               :minimum-width="column.minimumWidth"
-                                               :sortable="column.sortable"
-                                               :type="column.type"
-                                               @resize="onResize"/>
+                            <slds-resizable-column
+                                v-if="isColumnResizable(column)"
+                                :key="column.fieldName"
+                                :column="column"
+                                :index="index"
+                                :initial-width="column.initialWidth"
+                                :label="column.label"
+                                :left="column.left"
+                                :minimum-width="column.minimumWidth"
+                                :sortable="column.sortable"
+                                :type="column.type"
+                                @resize="onResize"/>
 
-                        <slds-fixed-column v-else
-                                           :key="column.fieldName"
-                                           :column="column"
-                                           :fixed-width="column.fixedWidth"
-                                           :label="column.label"
-                                           :left="column.left"
-                                           :sortable="column.sortable"
-                                           :type="column.type"/>
+                            <slds-fixed-column
+                                v-else
+                                :key="column.fieldName"
+                                :column="column"
+                                :fixed-width="column.fixedWidth"
+                                :label="column.label"
+                                :left="column.left"
+                                :sortable="column.sortable"
+                                :type="column.type"/>
 
-                    </template>
+                        </template>
 
-                </tr>
+                    </tr>
                 </thead>
 
                 <!-- Body -->
                 <tbody>
-                <slds-row v-for="row in rows" :key="row.id" :row="row" :columns="columns"/>
+                    <slds-row
+                        v-for="row in rows"
+                        :key="row.id"
+                        :row="row"
+                        :columns="columns"/>
                 </tbody>
 
             </table>

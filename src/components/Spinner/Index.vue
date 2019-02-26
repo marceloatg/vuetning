@@ -5,9 +5,10 @@
 -->
 
 <template>
-    <div role="status"
-         class="slds-spinner"
-         :class="[`slds-spinner_${size}`, `slds-spinner_${variant}`, {'slds-spinner_delayed': hasDelay}]">
+    <div
+        role="status"
+        class="slds-spinner"
+        :class="[`slds-spinner_${size}`, `slds-spinner_${variant}`, {'slds-spinner_delayed': hasDelay}]">
 
         <div class="slds-spinner__dot-a"/>
 

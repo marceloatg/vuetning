@@ -1,10 +1,11 @@
 <template>
-    <slds-table-view :columns="columns"
-                     :figure="figure"
-                     :initialized="initialized"
-                     :list-views="listViews"
-                     :rows="rows"
-                     :title="title">
+    <slds-table-view
+        :columns="columns"
+        :figure="figure"
+        :initialized="initialized"
+        :list-views="listViews"
+        :rows="rows"
+        :title="title">
 
         <div slot="header-actions" class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
             <div class="slds-button-group">

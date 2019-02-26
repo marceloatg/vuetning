@@ -1,9 +1,10 @@
 <template>
-    <button type="button"
-            class="slds-button"
-            :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
-            v-bind="disabledAttribute"
-            @click.stop="onClick">
+    <button
+        type="button"
+        class="slds-button"
+        :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
+        v-bind="disabledAttribute"
+        @click.stop="onClick">
 
         <!-- Text for right icon -->
         <span v-if="iconPosition === 'right'" :class="{'slds-hidden': spinnerActive}">
@@ -11,10 +12,11 @@
         </span>
 
         <!-- Icon -->
-        <slds-svg v-if="hasIcon"
-                  :icon-name="iconName"
-                  class="slds-button__icon"
-                  :class="['slds-button__icon_' + iconPosition, {'slds-hidden': spinnerActive}]"/>
+        <slds-svg
+            v-if="hasIcon"
+            :icon-name="iconName"
+            class="slds-button__icon"
+            :class="['slds-button__icon_' + iconPosition, {'slds-hidden': spinnerActive}]"/>
 
         <!-- Text for left icon -->
         <span v-if="iconPosition === 'left'" :class="{'slds-hidden': spinnerActive}">

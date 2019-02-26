@@ -15,22 +15,24 @@
         <!-- Combobox -->
         <div class="slds-form-element__control">
             <div class="slds-combobox_container">
-                <div role="combobox"
-                     class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                <div
+                    role="combobox"
+                    class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                     <!-- Input -->
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
 
-                        <input type="text"
-                               role="textbox"
-                               :value="selected.value"
-                               autoComplete="off"
-                               :placeholder="placeholder"
-                               readonly
-                               class="slds-input slds-combobox__input"
-                               @click="open"
-                               @blur="close"
-                               @keyup="keyUp">
+                        <input
+                            type="text"
+                            role="textbox"
+                            :value="selected.value"
+                            autoComplete="off"
+                            :placeholder="placeholder"
+                            readonly
+                            class="slds-input slds-combobox__input"
+                            @click="open"
+                            @blur="close"
+                            @keyup="keyUp">
 
                         <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
                             <slds-svg icon-name="utility:down" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"/>
@@ -39,16 +41,19 @@
                     </div>
 
                     <!-- Options -->
-                    <transition enter-active-class="animated fadeIn quicker"
-                                leave-active-class="animated fadeOut quicker">
-                        <div v-show="isOpen"
-                             class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
-                             :class="[`slds-dropdown_${orientation}`]"
-                             role="listbox">
+                    <transition
+                        enter-active-class="animated fadeIn quicker"
+                        leave-active-class="animated fadeOut quicker">
+                        <div
+                            v-show="isOpen"
+                            class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                            :class="[`slds-dropdown_${orientation}`]"
+                            role="listbox">
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
 
                                 <!-- Option -->
-                                <li v-for="option in options"
+                                <li
+                                    v-for="option in options"
                                     :key="option.key"
                                     role="presentation"
                                     class="slds-listbox__item"

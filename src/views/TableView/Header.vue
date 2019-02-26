@@ -55,7 +55,11 @@
                 <div class="slds-form-element">
                     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
                         <slds-svg icon-name="utility:search" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
-                        <input class="slds-input" type="text" value="" placeholder="Search this list...">
+                        <input
+                            class="slds-input"
+                            type="text"
+                            value=""
+                            placeholder="Search this list...">
                     </div>
                 </div>
             </div>

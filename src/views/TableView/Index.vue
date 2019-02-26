@@ -2,7 +2,11 @@
     <main class="table-view" ref="tableView">
 
         <!-- Header -->
-        <table-view-header :count="count" :figure="figure" :list-views="listViews" :title="title">
+        <table-view-header
+            :count="count"
+            :figure="figure"
+            :list-views="listViews"
+            :title="title">
 
             <template slot="actions">
                 <slot name="header-actions"/>
@@ -35,11 +39,12 @@
         </div>
 
         <!-- Footer -->
-        <table-view-footer :rows-per-page-options="rowsPerPageOptions"
-                           :rows-per-page="rowsPerPageOptions[0]"
-                           :total-pages="10"
-                           :current-page="currentPage"
-                           @pagechanged="onPageChanged"/>
+        <table-view-footer
+            :rows-per-page-options="rowsPerPageOptions"
+            :rows-per-page="rowsPerPageOptions[0]"
+            :total-pages="10"
+            :current-page="currentPage"
+            @pagechanged="onPageChanged"/>
 
     </main>
 </template>

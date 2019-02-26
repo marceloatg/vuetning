@@ -1,22 +1,24 @@
 <template>
     <div>
-        <slds-picklist label="My awesome picklist"
-                       :options="options"
-                       size="medium"
-                       :required="true"
-                       v-model="selection"/>
+        <slds-picklist
+            label="My awesome picklist"
+            :options="options"
+            size="medium"
+            :required="true"
+            v-model="selection"/>
         <br>
         <p>
             Value selected is: {{ selection }}
         </p>
         <br>
-        <slds-input label="My input"
-                    :required="true"
-                    placeholder="Type something nice!"
-                    :disabled="false"
-                    :read-only="false"
-                    :maxlength="10"
-                    v-model="input"/>
+        <slds-input
+            label="My input"
+            :required="true"
+            placeholder="Type something nice!"
+            :disabled="false"
+            :read-only="false"
+            :maxlength="10"
+            v-model="input"/>
         <p>
             Value input is: {{ input }}
         </p>
@@ -39,7 +41,11 @@
         <br>
         <slds-input pre-fixed-text="$" post-fixed-text="Euro"/>
         <br>
-        <slds-input pre-fixed-text="$" post-fixed-text="Euros" :has-clear-button="true" :spinner-active="true"/>
+        <slds-input
+            pre-fixed-text="$"
+            post-fixed-text="Euros"
+            :has-clear-button="true"
+            :spinner-active="true"/>
         <br>
         <slds-input label="Phone" inline-help="ex: (415)111-2222"/>
     </div>
