@@ -45,6 +45,9 @@
                 backgroundColor: null,
             }
         },
+        mounted() {
+            this.backgroundColor = this.parseBackgroundColor();
+        },
         methods: {
             parseBackgroundColor() {
                 const classes = this.$el.classList;
@@ -59,9 +62,6 @@
                 const name = this.iconName.split(':')[1].replace(/_/g, "-");
                 return `slds-icon-${category}-${name}`;
             },
-        },
-        mounted() {
-            this.backgroundColor = this.parseBackgroundColor();
         },
     }
 </script>

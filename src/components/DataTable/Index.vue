@@ -94,25 +94,6 @@
                 tableWidth: null,
             }
         },
-        methods: {
-            isColumnResizable(column) {
-                if (column.resizable == null) this.$set(column, 'resizable', true);
-                return column.resizable;
-            },
-            onScroll() {
-                const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
-                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
-            },
-            onResize(index, delta) {
-                this.columns[index].initialWidth += delta;
-                this.tableWidth += delta;
-
-                for (++index; index < this.columns.length; index++) {
-                    this.columns[index].left += delta;
-                    this.columns[index].offsetLeft += delta;
-                }
-            }
-        },
         mounted() {
             // Settings table width to prevent abnormal behavior when resizing window
             const table = this.$el.getElementsByTagName('table')[0];
@@ -159,6 +140,25 @@
             this.$el
                 .getElementsByClassName('slds-scrollable_area')[0]
                 .removeEventListener('scroll', this.onScroll);
+        },
+        methods: {
+            isColumnResizable(column) {
+                if (column.resizable == null) this.$set(column, 'resizable', true);
+                return column.resizable;
+            },
+            onScroll() {
+                const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
+                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+            },
+            onResize(index, delta) {
+                this.columns[index].initialWidth += delta;
+                this.tableWidth += delta;
+
+                for (++index; index < this.columns.length; index++) {
+                    this.columns[index].left += delta;
+                    this.columns[index].offsetLeft += delta;
+                }
+            }
         }
     }
 </script>

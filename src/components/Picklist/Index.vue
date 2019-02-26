@@ -182,6 +182,13 @@
                 return this.disabled ? {['disabled']: 'disabled'} : {};
             },
         },
+        created() {
+            if (this.option === null) return;
+
+            this.selectedValue = this.option.value;
+            this.selectedLabel = this.option.label;
+            this.$emit('input', this.selectedValue);
+        },
         methods: {
             open() {
                 this.isOpen = true;
@@ -206,13 +213,6 @@
                 this.selectedLabel = label;
                 this.$emit('input', value);
             },
-        },
-        created() {
-            if (this.option === null) return;
-
-            this.selectedValue = this.option.value;
-            this.selectedLabel = this.option.label;
-            this.$emit('input', this.selectedValue);
         },
     }
 </script>

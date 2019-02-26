@@ -45,6 +45,28 @@ module.exports = {
             "ignoreProperties": false
         }],
         "vue/no-spaces-around-equal-signs-in-attribute": ["warn"],
+        "vue/order-in-components": ["warn", {
+            "order": [
+                "el",
+                "name",
+                "parent",
+                "functional",
+                ["delimiters", "comments"],
+                ["components", "directives", "filters"],
+                "extends",
+                "mixins",
+                "inheritAttrs",
+                "model",
+                ["props", "propsData"],
+                "data",
+                "computed",
+                "watch",
+                "LIFECYCLE_HOOKS",
+                "methods",
+                ["template", "render"],
+                "renderError"
+            ]
+        }],
         "vue/prop-name-casing": ["error", "camelCase"],
         "vue/singleline-html-element-content-newline": ["warn", {
             "ignoreWhenNoAttributes": true,

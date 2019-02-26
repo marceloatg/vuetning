@@ -152,6 +152,12 @@
                 return '.2rem';
             },
         },
+        mounted() {
+            if (this.postFixedText == null) return;
+
+            const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
+            this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
+        },
         methods: {
             onClear() {
                 this.value = null;
@@ -161,12 +167,6 @@
                 this.value = event.target.value;
                 this.$emit('input', this.value);
             }
-        },
-        mounted() {
-            if (this.postFixedText == null) return;
-
-            const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
-            this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
         },
     }
 </script>
