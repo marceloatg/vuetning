@@ -51,7 +51,8 @@ module.exports = {
             "ignoreWhenEmpty": true,
             "ignores": ["abbr", "pre", "span", "textarea"]
         }],
-        "vue/v-on-style": ["error", "shorthand"],
+        "vue/v-bind-style": ["warn", "shorthand"],
+        "vue/v-on-style": ["warn", "shorthand"],
     },
     parserOptions: {
         parser: 'babel-eslint'
