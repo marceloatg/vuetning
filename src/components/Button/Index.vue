@@ -24,8 +24,8 @@
         <!-- Spinner -->
         <div v-if="spinnerActive">
             <div class="slds-spinner slds-spinner_x-small" :class="['slds-spinner-variant_' + variant]">
-                <div class="slds-spinner__dot-a"></div>
-                <div class="slds-spinner__dot-b"></div>
+                <div class="slds-spinner__dot-a"/>
+                <div class="slds-spinner__dot-b"/>
             </div>
         </div>
 

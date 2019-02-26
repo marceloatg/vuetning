@@ -18,6 +18,15 @@ module.exports = {
             "endTag": "never",
             "selfClosingTag": "never"
         }],
+        "vue/html-self-closing": ["error", {
+            "html": {
+                "void": "never",
+                "normal": "always",
+                "component": "always"
+            },
+            "svg": "always",
+            "math": "always"
+        }],
         "vue/name-property-casing": ["error", "PascalCase"],
         "vue/v-on-style": ["error", "shorthand"],
     },

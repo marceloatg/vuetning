@@ -2,7 +2,7 @@
     <tr class="slds-hint-parent">
 
         <td class="slds-cell-edit slds-cell-error slds-text-align_center">
-            <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
+            <span class="slds-row-number slds-text-body_small slds-text-color_weak"/>
         </td>
 
         <template v-for="(column, index) in columns">

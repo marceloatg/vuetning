@@ -27,7 +27,7 @@
             <div class="slds-resizable">
 
                 <!-- Input -->
-                <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text"/>
+                <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text">
 
                 <!-- Handle -->
                 <span class="slds-resizable__handle"
@@ -35,7 +35,7 @@
                       @mousedown.prevent.stop="onResizerMouseDown">
 
                     <!-- Divider -->
-                    <span class="slds-resizable__divider"></span>
+                    <span class="slds-resizable__divider"/>
 
                 </span>
 

@@ -9,15 +9,15 @@
                 <div class="slds-context-bar__icon-action">
                     <div class="slds-context-bar__button">
                         <span class="slds-icon-waffle">
-                            <span class="slds-r1"></span>
-                            <span class="slds-r2"></span>
-                            <span class="slds-r3"></span>
-                            <span class="slds-r4"></span>
-                            <span class="slds-r5"></span>
-                            <span class="slds-r6"></span>
-                            <span class="slds-r7"></span>
-                            <span class="slds-r8"></span>
-                            <span class="slds-r9"></span>
+                            <span class="slds-r1"/>
+                            <span class="slds-r2"/>
+                            <span class="slds-r3"/>
+                            <span class="slds-r4"/>
+                            <span class="slds-r5"/>
+                            <span class="slds-r6"/>
+                            <span class="slds-r7"/>
+                            <span class="slds-r8"/>
+                            <span class="slds-r9"/>
                         </span>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
 
         <!-- Tabs -->
         <div class="slds-context-bar__secondary">
-            <div class="slds-context-bar__vertical-divider"></div>
+            <div class="slds-context-bar__vertical-divider"/>
             <ul class="slds-grid" role="tablist">
 
                 <!-- Tab -->
@@ -45,7 +45,7 @@
                        class="slds-context-bar__label-action">
 
                         <!-- Indicator -->
-                        <span class="slds-indicator-container"></span>
+                        <span class="slds-indicator-container"/>
 
                         <!-- Icon -->
                         <span class="slds-icon_container" title="Home">

@@ -30,7 +30,7 @@
                                class="slds-input slds-combobox__input"
                                @click="open"
                                @blur="close"
-                               @keyup="keyUp"/>
+                               @keyup="keyUp">
 
                         <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
                             <slds-svg icon-name="utility:down" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"/>
@@ -57,7 +57,7 @@
                                     <div role="option" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small">
 
                                         <!-- Icon -->
-                                        <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                        <span class="slds-media__figure slds-listbox__option-icon"/>
 
                                         <!-- Text -->
                                         <span class="slds-media__body">

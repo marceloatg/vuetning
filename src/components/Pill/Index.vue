@@ -3,7 +3,7 @@
 
         <!-- Icon -->
         <span v-if="$slots.icon" class="slds-pill__icon_container">
-            <slot name="icon"></slot>
+            <slot name="icon"/>
         </span>
 
         <!-- Clickable -->

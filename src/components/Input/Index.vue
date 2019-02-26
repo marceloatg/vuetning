@@ -31,7 +31,7 @@
                    :maxlength="maxlength"
                    class="slds-input"
                    v-bind="[disabledAttribute, readOnlyAttribute]"
-                   @input.stop="onInput($event)"/>
+                   @input.stop="onInput($event)">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">

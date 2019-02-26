@@ -30,7 +30,7 @@
                         </li>
 
                         <!-- Separator -->
-                        <li :key="item.name" v-else-if="item.type === 'separator'" class="slds-has-divider_top-space" role="separator"></li>
+                        <li :key="item.name" v-else-if="item.type === 'separator'" class="slds-has-divider_top-space" role="separator"/>
 
                         <!-- Item -->
                         <li :key="item.name" v-else class="slds-dropdown__item" role="presentation">

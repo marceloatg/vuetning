@@ -5,7 +5,7 @@
         <table-view-header :count="count" :figure="figure" :list-views="listViews" :title="title">
 
             <template slot="actions">
-                <slot name="header-actions"></slot>
+                <slot name="header-actions"/>
             </template>
 
         </table-view-header>
@@ -16,10 +16,10 @@
                 <div class="slds-col slds-no-space">
 
                     <!-- Spinner -->
-                    <div v-if="refreshing"></div>
+                    <div v-if="refreshing"/>
 
                     <!-- Placeholder -->
-                    <div v-if="!initialized"></div>
+                    <div v-if="!initialized"/>
 
                     <!-- Initialized body -->
                     <div v-else>

@@ -9,7 +9,7 @@
         </abbr>
 
         <!-- Image -->
-        <img v-else alt="Avatar" :src="src"/>
+        <img v-else alt="Avatar" :src="src">
 
     </span>
 </template>

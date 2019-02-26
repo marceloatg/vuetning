@@ -30,7 +30,7 @@
                                v-bind="disabledAttribute"
                                @click="open"
                                @blur="close"
-                               @keyup="keyUp"/>
+                               @keyup="keyUp">
 
                         <slds-icon icon-name="utility:down"
                                    class="slds-input__icon slds-input__icon_right"
@@ -64,8 +64,8 @@
                             <li v-if="spinnerActive" role="presentation" class="slds-listbox__item">
                                 <div class="slds-align_absolute-center slds-p-top_medium">
                                     <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
-                                        <div class="slds-spinner__dot-a"></div>
-                                        <div class="slds-spinner__dot-b"></div>
+                                        <div class="slds-spinner__dot-a"/>
+                                        <div class="slds-spinner__dot-b"/>
                                     </div>
                                 </div>
                             </li>

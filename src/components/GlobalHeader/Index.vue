@@ -12,11 +12,11 @@
             </div>
 
             <!-- Search bar -->
-            <div></div>
+            <div/>
 
             <!-- Actions -->
             <div class="slds-global-header__item">
-                <slot name="actions"></slot>
+                <slot name="actions"/>
             </div>
 
         </div>
