@@ -13,7 +13,7 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         "vue/attribute-hyphenation": ["error", "always"],
-        "vue/component-name-in-template-casing": ["error", "PascalCase"],
+        "vue/component-name-in-template-casing": ["error", "kebab-case"],
         "vue/html-closing-bracket-spacing": ["error", {
             "startTag": "never",
             "endTag": "never",

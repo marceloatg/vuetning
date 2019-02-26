@@ -1,5 +1,8 @@
 <template>
-    <span class="slds-pill" :class="{'slds-pill_link': clickable}" @click.stop="onClick">
+    <span
+        class="slds-pill"
+        :class="[{'slds-pill_link': clickable}, {'slds-has-error': hasError}]"
+        @click.stop="onClick">
 
         <!-- Icon -->
         <span v-if="$slots.icon" class="slds-pill__icon_container">
@@ -27,18 +30,27 @@
 </template>
 
 <script>
+    import SldsSvg from '@/shared/Svg/index';
+
     export default {
+        components: {
+            SldsSvg
+        },
         props: {
+            clickable: {
+                type: Boolean,
+                default: true,
+            },
+            hasError: {
+                type: Boolean,
+                default: false,
+            },
             label: {
                 type: String,
                 required: true,
             },
             name: {
                 type: String,
-            },
-            clickable: {
-                type: Boolean,
-                default: true,
             },
         },
         methods: {

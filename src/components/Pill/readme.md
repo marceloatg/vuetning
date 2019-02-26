@@ -1,8 +1,8 @@
-# Pill ![avaliability](https://img.shields.io/badge/avaliability-beta-orange.svg)  ![testing](https://img.shields.io/badge/testing-untested-red.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
+# Pill ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-tested-green.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
 
 A pill represents an object that can be viewed with or without an icon
 
-### Props
+## Props
 
 | Name      | Type    | Required | Default | Description |
 | --------- | ------- | -------- | ------- | ----------- |
@@ -10,14 +10,20 @@ A pill represents an object that can be viewed with or without an icon
 | name      | String  | false    |         | The name for the pill.<br>This value is optional and can be used to identify the pill when firing events. |
 | clickable | Boolean | false    | true    | Indicates whether or not the pill is clickable.<br>If true, when the pill is clicked a "click" event is fired.<br>Default is true. |
 
-### Events
+## Slots
+
+| Name | Description |
+| ---- | ----------- |
+| icon | An icon or avatar that sits to the left-hand side of the pill label. |
+
+## Events
 
 | Name   | Arguments | Description |
 | ------ | --------- | ----------- |
 | click  | name      | Fired when a clickable pill is clicked.<br>Passes as argument the pill name. |
 | remove | name      | Fired when the remove button is clicked.<br>Passes as argument the pill name. |
 
-### Salesforce documentation
+## Salesforce documentation
 [SLDS documentation](https://www.lightningdesignsystem.com/components/pills/)<br>
 [Aura documentation](https://developer.salesforce.com/docs/component-library/bundle/lightning:pill)<br>
 [LWC documentation](https://developer.salesforce.com/docs/component-library/bundle/lightning-pill)<br>
