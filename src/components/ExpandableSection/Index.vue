@@ -58,13 +58,13 @@
                 isOpen: false,
             }
         },
+        mounted() {
+            this.isOpen = this.expanded;
+        },
         methods: {
             toggle() {
                 this.isOpen = !this.isOpen;
             }
-        },
-        mounted() {
-            this.isOpen = this.expanded;
         }
     }
 </script>

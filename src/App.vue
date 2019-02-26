@@ -2,21 +2,22 @@
     <div id="app" :class="{'has-trial-bar': trial.showBar, 'has-alert': alert.show}">
 
         <!-- Trial bar -->
-        <slds-trial-bar :daysLeft="trial.daysLeft" v-if="trial.showBar"/>
+        <slds-trial-bar :days-left="trial.daysLeft" v-if="trial.showBar"/>
 
         <!-- Alert -->
-        <slds-alert :theme="alert.theme"
-                    :icon-category="alert.iconCategory"
-                    :icon-name="alert.iconName"
-                    :message="alert.message"
-                    :class="[{'slds-hide': !alert.show}]"
-                    @close="closeAlert"/>
+        <slds-alert
+            :theme="alert.theme"
+            :icon-category="alert.iconCategory"
+            :icon-name="alert.iconName"
+            :message="alert.message"
+            :class="[{'slds-hide': !alert.show}]"
+            @close="closeAlert"/>
 
         <!-- Global header -->
         <slds-global-header name="Arcthos"/>
 
         <!-- Global navigation -->
-        <slds-global-navigation appName="Vuetning"/>
+        <slds-global-navigation app-name="Vuetning"/>
 
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
@@ -24,7 +25,7 @@
         <!-- Global content -->
         <div class="slds-global-content">
             <!--<picklists/>-->
-            <components/>
+            <Components/>
         </div>
 
     </div>
@@ -35,7 +36,7 @@
     //import Picklists from "./views/Picklists";
 
     export default {
-        name: 'app',
+        name: 'App',
         components: {
             Components,
             //Picklists

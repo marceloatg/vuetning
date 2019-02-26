@@ -2,14 +2,15 @@
     <span class="slds-avatar" :class="[`slds-avatar_${variant}`, 'slds-avatar_' + size]">
 
         <!-- Initials -->
-        <abbr v-if="initials !== null"
-              class="slds-avatar__initials"
-              :class="[backgroundColor, {'slds-avatar__initials_inverse': inverse}]">
+        <abbr
+            v-if="initials !== null"
+            class="slds-avatar__initials"
+            :class="[backgroundColor, {'slds-avatar__initials_inverse': inverse}]">
             {{ initials }}
         </abbr>
 
         <!-- Image -->
-        <img v-else alt="Avatar" :src="src"/>
+        <img v-else alt="Avatar" :src="src">
 
     </span>
 </template>

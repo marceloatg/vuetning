@@ -3,7 +3,9 @@
 
         <!-- Tour --> <!-- TODO: make into slot -->
         <div class="slds-grid">
-            <button class="slds-button slds-m-right_small">Take the salesforce tour</button>
+            <button class="slds-button slds-m-right_small">
+                Take the salesforce tour
+            </button>
             <div class="slds-grid slds-dropdown-trigger slds-dropdown-trigger_click">
                 <button class="slds-button">
                     <slds-svg icon-name="utility:right" class="slds-button__icon slds-button__icon_left"/>

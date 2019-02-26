@@ -1,8 +1,9 @@
 <template>
     <li role="presentation" class="slds-listbox__item" @mousedown.stop="selected">
-        <div role="option"
-             class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
-             :class="[{'slds-is-selected': isSelected}]">
+        <div
+            role="option"
+            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+            :class="[{'slds-is-selected': isSelected}]">
 
             <!-- Figure -->
             <span class="slds-media__figure">

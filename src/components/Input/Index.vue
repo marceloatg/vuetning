@@ -15,38 +15,43 @@
             </span>
 
             <!-- Left icon -->
-            <slds-svg v-if="leftIconName != null"
-                      :icon-name="leftIconName"
-                      class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
+            <slds-svg
+                v-if="leftIconName != null"
+                :icon-name="leftIconName"
+                class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
 
             <!-- Right icon -->
-            <slds-svg v-if="rightIconName != null && !hasClearButton"
-                      :icon-name="rightIconName"
-                      class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"/>
+            <slds-svg
+                v-if="rightIconName != null && !hasClearButton"
+                :icon-name="rightIconName"
+                class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"/>
 
             <!-- Input -->
-            <input :type="type"
-                   :placeholder="placeholder"
-                   :value="value"
-                   :maxlength="maxlength"
-                   class="slds-input"
-                   v-bind="[disabledAttribute, readOnlyAttribute]"
-                   @input.stop="onInput($event)"/>
+            <input
+                :type="type"
+                :placeholder="placeholder"
+                :value="value"
+                :maxlength="maxlength"
+                class="slds-input"
+                v-bind="[disabledAttribute, readOnlyAttribute]"
+                @input.stop="onInput($event)">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
 
-                <slds-spinner v-if="spinnerActive"
-                              variant="brand"
-                              size="x-small"
-                              class="slds-input__spinner"
-                              :style="{right: spinnerRight}"/>
+                <slds-spinner
+                    v-if="spinnerActive"
+                    variant="brand"
+                    size="x-small"
+                    class="slds-input__spinner"
+                    :style="{right: spinnerRight}"/>
 
-                <slds-button-icon v-if="hasClearButton && value"
-                                  icon-name="utility:clear"
-                                  class="slds-input__icon slds-input__icon_right"
-                                  title="Clear"
-                                  @click.stop="onClear"/>
+                <slds-button-icon
+                    v-if="hasClearButton && value"
+                    icon-name="utility:clear"
+                    class="slds-input__icon slds-input__icon_right"
+                    title="Clear"
+                    @click.stop="onClear"/>
             </div>
 
             <!-- Post fixed text -->
@@ -147,6 +152,12 @@
                 return '.2rem';
             },
         },
+        mounted() {
+            if (this.postFixedText == null) return;
+
+            const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
+            this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
+        },
         methods: {
             onClear() {
                 this.value = null;
@@ -156,12 +167,6 @@
                 this.value = event.target.value;
                 this.$emit('input', this.value);
             }
-        },
-        mounted() {
-            if (this.postFixedText == null) return;
-
-            const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
-            this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
         },
     }
 </script>

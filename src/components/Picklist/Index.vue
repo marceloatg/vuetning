@@ -14,49 +14,55 @@
         <!-- Control -->
         <div class="slds-form-element__control">
             <div class="slds-combobox_container" :class="[`slds-size_${size}`]">
-                <div role="combobox"
-                     class="slds-combobox slds-is-open">
+                <div
+                    role="combobox"
+                    class="slds-combobox slds-is-open">
 
                     <!-- Input -->
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
 
-                        <input role="textbox"
-                               type="text"
-                               :placeholder="placeholder"
-                               :value="selectedLabel"
-                               autocomplete="off"
-                               readonly
-                               class="slds-input slds-combobox__input"
-                               v-bind="disabledAttribute"
-                               @click="open"
-                               @blur="close"
-                               @keyup="keyUp"/>
+                        <input
+                            role="textbox"
+                            type="text"
+                            :placeholder="placeholder"
+                            :value="selectedLabel"
+                            autocomplete="off"
+                            readonly
+                            class="slds-input slds-combobox__input"
+                            v-bind="disabledAttribute"
+                            @click="open"
+                            @blur="close"
+                            @keyup="keyUp">
 
-                        <slds-icon icon-name="utility:down"
-                                   class="slds-input__icon slds-input__icon_right"
-                                   size="x-small"
-                                   variant="default"/>
+                        <slds-icon
+                            icon-name="utility:down"
+                            class="slds-input__icon slds-input__icon_right"
+                            size="x-small"
+                            variant="default"/>
 
                     </div>
 
                     <!-- Options -->
                     <div v-show="isOpen" role="listbox">
-                        <ul role="presentation"
+                        <ul
+                            role="presentation"
                             class="slds-listbox slds-listbox_vertical slds-dropdown"
                             :class="[`slds-dropdown_${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]">
 
                             <template v-for="option in options">
 
-                                <slds-picklist-heading v-if="option.group != null"
-                                                       :key="option.value"
-                                                       :group="option.group"/>
+                                <SldsPicklistHeading
+                                    v-if="option.group != null"
+                                    :key="option.value"
+                                    :group="option.group"/>
 
-                                <slds-picklist-option v-else
-                                                      :key="option.value"
-                                                      :label="option.label"
-                                                      :value="option.value"
-                                                      :is-selected="option.value === selectedValue"
-                                                      @selected="onSelect"/>
+                                <SldsPicklistOption
+                                    v-else
+                                    :key="option.value"
+                                    :label="option.label"
+                                    :value="option.value"
+                                    :is-selected="option.value === selectedValue"
+                                    @selected="onSelect"/>
 
                             </template>
 
@@ -64,8 +70,8 @@
                             <li v-if="spinnerActive" role="presentation" class="slds-listbox__item">
                                 <div class="slds-align_absolute-center slds-p-top_medium">
                                     <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
-                                        <div class="slds-spinner__dot-a"></div>
-                                        <div class="slds-spinner__dot-b"></div>
+                                        <div class="slds-spinner__dot-a"/>
+                                        <div class="slds-spinner__dot-b"/>
                                     </div>
                                 </div>
                             </li>
@@ -176,6 +182,13 @@
                 return this.disabled ? {['disabled']: 'disabled'} : {};
             },
         },
+        created() {
+            if (this.option === null) return;
+
+            this.selectedValue = this.option.value;
+            this.selectedLabel = this.option.label;
+            this.$emit('input', this.selectedValue);
+        },
         methods: {
             open() {
                 this.isOpen = true;
@@ -200,13 +213,6 @@
                 this.selectedLabel = label;
                 this.$emit('input', value);
             },
-        },
-        created() {
-            if (this.option === null) return;
-
-            this.selectedValue = this.option.value;
-            this.selectedLabel = this.option.label;
-            this.$emit('input', this.selectedValue);
         },
     }
 </script>

@@ -8,18 +8,20 @@
                     Rows per page
                 </span>
 
-                <slds-picklist :options="rowsPerPageOptions"
-                               :option="rowsPerPage"
-                               orientation="upwards"
-                               size="xx-small"
-                               class="slds-m-left_x-small"/>
+                <slds-picklist
+                    :options="rowsPerPageOptions"
+                    :option="rowsPerPage"
+                    orientation="upwards"
+                    size="xx-small"
+                    class="slds-m-left_x-small"/>
             </span>
         </div>
 
         <div class="slds-col">
-            <slds-pagination :totalPages="totalPages"
-                             :currentPage="currentPage"
-                             @pagechanged="onPageChanged"/>
+            <slds-pagination
+                :total-pages="totalPages"
+                :current-page="currentPage"
+                @pagechanged="onPageChanged"/>
         </div>
 
     </div>

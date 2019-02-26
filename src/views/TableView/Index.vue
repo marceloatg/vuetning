@@ -2,13 +2,17 @@
     <main class="table-view" ref="tableView">
 
         <!-- Header -->
-        <table-view-header :count="count" :figure="figure" :list-views="listViews" :title="title">
+        <TableViewHeader
+            :count="count"
+            :figure="figure"
+            :list-views="listViews"
+            :title="title">
 
             <template slot="actions">
-                <slot name="header-actions"></slot>
+                <slot name="header-actions"/>
             </template>
 
-        </table-view-header>
+        </TableViewHeader>
 
         <!-- Body -->
         <div class="table-view_body">
@@ -16,10 +20,10 @@
                 <div class="slds-col slds-no-space">
 
                     <!-- Spinner -->
-                    <div v-if="refreshing"></div>
+                    <div v-if="refreshing"/>
 
                     <!-- Placeholder -->
-                    <div v-if="!initialized"></div>
+                    <div v-if="!initialized"/>
 
                     <!-- Initialized body -->
                     <div v-else>
@@ -35,11 +39,12 @@
         </div>
 
         <!-- Footer -->
-        <table-view-footer :rowsPerPageOptions="rowsPerPageOptions"
-                           :rows-per-page="rowsPerPageOptions[0]"
-                           :total-pages="10"
-                           :current-page="currentPage"
-                           @pagechanged="onPageChanged"/>
+        <TableViewFooter
+            :rows-per-page-options="rowsPerPageOptions"
+            :rows-per-page="rowsPerPageOptions[0]"
+            :total-pages="10"
+            :current-page="currentPage"
+            @pagechanged="onPageChanged"/>
 
     </main>
 </template>

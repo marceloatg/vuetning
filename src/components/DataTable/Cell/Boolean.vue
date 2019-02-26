@@ -2,10 +2,10 @@
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
             <slds-icon
-                    v-if="cell"
-                    icon-name="utility:check"
-                    variant="default"
-                    size="x-small"/>
+                v-if="cell"
+                icon-name="utility:check"
+                variant="default"
+                size="x-small"/>
         </span>
     </td>
 </template>

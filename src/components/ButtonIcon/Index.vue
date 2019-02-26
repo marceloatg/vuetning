@@ -4,13 +4,14 @@
 -->
 
 <template>
-    <button type="button"
-            class="slds-button slds-button_icon"
-            :class="['slds-button_icon-' + variant, containerType, containerSize, {'slds-button_icon-container-more': hasDropdown}]"
-            v-bind="disabledAttribute"
-            @click="onClick"
-            @blur="onBlur"
-            @keyup="onKeyUp">
+    <button
+        type="button"
+        class="slds-button slds-button_icon"
+        :class="['slds-button_icon-' + variant, containerType, containerSize, {'slds-button_icon-container-more': hasDropdown}]"
+        v-bind="disabledAttribute"
+        @click="onClick"
+        @blur="onBlur"
+        @keyup="onKeyUp">
 
         <!-- Button icon -->
         <slds-svg :icon-name="iconName" class="slds-button__icon" :class="[iconSize, iconClass]"/>

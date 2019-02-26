@@ -1,20 +1,23 @@
 <template>
     <div class="slds-button-group">
 
-        <slds-button-icon icon-name="utility:chevronleft"
-                          :disabled="isInFirstPage"
-                          @click.stop="onClickPreviousPage"/>
+        <slds-button-icon
+            icon-name="utility:chevronleft"
+            :disabled="isInFirstPage"
+            @click.stop="onClickPreviousPage"/>
 
-        <slds-button v-for="page in pages"
-                     :key="page"
-                     :label="`${page}`"
-                     :variant="buttonVariant(page)"
-                     :style="{padding: '0 12px'}"
-                     @click="onClickPage(page)"/>
+        <slds-button
+            v-for="page in pages"
+            :key="page"
+            :label="`${page}`"
+            :variant="buttonVariant(page)"
+            :style="{padding: '0 12px'}"
+            @click="onClickPage(page)"/>
 
-        <slds-button-icon icon-name="utility:chevronright"
-                          :disabled="isInLastPage"
-                          @click="onClickNextPage"/>
+        <slds-button-icon
+            icon-name="utility:chevronright"
+            :disabled="isInLastPage"
+            @click="onClickNextPage"/>
 
     </div>
 </template>

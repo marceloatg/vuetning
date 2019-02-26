@@ -5,7 +5,7 @@
 -->
 
 <template>
-    <div class="slds-brand-band" :class="['slds-brand-band_' + theme, 'slds-brand-band_' + size]"></div>
+    <div class="slds-brand-band" :class="['slds-brand-band_' + theme, 'slds-brand-band_' + size]"/>
 </template>
 
 <script>

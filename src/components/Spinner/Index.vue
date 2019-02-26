@@ -5,13 +5,14 @@
 -->
 
 <template>
-    <div role="status"
-         class="slds-spinner"
-         :class="[`slds-spinner_${size}`, `slds-spinner_${variant}`, {'slds-spinner_delayed': hasDelay}]">
+    <div
+        role="status"
+        class="slds-spinner"
+        :class="[`slds-spinner_${size}`, `slds-spinner_${variant}`, {'slds-spinner_delayed': hasDelay}]">
 
-        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-a"/>
 
-        <div class="slds-spinner__dot-b"></div>
+        <div class="slds-spinner__dot-b"/>
 
         <div v-if="text !== null" class="slds-text slds-align_absolute-center">
             {{ text }}

@@ -1,10 +1,12 @@
 <template>
-    <th scope="col"
+    <th
+        scope="col"
         class="slds-is-resizable"
         :class="[{'slds-is-sortable': isSortable}]"
         :style="{ width: `${initialWidth}px` }">
-        <div class="slds-cell-fixed"
-             :style="{ width: `${initialWidth}px`, left: `${left}px` }">
+        <div
+            class="slds-cell-fixed"
+            :style="{ width: `${initialWidth}px`, left: `${left}px` }">
 
             <!-- Column name -->
             <a class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
@@ -27,15 +29,16 @@
             <div class="slds-resizable">
 
                 <!-- Input -->
-                <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text"/>
+                <input tabindex="-1" type="range" class="slds-resizable__input slds-assistive-text">
 
                 <!-- Handle -->
-                <span class="slds-resizable__handle"
-                      :style="{transform: `translateX(${resizerTranslation}px)`}"
-                      @mousedown.prevent.stop="onResizerMouseDown">
+                <span
+                    class="slds-resizable__handle"
+                    :style="{transform: `translateX(${resizerTranslation}px)`}"
+                    @mousedown.prevent.stop="onResizerMouseDown">
 
                     <!-- Divider -->
-                    <span class="slds-resizable__divider"></span>
+                    <span class="slds-resizable__divider"/>
 
                 </span>
 

@@ -1,4 +1,4 @@
-# Vuetning [![vuetning](https://img.shields.io/npm/v/vuetning.svg)](https://www.npmjs.org/package/vuetning) [![NPM downloads](https://img.shields.io/npm/dt/vuetning.svg)](https://npmjs.org/package/vuetning) ![gzip size](http://img.badgesize.io/https://unpkg.com/vuetning/dist/vuetning.common.js?compression=gzip&label=gzip%20size)
+# Vuetning [![vuetning](https://img.shields.io/npm/v/vuetning.svg)](https://www.npmjs.org/package/vuetning) ![Dependencies](https://img.shields.io/david/ArcthosCompany/Vuetning.svg) [![NPM downloads](https://img.shields.io/npm/dt/vuetning.svg)](https://npmjs.org/package/vuetning) ![gzip size](http://img.badgesize.io/https://unpkg.com/vuetning/dist/vuetning.common.js?compression=gzip&label=gzip%20size)
 ### Salesforce Lightning Design System framework for Vue.js 2
 
 ## Introduction
