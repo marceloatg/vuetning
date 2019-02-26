@@ -41,6 +41,16 @@ module.exports = {
         }],
         "vue/mustache-interpolation-spacing": ["warn", "always"],
         "vue/name-property-casing": ["error", "PascalCase"],
+        "vue/no-multi-spaces": ["warn", {
+            "ignoreProperties": false
+        }],
+        "vue/no-spaces-around-equal-signs-in-attribute": ["warn"],
+        "vue/prop-name-casing": ["error", "camelCase"],
+        "vue/singleline-html-element-content-newline": ["warn", {
+            "ignoreWhenNoAttributes": true,
+            "ignoreWhenEmpty": true,
+            "ignores": ["abbr", "pre", "span", "textarea"]
+        }],
         "vue/v-on-style": ["error", "shorthand"],
     },
     parserOptions: {
