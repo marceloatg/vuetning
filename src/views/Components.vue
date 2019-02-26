@@ -1,5 +1,5 @@
 <template>
-    <SldsTableView
+    <slds-table-view
         :columns="columns"
         :figure="figure"
         :initialized="initialized"
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-    </SldsTableView>
+    </slds-table-view>
 </template>
 
 <script>

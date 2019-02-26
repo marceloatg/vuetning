@@ -25,7 +25,7 @@
 
                         <template v-for="(column, index) in columns">
 
-                            <SldsResizableColumn
+                            <slds-resizable-column
                                 v-if="isColumnResizable(column)"
                                 :key="column.fieldName"
                                 :column="column"
@@ -38,7 +38,7 @@
                                 :type="column.type"
                                 @resize="onResize"/>
 
-                            <SldsFixedColumn
+                            <slds-fixed-column
                                 v-else
                                 :key="column.fieldName"
                                 :column="column"
@@ -55,7 +55,7 @@
 
                 <!-- Body -->
                 <tbody>
-                    <SldsRow
+                    <slds-row
                         v-for="row in rows"
                         :key="row.id"
                         :row="row"

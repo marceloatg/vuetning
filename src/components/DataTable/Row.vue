@@ -7,45 +7,45 @@
 
         <template v-for="(column, index) in columns">
 
-            <SldsCellAction
+            <slds-cell-action
                 v-if="column.type === 'action'"
                 :align="column.align"
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
-            <SldsCellAvatar
+            <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :key="index"/>
 
-            <SldsCellBoolean
+            <slds-cell-boolean
                 v-else-if="column.type === 'boolean'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :key="index"/>
 
-            <SldsCellButton
+            <slds-cell-button
                 v-else-if="column.type === 'button'"
                 :align="column.align"
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
-            <SldsCellEmail
+            <slds-cell-email
                 v-else-if="column.type === 'email'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :key="index"/>
 
-            <SldsCellLink
+            <slds-cell-link
                 v-else-if="column.type === 'link'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :key="index"/>
 
-            <SldsCellNumber
+            <slds-cell-number
                 v-else-if="column.type === 'number'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
@@ -53,7 +53,7 @@
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
-            <SldsCellText
+            <slds-cell-text
                 v-else-if="column.type === 'text'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
