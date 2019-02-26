@@ -51,12 +51,12 @@
 
                             <template v-for="option in options">
 
-                                <slds-picklist-heading
+                                <SldsPicklistHeading
                                     v-if="option.group != null"
                                     :key="option.value"
                                     :group="option.group"/>
 
-                                <slds-picklist-option
+                                <SldsPicklistOption
                                     v-else
                                     :key="option.value"
                                     :label="option.label"

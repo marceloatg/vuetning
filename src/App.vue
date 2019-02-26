@@ -25,7 +25,7 @@
         <!-- Global content -->
         <div class="slds-global-content">
             <!--<picklists/>-->
-            <components/>
+            <Components/>
         </div>
 
     </div>
