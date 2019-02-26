@@ -39,7 +39,7 @@
                         <slds-fixed-column v-else
                                            :key="column.fieldName"
                                            :column="column"
-                                           :fixedWidth="column.fixedWidth"
+                                           :fixed-width="column.fixedWidth"
                                            :label="column.label"
                                            :left="column.left"
                                            :sortable="column.sortable"

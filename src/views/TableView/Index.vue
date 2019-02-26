@@ -35,7 +35,7 @@
         </div>
 
         <!-- Footer -->
-        <table-view-footer :rowsPerPageOptions="rowsPerPageOptions"
+        <table-view-footer :rows-per-page-options="rowsPerPageOptions"
                            :rows-per-page="rowsPerPageOptions[0]"
                            :total-pages="10"
                            :current-page="currentPage"

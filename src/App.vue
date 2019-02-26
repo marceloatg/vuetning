@@ -2,7 +2,7 @@
     <div id="app" :class="{'has-trial-bar': trial.showBar, 'has-alert': alert.show}">
 
         <!-- Trial bar -->
-        <slds-trial-bar :daysLeft="trial.daysLeft" v-if="trial.showBar"/>
+        <slds-trial-bar :days-left="trial.daysLeft" v-if="trial.showBar"/>
 
         <!-- Alert -->
         <slds-alert :theme="alert.theme"
@@ -16,7 +16,7 @@
         <slds-global-header name="Arcthos"/>
 
         <!-- Global navigation -->
-        <slds-global-navigation appName="Vuetning"/>
+        <slds-global-navigation app-name="Vuetning"/>
 
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
@@ -35,7 +35,7 @@
     //import Picklists from "./views/Picklists";
 
     export default {
-        name: 'app',
+        name: 'App',
         components: {
             Components,
             //Picklists

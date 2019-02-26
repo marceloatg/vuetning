@@ -11,7 +11,10 @@ module.exports = {
     ],
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        "vue/attribute-hyphenation": ["error", "always"],
+        "vue/name-property-casing": ["error", "PascalCase"],
+        "vue/v-on-style": ["error", "shorthand"],
     },
     parserOptions: {
         parser: 'babel-eslint'

@@ -17,8 +17,8 @@
         </div>
 
         <div class="slds-col">
-            <slds-pagination :totalPages="totalPages"
-                             :currentPage="currentPage"
+            <slds-pagination :total-pages="totalPages"
+                             :current-page="currentPage"
                              @pagechanged="onPageChanged"/>
         </div>
 
