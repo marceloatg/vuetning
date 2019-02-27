@@ -23,7 +23,12 @@
 </template>
 
 <script>
+    import SldsSvg from '@/shared/Svg/index'
+
     export default {
+        components: {
+            SldsSvg,
+        },
         props: {
             iconName: {
                 type: String,

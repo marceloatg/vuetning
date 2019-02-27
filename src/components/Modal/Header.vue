@@ -13,7 +13,7 @@
 
         <!-- Heading -->
         <h2 v-if="!headerEmpty" class="slds-text-heading_medium slds-hyphenate">
-            {{heading}}
+            {{ heading }}
         </h2>
 
         <!-- Tagline -->
@@ -24,7 +24,12 @@
 </template>
 
 <script>
+    import SldsButtonIcon from '../ButtonIcon/Index'
+
     export default {
+        components: {
+            SldsButtonIcon,
+        },
         props: {
             headerEmpty: {
                 type: Boolean,
@@ -32,7 +37,6 @@
             },
             heading: {
                 type: String,
-                required: true,
             }
         },
         methods: {

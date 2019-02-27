@@ -2,16 +2,28 @@
     <footer class="slds-modal__footer">
 
         <!-- Secondary button -->
-        <slds-button :label="secondaryButtonLabel" @click.stop="onSecondaryClick"/>
+        <slds-button
+            ref="secondaryButton"
+            :label="secondaryButtonLabel"
+            @click="onSecondaryClick"/>
 
         <!-- Primary button -->
-        <slds-button :label="primaryButtonLabel" variant="brand" @click.stop="onPrimaryClick"/>
+        <slds-button
+            ref="primaryButton"
+            :label="primaryButtonLabel"
+            variant="brand"
+            @click="onPrimaryClick"/>
 
     </footer>
 </template>
 
 <script>
+    import SldsButton from '../Button/Index'
+
     export default {
+        components: {
+            SldsButton,
+        },
         props: {
             primaryButtonLabel: {
                 type: String,

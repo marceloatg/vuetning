@@ -2,7 +2,7 @@
     <div>
 
         <!-- Modal -->
-        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" :class="`slds-modal_${size}`">
+        <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="`slds-modal_${size}`">
             <div class="slds-modal__container">
 
                 <!-- Header -->
@@ -58,7 +58,6 @@
             },
             heading: {
                 type: String,
-                required: true,
             },
             primaryButtonLabel: {
                 type: String,
