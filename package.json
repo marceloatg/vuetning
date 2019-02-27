@@ -12,6 +12,7 @@
     "lightning",
     "salesforce"
   ],
+  "homepage": "https://arcthoscompany.github.io/Vuetning/",
   "repository": {
     "type": "git",
     "url": "https://github.com/ArcthosCompany/Vuetning"
