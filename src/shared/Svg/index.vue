@@ -48,4 +48,8 @@
             transform: rotate($rotation);
         }
     }
+
+    .utility-category-adjustment {
+        padding: 8px;
+    }
 </style>
