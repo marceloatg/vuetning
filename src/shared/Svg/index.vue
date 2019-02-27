@@ -50,6 +50,12 @@
     }
 
     .utility-category-adjustment {
-        padding: 8px;
+        &.slds-icon_medium {
+            padding: 6px;
+        }
+
+        &.slds-icon_large {
+            padding: 8px;
+        }
     }
 </style>
