@@ -22,39 +22,58 @@
                     <!-- Spinner -->
                     <div v-if="refreshing"/>
 
-                    <!-- Placeholder -->
-                    <div v-if="!initialized"/>
+                    <transition
+                        name="router-animation"
+                        enter-active-class="animated fadeIn quicker"
+                        leave-active-class="animated fadeOut quicker"
+                        mode="out-in">
 
-                    <!-- Initialized body -->
-                    <div v-else>
+                        <!-- Placeholder -->
+                        <list-placeholder v-if="!initialized"/>
 
-                        <!--Empty message-->
+                        <!-- Initialized body -->
+                        <div v-else>
 
-                        <!-- Table -->
-                        <slds-data-table :columns="columns" :rows="rows"/>
+                            <!--Empty message-->
+                            <empty-list-message
+                                v-if="isEmpty"
+                                :heading="emptyMessage.heading"
+                                :message="emptyMessage.message"/>
 
-                    </div>
+                            <!-- Table -->
+                            <slds-data-table v-else :columns="columns" :rows="rows"/>
+
+                        </div>
+
+                    </transition>
+
+
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
         <table-view-footer
+            :current-page="footer.currentPage"
+            :initialized="initialized"
             :rows-per-page-options="rowsPerPageOptions"
             :rows-per-page="rowsPerPageOptions[0]"
-            :total-pages="10"
-            :current-page="currentPage"
+            :total-pages="footer.totalPages"
             @pagechanged="onPageChanged"/>
 
     </main>
 </template>
 
 <script>
+    import EmptyListMessage from './EmptyListMessage'
+    import ListPlaceholder from './ListPlaceholder'
     import TableViewFooter from './Footer'
     import TableViewHeader from './Header'
 
     export default {
         components: {
+            EmptyListMessage,
+            ListPlaceholder,
             TableViewFooter,
             TableViewHeader,
         },
@@ -63,7 +82,15 @@
                 type: Array,
                 required: true,
             },
+            emptyMessage: {
+                type: Object,
+                required: true,
+            },
             figure: {
+                type: Object,
+                required: true,
+            },
+            footer: {
                 type: Object,
                 required: true,
             },
@@ -86,7 +113,6 @@
         },
         data() {
             return {
-                currentPage: 1,
                 refreshing: false,
                 rowsPerPageOptions: [
                     {value: 100, label: '100',},
@@ -100,7 +126,7 @@
                 return this.rows.length;
             },
             isEmpty() {
-                return this.model.rows.length === 0;
+                return this.rows.length === 0;
             },
         },
         methods: {
