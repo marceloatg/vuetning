@@ -14,6 +14,27 @@ describe('SldsPill', () => {
         expect(wrapper.find('span.slds-pill__label').text()).toMatch(label);
     });
 
+    it('does not contain error class when prop.hasError is false', () => {
+        // shallow mount the button setting a label
+        const wrapper = shallowMount(SldsPill, {
+            propsData: {label}
+        });
+
+        // assert button text matches label
+        expect(wrapper.find('.slds-has-error').exists()).toBeFalsy();
+    });
+
+    it('contains error class when prop.hasError is true', () => {
+        // shallow mount the button setting a label
+        const hasError = true;
+        const wrapper = shallowMount(SldsPill, {
+            propsData: {label, hasError}
+        });
+
+        // assert button text matches label
+        expect(wrapper.findAll('.slds-has-error').exists()).toBeTruthy();
+    });
+
     it('does not render icon when not passed', () => {
         // shallow mount the button setting a label
         const wrapper = shallowMount(SldsPill, {

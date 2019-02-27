@@ -1,12 +1,19 @@
 <template>
     <span class="slds-icon_container" :class="backgroundColor">
-        <slds-svg :icon-name="iconName" class="slds-icon" :class="[`slds-icon_${size}`, `slds-icon-text-${variant}`]"/>
+        <slds-svg
+            :icon-name="iconName"
+            class="slds-icon"
+            :class="[iconClass, `slds-icon_${size}`, `slds-icon-text-${variant}`]"/>
     </span>
 </template>
 
 <script>
     export default {
         props: {
+            iconClass: {
+                type: String,
+                required: false,
+            },
             iconName: {
                 type: String,
                 required: true,
