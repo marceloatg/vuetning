@@ -15,6 +15,7 @@ import SldsIcon from './components/Icon/Index'
 import SldsIllustration from './components/Illustration/Index'
 import SldsInput from './components/Input/Index'
 import SldsMenu from './components/Menu/Index'
+import SldsModal from './components/Modal/Index'
 import SldsPagination from './components/Pagination/Index'
 import SldsPicklist from './components/Picklist/Index'
 import SldsPill from './components/Pill/Index'
@@ -38,6 +39,7 @@ Vue.component('slds-icon', SldsIcon);
 Vue.component('slds-illustration', SldsIllustration);
 Vue.component('slds-input', SldsInput);
 Vue.component('slds-menu', SldsMenu);
+Vue.component('slds-modal', SldsModal);
 Vue.component('slds-pagination', SldsPagination);
 Vue.component('slds-picklist', SldsPicklist);
 Vue.component('slds-pill', SldsPill);

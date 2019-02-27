@@ -141,5 +141,7 @@
 </script>
 
 <style scoped lang="scss">
-
+    .slds-context-bar {
+        z-index: 0;
+    }
 </style>

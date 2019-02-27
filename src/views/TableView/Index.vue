@@ -1,6 +1,9 @@
 <template>
     <main class="table-view" ref="tableView">
 
+        <!-- Modals -->
+        <slot name="modals"/>
+
         <!-- Header -->
         <table-view-header
             :count="count"

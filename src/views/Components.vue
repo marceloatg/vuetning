@@ -1,11 +1,17 @@
 <template>
     <slds-table-view
         :columns="columns"
+        :empty-message="emptyMessage"
         :figure="figure"
+        :footer="footer"
         :initialized="initialized"
         :list-views="listViews"
         :rows="rows"
         :title="title">
+
+        <template #modals>
+            <slds-modal/>
+        </template>
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
@@ -82,9 +88,17 @@
                         }]
                     },
                 }],
+                emptyMessage: {
+                    heading: 'Nothing here yet',
+                    message: 'You do not have any organizations added, click the Add button to get started.',
+                },
                 figure: {
                     name: 'standard:customers',
                     color: 'slds-icon-standard-customers',
+                },
+                footer: {
+                    currentPage: 1,
+                    totalPages: 1,
                 },
                 initialized: true,
                 listViews: 'All users',

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import SldsView from "./views/Pills";
+    import SldsView from "./views/Components";
 
     export default {
         name: 'App',
