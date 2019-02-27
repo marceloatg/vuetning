@@ -2,7 +2,7 @@
     <div>
 
         <!-- Modal -->
-        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" :class="`slds-modal_${size}`">
             <div class="slds-modal__container">
 
                 <!-- Header -->
@@ -63,6 +63,18 @@
             },
             secondaryButtonLabel: {
                 type: String,
+            },
+            size: {
+                type: String,
+                default: 'default',
+                validator(value) {
+                    return [
+                        'default',
+                        'small',
+                        'medium',
+                        'large',
+                    ].indexOf(value) !== -1
+                },
             },
         },
     }

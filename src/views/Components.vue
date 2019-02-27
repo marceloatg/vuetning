@@ -10,7 +10,7 @@
         :title="title">
 
         <template #modals>
-            <slds-modal heading="My awesome modal" :header-empty="false">
+            <slds-modal heading="My awesome modal">
 
                 <template #tagline>
                     <p class="slds-m-top_x-small">Here’s a tagline if you need it. It is allowed to extend across
