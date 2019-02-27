@@ -6,46 +6,26 @@
             <div class="slds-modal__container">
 
                 <!-- Header -->
-                <header class="slds-modal__header">
-
-                    <!-- Close button -->
-                    <slds-button-icon
-                        icon-name="utility:close"
-                        container="none"
-                        variant="inverse"
-                        size="large"
-                        title="close"
-                        class="slds-modal__close"/>
-
-                    <!-- Heading -->
-                    <h2 class="slds-text-heading_medium slds-hyphenate">
-                        Modal Header
-                    </h2>
-
-                </header>
+                <slds-modal-header :header-empty="headerEmpty" :heading="heading">
+                    <template #tagline>
+                        <slot name="tagline"/>
+                    </template>
+                </slds-modal-header>
 
                 <!-- Body -->
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p>Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat
-                        veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud
-                        elit officia tempor esse quis. Cillum sunt ad dolore
-                        quis aute consequat ipsum magna exercitation reprehenderit magna. Tempor cupidatat consequat
-                        elit dolor adipisicing.</p>
-                    <p>Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia. Lorem aliqua enim
-                        laboris do dolor eiusmod officia. Mollit incididunt nisi consectetur esse laborum eiusmod
-                        pariatur proident. Eiusmod et adipisicing culpa deserunt nostrud
-                        ad veniam nulla aute est. Labore esse esse cupidatat amet velit id elit consequat minim ullamco
-                        mollit enim excepteur ea.</p>
+                <div class="slds-modal__content" :class="bodyClass">
+                    <slot name="body"/>
                 </div>
 
                 <!-- Footer -->
-                <footer class="slds-modal__footer">
-
-                    <slds-button label="Cancel"/>
-
-                    <slds-button label="Save" variant="brand"/>
-
+                <footer v-if="$slots.footer" class="slds-modal__footer">
+                    <slot name="footer"/>
                 </footer>
+
+                <slds-modal-footer
+                    v-else
+                    :primary-button-label="primaryButtonLabel"
+                    :secondary-button-label="secondaryButtonLabel"/>
 
             </div>
         </section>
@@ -57,7 +37,35 @@
 </template>
 
 <script>
-    export default {}
+    import SldsModalFooter from './Footer'
+    import SldsModalHeader from './Header'
+
+    export default {
+        components: {
+            SldsModalFooter,
+            SldsModalHeader,
+        },
+        props: {
+            bodyClass: {
+                type: String,
+                default: 'slds-p-around_medium',
+            },
+            headerEmpty: {
+                type: Boolean,
+                default: false,
+            },
+            heading: {
+                type: String,
+                required: true,
+            },
+            primaryButtonLabel: {
+                type: String,
+            },
+            secondaryButtonLabel: {
+                type: String,
+            },
+        },
+    }
 </script>
 
 <style lang="scss">
