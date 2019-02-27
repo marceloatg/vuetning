@@ -12,9 +12,9 @@ A pill represents an object that can be viewed with or without an icon
 
 ## Slots
 
-| Name | Description |
-| ---- | ----------- |
-| icon | An icon or avatar that sits to the left-hand side of the pill label. |
+| Name | Optional |Description |
+| ---- | -------- |----------- |
+| icon | true     |An icon or avatar that sits to the left-hand side of the pill label. |
 
 ## Events
 

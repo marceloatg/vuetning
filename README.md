@@ -21,6 +21,10 @@ import 'vuetning';
 
 Since vuetning globally register its components, you can start using them out of the box, that simple!
 
+## Assets
+
+TBD 
+
 ## Components
 
 * [Alert](/src/components/Alert)
@@ -38,6 +42,7 @@ Since vuetning globally register its components, you can start using them out of
 * [Illustration](/src/components/Illustration)
 * [Input](/src/components/Input)
 * [Menu](/src/components/Menu)
+* [Modal](./src/components/Modal)
 * [Pagination](/src/components/Pagination)
 * [Picklist](/src/components/Picklist)
 * [Pill](/src/components/Pill)

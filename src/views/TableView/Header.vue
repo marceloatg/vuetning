@@ -10,7 +10,7 @@
 
                     <!-- Figure -->
                     <div class="slds-media__figure">
-                        <slds-icon :icon-name="figure.name" :class="figure.color"/>
+                        <slds-icon :icon-name="figure.name" :icon-class="adjustmentClass" :class="figure.color"/>
                     </div>
 
                     <!-- Body -->
@@ -100,6 +100,14 @@
             title: {
                 type: String,
                 required: true,
+            },
+        },
+        computed: {
+            adjustmentClass() {
+                const iconName = this.figure.name;
+                if (iconName == null) return null;
+                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
+                return null;
             },
         },
     }

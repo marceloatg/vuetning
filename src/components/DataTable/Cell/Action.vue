@@ -1,7 +1,7 @@
 <template>
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
-            <slds-menu :items="items" size="small" position="right"/>
+            <slds-menu :items="items" size="x-small" position="right"/>
         </span>
     </td>
 </template>

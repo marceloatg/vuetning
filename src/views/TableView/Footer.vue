@@ -1,7 +1,7 @@
 <template>
     <div class="table-view_footer slds-grid slds-grid_align-spread">
 
-        <div class="slds-col">
+        <div v-if="initialized" class="slds-col">
             <span class="rows-per-page">
 
                 <span>
@@ -17,7 +17,7 @@
             </span>
         </div>
 
-        <div class="slds-col">
+        <div v-if="initialized && currentPage > 0" class="slds-col">
             <slds-pagination
                 :total-pages="totalPages"
                 :current-page="currentPage"
@@ -32,6 +32,10 @@
         props: {
             currentPage: {
                 type: Number,
+                required: true
+            },
+            initialized: {
+                type: Boolean,
                 required: true
             },
             rowsPerPageOptions: {

@@ -1,16 +1,55 @@
 <template>
     <slds-table-view
         :columns="columns"
+        :empty-message="emptyMessage"
         :figure="figure"
+        :footer="footer"
         :initialized="initialized"
         :list-views="listViews"
         :rows="rows"
         :title="title">
 
+        <template #modals>
+            <slds-modal v-if="modalOpened" heading="My awesome modal" @close="onClose">
+
+                <template #tagline>
+                    <p class="slds-m-top_x-small">Here’s a tagline if you need it. It is allowed to extend across
+                        mulitple lines, so I’m making up content to show that to you. It is allowed to
+                        <a href="javascript:void(0);">contain links or be a link</a>.
+                    </p>
+                </template>
+
+                <template #body>
+                    <p>Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id
+                        consequat
+                        veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud
+                        elit officia tempor esse quis. Cillum sunt ad dolore
+                        quis aute consequat ipsum magna exercitation reprehenderit magna. Tempor cupidatat consequat
+                        elit dolor adipisicing.</p>
+                    <p>Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia. Lorem aliqua
+                        enim
+                        laboris do dolor eiusmod officia. Mollit incididunt nisi consectetur esse laborum eiusmod
+                        pariatur proident. Eiusmod et adipisicing culpa deserunt nostrud
+                        ad veniam nulla aute est. Labore esse esse cupidatat amet velit id elit consequat minim
+                        ullamco
+                        mollit enim excepteur ea.</p>
+                </template>
+
+                <template #footer>
+
+                    <slds-button label="Don't go..."/>
+
+                    <slds-button label="Go!" variant="brand"/>
+
+                </template>
+
+            </slds-modal>
+        </template>
+
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
                 <div class="slds-button-group">
-                    <slds-button label="Create" icon-name="utility:add"/>
+                    <slds-button label="Create" icon-name="utility:add" @click="onClick"/>
                 </div>
             </div>
         </template>
@@ -28,6 +67,7 @@
         },
         data() {
             return {
+                modalOpened: true,
                 columns: [{
                     fieldName: 'avatar',
                     resizable: false,
@@ -82,9 +122,17 @@
                         }]
                     },
                 }],
+                emptyMessage: {
+                    heading: 'Nothing here yet',
+                    message: 'You do not have any organizations added, click the Add button to get started.',
+                },
                 figure: {
                     name: 'standard:customers',
                     color: 'slds-icon-standard-customers',
+                },
+                footer: {
+                    currentPage: 1,
+                    totalPages: 1,
                 },
                 initialized: true,
                 listViews: 'All users',
@@ -158,6 +206,14 @@
                 }],
                 title: 'Users',
             }
+        },
+        methods: {
+            onClick() {
+                this.modalOpened = true;
+            },
+            onClose() {
+                this.modalOpened = false;
+            },
         },
     }
 </script>
