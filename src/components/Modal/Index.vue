@@ -79,9 +79,27 @@
                 },
             },
         },
+        created() {
+            document.body.addEventListener("keyup", this.onKeyUp);
+        },
+        destroyed() {
+            document.body.removeEventListener("keyup", this.onKeyUp);
+        },
         methods: {
             onClose() {
                 this.$emit('close');
+            },
+            onKeyUp(event) {
+                switch (event.key) {
+
+                    case 'Enter':
+                        if (!this.$slots.footer) this.onPrimaryClick();
+                        break;
+
+                    case 'Escape':
+                        this.onClose();
+                        break;
+                }
             },
             onPrimaryClick() {
                 this.$emit('primaryclick');
