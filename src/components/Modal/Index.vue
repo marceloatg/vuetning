@@ -6,7 +6,7 @@
             <div class="slds-modal__container">
 
                 <!-- Header -->
-                <slds-modal-header :header-empty="headerEmpty" :heading="heading">
+                <slds-modal-header :header-empty="headerEmpty" :heading="heading" @close="onClose">
                     <template #tagline>
                         <slot name="tagline"/>
                     </template>
@@ -25,7 +25,9 @@
                 <slds-modal-footer
                     v-else
                     :primary-button-label="primaryButtonLabel"
-                    :secondary-button-label="secondaryButtonLabel"/>
+                    :secondary-button-label="secondaryButtonLabel"
+                    @primaryclick="onPrimaryClick"
+                    @secondaryclick="onSecondaryClick"/>
 
             </div>
         </section>
@@ -77,11 +79,16 @@
                 },
             },
         },
+        methods: {
+            onClose() {
+                this.$emit('close');
+            },
+            onPrimaryClick() {
+                this.$emit('primaryclick');
+            },
+            onSecondaryClick() {
+                this.$emit('secondaryclick');
+            },
+        },
     }
 </script>
-
-<style lang="scss">
-    .slds-backdrop_open {
-        pointer-events: none;
-    }
-</style>

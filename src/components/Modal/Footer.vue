@@ -2,10 +2,10 @@
     <footer class="slds-modal__footer">
 
         <!-- Secondary button -->
-        <slds-button :label="secondaryButtonLabel"/>
+        <slds-button :label="secondaryButtonLabel" @click.stop="onSecondaryClick"/>
 
         <!-- Primary button -->
-        <slds-button :label="primaryButtonLabel" variant="brand"/>
+        <slds-button :label="primaryButtonLabel" variant="brand" @click.stop="onPrimaryClick"/>
 
     </footer>
 </template>
@@ -20,6 +20,14 @@
             secondaryButtonLabel: {
                 type: String,
                 default: 'Cancel',
+            },
+        },
+        methods: {
+            onPrimaryClick() {
+                this.$emit('primaryclick');
+            },
+            onSecondaryClick() {
+                this.$emit('secondaryclick');
             },
         },
     }

@@ -8,7 +8,8 @@
             variant="inverse"
             size="large"
             title="close"
-            class="slds-modal__close"/>
+            class="slds-modal__close"
+            @click.stop="onClose"/>
 
         <!-- Heading -->
         <h2 v-if="!headerEmpty" class="slds-text-heading_medium slds-hyphenate">
@@ -32,6 +33,11 @@
             heading: {
                 type: String,
                 required: true,
+            }
+        },
+        methods: {
+            onClose() {
+                this.$emit('close');
             }
         },
     }
