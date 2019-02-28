@@ -24,9 +24,7 @@
                         </th>
 
                         <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
-                            <div class="slds-cell-fixed">
-                                <input type="checkbox">
-                            </div>
+                            <div class="slds-cell-fixed slds-th__action slds-th__action_form"/>
                         </th>
 
                         <template v-for="(column, index) in columns">
@@ -188,6 +186,7 @@
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
             },
             onSelect(event, key) {
+                //this.$emit('select', event, key);
                 if (event) this.selectedRows.push(key);
                 else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
             },

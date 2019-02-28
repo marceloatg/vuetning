@@ -6,7 +6,7 @@
         </td>
 
         <td v-if="showRowSelectionColumn" class="slds-text-align_center">
-            <slds-checkbox @input="onSelect($event)"/>
+            <slds-checkbox :checked="isSelected" @input="onSelect($event)"/>
         </td>
 
         <template v-for="(column, index) in columns">
