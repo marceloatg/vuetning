@@ -25,7 +25,7 @@
 
                         <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
                             <div class="slds-cell-fixed slds-th__action slds-th__action_form">
-                                <slds-checkbox :checked="allRowsSelected" @input="onSelectAll($event)"/>
+                                <slds-checkbox :checked="allRowsSelected" variant="inline" @input="onSelectAll($event)"/>
                             </div>
                         </th>
 

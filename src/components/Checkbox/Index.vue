@@ -7,7 +7,7 @@
             <abbr v-if="required" class="slds-required" title="required">* </abbr>{{ label }}
         </label>
 
-        <div class="slds-form-element__control">
+        <div class="slds-form-element__control" @click.stop="onClick">
 
             <!-- Inline faux -->
             <div v-if="!readOnly && variant === 'inline'" class="slds-checkbox">
@@ -18,7 +18,7 @@
                     :value="value"
                     v-bind="[disabledAttribute]">
 
-                <label class="slds-checkbox__label" @click.stop="onClick">
+                <label class="slds-checkbox__label">
                     <span class="slds-checkbox_faux"/>
                     <span class="slds-form-element__label">
                         {{ label }}
@@ -60,7 +60,12 @@
 </template>
 
 <script>
+    import SldsSvg from '@/shared/Svg/index'
+
     export default {
+        components: {
+            SldsSvg
+        },
         props: {
             checked: {
                 type: Boolean,
@@ -119,7 +124,7 @@
         },
         methods: {
             onClick() {
-                if (this.disabled) return;
+                if (this.disabled || this.readOnly) return;
                 this.value = !this.value;
                 this.$emit('input', this.value);
             },
