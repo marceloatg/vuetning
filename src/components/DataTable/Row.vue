@@ -19,6 +19,12 @@
                 :cell="getCell(column.fieldName)"
                 :key="index"/>
 
+            <slds-cell-badge
+                v-else-if="column.type === 'badge'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :key="index"/>
+
             <slds-cell-boolean
                 v-else-if="column.type === 'boolean'"
                 :align="column.align"
@@ -68,6 +74,7 @@
 <script>
     import SldsCellAction from './Cell/Action';
     import SldsCellAvatar from './Cell/Avatar';
+    import SldsCellBadge from './Cell/Badge';
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
     import SldsCellEmail from './Cell/Email';
@@ -79,6 +86,7 @@
         components: {
             SldsCellAction,
             SldsCellAvatar,
+            SldsCellBadge,
             SldsCellBoolean,
             SldsCellButton,
             SldsCellEmail,

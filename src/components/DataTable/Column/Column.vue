@@ -18,6 +18,7 @@
                     return [
                         'avatar',
                         'action',
+                        'badge',
                         'boolean',
                         'button',
                         'button-icon',
