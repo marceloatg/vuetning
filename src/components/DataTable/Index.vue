@@ -62,12 +62,12 @@
                     <slds-row
                         v-for="(row, index) in rows"
                         :columns="columns"
-                        :is-selected="selectedRows.includes(getRowKey(row, index))"
-                        :key="getRowKey(row, index)"
+                        :is-selected="selectedRows.includes(index)"
+                        :key="index"
                         :row="row"
                         :show-row-number-column="showRowNumberColumn"
                         :show-row-selection-column="showRowSelectionColumn"
-                        @select="onSelect($event, getRowKey(row, index))"/>
+                        @select="onSelect($event, index)"/>
                 </tbody>
 
             </table>
@@ -173,9 +173,6 @@
                     this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
                     this.$set(this.columns[index - indexOffset], 'left', header [index].offsetLeft);
                 }
-            },
-            getRowKey(row, index) {
-                return (this.keyField != null) ? row[this.keyField] : index;
             },
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);
