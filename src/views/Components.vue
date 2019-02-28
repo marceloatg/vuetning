@@ -15,7 +15,9 @@
                 <template #tagline>
                     <p class="slds-m-top_x-small">Here’s a tagline if you need it. It is allowed to extend across
                         mulitple lines, so I’m making up content to show that to you. It is allowed to
-                        <a href="javascript:void(0);">contain links or be a link</a>.
+                        <a href="javascript:void(0);">
+                            contain links or be a link
+                        </a>.
                     </p>
                 </template>
 

@@ -26,8 +26,8 @@ Modals are used to display content in a layer above the app. This paradigm is us
 | Name           | Arguments | Description |
 | -------------- | --------- | ----------- |
 | close          |           | Fired when the close button inside the header is clicked. |
-| primaryclick   |           | Fired when the the primary button in the default footer is clicked. |
-| secondaryclick |           | Fired when the the secondary button in the default footer is clicked. |
+| primaryclick   |           | Fired when the primary button in the default footer is clicked. |
+| secondaryclick |           | Fired when the secondary button in the default footer is clicked. |
 
 ## Examples
 
