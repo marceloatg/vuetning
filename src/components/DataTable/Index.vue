@@ -112,60 +112,61 @@
             }
         },
         mounted() {
-            // Settings table width to prevent abnormal behavior when resizing window
-            const table = this.$el.getElementsByTagName('table')[0];
-            this.tableWidth = table.offsetWidth;
+            this.getTableWidth();
+            this.getColumnWidths();
+            this.getColumnLeftOffsets();
 
-            // Calculating column widths
-            let knownWidth = 0;
-            let unknownWidthColumns = 0;
-
-            if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
-
-            for (let column of this.columns) {
-                if (column.resizable) {
-                    if (column.initialWidth == null) unknownWidthColumns++;
-                    else knownWidth += column.initialWidth;
-                }
-                else {
-                    if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
-                    else knownWidth += column.fixedWidth;
-                }
-            }
-
-            const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
-            const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
-
-            for (let column of this.columns) {
-                if (!column.resizable) continue;
-                if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
-            }
-
-            // Saving column offset left values as a data attribute
-            let indexOffset = 0;
-            if (this.showRowNumberColumn) indexOffset++;
-            if (this.showRowSelectionColumn) indexOffset++;
-
-            const cells = this.$el.getElementsByClassName('slds-cell-fixed');
-
-            for (let index = indexOffset; index < cells.length; index++) {
-                this.$set(this.columns[index - indexOffset], 'offsetLeft', cells[index].offsetLeft);
-                this.$set(this.columns[index - indexOffset], 'left', cells[index].offsetLeft);
-            }
-
-            // Adding scroll event listener
             this.$el
                 .getElementsByClassName('slds-scrollable_area')[0]
                 .addEventListener('scroll', this.onScroll);
         },
         destroyed() {
-
-            // Removing scroll event listener
             this.$el
                 .getElementsByClassName('slds-scrollable_area')[0]
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
+            getTableWidth() {
+                const table = this.$el.getElementsByTagName('table')[0];
+                this.tableWidth = table.offsetWidth;
+            },
+            getColumnWidths() {
+                let knownWidth = 0;
+                let unknownWidthColumns = 0;
+
+                if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
+
+                for (let column of this.columns) {
+                    if (column.resizable) {
+                        if (column.initialWidth == null) unknownWidthColumns++;
+                        else knownWidth += column.initialWidth;
+                    }
+                    else {
+                        if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
+                        else knownWidth += column.fixedWidth;
+                    }
+                }
+
+                const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
+                const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
+
+                for (let column of this.columns) {
+                    if (!column.resizable) continue;
+                    if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
+                }
+            },
+            getColumnLeftOffsets() {
+                let indexOffset = 0;
+                if (this.showRowNumberColumn) indexOffset++;
+                if (this.showRowSelectionColumn) indexOffset++;
+
+                const cells = this.$el.getElementsByClassName('slds-cell-fixed');
+
+                for (let index = indexOffset; index < cells.length; index++) {
+                    this.$set(this.columns[index - indexOffset], 'offsetLeft', cells[index].offsetLeft);
+                    this.$set(this.columns[index - indexOffset], 'left', cells[index].offsetLeft);
+                }
+            },
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);
                 return column.resizable;
