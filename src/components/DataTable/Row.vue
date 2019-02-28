@@ -5,6 +5,10 @@
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"/>
         </td>
 
+        <td v-if="showRowSelectionColumn" class="slds-text-align_center">
+            <slds-checkbox @input="onSelect($event)"/>
+        </td>
+
         <template v-for="(column, index) in columns">
 
             <slds-cell-action
@@ -116,11 +120,6 @@
                 default: false,
             },
         },
-        data() {
-            return {
-                selected: false,
-            }
-        },
         methods: {
             getCell(fieldName) {
                 const fields = fieldName.split('.');
@@ -131,6 +130,9 @@
                 }
 
                 return cell;
+            },
+            onSelect(event) {
+                this.$emit('select', event);
             },
         },
     }

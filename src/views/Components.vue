@@ -9,6 +9,7 @@
         :list-views="listViews"
         :rows="rows"
         :show-row-number-column="true"
+        :show-row-selection-column="true"
         :title="title">
 
         <template #header-actions>

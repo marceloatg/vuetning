@@ -11,6 +11,7 @@ import SldsBadge from './components/Badge/Index'
 import SldsBrandBand from './components/BrandBand/Index'
 import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
+import SldsCheckbox from './components/Checkbox/Index'
 import SldsCombobox from './components/Combobox/Index'
 import SldsDataTable from './components/DataTable/Index';
 import SldsGlobalHeader from './components/GlobalHeader/Index'
@@ -35,6 +36,7 @@ Vue.component('slds-brand-band', SldsBrandBand);
 Vue.component('slds-badge', SldsBadge);
 Vue.component('slds-button', SldsButton);
 Vue.component('slds-button-icon', SldsButtonIcon);
+Vue.component('slds-checkbox', SldsCheckbox);
 Vue.component('slds-combobox', SldsCombobox);
 Vue.component('slds-data-table', SldsDataTable);
 Vue.component('slds-global-header', SldsGlobalHeader);

@@ -23,6 +23,12 @@
                             </div>
                         </th>
 
+                        <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
+                            <div class="slds-cell-fixed">
+                                <input type="checkbox">
+                            </div>
+                        </th>
+
                         <template v-for="(column, index) in columns">
 
                             <slds-resizable-column
@@ -58,10 +64,12 @@
                     <slds-row
                         v-for="(row, index) in rows"
                         :columns="columns"
-                        :is-selected="selectedRows.includes((keyField != null) ? row[keyField] : index)"
-                        :key="(keyField != null) ? row[keyField] : index"
+                        :is-selected="selectedRows.includes(getRowKey(row, index))"
+                        :key="getRowKey(row, index)"
                         :row="row"
-                        :show-row-number-column="showRowNumberColumn"/>
+                        :show-row-number-column="showRowNumberColumn"
+                        :show-row-selection-column="showRowSelectionColumn"
+                        @select="onSelect($event, getRowKey(row, index))"/>
                 </tbody>
 
             </table>
@@ -135,6 +143,7 @@
                 let unknownWidthColumns = 0;
 
                 if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
+                if (this.showRowSelectionColumn) knownWidth += Commons.LINE_SELECTION_WIDTH;
 
                 for (let column of this.columns) {
                     if (column.resizable) {
@@ -160,12 +169,15 @@
                 if (this.showRowNumberColumn) indexOffset++;
                 if (this.showRowSelectionColumn) indexOffset++;
 
-                const cells = this.$el.getElementsByClassName('slds-cell-fixed');
+                const header = this.$el.getElementsByTagName('th');
 
-                for (let index = indexOffset; index < cells.length; index++) {
-                    this.$set(this.columns[index - indexOffset], 'offsetLeft', cells[index].offsetLeft);
-                    this.$set(this.columns[index - indexOffset], 'left', cells[index].offsetLeft);
+                for (let index = indexOffset; index < header.length; index++) {
+                    this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
+                    this.$set(this.columns[index - indexOffset], 'left', header [index].offsetLeft);
                 }
+            },
+            getRowKey(row, index) {
+                return (this.keyField != null) ? row[this.keyField] : index;
             },
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);
@@ -174,6 +186,10 @@
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+            },
+            onSelect(event, key) {
+                if (event) this.selectedRows.push(key);
+                else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;
