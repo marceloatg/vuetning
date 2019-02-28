@@ -15,11 +15,17 @@
                 <thead>
                     <tr class="slds-line-height_reset">
 
-                        <th scope="col" style="width: 60px;">
+                        <th v-if="showRowNumberColumn" scope="col" style="width: 60px;">
                             <div class="slds-cell-fixed">
-                                <div class="slds-truncate slds-assistive-text" title="Errors">
+                                <div class="slds-truncate slds-assistive-text">
                                     Errors
                                 </div>
+                            </div>
+                        </th>
+
+                        <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
+                            <div class="slds-cell-fixed slds-th__action slds-th__action_form">
+                                <slds-checkbox :checked="allRowsSelected" variant="inline" @input="onSelectAll($event)"/>
                             </div>
                         </th>
 
@@ -56,10 +62,14 @@
                 <!-- Body -->
                 <tbody>
                     <slds-row
-                        v-for="row in rows"
-                        :key="row.id"
+                        v-for="(row, index) in rows"
+                        :columns="columns"
+                        :is-selected="selectedRows.includes(index)"
+                        :key="index"
                         :row="row"
-                        :columns="columns"/>
+                        :show-row-number-column="showRowNumberColumn"
+                        :show-row-selection-column="showRowSelectionColumn"
+                        @select="onSelect($event, index)"/>
                 </tbody>
 
             </table>
@@ -80,13 +90,31 @@
             SldsRow,
         },
         props: {
+            allRowsSelected: {
+                type: Boolean,
+                default: false,
+            },
             columns: {
                 type: Array,
                 required: true,
             },
+            keyField: {
+                type: String,
+            },
             rows: {
                 type: Array,
                 required: true,
+            },
+            selectedRows: {
+                type: Array,
+            },
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
             },
         },
         data() {
@@ -95,53 +123,62 @@
             }
         },
         mounted() {
-            // Settings table width to prevent abnormal behavior when resizing window
-            const table = this.$el.getElementsByTagName('table')[0];
-            this.tableWidth = table.offsetWidth;
+            this.getTableWidth();
+            this.getColumnWidths();
+            this.getColumnLeftOffsets();
 
-            // Calculating column widths
-            let knownWidth = Commons.LINE_COUNTER_WIDTH;
-            let unknownWidthColumns = 0;
-
-            for (let column of this.columns) {
-                if (column.resizable) {
-                    if (column.initialWidth == null) unknownWidthColumns++;
-                    else knownWidth += column.initialWidth;
-                }
-                else {
-                    if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
-                    else knownWidth += column.fixedWidth;
-                }
-            }
-
-            const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
-            const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
-
-            for (let column of this.columns) {
-                if (!column.resizable) continue;
-                if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
-            }
-
-            // Saving column offset left values as a data attribute
-            const cells = this.$el.getElementsByClassName('slds-cell-fixed');
-            for (let index = 1; index < cells.length; index++) {
-                this.$set(this.columns[index - 1], 'offsetLeft', cells[index].offsetLeft);
-                this.$set(this.columns[index - 1], 'left', cells[index].offsetLeft);
-            }
-
-            // Adding scroll event listener
             this.$el
                 .getElementsByClassName('slds-scrollable_area')[0]
                 .addEventListener('scroll', this.onScroll);
         },
         destroyed() {
-
-            // Removing scroll event listener
             this.$el
                 .getElementsByClassName('slds-scrollable_area')[0]
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
+            getTableWidth() {
+                const table = this.$el.getElementsByTagName('table')[0];
+                this.tableWidth = table.offsetWidth;
+            },
+            getColumnWidths() {
+                let knownWidth = 0;
+                let unknownWidthColumns = 0;
+
+                if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
+                if (this.showRowSelectionColumn) knownWidth += Commons.LINE_SELECTION_WIDTH;
+
+                for (let column of this.columns) {
+                    if (column.resizable) {
+                        if (column.initialWidth == null) unknownWidthColumns++;
+                        else knownWidth += column.initialWidth;
+                    }
+                    else {
+                        if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
+                        else knownWidth += column.fixedWidth;
+                    }
+                }
+
+                const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
+                const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
+
+                for (let column of this.columns) {
+                    if (!column.resizable) continue;
+                    if (column.initialWidth == null) this.$set(column, 'initialWidth', initialWidth);
+                }
+            },
+            getColumnLeftOffsets() {
+                let indexOffset = 0;
+                if (this.showRowNumberColumn) indexOffset++;
+                if (this.showRowSelectionColumn) indexOffset++;
+
+                const header = this.$el.getElementsByTagName('th');
+
+                for (let index = indexOffset; index < header.length; index++) {
+                    this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
+                    this.$set(this.columns[index - indexOffset], 'left', header [index].offsetLeft);
+                }
+            },
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);
                 return column.resizable;
@@ -149,6 +186,12 @@
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+            },
+            onSelect(selected, key) {
+                this.$emit('select', selected, key);
+            },
+            onSelectAll(selected) {
+                this.$emit('selectall', selected);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;

@@ -1,4 +1,4 @@
-# Modal ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-untested-red.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
+# Modal ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-tested-green.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
 
 Modals are used to display content in a layer above the app. This paradigm is used in cases such as the creation or editing of a record, as well as various types of messaging and wizards.
 
@@ -26,8 +26,8 @@ Modals are used to display content in a layer above the app. This paradigm is us
 | Name           | Arguments | Description |
 | -------------- | --------- | ----------- |
 | close          |           | Fired when the close button inside the header is clicked. |
-| primaryclick   |           | Fired when the the primary button in the default footer is clicked. |
-| secondaryclick |           | Fired when the the secondary button in the default footer is clicked. |
+| primaryclick   |           | Fired when the primary button in the default footer is clicked. |
+| secondaryclick |           | Fired when the secondary button in the default footer is clicked. |
 
 ## Examples
 

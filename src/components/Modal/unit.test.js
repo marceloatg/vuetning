@@ -90,8 +90,6 @@ describe('SldsModal', () => {
         expect(wrapper.find(`.slds-modal_${size}`).exists()).toBeTruthy();
     });
 
-    // Testing slots
-
     // Testing events
     it('emits close when close button is clicked', () => {
 

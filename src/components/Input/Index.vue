@@ -163,7 +163,7 @@
                 this.value = null;
                 this.$emit('input', this.value);
             },
-            onInput(event) {
+            onClick(event) {
                 this.value = event.target.value;
                 this.$emit('input', this.value);
             }

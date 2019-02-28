@@ -1,34 +1,20 @@
-<!--
-    @Description: Badges are labels which hold small amounts of information.
-    @Documentation: https://www.lightningdesignsystem.com/components/badges/
--->
-
 <template>
-    <span class="slds-badge" :class="['slds-badge_' + color]" :title="title">
-        {{ (iconPosition === 'right') ? text : '' }}
+    <span class="slds-badge" :class="['slds-badge_' + color]">
+        {{ (iconPosition === 'right') ? label : '' }}
         <span
             v-if="hasIcon"
             class="slds-badge__icon"
             :class="['slds-badge__icon_' + color, 'slds-badge__icon_' + iconPosition]">
             <span class="slds-icon_container slds-current-color">
-                <slds-svg :icon-name="`${iconCategory}:${iconName}`" class="slds-icon slds-icon_xx-small"/>
+                <slds-svg :icon-name="iconName" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
             </span>
-        </span>{{ (iconPosition === 'left') ? text : '' }}
+        </span>{{ (iconPosition === 'left') ? label : '' }}
     </span>
 </template>
 
 <script>
     export default {
         props: {
-            text: {
-                type: String,
-                default: '',
-                note: 'Badge text.'
-            },
-            title: {
-                type: String,
-                note: 'Badge title.'
-            },
             color: {
                 type: String,
                 default: 'default',
@@ -39,26 +25,25 @@
                         'inverse',
                         'lightest',
                         'brand',
+                        'outline-brand',
                         'success',
+                        'outline-success',
                         'warning',
+                        'outline-warning',
                         'error',
+                        'outline-error',
                     ].indexOf(value) !== -1
                 }
             },
-            iconCategory: {
+            label: {
                 type: String,
-                default: null,
-                note: 'Badge icon category.'
             },
             iconName: {
                 type: String,
-                default: null,
-                note: 'Badge icon name.'
             },
             iconPosition: {
                 type: String,
                 default: 'left',
-                note: 'Badge icon position. Check the validator for available options.',
                 validator(value) {
                     return [
                         'left',
@@ -69,35 +54,37 @@
         },
         computed: {
             hasIcon() {
-                return (this.iconCategory != null && this.iconName != null)
+                return (this.iconName != null)
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .slds-badge_brand,
-    .slds-badge__icon_brand {
-        color: white;
-        background-color: #0070d2;
-    }
+    $colors: (
+        'brand': #0070d2,
+        'error': #c23934,
+        'success': #04844b,
+        'warning': #ffb75d,
+    );
 
-    .slds-badge_success,
-    .slds-badge__icon_success {
-        color: white;
-        background-color: #04844b;
-    }
+    @each $name, $color in $colors {
 
-    .slds-badge_warning,
-    .slds-badge__icon_warning {
-        color: white;
-        background-color: #ffb75d;
-    }
+        .slds-badge_#{$name},
+        .slds-badge__icon_#{$name} {
+            color: white;
+            background-color: $color;
+        }
 
-    .slds-badge_error,
-    .slds-badge__icon_error {
-        color: white;
-        background-color: #c23934;
-    }
+        .slds-badge_outline-#{$name} {
+            border: 1px solid $color;
+            background-color: white;
+            color: $color;
+            padding: 3px 8px;
 
+            svg {
+                fill: $color;
+            }
+        }
+    }
 </style>

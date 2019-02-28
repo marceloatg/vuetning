@@ -6,7 +6,7 @@
 
         <!-- Header -->
         <table-view-header
-            :count="count"
+            :count="totalRows"
             :figure="figure"
             :list-views="listViews"
             :title="title">
@@ -44,12 +44,21 @@
                                 :message="emptyMessage.message"/>
 
                             <!-- Table -->
-                            <slds-data-table v-else :columns="columns" :rows="rows"/>
+                            <slds-data-table
+                                v-else
+                                :all-rows-selected="allRowsSelected"
+                                :key-field="keyField"
+                                :columns="columns"
+                                :rows="rows"
+                                :selected-rows="selectedRows"
+                                :show-row-number-column="showRowNumberColumn"
+                                :show-row-selection-column="showRowSelectionColumn"
+                                @select="onSelect(...arguments)"
+                                @selectall="onSelectAll($event)"/>
 
                         </div>
 
                     </transition>
-
 
                 </div>
             </div>
@@ -101,6 +110,9 @@
                 type: Boolean,
                 required: true,
             },
+            keyField: {
+                type: String,
+            },
             listViews: {
                 type: String,
                 required: true,
@@ -109,8 +121,24 @@
                 type: Array,
                 required: true,
             },
+            selectedRows: {
+                type: Array,
+                default: () => [],
+            },
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
+            },
             title: {
                 type: String,
+                required: true,
+            },
+            totalRows: {
+                type: Number,
                 required: true,
             },
         },
@@ -125,8 +153,8 @@
             }
         },
         computed: {
-            count() {
-                return this.rows.length;
+            allRowsSelected() {
+                return this.totalRows == this.selectedRows.length;
             },
             isEmpty() {
                 return this.rows.length === 0;
@@ -135,6 +163,20 @@
         methods: {
             onPageChanged(page) {
                 this.currentPage = page;
+            },
+            onSelect(selected, key) {
+                if (selected) this.selectedRows.push(key);
+                else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
+            },
+            onSelectAll(selected) {
+                if (selected) {
+                    for (let i = 0; i < this.totalRows; i++) {
+                        if (this.selectedRows.indexOf(i) === -1) this.selectedRows.push(i);
+                    }
+                }
+                else {
+                    this.selectedRows.splice(0);
+                }
             },
         },
     }

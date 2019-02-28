@@ -1,8 +1,12 @@
 <template>
-    <tr class="slds-hint-parent">
+    <tr class="slds-hint-parent" :class="{'slds-is-selected': isSelected}">
 
-        <td class="slds-cell-edit slds-cell-error slds-text-align_center">
+        <td v-if="showRowNumberColumn" class="slds-cell-edit slds-cell-error slds-text-align_center">
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"/>
+        </td>
+
+        <td v-if="showRowSelectionColumn" class="slds-text-align_center">
+            <slds-checkbox :checked="isSelected" variant="inline" @input="onSelect($event)"/>
         </td>
 
         <template v-for="(column, index) in columns">
@@ -15,6 +19,12 @@
 
             <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :key="index"/>
+
+            <slds-cell-badge
+                v-else-if="column.type === 'badge'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :key="index"/>
@@ -68,6 +78,7 @@
 <script>
     import SldsCellAction from './Cell/Action';
     import SldsCellAvatar from './Cell/Avatar';
+    import SldsCellBadge from './Cell/Badge';
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
     import SldsCellEmail from './Cell/Email';
@@ -79,6 +90,7 @@
         components: {
             SldsCellAction,
             SldsCellAvatar,
+            SldsCellBadge,
             SldsCellBoolean,
             SldsCellButton,
             SldsCellEmail,
@@ -91,15 +103,22 @@
                 type: Array,
                 required: true,
             },
+            isSelected: {
+                type: Boolean,
+                default: false,
+            },
             row: {
                 type: Object,
                 required: true
             },
-        },
-        data() {
-            return {
-                selected: false,
-            }
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
+            },
         },
         methods: {
             getCell(fieldName) {
@@ -111,6 +130,9 @@
                 }
 
                 return cell;
+            },
+            onSelect(event) {
+                this.$emit('select', event);
             },
         },
     }

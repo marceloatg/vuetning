@@ -52,7 +52,7 @@
                         'left',
                         'right',
                     ].indexOf(value) !== -1
-                }
+                },
             },
             label: {
                 type: String,
@@ -75,7 +75,7 @@
                         'inverse',
                         'success',
                     ].indexOf(value) !== -1
-                }
+                },
             },
         },
         computed: {
