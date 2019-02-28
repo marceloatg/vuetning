@@ -6,7 +6,7 @@
 
         <!-- Header -->
         <table-view-header
-            :count="count"
+            :count="totalRows"
             :figure="figure"
             :list-views="listViews"
             :title="title">
@@ -46,18 +46,19 @@
                             <!-- Table -->
                             <slds-data-table
                                 v-else
+                                :all-rows-selected="allRowsSelected"
                                 :key-field="keyField"
                                 :columns="columns"
                                 :rows="rows"
                                 :selected-rows="selectedRows"
                                 :show-row-number-column="showRowNumberColumn"
                                 :show-row-selection-column="showRowSelectionColumn"
-                                @select="onSelect(...arguments)"/>
+                                @select="onSelect(...arguments)"
+                                @selectall="onSelectAll($event)"/>
 
                         </div>
 
                     </transition>
-
 
                 </div>
             </div>
@@ -136,6 +137,10 @@
                 type: String,
                 required: true,
             },
+            totalRows: {
+                type: Number,
+                required: true,
+            },
         },
         data() {
             return {
@@ -148,8 +153,8 @@
             }
         },
         computed: {
-            count() {
-                return this.rows.length;
+            allRowsSelected() {
+                return this.totalRows == this.selectedRows.length;
             },
             isEmpty() {
                 return this.rows.length === 0;
@@ -162,6 +167,16 @@
             onSelect(selected, key) {
                 if (selected) this.selectedRows.push(key);
                 else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
+            },
+            onSelectAll(selected) {
+                if (selected) {
+                    for (let i = 0; i < this.totalRows; i++) {
+                        if (this.selectedRows.indexOf(i) === -1) this.selectedRows.push(i);
+                    }
+                }
+                else {
+                    this.selectedRows.splice(0);
+                }
             },
         },
     }

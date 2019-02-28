@@ -24,7 +24,9 @@
                         </th>
 
                         <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
-                            <div class="slds-cell-fixed slds-th__action slds-th__action_form"/>
+                            <div class="slds-cell-fixed slds-th__action slds-th__action_form">
+                                <slds-checkbox :checked="allRowsSelected" @input="onSelectAll($event)"/>
+                            </div>
                         </th>
 
                         <template v-for="(column, index) in columns">
@@ -88,6 +90,10 @@
             SldsRow,
         },
         props: {
+            allRowsSelected: {
+                type: Boolean,
+                default: false,
+            },
             columns: {
                 type: Array,
                 required: true,
@@ -183,6 +189,9 @@
             },
             onSelect(selected, key) {
                 this.$emit('select', selected, key);
+            },
+            onSelectAll(selected) {
+                this.$emit('selectall', selected);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;

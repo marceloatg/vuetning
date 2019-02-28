@@ -10,7 +10,8 @@
         :rows="rows"
         :show-row-number-column="true"
         :show-row-selection-column="true"
-        :title="title">
+        :title="title"
+        :total-rows="rows.length">
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
