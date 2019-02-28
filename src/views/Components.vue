@@ -5,6 +5,7 @@
         :figure="figure"
         :footer="footer"
         :initialized="initialized"
+        :key-field="keyField"
         :list-views="listViews"
         :rows="rows"
         :title="title">
@@ -102,6 +103,7 @@
                     totalPages: 1,
                 },
                 initialized: true,
+                keyField: 'id',
                 listViews: 'All users',
                 rows: [{
                     "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",

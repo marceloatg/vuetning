@@ -44,7 +44,11 @@
                                 :message="emptyMessage.message"/>
 
                             <!-- Table -->
-                            <slds-data-table v-else :columns="columns" :rows="rows"/>
+                            <slds-data-table
+                                v-else
+                                :key-field="keyField"
+                                :columns="columns"
+                                :rows="rows"/>
 
                         </div>
 
@@ -100,6 +104,9 @@
             initialized: {
                 type: Boolean,
                 required: true,
+            },
+            keyField: {
+                type: String,
             },
             listViews: {
                 type: String,

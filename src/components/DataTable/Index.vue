@@ -56,8 +56,8 @@
                 <!-- Body -->
                 <tbody>
                     <slds-row
-                        v-for="row in rows"
-                        :key="row.id"
+                        v-for="(row, index) in rows"
+                        :key="(keyField != null) ? row[keyField] : index"
                         :row="row"
                         :columns="columns"/>
                 </tbody>
@@ -83,6 +83,9 @@
             columns: {
                 type: Array,
                 required: true,
+            },
+            keyField: {
+                type: String,
             },
             rows: {
                 type: Array,
