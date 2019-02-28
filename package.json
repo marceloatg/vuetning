@@ -37,6 +37,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "v-clipboard": "^2.2.1",
     "vue": "^2.6.7"
   },
   "devDependencies": {

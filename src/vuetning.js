@@ -1,4 +1,8 @@
 import Vue from 'vue'
+import Clipboard from 'v-clipboard'
+
+// Using imports
+Vue.use(Clipboard);
 
 // Import lightning components
 import SldsAlert from './components/Alert/Index'

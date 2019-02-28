@@ -8,6 +8,7 @@
 
             <slds-button-icon
                 v-if="hasCopyButton"
+                v-clipboard="label"
                 icon-name="utility:copy_to_clipboard"
                 container="none"
                 class="slds-cell-edit__button slds-m-left_x-small"
