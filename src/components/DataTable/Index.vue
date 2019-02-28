@@ -15,9 +15,9 @@
                 <thead>
                     <tr class="slds-line-height_reset">
 
-                        <th scope="col" style="width: 60px;">
+                        <th v-if="showRowNumberColumn" scope="col" style="width: 60px;">
                             <div class="slds-cell-fixed">
-                                <div class="slds-truncate slds-assistive-text" title="Errors">
+                                <div class="slds-truncate slds-assistive-text">
                                     Errors
                                 </div>
                             </div>
@@ -57,9 +57,11 @@
                 <tbody>
                     <slds-row
                         v-for="(row, index) in rows"
+                        :columns="columns"
+                        :is-selected="selectedRows.includes((keyField != null) ? row[keyField] : index)"
                         :key="(keyField != null) ? row[keyField] : index"
                         :row="row"
-                        :columns="columns"/>
+                        :show-row-number-column="showRowNumberColumn"/>
                 </tbody>
 
             </table>
@@ -91,6 +93,18 @@
                 type: Array,
                 required: true,
             },
+            selectedRows: {
+                type: Array,
+                default: () => [],
+            },
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
+            },
         },
         data() {
             return {
@@ -103,8 +117,10 @@
             this.tableWidth = table.offsetWidth;
 
             // Calculating column widths
-            let knownWidth = Commons.LINE_COUNTER_WIDTH;
+            let knownWidth = 0;
             let unknownWidthColumns = 0;
+
+            if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
 
             for (let column of this.columns) {
                 if (column.resizable) {
@@ -126,10 +142,15 @@
             }
 
             // Saving column offset left values as a data attribute
+            let indexOffset = 0;
+            if (this.showRowNumberColumn) indexOffset++;
+            if (this.showRowSelectionColumn) indexOffset++;
+
             const cells = this.$el.getElementsByClassName('slds-cell-fixed');
-            for (let index = 1; index < cells.length; index++) {
-                this.$set(this.columns[index - 1], 'offsetLeft', cells[index].offsetLeft);
-                this.$set(this.columns[index - 1], 'left', cells[index].offsetLeft);
+
+            for (let index = indexOffset; index < cells.length; index++) {
+                this.$set(this.columns[index - indexOffset], 'offsetLeft', cells[index].offsetLeft);
+                this.$set(this.columns[index - indexOffset], 'left', cells[index].offsetLeft);
             }
 
             // Adding scroll event listener

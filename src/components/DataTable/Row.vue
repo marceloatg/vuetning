@@ -1,7 +1,7 @@
 <template>
-    <tr class="slds-hint-parent">
+    <tr class="slds-hint-parent" :class="{'slds-is-selected': isSelected}">
 
-        <td class="slds-cell-edit slds-cell-error slds-text-align_center">
+        <td v-if="showRowNumberColumn" class="slds-cell-edit slds-cell-error slds-text-align_center">
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"/>
         </td>
 
@@ -99,9 +99,21 @@
                 type: Array,
                 required: true,
             },
+            isSelected: {
+                type: Boolean,
+                default: false,
+            },
             row: {
                 type: Object,
                 required: true
+            },
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
             },
         },
         data() {

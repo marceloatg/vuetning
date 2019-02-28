@@ -8,6 +8,7 @@
         :key-field="keyField"
         :list-views="listViews"
         :rows="rows"
+        :show-row-number-column="true"
         :title="title">
 
         <template #header-actions>

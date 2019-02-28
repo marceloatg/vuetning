@@ -48,7 +48,10 @@
                                 v-else
                                 :key-field="keyField"
                                 :columns="columns"
-                                :rows="rows"/>
+                                :rows="rows"
+                                :selected-rows="selectedRows"
+                                :show-row-number-column="showRowNumberColumn"
+                                :show-row-selection-column="showRowSelectionColumn"/>
 
                         </div>
 
@@ -115,6 +118,17 @@
             rows: {
                 type: Array,
                 required: true,
+            },
+            selectedRows: {
+                type: Array,
+            },
+            showRowNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
+            showRowSelectionColumn: {
+                type: Boolean,
+                default: false,
             },
             title: {
                 type: String,
