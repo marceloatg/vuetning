@@ -19,7 +19,7 @@ module.exports = {
             "endTag": "never",
             "selfClosingTag": "never"
         }],
-        "vue/html-indent": ["warn", 4, {
+        "vue/html-indent": ["error", 4, {
             "attribute": 1,
             "baseIndent": 1,
             "alignAttributesVertically": true,
@@ -33,20 +33,20 @@ module.exports = {
             "svg": "always",
             "math": "always"
         }],
-        "vue/max-attributes-per-line": ["warn", {
+        "vue/max-attributes-per-line": ["error", {
             "singleline": 3,
             "multiline": {
                 "max": 1,
                 "allowFirstLine": false
             }
         }],
-        "vue/mustache-interpolation-spacing": ["warn", "always"],
+        "vue/mustache-interpolation-spacing": ["error", "always"],
         "vue/name-property-casing": ["error", "PascalCase"],
-        "vue/no-multi-spaces": ["warn", {
+        "vue/no-multi-spaces": ["error", {
             "ignoreProperties": false
         }],
-        "vue/no-spaces-around-equal-signs-in-attribute": ["warn"],
-        "vue/order-in-components": ["warn", {
+        "vue/no-spaces-around-equal-signs-in-attribute": ["error"],
+        "vue/order-in-components": ["error", {
             "order": [
                 "el",
                 "name",
@@ -69,13 +69,13 @@ module.exports = {
             ]
         }],
         "vue/prop-name-casing": ["error", "camelCase"],
-        "vue/singleline-html-element-content-newline": ["warn", {
+        "vue/singleline-html-element-content-newline": ["error", {
             "ignoreWhenNoAttributes": true,
             "ignoreWhenEmpty": true,
             "ignores": ["abbr", "pre", "span", "textarea"]
         }],
-        "vue/v-bind-style": ["warn", "shorthand"],
-        "vue/v-on-style": ["warn", "shorthand"],
+        "vue/v-bind-style": ["error", "shorthand"],
+        "vue/v-on-style": ["error", "shorthand"],
     },
     parserOptions: {
         parser: 'babel-eslint'

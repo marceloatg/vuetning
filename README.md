@@ -34,6 +34,7 @@ TBD
 * [Button](./src/components/Button)
 * [Button Icon](./src/components/ButtonIcon)
 * [Combobox](./src/components/Combobox)
+* [Checkbox](./src/components/Checkbox)
 * [Data Table](./src/components/DataTable)
 * [Expandable Section](./src/components/ExpandableSection)
 * [Global Header](./src/components/GlobalHeader)
