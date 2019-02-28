@@ -101,7 +101,6 @@
             },
             selectedRows: {
                 type: Array,
-                default: () => [],
             },
             showRowNumberColumn: {
                 type: Boolean,
@@ -182,10 +181,8 @@
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
             },
-            onSelect(event, key) {
-                //this.$emit('select', event, key);
-                if (event) this.selectedRows.push(key);
-                else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
+            onSelect(selected, key) {
+                this.$emit('select', selected, key);
             },
             onResize(index, delta) {
                 this.columns[index].initialWidth += delta;

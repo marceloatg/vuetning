@@ -51,7 +51,8 @@
                                 :rows="rows"
                                 :selected-rows="selectedRows"
                                 :show-row-number-column="showRowNumberColumn"
-                                :show-row-selection-column="showRowSelectionColumn"/>
+                                :show-row-selection-column="showRowSelectionColumn"
+                                @select="onSelect(...arguments)"/>
 
                         </div>
 
@@ -121,6 +122,7 @@
             },
             selectedRows: {
                 type: Array,
+                default: () => [],
             },
             showRowNumberColumn: {
                 type: Boolean,
@@ -156,6 +158,10 @@
         methods: {
             onPageChanged(page) {
                 this.currentPage = page;
+            },
+            onSelect(selected, key) {
+                if (selected) this.selectedRows.push(key);
+                else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
             },
         },
     }
