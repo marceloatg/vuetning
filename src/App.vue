@@ -23,7 +23,7 @@
         <div class="slds-notification-container">
             <slds-notification
                 v-for="(notification, index) in notifications"
-                :icon-color="notification.iconColor"
+                :icon-class="notification.iconColor"
                 :icon-name="notification.iconName"
                 :key="notification.name"
                 :message="notification.message"

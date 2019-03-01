@@ -9,7 +9,7 @@
                     :icon-name="iconName"
                     size="small"
                     class="slds-media__figure"
-                    :class="iconColor"/>
+                    :class="iconClass"/>
 
                 <!-- Body -->
                 <div class="slds-media__body">
@@ -37,7 +37,7 @@
 <script>
     export default {
         props: {
-            iconColor: {
+            iconClass: {
                 type: String,
             },
             iconName: {

@@ -44,6 +44,7 @@ TBD
 * [Input](./src/components/Input)
 * [Menu](./src/components/Menu)
 * [Modal](./src/components/Modal)
+* [Notification](./src/components/Notification)
 * [Pagination](./src/components/Pagination)
 * [Picklist](./src/components/Picklist)
 * [Pill](./src/components/Pill)
