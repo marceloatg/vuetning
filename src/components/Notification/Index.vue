@@ -5,15 +5,19 @@
             <a class="slds-notification__target slds-media" @click="onClick">
 
                 <!-- Icon -->
-                <slds-icon icon-name="standard:event" size="small" class="slds-media__figure"/>
+                <slds-icon
+                    :icon-name="iconName"
+                    size="small"
+                    class="slds-media__figure"
+                    :class="iconColor"/>
 
                 <!-- Body -->
                 <div class="slds-media__body">
                     <h2 class="slds-text-heading_small slds-m-bottom_xx-small">
-                        Tesla - Renewal meeting
+                        {{ subject }}
                     </h2>
                     <p>
-                        Event at 11:00am on Jan 8
+                        {{ message }}
                     </p>
                 </div>
 
@@ -32,6 +36,21 @@
 
 <script>
     export default {
+        props: {
+            iconColor: {
+                type: String,
+            },
+            iconName: {
+                type: String,
+                required: true,
+            },
+            message:{
+                type: String,
+            },
+            subject:{
+              type: String,
+            },
+        },
         methods: {
             onClick() {
                 this.$emit('click');
@@ -42,7 +61,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>
