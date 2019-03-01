@@ -8,7 +8,12 @@
 </template>
 
 <script>
+    import SldsSvg from '@/shared/Svg/index'
+
     export default {
+        components: {
+            SldsSvg,
+        },
         props: {
             iconClass: {
                 type: String,
