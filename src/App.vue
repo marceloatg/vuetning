@@ -19,6 +19,11 @@
         <!-- Global navigation -->
         <slds-global-navigation app-name="Vuetning"/>
 
+        <!-- Notifications -->
+        <div class="slds-notification-container">
+            <slds-notification v-for="i in 10" :key="i"/>
+        </div>
+
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
 
@@ -82,6 +87,10 @@
         overflow: hidden;
     }
 
+    .slds-notification-container {
+        margin-top: $default_height;
+    }
+
     .slds-global-content {
         position: fixed;
         height: calc(100% - #{$default_height});
@@ -115,62 +124,83 @@
         }
     }
 
-    .has-trial-bar .slds-global-content {
-        height: calc(100% - #{$default_height} - #{$trial_bar_height});
-        top: calc(#{$default_height} + #{$trial_bar_height});
+    .has-trial-bar {
 
-        main {
-            &.absolute,
-            &.table-view {
-                top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height});
-            }
+        .slds-notification-container {
+            margin-top: calc(#{$default_height} + #{$trial_bar_height});
+        }
 
-            &.absolute {
-                height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height});
-            }
+        .slds-global-content {
+            height: calc(100% - #{$default_height} - #{$trial_bar_height});
+            top: calc(#{$default_height} + #{$trial_bar_height});
 
-            &.table-view {
-                height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height});
+            main {
+                &.absolute,
+                &.table-view {
+                    top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height});
+                }
+
+                &.absolute {
+                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height});
+                }
+
+                &.table-view {
+                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height});
+                }
             }
         }
     }
 
-    .has-alert .slds-global-content {
-        height: calc(100% - #{$default_height} - #{$alert_height});
-        top: calc(#{$default_height} + #{$alert_height});
+    .has-alert {
 
-        main {
-            &.absolute,
-            &.table-view {
-                top: calc(#{$default_height} + #{$global-padding} + #{$alert_height});
-            }
+        .slds-notification-container {
+            margin-top: calc(#{$default_height} + #{$alert_height});
+        }
 
-            &.absolute {
-                height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$alert_height});
-            }
+        .slds-global-content {
+            height: calc(100% - #{$default_height} - #{$alert_height});
+            top: calc(#{$default_height} + #{$alert_height});
 
-            &.table-view {
-                height: calc(100% - #{$default_height} - #{$global-padding} - #{$alert_height});
+            main {
+                &.absolute,
+                &.table-view {
+                    top: calc(#{$default_height} + #{$global-padding} + #{$alert_height});
+                }
+
+                &.absolute {
+                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$alert_height});
+                }
+
+                &.table-view {
+                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$alert_height});
+                }
             }
         }
     }
 
-    .has-trial-bar.has-alert .slds-global-content {
-        height: calc(100% - #{$default_height} - #{$trial_bar_height} - #{$alert_height});
-        top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
+    .has-trial-bar.has-alert {
 
-        main {
-            &.absolute,
-            &.table-view {
-                top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height} + #{$alert_height});
-            }
+        .slds-notification-container {
+            margin-top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
+        }
 
-            &.absolute {
-                height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height} - #{$alert_height});
-            }
+        .slds-global-content {
+            height: calc(100% - #{$default_height} - #{$trial_bar_height} - #{$alert_height});
+            top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
 
-            &.table-view {
-                height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height} - #{$alert_height});
+            main {
+                &.absolute,
+                &.table-view {
+                    top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height} + #{$alert_height});
+                }
+
+                &.absolute {
+                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height} - #{$alert_height});
+                }
+
+                &.table-view {
+                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height} - #{$alert_height});
+                }
             }
         }
     }
