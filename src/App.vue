@@ -23,7 +23,7 @@
         <div class="slds-notification-container">
             <slds-notification
                 v-for="(notification, index) in notifications"
-                :icon-class="notification.iconColor"
+                :icon-class="notification.iconClass"
                 :icon-name="notification.iconName"
                 :key="notification.name"
                 :message="notification.message"
@@ -72,7 +72,7 @@
                     },
                     {
                         name: 'd91b85b1-d73a-462b-9373-0761b66a6e3f',
-                        iconColor: 'slds-icon-standard-quick-text',
+                        iconClass: 'slds-icon-standard-quick-text',
                         iconName: 'standard:partners',
                         subject: 'Second',
                         message: 'Event at 11:00am on Jan 8',

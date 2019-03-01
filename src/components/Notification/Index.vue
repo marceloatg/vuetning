@@ -35,7 +35,14 @@
 </template>
 
 <script>
+    import SldsIcon from '../Icon/Index'
+    import SldsButtonIcon from '../ButtonIcon/Index'
+
     export default {
+        components:{
+            SldsIcon,
+            SldsButtonIcon,
+        },
         props: {
             iconClass: {
                 type: String,
