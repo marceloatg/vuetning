@@ -2,7 +2,7 @@
     <section class="slds-notification">
         <div class="slds-notification__body">
 
-            <a class="slds-notification__target slds-media">
+            <a class="slds-notification__target slds-media" @click="onClick">
 
                 <!-- Icon -->
                 <slds-icon icon-name="standard:event" size="small" class="slds-media__figure"/>
@@ -33,6 +33,9 @@
 <script>
     export default {
         methods: {
+            onClick() {
+                this.$emit('click');
+            },
             onClose() {
                 this.$emit('close');
             },
