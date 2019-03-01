@@ -1,6 +1,6 @@
 # Checkbox ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-tested-green.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
 
-A checkable input that communicates if an option is true, false or indeterminate
+A checkable input that communicates if an option is true or false.
 
 ## Props
 
@@ -13,7 +13,7 @@ A checkable input that communicates if an option is true, false or indeterminate
 | label        | String  | false    | false   | Text label for the input. |
 | readOnly     | Boolean | false    | false   | If present, the input field is read-only and cannot be edited by users.<br>Default is false. |
 | required     | Boolean | false    | false   | If present, the input field must be filled out before the form is submitted.<br>Default is false. |
-| variant      | String  | false    | stacked | The variant changes the appearance of an input field.<br>Accepted sizes include stacked and inline.<br>Default is 'stacked'. |
+| variant      | String  | false    | stacked | The variant changes the appearance of an input field.<br>Accepted variants include stacked and inline.<br>Default is 'stacked'. |
 
 ## Events
 
