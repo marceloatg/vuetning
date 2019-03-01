@@ -20,7 +20,11 @@
             </a>
 
             <!-- Close button -->
-            <slds-button-icon icon-name="utility:close" class="slds-notification__close" container="bare"/>
+            <slds-button-icon
+                icon-name="utility:close"
+                container="bare"
+                class="slds-notification__close"
+                @click="onClose"/>
 
         </div>
     </section>
@@ -28,7 +32,11 @@
 
 <script>
     export default {
-        name: "Index"
+        methods: {
+            onClose() {
+                this.$emit('close');
+            },
+        },
     }
 </script>
 

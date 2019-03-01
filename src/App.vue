@@ -21,7 +21,10 @@
 
         <!-- Notifications -->
         <div class="slds-notification-container">
-            <slds-notification v-for="i in 10" :key="i"/>
+            <slds-notification
+                v-for="(notification, index) in notifications"
+                :key="index"
+                @close="onCloseNotification(index)"/>
         </div>
 
         <!-- Brand band -->
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-    import SldsView from "./views/Checkboxes";
+    import SldsView from "./views/Components";
 
     export default {
         name: 'App',
@@ -55,11 +58,20 @@
                     iconName: "offline",
                     message: 'Oops, it looks like you\'re offline. Check your internet connection and try again.'
                 },
+                notifications: [
+                    {},
+                    {},
+                    {},
+                    {},
+                ],
             }
         },
         methods: {
             closeAlert() {
                 this.alert.show = false;
+            },
+            onCloseNotification(index) {
+                this.notifications.splice(index, 1);
             },
         },
     }
