@@ -14,6 +14,7 @@ import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCheckbox from './components/Checkbox/Index'
 import SldsCombobox from './components/Combobox/Index'
 import SldsDataTable from './components/DataTable/Index';
+import SldsDockedComposer from './components/DockedComposer/Index';
 import SldsGlobalHeader from './components/GlobalHeader/Index'
 import SldsGlobalNavigation from './components/GlobalNavigation/Index'
 import SldsIcon from './components/Icon/Index'
@@ -40,6 +41,7 @@ Vue.component('slds-button-icon', SldsButtonIcon);
 Vue.component('slds-checkbox', SldsCheckbox);
 Vue.component('slds-combobox', SldsCombobox);
 Vue.component('slds-data-table', SldsDataTable);
+Vue.component('slds-docked-composer', SldsDockedComposer);
 Vue.component('slds-global-header', SldsGlobalHeader);
 Vue.component('slds-global-navigation', SldsGlobalNavigation);
 Vue.component('slds-icon', SldsIcon);

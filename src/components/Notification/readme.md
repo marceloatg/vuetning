@@ -7,7 +7,7 @@ Notifications serve as a feedback and confirmation mechanism that comes into the
 | Name      | Type   | Required | Default | Description |
 | --------- | ------ | -------- | ------- | ----------- |
 | iconClass | String | false    |         | Class applied to the inner icon component. |
-| iconName  | String | true     |         | The Lightning Design System name of the icon.<br>Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed. Only utility icons can be used in this component. |
+| iconName  | String | true     |         | The Lightning Design System name of the icon.<br>Names are written in the format 'standard:event' where 'standard' is the category, and 'event' is the specific icon to be displayed.<br>Only standard icons should be used in this component. |
 | message   | String | false    |         | Message text, displayed as a paragraph. |
 | subject   | String | false    |         | Subject text, displayed as a header. |
 

@@ -21,7 +21,7 @@ module.exports = {
         "**/unit.test.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
     testURL: 'http://localhost/',
-    collectCoverage: true,
+    collectCoverage: false,
     collectCoverageFrom: [
         '**/components/**/*.{js,vue}'
     ],
