@@ -1,9 +1,5 @@
 <template>
-    <section
-        class="slds-docked-composer slds-grid slds-grid_vertical slds-is-open"
-        role="dialog"
-        aria-labelledby="dialog-heading-id-1"
-        aria-describedby="dialog-content-id-1">
+    <section class="slds-docked-composer slds-grid slds-grid_vertical slds-is-open">
 
         <!-- Header -->
         <header class="slds-docked-composer__header slds-grid slds-shrink-none">
@@ -13,7 +9,7 @@
 
                 <!-- Figure -->
                 <slds-icon
-                    icon-name="utility:share_post"
+                    :icon-name="iconName"
                     class="slds-media__figure slds-m-right_x-small"
                     icon-class="slds-icon-text-default"
                     size="x-small"/>
@@ -21,7 +17,7 @@
                 <!-- Text -->
                 <div class="slds-media__body">
                     <h2 class="slds-truncate" title="Header">
-                        Header
+                        {{ heading }}
                     </h2>
                 </div>
 
@@ -51,7 +47,7 @@
         <!-- Footer -->
         <footer class="slds-docked-composer__footer slds-shrink-none">
             <div class="slds-col_bump-left slds-text-align_right">
-                <slds-button label="Action" variant="brand"/>
+                <slds-button label="actionButtonLabel" variant="brand"/>
             </div>
         </footer>
 
@@ -60,6 +56,15 @@
 
 <script>
     export default {
-        name: "Index"
+        props: {
+            heading: {
+                type: String,
+                required: true,
+            },
+            iconName: {
+                type: String,
+                required: true,
+            },
+        },
     }
 </script>

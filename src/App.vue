@@ -29,7 +29,7 @@
 
         <!-- Docked composer -->
         <div class="slds-docked_container">
-            <slds-docked-composer/>
+            <slds-docked-composer heading="Marcelo Gomes" icon-name="utility:share_post"/>
         </div>
 
     </div>
