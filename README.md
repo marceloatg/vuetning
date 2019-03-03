@@ -36,6 +36,7 @@ TBD
 * [Combobox](./src/components/Combobox)
 * [Checkbox](./src/components/Checkbox)
 * [Data Table](./src/components/DataTable)
+* [Docked Composer](./src/components/DockedComposer)
 * [Expandable Section](./src/components/ExpandableSection)
 * [Global Header](./src/components/GlobalHeader)
 * [Global Navigation](./src/components/GlobalNavigation)
