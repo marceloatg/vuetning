@@ -1,5 +1,5 @@
 <template>
-    <section class="slds-docked-composer slds-grid slds-grid_vertical slds-is-open">
+    <section class="slds-docked-composer slds-grid slds-grid_vertical" :class="`slds-is-${state}`">
 
         <!-- Header -->
         <header class="slds-docked-composer__header slds-grid slds-shrink-none">
@@ -26,11 +26,32 @@
             <!-- Actions -->
             <div class="slds-col_bump-left slds-shrink-none">
 
-                <slds-button-icon icon-name="utility:minimize_window" container="none" title="Minimize window"/>
+                <slds-button-icon
+                    v-if="hasMinimizeButton && state === 'close'"
+                    icon-name="utility:erect_window"
+                    container="none"
+                    title="Erect window"
+                    @click="onErect"/>
 
-                <slds-button-icon icon-name="utility:expand_alt" container="none" title="Expand Composer"/>
+                <slds-button-icon
+                    v-if="hasMinimizeButton && state === 'open'"
+                    icon-name="utility:minimize_window"
+                    container="none"
+                    title="Minimize window"
+                    @click="onMinimize"/>
 
-                <slds-button-icon icon-name="utility:close" container="none" title="Close"/>
+                <slds-button-icon
+                    v-if="hasExpandButton"
+                    icon-name="utility:expand_alt"
+                    container="none"
+                    title="Expand Composer"
+                    @click="onExpand"/>
+
+                <slds-button-icon
+                    icon-name="utility:close"
+                    container="none"
+                    title="Close"
+                    @click="onClose"/>
 
             </div>
 
@@ -57,6 +78,14 @@
 <script>
     export default {
         props: {
+            hasExpandButton: {
+                type: Boolean,
+                default: true,
+            },
+            hasMinimizeButton: {
+                type: Boolean,
+                default: true,
+            },
             heading: {
                 type: String,
                 required: true,
@@ -66,5 +95,32 @@
                 required: true,
             },
         },
+        data() {
+            return {
+                state: 'open',
+            }
+        },
+        methods: {
+            onClose() {
+                this.$emit('close');
+            },
+            onErect() {
+                this.state = 'open';
+                this.$emit('erect');
+            },
+            onExpand() {
+                this.$emit('expand');
+            },
+            onMinimize() {
+                this.state = 'close';
+                this.$emit('minimize');
+            },
+        },
     }
 </script>
+
+<style scoped lang="scss">
+    header {
+        height: 42px;
+    }
+</style>

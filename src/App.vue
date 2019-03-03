@@ -55,11 +55,15 @@
                     iconName: "offline",
                     message: 'Oops, it looks like you\'re offline. Check your internet connection and try again.'
                 },
+                showDockedComposer: true,
             }
         },
         methods: {
             closeAlert() {
                 this.alert.show = false;
+            },
+            closeDockedComposer() {
+                this.showDockedComposer = false;
             },
         },
     }
