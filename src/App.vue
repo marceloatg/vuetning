@@ -19,25 +19,17 @@
         <!-- Global navigation -->
         <slds-global-navigation app-name="Vuetning"/>
 
-        <!-- Notifications -->
-        <div class="slds-notification-container">
-            <slds-notification
-                v-for="(notification, index) in notifications"
-                :icon-class="notification.iconClass"
-                :icon-name="notification.iconName"
-                :key="notification.name"
-                :message="notification.message"
-                :name="notification.name"
-                :subject="notification.subject"
-                @close="onCloseNotification(index)"/>
-        </div>
-
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
 
         <!-- Global content -->
         <div class="slds-global-content">
             <slds-view/>
+        </div>
+
+        <!-- Docked composer -->
+        <div class="slds-docked_container">
+            <slds-docked-composer/>
         </div>
 
     </div>
@@ -63,41 +55,11 @@
                     iconName: "offline",
                     message: 'Oops, it looks like you\'re offline. Check your internet connection and try again.'
                 },
-                notifications: [
-                    {
-                        name: '7a06e46e-21e8-4197-8ebf-ba8893e24d51',
-                        iconName: 'standard:event',
-                        subject: 'First',
-                        message: 'Event at 11:00am on Jan 8',
-                    },
-                    {
-                        name: 'd91b85b1-d73a-462b-9373-0761b66a6e3f',
-                        iconClass: 'slds-icon-standard-quick-text',
-                        iconName: 'standard:partners',
-                        subject: 'Second',
-                        message: 'Event at 11:00am on Jan 8',
-                    },
-                    {
-                        name: '3ed946d7-f9d2-4944-91e9-98b6fff3f3af',
-                        iconName: 'standard:task',
-                        subject: 'Third',
-                        message: 'Event at 11:00am on Jan 8',
-                    },
-                    {
-                        name: '99cb0010-d946-4089-aded-cdfcf18264a3',
-                        iconName: 'standard:event',
-                        subject: 'Fourth',
-                        message: 'Event at 11:00am on Jan 8',
-                    },
-                ],
             }
         },
         methods: {
             closeAlert() {
                 this.alert.show = false;
-            },
-            onCloseNotification(index) {
-                this.notifications.splice(index, 1);
             },
         },
     }
