@@ -63,7 +63,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="slds-docked-composer__footer slds-shrink-none">
+        <footer v-if="$slots.footer" class="slds-docked-composer__footer slds-shrink-none">
             <slot name="footer"/>
         </footer>
 
