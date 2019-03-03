@@ -27,6 +27,7 @@
             <div class="slds-col_bump-left slds-shrink-none">
 
                 <slds-button-icon
+                    ref="erectButton"
                     v-if="hasMinimizeButton && state === 'close'"
                     icon-name="utility:erect_window"
                     container="none"
@@ -34,6 +35,7 @@
                     @click="onErect"/>
 
                 <slds-button-icon
+                    ref="minimizeButton"
                     v-if="hasMinimizeButton && state === 'open'"
                     icon-name="utility:minimize_window"
                     container="none"
@@ -41,6 +43,7 @@
                     @click="onMinimize"/>
 
                 <slds-button-icon
+                    ref="expandButton"
                     v-if="hasExpandButton"
                     icon-name="utility:expand_alt"
                     container="none"
@@ -48,6 +51,7 @@
                     @click="onExpand"/>
 
                 <slds-button-icon
+                    ref="closeButton"
                     icon-name="utility:close"
                     container="none"
                     title="Close"
@@ -71,7 +75,14 @@
 </template>
 
 <script>
+    import SldsButtonIcon from '../ButtonIcon/Index'
+    import SldsIcon from '../Icon/Index'
+
     export default {
+        components: {
+            SldsButtonIcon,
+            SldsIcon,
+        },
         props: {
             hasExpandButton: {
                 type: Boolean,
