@@ -59,17 +59,12 @@
 
         <!-- Body -->
         <div class="slds-docked-composer__body">
-            <div class="slds-align_absolute-center">
-                Docked Composer Panel Body <br>
-                This area consumes the feature
-            </div>
+            <slot name="body"/>
         </div>
 
         <!-- Footer -->
         <footer class="slds-docked-composer__footer slds-shrink-none">
-            <div class="slds-col_bump-left slds-text-align_right">
-                <slds-button label="actionButtonLabel" variant="brand"/>
-            </div>
+            <slot name="footer"/>
         </footer>
 
     </section>

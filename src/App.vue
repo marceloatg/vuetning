@@ -29,7 +29,22 @@
 
         <!-- Docked composer -->
         <div class="slds-docked_container">
-            <slds-docked-composer heading="Marcelo Gomes" icon-name="utility:share_post"/>
+            <slds-docked-composer heading="Marcelo Gomes" icon-name="utility:share_post">
+
+                <template #body>
+                    <div class="slds-align_absolute-center">
+                        Docked Composer Panel Body <br>
+                        This area consumes the feature
+                    </div>
+                </template>
+
+                <template #footer>
+                    <div class="slds-col_bump-left slds-text-align_right">
+                        <slds-button label="actionButtonLabel" variant="brand"/>
+                    </div>
+                </template>
+
+            </slds-docked-composer>
         </div>
 
     </div>
