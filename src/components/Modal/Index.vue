@@ -109,3 +109,10 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .overflow-initial {
+        overflow: initial;
+        overflow-y: auto;
+    }
+</style>
