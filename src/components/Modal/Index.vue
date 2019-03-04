@@ -109,3 +109,9 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .slds-modal__content {
+        overflow: initial;
+    }
+</style>
