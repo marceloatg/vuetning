@@ -111,7 +111,7 @@
 </script>
 
 <style scoped lang="scss">
-    .overflow-initial {
+    .slds-modal__content {
         overflow: initial;
         overflow-y: auto;
     }
