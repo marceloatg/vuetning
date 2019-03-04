@@ -46,7 +46,7 @@
                     <div v-show="isOpen" role="listbox">
                         <ul
                             role="presentation"
-                            class="slds-listbox slds-listbox_vertical slds-dropdown"
+                            class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
                             :class="[`slds-dropdown_${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]">
 
                             <template v-for="option in options">
@@ -110,11 +110,9 @@
                 type: String,
             },
             length: {
-                type: [String, Number],
-                default: 'fluid',
+                type: [Number],
                 validator(value) {
                     return [
-                        'fluid',
                         5,
                         7,
                         10,
