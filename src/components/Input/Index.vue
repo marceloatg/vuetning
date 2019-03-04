@@ -34,7 +34,8 @@
                 :maxlength="maxlength"
                 class="slds-input"
                 v-bind="[disabledAttribute, readOnlyAttribute]"
-                @input.stop="onInput($event)">
+                @blur="onBlur"
+                @input="onInput($event)">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
@@ -66,10 +67,11 @@
             {{ inlineHelp }}
         </div>
 
-        <!-- Inline help -->
+        <!-- Error messages -->
         <div v-if="hasError" class="slds-form-element__help">
-            {{ errorMessage }}
+            <slot name="errors"/>
         </div>
+
     </div>
 </template>
 
@@ -83,10 +85,6 @@
             disabled: {
                 type: Boolean,
                 default: false,
-            },
-            errorMessage: {
-                type: String,
-                default: 'There was an error validating this field.',
             },
             hasClearButton: {
                 type: Boolean,
@@ -186,6 +184,9 @@
             onClick(event) {
                 this.value = event.target.value;
                 this.$emit('input', this.value);
+            },
+            onBlur() {
+                this.$emit('blur');
             },
             onInput(event) {
                 this.value = event.target.value;

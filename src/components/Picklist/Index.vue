@@ -30,9 +30,9 @@
                             readonly
                             class="slds-input slds-combobox__input"
                             v-bind="disabledAttribute"
-                            @click="open"
-                            @blur="close"
-                            @keyup="keyUp">
+                            @click="onClick"
+                            @blur="onBlur"
+                            @keyup="onKeyUp">
 
                         <slds-icon
                             icon-name="utility:down"
@@ -62,7 +62,7 @@
                                     :label="option.label"
                                     :value="option.value"
                                     :is-selected="option.value === selectedValue"
-                                    @selected="onSelect"/>
+                                    @selected="onSelected"/>
 
                             </template>
 
@@ -84,9 +84,14 @@
             </div>
         </div>
 
-        <!-- Help -->
-        <div class="slds-form-element__help" v-if="hasError">
-            {{ helpMessage }}
+        <!-- Inline help -->
+        <div v-if="!hasError && inlineHelp != null" class="slds-form-element__help">
+            {{ inlineHelp }}
+        </div>
+
+        <!-- Error messages -->
+        <div v-if="hasError" class="slds-form-element__help">
+            <slot name="errors"/>
         </div>
 
     </div>
@@ -105,6 +110,13 @@
             disabled: {
                 type: Boolean,
                 default: false,
+            },
+            hasError: {
+                type: Boolean,
+                default: false,
+            },
+            inlineHelp: {
+                type: String,
             },
             label: {
                 type: String,
@@ -168,8 +180,6 @@
         },
         data() {
             return {
-                hasError: false,
-                helpMessage: 'Help message',
                 isOpen: false,
                 selectedValue: null,
                 selectedLabel: null,
@@ -188,13 +198,14 @@
             this.$emit('input', this.selectedValue);
         },
         methods: {
-            open() {
+            onClick() {
                 this.isOpen = true;
             },
-            close() {
+            onBlur() {
                 this.isOpen = false;
+                this.$emit('blur');
             },
-            keyUp(event) {
+            onKeyUp(event) {
                 switch (event.key) {
 
                     case 'Escape':
@@ -206,7 +217,7 @@
                         break;
                 }
             },
-            onSelect(value, label) {
+            onSelected(value, label) {
                 this.selectedValue = value;
                 this.selectedLabel = label;
                 this.$emit('input', value);
