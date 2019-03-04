@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-form-element">
+    <div class="slds-form-element" :class="{ 'slds-has-error': hasError }">
 
         <!-- Label -->
         <label v-if="label != null" class="slds-form-element__label">
@@ -62,10 +62,14 @@
         </div>
 
         <!-- Inline help -->
-        <div v-if="inlineHelp != null" class="slds-form-element__help">
+        <div v-if="!hasError && inlineHelp != null" class="slds-form-element__help">
             {{ inlineHelp }}
         </div>
 
+        <!-- Inline help -->
+        <div v-if="hasError" class="slds-form-element__help">
+            {{ errorMessage }}
+        </div>
     </div>
 </template>
 
@@ -80,7 +84,15 @@
                 type: Boolean,
                 default: false,
             },
+            errorMessage: {
+                type: String,
+                default: 'There was an error validating this field.',
+            },
             hasClearButton: {
+                type: Boolean,
+                default: false,
+            },
+            hasError: {
                 type: Boolean,
                 default: false,
             },
@@ -175,7 +187,7 @@
                 this.value = event.target.value;
                 this.$emit('input', this.value);
             },
-            onInput(event){
+            onInput(event) {
                 this.value = event.target.value;
                 this.$emit('input', this.value);
             },
