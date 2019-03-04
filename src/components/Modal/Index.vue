@@ -109,3 +109,10 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .slds-modal_medium {
+        max-width: 840px;
+        min-width: 480px;
+    }
+</style>
