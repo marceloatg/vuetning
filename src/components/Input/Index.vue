@@ -73,6 +73,9 @@
     export default {
         name: 'Input',
         props: {
+            default: {
+                default: null,
+            },
             disabled: {
                 type: Boolean,
                 default: false,
@@ -153,6 +156,11 @@
             },
         },
         mounted() {
+            if (this.default != null) {
+                this.value = this.default;
+                this.$emit('input', this.value);
+            }
+
             if (this.postFixedText == null) return;
 
             const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
