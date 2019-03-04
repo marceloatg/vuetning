@@ -44,6 +44,17 @@
                     label: 'Name',
                     type: 'link',
                 }, {
+                    label: 'Access',
+                    fixedWidth: 120,
+                    resizable: false,
+                    type: 'button',
+                    typeAttributes: {
+                        label: 'access',
+                        iconName: 'utility:salesforce1',
+                        variant: 'outline-brand',
+                        class: 'slds-button_in-table',
+                    },
+                }, {
                     fieldName: 'email',
                     label: 'Email',
                     type: 'email',
