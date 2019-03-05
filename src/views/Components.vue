@@ -35,75 +35,86 @@
         data() {
             return {
                 modalOpened: true,
-                columns: [{
-                    fieldName: 'avatar',
-                    resizable: false,
-                    type: 'avatar',
-                }, {
-                    fieldName: 'name',
-                    label: 'Name',
-                    type: 'link',
-                }, {
-                    label: 'Access',
-                    fixedWidth: 120,
-                    resizable: false,
-                    type: 'button',
-                    typeAttributes: {
-                        label: 'access',
-                        iconName: 'utility:salesforce1',
-                        variant: 'outline-brand',
-                        class: 'slds-button_in-table',
+                columns: [
+                    {
+                        fieldName: 'avatar',
+                        resizable: false,
+                        type: 'avatar',
                     },
-                }, {
-                    fieldName: 'email',
-                    label: 'Email',
-                    type: 'email',
-                }, {
-                    fieldName: 'verified',
-                    label: 'Verified',
-                    type: 'boolean',
-                    initialWidth: 100,
-                }, {
-                    fieldName: 'blocked',
-                    label: 'Blocked',
-                    type: 'boolean',
-                    initialWidth: 100,
-                }, {
-                    fieldName: 'status',
-                    label: 'Status',
-                    type: 'badge',
-                }, {
-                    fieldName: 'profile.label',
-                    label: 'Profile',
-                    type: 'text',
-                }, {
-                    fieldName: 'usedStorage',
-                    label: 'Used storage',
-                    type: 'number',
-                    align: 'right',
-                    typeAttributes: {
-                        decimalPlaces: 2,
+                    {
+                        fieldName: 'name',
+                        label: 'Name',
+                        type: 'link',
+                    },
+                    {
+                        label: 'Access',
+                        fixedWidth: 120,
+                        resizable: false,
+                        type: 'button',
+                        typeAttributes: {
+                            label: 'access',
+                            iconName: 'utility:salesforce1',
+                            variant: 'outline-brand',
+                            class: 'slds-button_in-table',
+                        },
+                    },
+                    {
+                        fieldName: 'email',
+                        label: 'Email',
+                        type: 'email',
+                    },
+                    {
+                        fieldName: 'verified',
+                        label: 'Verified',
+                        type: 'boolean',
+                        initialWidth: 100,
+                    },
+                    {
+                        fieldName: 'blocked',
+                        label: 'Blocked',
+                        type: 'boolean',
+                        initialWidth: 100,
+                    },
+                    {
+                        fieldName: 'status',
+                        label: 'Status',
+                        type: 'badge',
+                    },
+                    {
+                        fieldName: 'profile.label',
+                        label: 'Profile',
+                        type: 'text',
+                    },
+                    {
+                        fieldName: 'usedStorage',
+                        label: 'Used storage',
+                        type: 'number',
+                        align: 'right',
+                        typeAttributes: {
+                            decimalPlaces: 2,
+                        }
+                    },
+                    {
+                        type: 'action',
+                        resizable: false,
+                        fixedWidth: 52,
+                        typeAttributes: {
+                            rowActions: [{
+                                label: 'Edit',
+                                name: 'edit',
+                                leftIconName: 'utility:edit',
+                            }, {
+                                label: 'Block',
+                                name: 'block',
+                                leftIconName: 'utility:ban',
+                            }, {
+                                label: 'Delete',
+                                name: 'delete',
+                                leftIconName: 'utility:delete',
+                            }]
+                        },
                     }
-                }, {
-                    type: 'action',
-                    resizable: false,
-                    fixedWidth: 52,
-                    typeAttributes: {
-                        rowActions: [{
-                            label: 'Edit',
-                            name: 'edit',
-                            leftIconName: 'utility:edit',
-                        }, {
-                            label: 'Block',
-                            name: 'block',
-                            leftIconName: 'utility:ban',
-                        }, {
-                            label: 'Delete',
-                            name: 'delete',
-                            leftIconName: 'utility:delete',
-                        }]
-                    },
-                }],
+                ],
                 emptyMessage: {
                     heading: 'Nothing here yet',
                     message: 'You do not have any organizations added, click the Add button to get started.',
