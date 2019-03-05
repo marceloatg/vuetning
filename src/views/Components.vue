@@ -103,9 +103,9 @@
                         type: 'badge',
                     },
                     {
-                        fieldName: 'profile.label',
-                        label: 'Profile',
-                        type: 'text',
+                        fieldName: 'duration',
+                        label: 'Duration',
+                        type: 'duration',
                     },
                     {
                         fieldName: 'usedStorage',
@@ -156,6 +156,7 @@
                 refreshing: false,
                 rows: [
                     {
+                        "duration": 15,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
                         "name": "John Doe",
                         "email": "johndoe@arcthos.com",
@@ -178,6 +179,7 @@
                         "usedStorage": 100000000
                     },
                     {
+                        "duration": 2,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d5",
                         "name": "John Doe",
                         "email": "johndoe@arcthos.com",
@@ -200,6 +202,7 @@
                         "usedStorage": 100000000
                     },
                     {
+                        "duration": 11658,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
                         "name": "John Doe",
                         "email": "johndoe@arcthos.com",
@@ -222,6 +225,7 @@
                         "usedStorage": null
                     },
                     {
+                        "duration": 2156000,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d6",
                         "name": "John Doe",
                         "email": "johndoe@arcthos.com",
@@ -313,6 +317,7 @@
                         }
                     },
                     {
+                        "duration": 13245678,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c9",
                         "name": "John Doe",
                         "email": "johndoe@arcthos.com",

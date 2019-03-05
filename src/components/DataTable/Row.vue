@@ -58,6 +58,13 @@
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
+            <slds-cell-duration
+                v-else-if="column.type === 'duration'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"/>
+
             <slds-cell-email
                 v-else-if="column.type === 'email'"
                 :align="column.align"
@@ -93,6 +100,7 @@
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
     import SldsCellDate from './Cell/Date';
+    import SldsCellDuration from './Cell/Duration';
     import SldsCellEmail from './Cell/Email';
     import SldsCellNumber from './Cell/Number';
     import SldsCellText from './Cell/Text';
@@ -106,6 +114,7 @@
             SldsCellBoolean,
             SldsCellButton,
             SldsCellDate,
+            SldsCellDuration,
             SldsCellEmail,
             SldsCellNumber,
             SldsCellText,

@@ -25,6 +25,7 @@
                         'button-icon',
                         'currency',
                         'date',
+                        'duration',
                         'email',
                         'number',
                         'percent',
