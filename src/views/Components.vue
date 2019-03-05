@@ -11,7 +11,8 @@
         :show-row-number-column="true"
         :show-row-selection-column="true"
         :title="title"
-        :total-rows="rows.length">
+        :total-rows="rows.length"
+        @details="onDetails">
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
@@ -37,6 +38,17 @@
                 modalOpened: true,
                 columns: [
                     {
+                        align: 'center',
+                        type: 'action-link',
+                        hasCopyButton: false,
+                        fixedWidth: 90,
+                        resizable: false,
+                        typeAttributes: {
+                            label: 'See details',
+                            action: 'details',
+                        },
+                    },
+                    {
                         fieldName: 'avatar',
                         resizable: false,
                         type: 'avatar',
@@ -44,7 +56,10 @@
                     {
                         fieldName: 'name',
                         label: 'Name',
-                        type: 'link',
+                        type: 'action-link',
+                        typeAttributes: {
+                            action: 'userdetails',
+                        },
                     },
                     {
                         label: 'Access',
@@ -314,6 +329,9 @@
             },
             onClose() {
                 this.modalOpened = false;
+            },
+            onDetails(row) {
+                console.log(row);
             },
         },
     }

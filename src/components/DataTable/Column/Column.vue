@@ -16,8 +16,9 @@
                 required: true,
                 validator(value) {
                     return [
-                        'avatar',
                         'action',
+                        'action-link',
+                        'avatar',
                         'badge',
                         'boolean',
                         'button',
@@ -25,7 +26,6 @@
                         'currency',
                         'date',
                         'email',
-                        'link',
                         'number',
                         'percent',
                         'text',

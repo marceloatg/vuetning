@@ -53,6 +53,7 @@
                                 :selected-rows="selectedRows"
                                 :show-row-number-column="showRowNumberColumn"
                                 :show-row-selection-column="showRowSelectionColumn"
+                                @actionlink="onActionLink"
                                 @select="onSelect(...arguments)"
                                 @selectall="onSelectAll($event)"/>
 
@@ -161,6 +162,9 @@
             },
         },
         methods: {
+            onActionLink(action, row) {
+                this.$emit(action, row);
+            },
             onPageChanged(page) {
                 this.currentPage = page;
             },

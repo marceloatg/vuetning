@@ -69,6 +69,7 @@
                         :row="row"
                         :show-row-number-column="showRowNumberColumn"
                         :show-row-selection-column="showRowSelectionColumn"
+                        @actionlink="action => onActionLink(action, row)"
                         @select="onSelect($event, index)"/>
                 </tbody>
 
@@ -193,6 +194,9 @@
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);
                 return column.resizable;
+            },
+            onActionLink(action, row) {
+                this.$emit('actionlink', action, row);
             },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;

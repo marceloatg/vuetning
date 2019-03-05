@@ -2,13 +2,13 @@
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
 
-            <a class="slds-truncate" :title="cell">
-                {{ cell }}
+            <a class="slds-truncate" :title="label" @click="onClick">
+                {{ label }}
             </a>
 
             <slds-button-icon
                 v-if="hasCopyButton"
-                v-clipboard="cell"
+                v-clipboard="label"
                 icon-name="utility:copy_to_clipboard"
                 container="none"
                 class="slds-cell-edit__button slds-m-left_x-small"
@@ -27,11 +27,21 @@
         props: {
             cell: {
                 type: String,
-                required: true,
             },
             hasCopyButton: {
                 type: Boolean,
                 default: true,
+            },
+        },
+        computed: {
+            label() {
+                if (this.cell != null) return this.cell;
+                return this.typeAttributes.label;
+            },
+        },
+        methods: {
+            onClick() {
+                this.$emit('action', this.typeAttributes.action);
             },
         },
     }
