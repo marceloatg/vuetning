@@ -1,17 +1,21 @@
 <template>
     <slds-table-view
         :columns="columns"
+        :current-page="currentPage"
         :empty-message="emptyMessage"
         :figure="figure"
         :footer="footer"
         :initialized="initialized"
         :key-field="keyField"
         :list-views="listViews"
+        :refreshing="refreshing"
         :rows="rows"
         :show-row-number-column="true"
         :show-row-selection-column="true"
         :title="title"
+        :total-pages="totalPages"
         :total-rows="rows.length"
+        :update-time="updateTime"
         @details="onDetails">
 
         <template #header-actions>
@@ -130,6 +134,7 @@
                         },
                     }
                 ],
+                currentPage: 1,
                 emptyMessage: {
                     heading: 'Nothing here yet',
                     message: 'You do not have any organizations added, click the Add button to get started.',
@@ -145,182 +150,194 @@
                 initialized: true,
                 keyField: 'id',
                 listViews: 'All users',
-                rows: [{
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
+                refreshing: false,
+                rows: [
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "In Progress",
+                            "color": "outline-brand",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": 100000000
                     },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d5",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "In Progress",
+                            "color": "brand",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": 100000000
                     },
-                    "status": {
-                        "label": "In Progress",
-                        "color": "outline-brand",
-                        "iconName": "utility:error"
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Partial",
+                            "color": "outline-warning",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": null
                     },
-                    "usedStorage": 100000000
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d5",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d6",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Partial",
+                            "color": "warning",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": null
                     },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c7",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Succeeded",
+                            "color": "outline-success",
+                            "iconName": "utility:check"
+                        },
+                        "usedStorage": 12345.67
                     },
-                    "status": {
-                        "label": "In Progress",
-                        "color": "brand",
-                        "iconName": "utility:error"
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d7",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Succeeded",
+                            "color": "success",
+                            "iconName": "utility:check"
+                        },
+                        "usedStorage": 12345.67
                     },
-                    "usedStorage": 100000000
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c6",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c8",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Failed",
+                            "color": "outline-error",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": {
+                            "label": "95,37 MB",
+                            "value": 100002693
+                        }
                     },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Partial",
-                        "color": "outline-warning",
-                        "iconName": "utility:error"
-                    },
-                    "usedStorage": null
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d6",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
-                    },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Partial",
-                        "color": "warning",
-                        "iconName": "utility:error"
-                    },
-                    "usedStorage": null
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c7",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
-                    },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Succeeded",
-                        "color": "outline-success",
-                        "iconName": "utility:check"
-                    },
-                    "usedStorage": 12345.67
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d7",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
-                    },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Succeeded",
-                        "color": "success",
-                        "iconName": "utility:check"
-                    },
-                    "usedStorage": 12345.67
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c8",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
-                    },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Failed",
-                        "color": "outline-error",
-                        "iconName": "utility:error"
-                    },
-                    "usedStorage": {
-                        "label": "95,37 MB",
-                        "value": 100002693
+                    {
+                        "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c9",
+                        "name": "John Doe",
+                        "email": "johndoe@arcthos.com",
+                        "avatar": {
+                            "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
+                            "initials": "JD",
+                            "fallbackIconName": "standard:user",
+                        },
+                        "verified": true,
+                        "blocked": false,
+                        "profile": {
+                            "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
+                            "label": "Administrator"
+                        },
+                        "status": {
+                            "label": "Failed",
+                            "color": "error",
+                            "iconName": "utility:error"
+                        },
+                        "usedStorage": {
+                            "label": "95,37 MB",
+                            "value": 100002693
+                        }
                     }
-                }, {
-                    "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c9",
-                    "name": "John Doe",
-                    "email": "johndoe@arcthos.com",
-                    "avatar": {
-                        "src": "https://s.gravatar.com/avatar/73822150983841403240232f7070b52a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fjd.png",
-                        "initials": "JD",
-                        "fallbackIconName": "standard:user",
-                    },
-                    "verified": true,
-                    "blocked": false,
-                    "profile": {
-                        "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
-                        "label": "Administrator"
-                    },
-                    "status": {
-                        "label": "Failed",
-                        "color": "error",
-                        "iconName": "utility:error"
-                    },
-                    "usedStorage": {
-                        "label": "95,37 MB",
-                        "value": 100002693
-                    }
-                }],
+                ],
                 title: 'Users',
+                totalPages: 3,
+                updateTime: Date.now(),
             }
         },
         methods: {

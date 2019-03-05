@@ -8,8 +8,13 @@
         <table-view-header
             :count="totalRows"
             :figure="figure"
+            :initialized="initialized"
             :list-views="listViews"
-            :title="title">
+            :refreshing="refreshing"
+            :title="title"
+            :update-time="updateTime"
+            @filter="onFilter"
+            @refresh="onRefresh">
 
             <template #actions>
                 <slot name="header-actions"/>
@@ -23,7 +28,17 @@
                 <div class="slds-col slds-no-space">
 
                     <!-- Spinner -->
-                    <div v-if="refreshing"/>
+                    <transition
+                        name="router-animation"
+                        enter-active-class="animated fadeIn quicker"
+                        leave-active-class="animated fadeOut quicker"
+                        mode="out-in">
+
+                        <div v-if="refreshing" class="slds-spinner_container">
+                            <slds-spinner variant="brand"/>
+                        </div>
+
+                    </transition>
 
                     <transition
                         name="router-animation"
@@ -67,11 +82,11 @@
 
         <!-- Footer -->
         <table-view-footer
-            :current-page="footer.currentPage"
+            :current-page="currentPage"
             :initialized="initialized"
             :rows-per-page-options="rowsPerPageOptions"
             :rows-per-page="rowsPerPageOptions[0]"
-            :total-pages="footer.totalPages"
+            :total-pages="totalPages"
             @pagechanged="onPageChanged"/>
 
     </main>
@@ -95,15 +110,15 @@
                 type: Array,
                 required: true,
             },
+            currentPage: {
+                type: Number,
+                required: true
+            },
             emptyMessage: {
                 type: Object,
                 required: true,
             },
             figure: {
-                type: Object,
-                required: true,
-            },
-            footer: {
                 type: Object,
                 required: true,
             },
@@ -117,6 +132,10 @@
             listViews: {
                 type: String,
                 required: true,
+            },
+            refreshing: {
+                type: Boolean,
+                default: false,
             },
             rows: {
                 type: Array,
@@ -138,14 +157,20 @@
                 type: String,
                 required: true,
             },
+            totalPages: {
+                type: Number,
+                required: true,
+            },
             totalRows: {
                 type: Number,
                 required: true,
             },
+            updateTime: {
+                type: Number,
+            },
         },
         data() {
             return {
-                refreshing: false,
                 rowsPerPageOptions: [
                     {value: 100, label: '100',},
                     {value: 50, label: '50',},
@@ -155,7 +180,7 @@
         },
         computed: {
             allRowsSelected() {
-                return this.totalRows == this.selectedRows.length;
+                return this.totalRows === this.selectedRows.length;
             },
             isEmpty() {
                 return this.rows.length === 0;
@@ -165,8 +190,14 @@
             onActionLink(action, row) {
                 this.$emit(action, row);
             },
+            onFilter() {
+                this.$emit('filter');
+            },
             onPageChanged(page) {
                 this.currentPage = page;
+            },
+            onRefresh() {
+                this.$emit('refresh');
             },
             onSelect(selected, key) {
                 if (selected) this.selectedRows.push(key);
