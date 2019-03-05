@@ -37,6 +37,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "v-clipboard": "^2.2.1",
     "vue": "^2.6.8"
   },
