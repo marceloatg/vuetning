@@ -65,7 +65,7 @@
                         v-for="(row, index) in rows"
                         :columns="columns"
                         :is-selected="selectedRows.includes(index)"
-                        :key="index"
+                        :key="getKeyField(row)"
                         :row="row"
                         :show-row-number-column="showRowNumberColumn"
                         :show-row-selection-column="showRowSelectionColumn"
@@ -100,6 +100,7 @@
             },
             keyField: {
                 type: String,
+                required: true,
             },
             rows: {
                 type: Array,
@@ -178,6 +179,16 @@
                     this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
                     this.$set(this.columns[index - indexOffset], 'left', header [index].offsetLeft);
                 }
+            },
+            getKeyField(row) {
+                const fields = this.keyField.split('.');
+                let cell = row[fields[0]];
+
+                for (let i = 1; i < fields.length; i++) {
+                    cell = cell[fields[i]];
+                }
+
+                return cell;
             },
             isColumnResizable(column) {
                 if (column.resizable == null) this.$set(column, 'resizable', true);

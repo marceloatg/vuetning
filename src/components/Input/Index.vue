@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-form-element">
+    <div class="slds-form-element" :class="{ 'slds-has-error': hasError }">
 
         <!-- Label -->
         <label v-if="label != null" class="slds-form-element__label">
@@ -34,7 +34,9 @@
                 :maxlength="maxlength"
                 class="slds-input"
                 v-bind="[disabledAttribute, readOnlyAttribute]"
-                @input.stop="onInput($event)">
+                @blur="onBlur"
+                @change="onChange($event)"
+                @input="onInput($event)">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
@@ -62,8 +64,13 @@
         </div>
 
         <!-- Inline help -->
-        <div v-if="inlineHelp != null" class="slds-form-element__help">
+        <div v-if="!hasError && inlineHelp != null" class="slds-form-element__help">
             {{ inlineHelp }}
+        </div>
+
+        <!-- Error messages -->
+        <div v-if="hasError" class="slds-form-element__help">
+            <slot name="errors"/>
         </div>
 
     </div>
@@ -73,11 +80,18 @@
     export default {
         name: 'Input',
         props: {
+            default: {
+                default: null,
+            },
             disabled: {
                 type: Boolean,
                 default: false,
             },
             hasClearButton: {
+                type: Boolean,
+                default: false,
+            },
+            hasError: {
                 type: Boolean,
                 default: false,
             },
@@ -153,6 +167,11 @@
             },
         },
         mounted() {
+            if (this.default != null) {
+                this.value = this.default;
+                this.$emit('input', this.value);
+            }
+
             if (this.postFixedText == null) return;
 
             const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
@@ -163,10 +182,20 @@
                 this.value = null;
                 this.$emit('input', this.value);
             },
+            onBlur() {
+                this.$emit('blur');
+            },
+            onChange(event){
+                this.$emit('change', event);
+            },
             onClick(event) {
                 this.value = event.target.value;
                 this.$emit('input', this.value);
-            }
+            },
+            onInput(event) {
+                this.value = event.target.value;
+                this.$emit('input', this.value);
+            },
         },
     }
 </script>

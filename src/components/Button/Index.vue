@@ -135,6 +135,10 @@
         &_in-table {
             padding: 0 6px;
             line-height: 1.125rem;
+
+            .slds-button__icon_left {
+                margin-right: 0;
+            }
         }
     }
 
