@@ -35,6 +35,7 @@
                 class="slds-input"
                 v-bind="[disabledAttribute, readOnlyAttribute]"
                 @blur="onBlur"
+                @change="onChange($event)"
                 @input="onInput($event)">
 
             <!-- Right group -->
@@ -181,12 +182,15 @@
                 this.value = null;
                 this.$emit('input', this.value);
             },
+            onBlur() {
+                this.$emit('blur');
+            },
+            onChange(event){
+                this.$emit('change', event);
+            },
             onClick(event) {
                 this.value = event.target.value;
                 this.$emit('input', this.value);
-            },
-            onBlur() {
-                this.$emit('blur');
             },
             onInput(event) {
                 this.value = event.target.value;
