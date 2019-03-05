@@ -2,9 +2,9 @@
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
 
-            <span :title="title" class="slds-truncate">
+            <a class="slds-truncate" :title="label" @click="onClick">
                 {{ label }}
-            </span>
+            </a>
 
             <slds-button-icon
                 v-if="hasCopyButton"
@@ -20,14 +20,13 @@
 </template>
 
 <script>
-    import moment from 'moment'
     import SldsCell from './Cell'
 
     export default {
         extends: SldsCell,
         props: {
             cell: {
-                type: [Date, Number, String],
+                type: String,
             },
             hasCopyButton: {
                 type: Boolean,
@@ -36,15 +35,13 @@
         },
         computed: {
             label() {
-                if (this.cell == null) return null;
-                return moment(this.cell).format(this.typeAttributes.format);
+                if (this.cell != null) return this.cell;
+                return this.typeAttributes.label;
             },
-            title() {
-                if (this.cell == null) return null;
-
-                let format = this.typeAttributes.format;
-                if (this.typeAttributes.titleFormat != null) format = this.typeAttributes.titleFormat;
-                return moment(this.cell).format(format);
+        },
+        methods: {
+            onClick() {
+                this.$emit('action', this.typeAttributes.action);
             },
         },
     }

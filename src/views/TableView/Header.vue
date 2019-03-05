@@ -45,8 +45,8 @@
 
             <!-- Details -->
             <div class="slds-col slds-align-bottom">
-                <p class="slds-text-body_small">
-                    {{ count }} items
+                <p v-if="initialized" class="slds-text-body_small">
+                    {{ count }} items • Updated {{ relativeUpdatedTime }}
                 </p>
             </div>
 
@@ -69,10 +69,10 @@
                 <div class="slds-m-left_xx-small">
 
                     <!-- Filter -->
-                    <slds-button-icon icon-name="utility:filterList"/>
+                    <slds-button-icon icon-name="utility:filterList" @click="onFilter"/>
 
                     <!-- Refresh -->
-                    <slds-button-icon icon-name="utility:refresh"/>
+                    <slds-button-icon icon-name="utility:refresh" :disabled="refreshing" @click="onRefresh"/>
 
                 </div>
             </div>
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: {
             count: {
@@ -93,14 +95,30 @@
                 type: Object,
                 required: true,
             },
+            initialized: {
+                type: Boolean,
+                required: true,
+            },
             listViews: {
                 type: String,
+                required: true,
+            },
+            refreshing: {
+                type: Boolean,
                 required: true,
             },
             title: {
                 type: String,
                 required: true,
             },
+            updateTime: {
+                type: Number,
+            },
+        },
+        data() {
+            return {
+                relativeUpdatedTime: null,
+            }
         },
         computed: {
             adjustmentClass() {
@@ -108,6 +126,34 @@
                 if (iconName == null) return null;
                 if (iconName.startsWith('utility')) return 'utility-category-adjustment';
                 return null;
+            },
+        },
+        watch: {
+            initialized: function (newValue, oldValue) {
+                if (newValue === false || oldValue === true) return;
+                this.relativeUpdatedTime = moment(this.updateTime).fromNow();
+            },
+            updateTime: function (newValue) {
+                this.relativeUpdatedTime = moment(newValue).fromNow();
+            },
+        },
+        created() {
+            if (this.updateTime != null) this.relativeUpdatedTime = moment(this.updateTime).fromNow();
+            setInterval(this.updateRelativeUpdatedTime, 60000);
+        },
+        destroyed() {
+            clearInterval(this.updateTime);
+        },
+        methods: {
+            onFilter() {
+                this.$emit('filter');
+            },
+            onRefresh() {
+                this.$emit('refresh');
+            },
+            updateRelativeUpdatedTime() {
+                if (this.updateTime == null) return;
+                this.relativeUpdatedTime = moment(this.updateTime).fromNow();
             },
         },
     }

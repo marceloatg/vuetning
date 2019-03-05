@@ -17,6 +17,15 @@
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
+            <slds-cell-action-link
+                v-else-if="column.type === 'action-link'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"
+                :type-attributes="column.typeAttributes"
+                @action="onActionLink"/>
+
             <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
                 :align="column.align"
@@ -41,15 +50,23 @@
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
-            <slds-cell-email
-                v-else-if="column.type === 'email'"
+            <slds-cell-date
+                v-else-if="column.type === 'date'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"
+                :type-attributes="column.typeAttributes"/>
+
+            <slds-cell-duration
+                v-else-if="column.type === 'duration'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :key="index"/>
 
-            <slds-cell-link
-                v-else-if="column.type === 'link'"
+            <slds-cell-email
+                v-else-if="column.type === 'email'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
@@ -77,24 +94,28 @@
 
 <script>
     import SldsCellAction from './Cell/Action';
+    import SldsCellActionLink from './Cell/ActionLink';
     import SldsCellAvatar from './Cell/Avatar';
     import SldsCellBadge from './Cell/Badge';
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
+    import SldsCellDate from './Cell/Date';
+    import SldsCellDuration from './Cell/Duration';
     import SldsCellEmail from './Cell/Email';
-    import SldsCellLink from './Cell/Link';
     import SldsCellNumber from './Cell/Number';
     import SldsCellText from './Cell/Text';
 
     export default {
         components: {
             SldsCellAction,
+            SldsCellActionLink,
             SldsCellAvatar,
             SldsCellBadge,
             SldsCellBoolean,
             SldsCellButton,
+            SldsCellDate,
+            SldsCellDuration,
             SldsCellEmail,
-            SldsCellLink,
             SldsCellNumber,
             SldsCellText,
         },
@@ -122,6 +143,8 @@
         },
         methods: {
             getCell(fieldName) {
+                if (fieldName == null) return null;
+
                 const fields = fieldName.split('.');
                 let cell = this.row[fields[0]];
 
@@ -130,6 +153,9 @@
                 }
 
                 return cell;
+            },
+            onActionLink(action) {
+                this.$emit('actionlink', action);
             },
             onSelect(event) {
                 this.$emit('select', event);
