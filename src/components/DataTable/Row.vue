@@ -50,13 +50,20 @@
                 :key="index"
                 :type-attributes="column.typeAttributes"/>
 
+            <slds-cell-date
+                v-else-if="column.type === 'date'"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"
+                :has-copy-button="column.hasCopyButton"
+                :key="index"
+                :type-attributes="column.typeAttributes"/>
+
             <slds-cell-email
                 v-else-if="column.type === 'email'"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :key="index"/>
-
 
             <slds-cell-number
                 v-else-if="column.type === 'number'"
@@ -85,6 +92,7 @@
     import SldsCellBadge from './Cell/Badge';
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
+    import SldsCellDate from './Cell/Date';
     import SldsCellEmail from './Cell/Email';
     import SldsCellNumber from './Cell/Number';
     import SldsCellText from './Cell/Text';
@@ -97,6 +105,7 @@
             SldsCellBadge,
             SldsCellBoolean,
             SldsCellButton,
+            SldsCellDate,
             SldsCellEmail,
             SldsCellNumber,
             SldsCellText,

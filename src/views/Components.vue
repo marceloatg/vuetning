@@ -90,9 +90,12 @@
                     },
                     {
                         fieldName: 'blocked',
-                        label: 'Blocked',
-                        type: 'boolean',
-                        initialWidth: 100,
+                        label: 'Blocked on',
+                        type: 'date',
+                        typeAttributes: {
+                            format: 'DD/MMM/YYYY',
+                            titleFormat: 'MMMM Do YYYY, h:mm:ss a',
+                        },
                     },
                     {
                         fieldName: 'status',
@@ -162,7 +165,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -184,7 +187,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": null,
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -206,7 +209,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -228,7 +231,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -250,7 +253,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -272,7 +275,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -294,7 +297,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
@@ -319,7 +322,7 @@
                             "fallbackIconName": "standard:user",
                         },
                         "verified": true,
-                        "blocked": false,
+                        "blocked": Date.now(),
                         "profile": {
                             "id": "de06c530-fa6c-45b1-b989-4739a57c9da6",
                             "label": "Administrator"
