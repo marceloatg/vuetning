@@ -10,12 +10,10 @@
         <div class="slds-notify__content">
 
             <h2 class="slds-text-heading_small">
-                You've encountered some errors when trying to save edits to Samuel Smith.
+                <slot name="heading"/>
             </h2>
 
-            <p>
-                Here's some detail of <a> what happened </a>, being very descriptive and transparent.
-            </p>
+            <slot name="details"/>
 
         </div>
 
