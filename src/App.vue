@@ -19,6 +19,11 @@
         <!-- Global navigation -->
         <slds-global-navigation app-name="Vuetning"/>
 
+        <!-- Toast container -->
+        <div class="slds-notify_container">
+            <slds-toast/>
+        </div>
+
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
 
@@ -106,6 +111,7 @@
         overflow: hidden;
     }
 
+    .slds-notify_container,
     .slds-notification-container {
         margin-top: $default_height;
     }
@@ -145,6 +151,7 @@
 
     .has-trial-bar {
 
+        .slds-notify_container,
         .slds-notification-container {
             margin-top: calc(#{$default_height} + #{$trial_bar_height});
         }
@@ -172,6 +179,7 @@
 
     .has-alert {
 
+        .slds-notify_container,
         .slds-notification-container {
             margin-top: calc(#{$default_height} + #{$alert_height});
         }
@@ -199,6 +207,7 @@
 
     .has-trial-bar.has-alert {
 
+        .slds-notify_container,
         .slds-notification-container {
             margin-top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
         }

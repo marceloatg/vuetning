@@ -29,6 +29,7 @@ import SldsPill from './components/Pill/Index'
 import SldsExpandableSection from './components/ExpandableSection/Index'
 import SldsSpinner from './components/Spinner/Index'
 import SldsSvg from './shared/Svg'
+import SldsToast from './components/Toast/Index'
 import SldsTrialBar from './components/TrialBar/Index'
 
 // Registering lightning components
@@ -56,4 +57,5 @@ Vue.component('slds-pill', SldsPill);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
 Vue.component('slds-svg', SldsSvg);
+Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
