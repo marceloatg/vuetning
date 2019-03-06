@@ -23,7 +23,8 @@
                 icon-name="utility:close"
                 size="large"
                 variant="inverse"
-                container="none"/>
+                container="none"
+                @click="onClickClose"/>
         </div>
 
     </div>
@@ -53,6 +54,11 @@
                         'warning',
                     ].indexOf(value) !== -1
                 },
+            },
+        },
+        methods: {
+            onClickClose() {
+                this.$emit('close');
             },
         },
     }
