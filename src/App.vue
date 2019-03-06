@@ -22,6 +22,9 @@
         <!-- Toast container -->
         <div class="slds-notify_container">
             <slds-toast/>
+            <slds-toast icon-name="utility:check" variant="success"/>
+            <slds-toast icon-name="utility:warning" variant="warning"/>
+            <slds-toast icon-name="utility:error" variant="error"/>
         </div>
 
         <!-- Brand band -->

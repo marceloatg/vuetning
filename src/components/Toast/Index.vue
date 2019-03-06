@@ -1,9 +1,9 @@
 <template>
-    <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+    <div class="slds-notify slds-notify_toast" :class="`slds-theme_${variant}`">
 
         <!-- Icon -->
-        <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top">
-            <slds-icon icon-name="utility:error" size="small"/>
+        <span v-if="iconName != null" class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top">
+            <slds-icon :icon-name="iconName" size="small"/>
         </span>
 
         <!-- Content -->
@@ -32,7 +32,30 @@
 </template>
 
 <script>
+    import SldsButtonIcon from '../ButtonIcon/Index'
+    import SldsIcon from '../Icon/Index'
+
     export default {
-        name: "Index"
+        components: {
+            SldsButtonIcon,
+            SldsIcon,
+        },
+        props: {
+            iconName: {
+                type: String,
+            },
+            variant: {
+                type: String,
+                default: 'base',
+                validator(value) {
+                    return [
+                        'base',
+                        'error',
+                        'success',
+                        'warning',
+                    ].indexOf(value) !== -1
+                },
+            },
+        },
     }
 </script>
