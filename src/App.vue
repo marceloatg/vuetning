@@ -24,7 +24,7 @@
             <slds-toast icon-name="utility:check" variant="success">
 
                 <template #heading>
-                    You've successfuly some errors when trying to save edits to <a> what happened </a>.
+                    You've successfully some errors when trying to save edits to <a> what happened </a>.
                 </template>
 
             </slds-toast>
