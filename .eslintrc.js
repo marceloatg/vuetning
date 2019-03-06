@@ -13,6 +13,21 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         "vue/attribute-hyphenation": ["error", "always"],
+        "vue/attributes-order": ["error", {
+            "order": [
+                "DEFINITION",
+                "LIST_RENDERING",
+                "CONDITIONALS",
+                "RENDER_MODIFIERS",
+                "GLOBAL",
+                "UNIQUE",
+                "TWO_WAY_BINDING",
+                "OTHER_DIRECTIVES",
+                "OTHER_ATTR",
+                "EVENTS",
+                "CONTENT"
+            ]
+        }],
         "vue/component-name-in-template-casing": ["error", "kebab-case"],
         "vue/html-closing-bracket-spacing": ["error", {
             "startTag": "never",

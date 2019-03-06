@@ -3,7 +3,7 @@
 
         <!-- Label -->
         <label v-if="label != null" class="slds-form-element__label">
-            <abbr class="slds-required" title="required" v-if="required">*</abbr> {{ label }}
+            <abbr v-if="required" class="slds-required" title="required">*</abbr> {{ label }}
         </label>
 
         <!-- Input -->

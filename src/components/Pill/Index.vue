@@ -22,7 +22,7 @@
         </span>
 
         <!-- Close button -->
-        <button @click.stop="onRemove" title="Remove" class="slds-button slds-button_icon slds-button_icon slds-pill__remove">
+        <button title="Remove" class="slds-button slds-button_icon slds-button_icon slds-pill__remove" @click.stop="onRemove">
             <slds-svg icon-name="utility:close" class="slds-button__icon"/>
         </button>
 

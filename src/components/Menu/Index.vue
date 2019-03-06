@@ -26,8 +26,8 @@
 
                         <!-- Heading -->
                         <li
-                            :key="item.name"
                             v-if="item.type === 'heading'"
+                            :key="item.name"
                             class="slds-dropdown__header slds-truncate"
                             :title="item.label"
                             role="separator">
@@ -38,15 +38,15 @@
 
                         <!-- Separator -->
                         <li
-                            :key="item.name"
                             v-else-if="item.type === 'separator'"
+                            :key="item.name"
                             class="slds-has-divider_top-space"
                             role="separator"/>
 
                         <!-- Item -->
                         <li
-                            :key="item.name"
                             v-else
+                            :key="item.name"
                             class="slds-dropdown__item"
                             role="presentation">
                             <a role="menuitem" tabindex="0">

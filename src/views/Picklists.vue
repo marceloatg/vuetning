@@ -1,24 +1,24 @@
 <template>
     <div>
         <slds-picklist
+            v-model="selection"
             label="My awesome picklist"
             :options="options"
             size="medium"
-            :required="true"
-            v-model="selection"/>
+            :required="true"/>
         <br>
         <p>
             Value selected is: {{ selection }}
         </p>
         <br>
         <slds-input
+            v-model="input"
             label="My input"
             :required="true"
             placeholder="Type something nice!"
             :disabled="false"
             :read-only="false"
-            :maxlength="10"
-            v-model="input"/>
+            :maxlength="10"/>
         <p>
             Value input is: {{ input }}
         </p>

@@ -63,9 +63,9 @@
                 <tbody>
                     <slds-row
                         v-for="(row, index) in rows"
+                        :key="getKeyField(row)"
                         :columns="columns"
                         :is-selected="selectedRows.includes(index)"
-                        :key="getKeyField(row)"
                         :row="row"
                         :show-row-number-column="showRowNumberColumn"
                         :show-row-selection-column="showRowSelectionColumn"

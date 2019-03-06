@@ -2,7 +2,7 @@
     <div class="slds-context-bar slds-context-bar_tabs">
 
         <!-- App name -->
-        <a @click="$emit('homeClick')" class="slds-context-bar__primary slds-icon-waffle_container slds-text-link_reset">
+        <a class="slds-context-bar__primary slds-icon-waffle_container slds-text-link_reset" @click="$emit('homeClick')">
             <div class="slds-context-bar__item">
 
                 <!-- Icon -->
