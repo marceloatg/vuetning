@@ -1,5 +1,5 @@
 <template>
-    <main class="table-view" ref="tableView">
+    <main ref="tableView" class="table-view">
 
         <!-- Modals -->
         <slot name="modals"/>

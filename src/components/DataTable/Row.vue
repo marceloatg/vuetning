@@ -13,79 +13,79 @@
 
             <slds-cell-action
                 v-if="column.type === 'action'"
-                :align="column.align"
                 :key="index"
+                :align="column.align"
                 :type-attributes="column.typeAttributes"/>
 
             <slds-cell-action-link
                 v-else-if="column.type === 'action-link'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
-                :key="index"
                 :type-attributes="column.typeAttributes"
                 @action="onActionLink"/>
 
             <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
+                :key="index"
                 :align="column.align"
-                :cell="getCell(column.fieldName)"
-                :key="index"/>
+                :cell="getCell(column.fieldName)"/>
 
             <slds-cell-badge
                 v-else-if="column.type === 'badge'"
+                :key="index"
                 :align="column.align"
-                :cell="getCell(column.fieldName)"
-                :key="index"/>
+                :cell="getCell(column.fieldName)"/>
 
             <slds-cell-boolean
                 v-else-if="column.type === 'boolean'"
+                :key="index"
                 :align="column.align"
-                :cell="getCell(column.fieldName)"
-                :key="index"/>
+                :cell="getCell(column.fieldName)"/>
 
             <slds-cell-button
                 v-else-if="column.type === 'button'"
-                :align="column.align"
                 :key="index"
+                :align="column.align"
                 :type-attributes="column.typeAttributes"/>
 
             <slds-cell-date
                 v-else-if="column.type === 'date'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
-                :key="index"
                 :type-attributes="column.typeAttributes"/>
 
             <slds-cell-duration
                 v-else-if="column.type === 'duration'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
-                :has-copy-button="column.hasCopyButton"
-                :key="index"/>
+                :has-copy-button="column.hasCopyButton"/>
 
             <slds-cell-email
                 v-else-if="column.type === 'email'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
-                :has-copy-button="column.hasCopyButton"
-                :key="index"/>
+                :has-copy-button="column.hasCopyButton"/>
 
             <slds-cell-number
                 v-else-if="column.type === 'number'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
-                :key="index"
                 :type-attributes="column.typeAttributes"/>
 
             <slds-cell-text
                 v-else-if="column.type === 'text'"
+                :key="index"
                 :align="column.align"
                 :cell="getCell(column.fieldName)"
-                :has-copy-button="column.hasCopyButton"
-                :key="index"/>
+                :has-copy-button="column.hasCopyButton"/>
 
         </template>
 

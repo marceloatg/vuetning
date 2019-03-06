@@ -27,24 +27,24 @@
             <div class="slds-col_bump-left slds-shrink-none">
 
                 <slds-button-icon
-                    ref="erectButton"
                     v-if="hasMinimizeButton && state === 'close'"
+                    ref="erectButton"
                     icon-name="utility:erect_window"
                     container="none"
                     title="Erect window"
                     @click="onErect"/>
 
                 <slds-button-icon
-                    ref="minimizeButton"
                     v-if="hasMinimizeButton && state === 'open'"
+                    ref="minimizeButton"
                     icon-name="utility:minimize_window"
                     container="none"
                     title="Minimize window"
                     @click="onMinimize"/>
 
                 <slds-button-icon
-                    ref="expandButton"
                     v-if="hasExpandButton"
+                    ref="expandButton"
                     icon-name="utility:expand_alt"
                     container="none"
                     title="Expand Composer"

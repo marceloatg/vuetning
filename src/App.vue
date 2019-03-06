@@ -2,7 +2,7 @@
     <div id="app" :class="{'has-trial-bar': trial.showBar, 'has-alert': alert.show}">
 
         <!-- Trial bar -->
-        <slds-trial-bar :days-left="trial.daysLeft" v-if="trial.showBar"/>
+        <slds-trial-bar v-if="trial.showBar" :days-left="trial.daysLeft"/>
 
         <!-- Alert -->
         <slds-alert
