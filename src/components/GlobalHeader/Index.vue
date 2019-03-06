@@ -40,8 +40,6 @@
         position: static;
 
         .slds-global-header {
-            box-shadow: none;
-
             .slds-global-header__name {
                 padding-left: 48px;
                 font-size: 22px;
