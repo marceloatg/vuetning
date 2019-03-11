@@ -64,5 +64,9 @@
         color: #c9c7c5;
         cursor: not-allowed;
         user-select: none;
+
+        .slds-listbox__option-meta {
+            color: #c9c7c5;
+        }
     }
 </style>

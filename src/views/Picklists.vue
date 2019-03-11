@@ -63,7 +63,7 @@
                     {label: 'In Progress', value: 'inProgress'},
                     {label: 'Finished', value: 'finished'},
                     {group: 'Fruits'},
-                    {label: 'Banana', value: 'ed691c6f-44b9-4850-91ca-caec35b49922', disabled: true},
+                    {label: 'Banana', meta:"BA-NA-NA", value: 'ed691c6f-44b9-4850-91ca-caec35b49922', disabled: true},
                     {label: 'Pear', value: '4f639702-72fc-455c-8dc9-10610c919d8a'},
                     {label: 'Apple', value: '28d56658-5005-440b-b5e4-eb6e5f661d04'},
                 ],
