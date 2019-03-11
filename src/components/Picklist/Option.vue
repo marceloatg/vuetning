@@ -3,7 +3,7 @@
         <div
             role="option"
             class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
-            :class="[{'slds-is-selected': isSelected}]">
+            :class="[{'slds-is-selected': isSelected}, {'slds-is-disabled': disabled}]">
 
             <!-- Figure -->
             <span class="slds-media__figure">
@@ -31,6 +31,10 @@
     export default {
         name: 'SldsPicklistOption',
         props: {
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
             isSelected: {
                 type: Boolean,
                 default: false,
@@ -48,8 +52,17 @@
         },
         methods: {
             selected() {
+                if (this.disabled) return;
                 this.$emit('selected', this.value, this.label);
             }
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .slds-is-disabled {
+        color: #c9c7c5;
+        cursor: not-allowed;
+        user-select: none;
+    }
+</style>

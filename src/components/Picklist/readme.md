@@ -10,7 +10,7 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 | label          | String          | false    |                  | Text label for the picklist. |
 | length         | String, Number  | false    | fluid            | The dropdown length for the picklist. If fluid, the dropdown will expand according to the amount of items to show, otherwise forces overflow scrolling after the specified length of items.<br>Accepted lengths include "fluid", 5, 7, and 10.<br>The default is fluid. |
 | option         | Object (Option) | false    |                  | A preselected option.<br>Does not need to be present within the list of options. |
-| options        | Array           | true     |                  | A list of options that are available for selection and optionally headings for grouping.<br>Each **option** has the following attributes: label, meta, and value.<br>Each **heading** has the following attributes: group.<br> |
+| options        | Array           | true     |                  | A list of options that are available for selection and optionally headings for grouping.<br>Each **option** has the following attributes: disabled, label, meta, and value.<br>Each **heading** has the following attributes: group.<br> |
 | orientation    | String          | false    | downwards        | The orientation of the dropdown.<br>Accepted orientations include downwards and upwards.<br>The default is downwards. |
 | placeholder    | String          | false    | Select an Option | Text that is displayed before an option is selected, to prompt the user to select an option.<br>The default is "Select an Option". |
 | required       | Boolean         | false    | false            | If true, a value must be selected before the form can be submitted. |
@@ -27,6 +27,7 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 #### Option
 ```json
 {
+  "disabled": false,
   "label": "My awesome option",
   "meta": "My meta optional description",
   "value": "a6d3dbd7-effb-42ee-96ad-f5c95794b3c8"

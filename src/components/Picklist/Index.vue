@@ -59,6 +59,7 @@
                                 <slds-picklist-option
                                     v-else
                                     :key="option.value"
+                                    :disabled="option.disabled"
                                     :label="option.label"
                                     :meta="option.meta"
                                     :value="option.value"
