@@ -60,6 +60,7 @@
                                     v-else
                                     :key="option.value"
                                     :label="option.label"
+                                    :meta="option.meta"
                                     :value="option.value"
                                     :is-selected="option.value === selectedValue"
                                     @selected="onSelected"/>

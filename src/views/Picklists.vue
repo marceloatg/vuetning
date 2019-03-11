@@ -59,7 +59,7 @@
             return {
                 options: [
                     {group: 'Status'},
-                    {label: 'New', value: 'new'},
+                    {label: 'New', meta:"Creates a new record from zero. Totally fresh!", value: 'new'},
                     {label: 'In Progress', value: 'inProgress'},
                     {label: 'Finished', value: 'finished'},
                     {group: 'Fruits'},

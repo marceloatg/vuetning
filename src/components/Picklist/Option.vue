@@ -12,9 +12,15 @@
 
             <!-- Body -->
             <span class="slds-media__body">
+
                 <span class="slds-truncate" :title="label">
                     {{ label }}
                 </span>
+
+                <span v-if="meta != null" class="slds-listbox__option-meta">
+                    {{ meta }}
+                </span>
+
             </span>
 
         </div>
@@ -32,6 +38,9 @@
             label: {
                 type: String,
                 required: true,
+            },
+            meta: {
+                type: String,
             },
             value: {
                 required: true,
