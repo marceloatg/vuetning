@@ -19,32 +19,6 @@
         <!-- Global navigation -->
         <slds-global-navigation app-name="Vuetning"/>
 
-        <!-- Toast container -->
-        <div class="slds-notify_container">
-            <slds-toast icon-name="utility:check" variant="success">
-
-                <template #heading>
-                    You've successfully some errors when trying to save edits to <a> what happened </a>.
-                </template>
-
-            </slds-toast>
-
-            <slds-toast icon-name="utility:error" variant="error">
-
-                <template #heading>
-                    You've encountered some errors when trying to save edits to Samuel Smith.
-                </template>
-
-                <template #details>
-                    <p>
-                        Here's some detail of <a> what happened </a>, being very descriptive and transparent.
-                    </p>
-                </template>
-
-            </slds-toast>
-
-        </div>
-
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
 
@@ -77,7 +51,7 @@
 </template>
 
 <script>
-    import SldsView from "./views/Components";
+    import SldsView from "./views/Picklists";
 
     export default {
         name: 'App',

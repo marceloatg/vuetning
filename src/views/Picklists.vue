@@ -5,6 +5,7 @@
             label="My awesome picklist"
             :options="options"
             size="medium"
+            :length="7"
             :required="true"/>
         <br>
         <p>

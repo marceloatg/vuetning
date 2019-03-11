@@ -14,9 +14,7 @@
         <!-- Control -->
         <div class="slds-form-element__control">
             <div class="slds-combobox_container" :class="[`slds-size_${size}`]">
-                <div
-                    role="combobox"
-                    class="slds-combobox slds-is-open">
+                <div role="combobox" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                     <!-- Input -->
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
@@ -43,11 +41,13 @@
                     </div>
 
                     <!-- Options -->
-                    <div v-show="isOpen" role="listbox">
-                        <ul
-                            role="presentation"
-                            class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
-                            :class="[`slds-dropdown_${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]">
+                    <div
+                        v-show="isOpen"
+                        class="slds-dropdown slds-dropdown_fluid"
+                        :class="[`slds-dropdown_length-${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]"
+                        role="listbox">
+
+                        <ul role="presentation" class="slds-listbox slds-listbox_vertical">
 
                             <template v-for="option in options">
 
@@ -77,8 +77,8 @@
                             </li>
 
                         </ul>
-                    </div>
 
+                    </div>
 
                 </div>
             </div>
