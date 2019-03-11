@@ -200,6 +200,11 @@
             this.$emit('input', this.selectedValue);
         },
         methods: {
+            clear() {
+                this.selectedValue = null;
+                this.selectedLabel = null;
+                this.$emit('input', null);
+            },
             onClick() {
                 this.isOpen = true;
             },
