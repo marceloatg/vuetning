@@ -35,6 +35,7 @@ TBD
 * [Button Icon](./src/components/ButtonIcon)
 * [Combobox](./src/components/Combobox)
 * [Checkbox](./src/components/Checkbox)
+* [Checkbox Button](./src/components/CheckboxButton)
 * [Data Table](./src/components/DataTable)
 * [Docked Composer](./src/components/DockedComposer)
 * [Expandable Section](./src/components/ExpandableSection)
@@ -50,6 +51,7 @@ TBD
 * [Picklist](./src/components/Picklist)
 * [Pill](./src/components/Pill)
 * [Spinner](./src/components/Spinner)
+* [Toast](./src/components/Toast)
 * [Trial Bar](./src/components/TrialBar)
 
 ## License

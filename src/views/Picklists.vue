@@ -5,6 +5,7 @@
             label="My awesome picklist"
             :options="options"
             size="medium"
+            :length="7"
             :required="true"/>
         <br>
         <p>
@@ -16,7 +17,7 @@
             label="My input"
             :required="true"
             placeholder="Type something nice!"
-            :disabled="false"
+            :disabled="true"
             :read-only="false"
             :maxlength="10"/>
         <p>
@@ -58,11 +59,11 @@
             return {
                 options: [
                     {group: 'Status'},
-                    {label: 'New', value: 'new'},
+                    {label: 'New', meta: "Creates a new record from zero. Totally fresh!", value: 'new'},
                     {label: 'In Progress', value: 'inProgress'},
                     {label: 'Finished', value: 'finished'},
                     {group: 'Fruits'},
-                    {label: 'Banana', value: 'ed691c6f-44b9-4850-91ca-caec35b49922'},
+                    {label: 'Banana', meta:"BA-NA-NA", value: 'ed691c6f-44b9-4850-91ca-caec35b49922', disabled: true},
                     {label: 'Pear', value: '4f639702-72fc-455c-8dc9-10610c919d8a'},
                     {label: 'Apple', value: '28d56658-5005-440b-b5e4-eb6e5f661d04'},
                 ],

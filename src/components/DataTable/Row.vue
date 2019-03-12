@@ -1,12 +1,16 @@
 <template>
     <tr class="slds-hint-parent" :class="{'slds-is-selected': isSelected}">
 
-        <td v-if="showRowNumberColumn" class="slds-cell-edit slds-cell-error slds-text-align_center">
+        <td v-if="hasNumberColumn" class="slds-cell-edit slds-cell-error slds-text-align_center">
             <span class="slds-row-number slds-text-body_small slds-text-color_weak"/>
         </td>
 
-        <td v-if="showRowSelectionColumn" class="slds-text-align_center">
+        <td v-if="hasCheckboxColumn" class="slds-text-align_center">
             <slds-checkbox :checked="isSelected" variant="inline" @input="onSelect($event)"/>
+        </td>
+
+        <td v-if="hasCheckboxButtonColumn" class="slds-text-align_center">
+            <slds-checkbox-button :checked="isSelected" @input="onSelect($event)"/>
         </td>
 
         <template v-for="(column, index) in columns">
@@ -124,6 +128,18 @@
                 type: Array,
                 required: true,
             },
+            hasCheckboxButtonColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasCheckboxColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
             isSelected: {
                 type: Boolean,
                 default: false,
@@ -131,14 +147,6 @@
             row: {
                 type: Object,
                 required: true
-            },
-            showRowNumberColumn: {
-                type: Boolean,
-                default: true,
-            },
-            showRowSelectionColumn: {
-                type: Boolean,
-                default: false,
             },
         },
         methods: {

@@ -19,58 +19,12 @@
         <!-- Global navigation -->
         <slds-global-navigation app-name="Vuetning"/>
 
-        <!-- Toast container -->
-        <div class="slds-notify_container">
-            <slds-toast icon-name="utility:check" variant="success">
-
-                <template #heading>
-                    You've successfully some errors when trying to save edits to <a> what happened </a>.
-                </template>
-
-            </slds-toast>
-
-            <slds-toast icon-name="utility:error" variant="error">
-
-                <template #heading>
-                    You've encountered some errors when trying to save edits to Samuel Smith.
-                </template>
-
-                <template #details>
-                    <p>
-                        Here's some detail of <a> what happened </a>, being very descriptive and transparent.
-                    </p>
-                </template>
-
-            </slds-toast>
-
-        </div>
-
         <!-- Brand band -->
         <slds-brand-band theme="default"/>
 
         <!-- Global content -->
         <div class="slds-global-content">
             <slds-view/>
-        </div>
-
-        <!-- Docked composer -->
-        <div class="slds-docked_container">
-            <slds-docked-composer heading="Marcelo Gomes" icon-name="utility:share_post">
-
-                <template #body>
-                    <div class="slds-align_absolute-center">
-                        Docked Composer Panel Body <br>
-                        This area consumes the feature
-                    </div>
-                </template>
-
-                <template #footer>
-                    <div class="slds-col_bump-left slds-text-align_right">
-                        <slds-button label="actionButtonLabel" variant="brand"/>
-                    </div>
-                </template>
-
-            </slds-docked-composer>
         </div>
 
     </div>
