@@ -50,6 +50,11 @@
                 :align="column.align"
                 :type-attributes="column.typeAttributes"/>
 
+            <slds-cell-checkbox-button
+                v-else-if="column.type === 'checkbox-button'"
+                :key="index"
+                :align="column.align"/>
+
             <slds-cell-date
                 v-else-if="column.type === 'date'"
                 :key="index"
@@ -99,6 +104,7 @@
     import SldsCellBadge from './Cell/Badge';
     import SldsCellBoolean from './Cell/Boolean';
     import SldsCellButton from './Cell/Button';
+    import SldsCellCheckboxButton from './Cell/CheckboxButton';
     import SldsCellDate from './Cell/Date';
     import SldsCellDuration from './Cell/Duration';
     import SldsCellEmail from './Cell/Email';
@@ -113,6 +119,7 @@
             SldsCellBadge,
             SldsCellBoolean,
             SldsCellButton,
+            SldsCellCheckboxButton,
             SldsCellDate,
             SldsCellDuration,
             SldsCellEmail,
