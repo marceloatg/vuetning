@@ -128,6 +128,7 @@
             },
             selectedRows: {
                 type: Array,
+                default: () => [],
             },
         },
         data() {
