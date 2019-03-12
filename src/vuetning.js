@@ -12,6 +12,7 @@ import SldsBrandBand from './components/BrandBand/Index'
 import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCheckbox from './components/Checkbox/Index'
+import SldsCheckboxButton from './components/CheckboxButton/Index'
 import SldsCombobox from './components/Combobox/Index'
 import SldsDataTable from './components/DataTable/Index';
 import SldsDockedComposer from './components/DockedComposer/Index';
@@ -40,6 +41,7 @@ Vue.component('slds-badge', SldsBadge);
 Vue.component('slds-button', SldsButton);
 Vue.component('slds-button-icon', SldsButtonIcon);
 Vue.component('slds-checkbox', SldsCheckbox);
+Vue.component('slds-checkbox-button', SldsCheckboxButton);
 Vue.component('slds-combobox', SldsCombobox);
 Vue.component('slds-data-table', SldsDataTable);
 Vue.component('slds-docked-composer', SldsDockedComposer);

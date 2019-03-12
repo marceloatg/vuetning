@@ -53,6 +53,12 @@
                         },
                     },
                     {
+                        align: 'center',
+                        resizable: false,
+                        type: 'checkbox-button',
+                        fixedWidth: 60,
+                    },
+                    {
                         fieldName: 'avatar',
                         resizable: false,
                         type: 'avatar',
