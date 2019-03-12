@@ -204,9 +204,9 @@
             onRefresh() {
                 this.$emit('refresh');
             },
-            onSelect(selected, key) {
-                if (selected) this.selectedRows.push(key);
-                else this.selectedRows.splice(this.selectedRows.indexOf(key), 1);
+            onSelect(selected, index) {
+                if (selected) this.selectedRows.push(index);
+                else this.selectedRows.splice(this.selectedRows.indexOf(index), 1);
             },
             onSelectAll(selected) {
                 if (selected) {
