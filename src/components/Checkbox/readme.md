@@ -19,7 +19,7 @@ A checkable input that communicates if an option is true or false.
 
 | Name           | Arguments | Description |
 | -------------- | --------- | ----------- |
-| input          | value     | Fired when the checkbox is clicked.<br>`v-on` binding available. |
+| input          | value     | Fired when the checkbox is clicked.<br>`v-model` binding available. |
 
 ## Examples
 
