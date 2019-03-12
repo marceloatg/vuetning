@@ -1,7 +1,7 @@
 <template>
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
-            <slds-checkbox-button/>
+            <slds-checkbox-button :checked="cell"/>
         </span>
     </td>
 </template>
@@ -14,7 +14,7 @@
         props: {
             cell: {
                 type: Boolean,
-                required: true,
+                default: false,
             },
         },
     }
