@@ -35,11 +35,6 @@
                 return this.disabled ? {['disabled']: 'disabled'} : {};
             },
         },
-        watch: {
-            checked: function (newValue) {
-                this.value = newValue;
-            }
-        },
         mounted() {
             this.value = this.checked;
         },
