@@ -23,7 +23,6 @@
                         'boolean',
                         'button',
                         'button-icon',
-                        'checkbox-button',
                         'currency',
                         'date',
                         'duration',

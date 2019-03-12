@@ -66,8 +66,9 @@
                                 :columns="columns"
                                 :rows="rows"
                                 :selected-rows="selectedRows"
-                                :show-row-number-column="showRowNumberColumn"
-                                :show-row-selection-column="showRowSelectionColumn"
+                                :has-checkbox-button-column="hasCheckboxButtonColumn"
+                                :has-checkbox-column="hasCheckboxColumn"
+                                :has-number-column="hasNumberColumn"
                                 @actionlink="onActionLink"
                                 @select="onSelect(...arguments)"
                                 @selectall="onSelectAll($event)"/>
@@ -122,6 +123,18 @@
                 type: Object,
                 required: true,
             },
+            hasCheckboxButtonColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasCheckboxColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
             initialized: {
                 type: Boolean,
                 required: true,
@@ -144,14 +157,6 @@
             selectedRows: {
                 type: Array,
                 default: () => [],
-            },
-            showRowNumberColumn: {
-                type: Boolean,
-                default: true,
-            },
-            showRowSelectionColumn: {
-                type: Boolean,
-                default: false,
             },
             title: {
                 type: String,

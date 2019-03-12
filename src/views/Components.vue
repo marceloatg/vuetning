@@ -5,13 +5,14 @@
         :empty-message="emptyMessage"
         :figure="figure"
         :footer="footer"
+        :has-checkbox-button-column="true"
+        :has-checkbox-column="true"
+        :has-number-column="true"
         :initialized="initialized"
         :key-field="keyField"
         :list-views="listViews"
         :refreshing="refreshing"
         :rows="rows"
-        :show-row-number-column="true"
-        :show-row-selection-column="true"
         :title="title"
         :total-pages="totalPages"
         :total-rows="rows.length"
@@ -51,12 +52,6 @@
                             label: 'See details',
                             action: 'details',
                         },
-                    },
-                    {
-                        align: 'center',
-                        resizable: false,
-                        type: 'checkbox-button',
-                        fixedWidth: 60,
                     },
                     {
                         fieldName: 'avatar',

@@ -15,7 +15,7 @@
                 <thead>
                     <tr class="slds-line-height_reset">
 
-                        <th v-if="showRowNumberColumn" scope="col" style="width: 60px;">
+                        <th v-if="hasNumberColumn" scope="col" style="width: 60px;">
                             <div class="slds-cell-fixed">
                                 <div class="slds-truncate slds-assistive-text">
                                     Errors
@@ -23,9 +23,15 @@
                             </div>
                         </th>
 
-                        <th v-if="showRowSelectionColumn" scope="col" style="width: 36px;">
+                        <th v-if="hasCheckboxColumn" scope="col" style="width: 36px;">
                             <div class="slds-cell-fixed slds-th__action slds-th__action_form">
                                 <slds-checkbox :checked="allRowsSelected" variant="inline" @input="onSelectAll($event)"/>
+                            </div>
+                        </th>
+
+                        <th v-if="hasCheckboxButtonColumn" scope="col" style="width: 48px;">
+                            <div class="slds-cell-fixed">
+                                <div class="slds-truncate slds-assistive-text"/>
                             </div>
                         </th>
 
@@ -65,10 +71,11 @@
                         v-for="(row, index) in rows"
                         :key="getKeyField(row)"
                         :columns="columns"
+                        :has-checkbox-button-column="hasCheckboxButtonColumn"
+                        :has-checkbox-column="hasCheckboxColumn"
+                        :has-number-column="hasNumberColumn"
                         :is-selected="selectedRows.includes(index)"
                         :row="row"
-                        :show-row-number-column="showRowNumberColumn"
-                        :show-row-selection-column="showRowSelectionColumn"
                         @actionlink="action => onActionLink(action, row)"
                         @select="onSelect($event, index)"/>
                 </tbody>
@@ -99,6 +106,18 @@
                 type: Array,
                 required: true,
             },
+            hasCheckboxButtonColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasCheckboxColumn: {
+                type: Boolean,
+                default: false,
+            },
+            hasNumberColumn: {
+                type: Boolean,
+                default: true,
+            },
             keyField: {
                 type: String,
                 required: true,
@@ -109,14 +128,6 @@
             },
             selectedRows: {
                 type: Array,
-            },
-            showRowNumberColumn: {
-                type: Boolean,
-                default: true,
-            },
-            showRowSelectionColumn: {
-                type: Boolean,
-                default: false,
             },
         },
         data() {
@@ -147,8 +158,9 @@
                 let knownWidth = 0;
                 let unknownWidthColumns = 0;
 
-                if (this.showRowNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
-                if (this.showRowSelectionColumn) knownWidth += Commons.LINE_SELECTION_WIDTH;
+                if (this.hasNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
+                if (this.hasCheckboxColumn) knownWidth += Commons.LINE_CHECKBOX_WIDTH;
+                if (this.hasCheckboxButtonColumn) knownWidth += Commons.LINE_CHECKBOX_BUTTON_WIDTH;
 
                 for (let column of this.columns) {
                     if (column.resizable) {
@@ -171,8 +183,9 @@
             },
             getColumnLeftOffsets() {
                 let indexOffset = 0;
-                if (this.showRowNumberColumn) indexOffset++;
-                if (this.showRowSelectionColumn) indexOffset++;
+                if (this.hasNumberColumn) indexOffset++;
+                if (this.hasCheckboxColumn) indexOffset++;
+                if (this.hasCheckboxButtonColumn) indexOffset++;
 
                 const header = this.$el.getElementsByTagName('th');
 
