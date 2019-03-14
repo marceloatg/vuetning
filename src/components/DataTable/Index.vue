@@ -68,16 +68,16 @@
                 <!-- Body -->
                 <tbody>
                     <slds-row
-                        v-for="(row, index) in rows"
+                        v-for="row in rows"
                         :key="getKeyField(row)"
                         :columns="columns"
                         :has-checkbox-button-column="hasCheckboxButtonColumn"
                         :has-checkbox-column="hasCheckboxColumn"
                         :has-number-column="hasNumberColumn"
-                        :is-selected="selectedRows.includes(index)"
+                        :is-selected="selectedRows.includes(getKeyField(row))"
                         :row="row"
                         @actionlink="action => onActionLink(action, row)"
-                        @select="onSelect($event, index)"/>
+                        @select="onSelect($event, getKeyField(row))"/>
                 </tbody>
 
             </table>
@@ -128,6 +128,7 @@
             },
             selectedRows: {
                 type: Array,
+                default: () => [],
             },
         },
         data() {
