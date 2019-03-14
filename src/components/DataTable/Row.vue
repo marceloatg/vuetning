@@ -51,6 +51,7 @@
             <slds-cell-button
                 v-else-if="column.type === 'button'"
                 :key="index"
+                :cell="getCell(column.fieldName)"
                 :align="column.align"
                 :type-attributes="column.typeAttributes"
                 @action="onAction"/>

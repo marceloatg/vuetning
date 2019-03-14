@@ -71,6 +71,7 @@
                         },
                     },
                     {
+                        fieldName: 'access',
                         label: 'Access',
                         fixedWidth: 120,
                         resizable: false,
@@ -165,6 +166,14 @@
                 refreshing: false,
                 rows: [
                     {
+                        "access": {
+                            "label": "Access",
+                            "disabled": false,
+                            "iconName": "utility:salesforce1",
+                            "variant": "success",
+                            "class": "slds-button_in-table",
+                            "spinnerActive": false,
+                        },
                         "duration": 15,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
                         "name": "John Doe",
@@ -188,6 +197,13 @@
                         "usedStorage": 100000000
                     },
                     {
+                        "access": {
+                            "label": "Access",
+                            "disabled": true,
+                            "iconName": "utility:emoji",
+                            "variant": "outline-brand",
+                            "class": "slds-button_in-table",
+                        },
                         "duration": 2,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d5",
                         "name": "John Doe",
@@ -359,7 +375,12 @@
         },
         methods: {
             onAccess(row) {
-                console.log({action: 'access', row: row});
+                if (row.access == null) return;
+
+                row.access.spinnerActive = true;
+                setTimeout(function () {
+                    row.access.spinnerActive = false;
+                }, 2000);
             },
             onClick() {
                 this.modalOpened = true;
