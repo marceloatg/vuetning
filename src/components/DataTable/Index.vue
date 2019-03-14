@@ -76,7 +76,7 @@
                         :has-number-column="hasNumberColumn"
                         :is-selected="selectedRows.includes(getKeyField(row))"
                         :row="row"
-                        @actionlink="action => onActionLink(action, row)"
+                        @action="action => onAction(action, row)"
                         @select="onSelect($event, getKeyField(row))"/>
                 </tbody>
 
@@ -209,8 +209,8 @@
                 if (column.resizable == null) this.$set(column, 'resizable', true);
                 return column.resizable;
             },
-            onActionLink(action, row) {
-                this.$emit('actionlink', action, row);
+            onAction(action, row) {
+                this.$emit('action', action, row);
             },
             onScroll() {
                 const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;

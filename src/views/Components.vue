@@ -17,7 +17,11 @@
         :total-pages="totalPages"
         :total-rows="rows.length"
         :update-time="updateTime"
-        @details="onDetails">
+        @access="onAccess"
+        @details="onDetails"
+        @edit="onAction"
+        @block="onAction"
+        @delete="onAction">
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
@@ -72,6 +76,7 @@
                         resizable: false,
                         type: 'button',
                         typeAttributes: {
+                            action: 'access',
                             label: 'access',
                             iconName: 'utility:salesforce1',
                             variant: 'outline-brand',
@@ -125,14 +130,17 @@
                             rowActions: [{
                                 label: 'Edit',
                                 name: 'edit',
+                                action: 'edit',
                                 leftIconName: 'utility:edit',
                             }, {
                                 label: 'Block',
                                 name: 'block',
+                                action: 'block',
                                 leftIconName: 'utility:ban',
                             }, {
                                 label: 'Delete',
                                 name: 'delete',
+                                action: 'delete',
                                 leftIconName: 'utility:delete',
                             }]
                         },
@@ -350,6 +358,9 @@
             }
         },
         methods: {
+            onAccess(row) {
+                console.log({action: 'access', row: row});
+            },
             onClick() {
                 this.modalOpened = true;
             },
@@ -358,6 +369,9 @@
             },
             onDetails(row) {
                 console.log(row);
+            },
+            onAction(foo, bar) {
+                console.log({foo: foo, bar: bar});
             },
         },
     }

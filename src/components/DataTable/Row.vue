@@ -28,7 +28,7 @@
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :type-attributes="column.typeAttributes"
-                @action="onActionLink"/>
+                @action="onAction"/>
 
             <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
@@ -52,7 +52,8 @@
                 v-else-if="column.type === 'button'"
                 :key="index"
                 :align="column.align"
-                :type-attributes="column.typeAttributes"/>
+                :type-attributes="column.typeAttributes"
+                @action="onAction"/>
 
             <slds-cell-date
                 v-else-if="column.type === 'date'"
@@ -162,8 +163,8 @@
 
                 return cell;
             },
-            onActionLink(action) {
-                this.$emit('actionlink', action);
+            onAction(action) {
+                this.$emit('action', action);
             },
             onSelect(event) {
                 this.$emit('select', event);

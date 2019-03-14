@@ -1,7 +1,10 @@
 <template>
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
-            <slds-menu :items="items" size="x-small" position="right"/>
+            <slds-menu
+                :items="items"
+                size="x-small"
+                position="right"/>
         </span>
     </td>
 </template>
@@ -11,9 +14,7 @@
 
     export default {
         extends: SldsCell,
-        props: {
-
-        },
+        props: {},
         computed: {
             items() {
                 if (this.typeAttributes == null || this.typeAttributes.rowActions == null) return [];
