@@ -29,7 +29,7 @@
                             </div>
                         </th>
 
-                        <th v-if="hasCheckboxButtonColumn" scope="col" style="width: 48px;">
+                        <th v-if="hasCheckboxButtonColumn" scope="col" style="width: 64px;">
                             <div class="slds-cell-fixed">
                                 <div class="slds-truncate slds-assistive-text"/>
                             </div>

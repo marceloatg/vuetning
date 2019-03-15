@@ -10,7 +10,10 @@
         </td>
 
         <td v-if="hasCheckboxButtonColumn" class="slds-text-align_center">
-            <slds-checkbox-button :checked="isSelected" @input="onSelect($event)"/>
+            <slds-checkbox-button
+                :checked="isSelected"
+                class="slds-align_absolute-center"
+                @input="onSelect($event)"/>
         </td>
 
         <template v-for="(column, index) in columns">
