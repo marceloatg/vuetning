@@ -84,7 +84,7 @@
             },
             hasIcon() {
                 return (this.iconName != null)
-            }
+            },
         },
         methods: {
             onClick() {
@@ -135,6 +135,40 @@
         &_in-table {
             padding: 0 6px;
             line-height: 1.125rem;
+
+            .slds-spinner_x-small {
+                width: 0.5rem;
+
+                &.slds-spinner_inline {
+                    height: 0.5rem;
+                }
+            }
+
+            .slds-spinner_x-small.slds-spinner:before,
+            .slds-spinner_x-small.slds-spinner:after,
+            .slds-spinner_x-small .slds-spinner__dot-a:before,
+            .slds-spinner_x-small .slds-spinner__dot-b:before,
+            .slds-spinner_x-small .slds-spinner__dot-a:after,
+            .slds-spinner_x-small .slds-spinner__dot-b:after {
+                width: 0.125rem;
+                height: 0.125rem;
+            }
+
+            .slds-spinner_x-small.slds-spinner:before,
+            .slds-spinner_x-small .slds-spinner__dot-a:before,
+            .slds-spinner_x-small .slds-spinner__dot-b:before {
+                top: -0.0625rem;
+                left: -0.0625rem;
+                animation-name: dotsBounceBefore-extraExtraSmall;
+            }
+
+            .slds-spinner_x-small.slds-spinner:after,
+            .slds-spinner_x-small .slds-spinner__dot-a:after,
+            .slds-spinner_x-small .slds-spinner__dot-b:after {
+                top: -0.0625rem;
+                right: -0.0625rem;
+                animation-name: dotsBounceAfter-extraExtraSmall;
+            }
 
             .slds-button__icon_left {
                 margin-right: 0;

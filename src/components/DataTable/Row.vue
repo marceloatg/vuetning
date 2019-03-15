@@ -10,7 +10,10 @@
         </td>
 
         <td v-if="hasCheckboxButtonColumn" class="slds-text-align_center">
-            <slds-checkbox-button :checked="isSelected" @input="onSelect($event)"/>
+            <slds-checkbox-button
+                :checked="isSelected"
+                class="slds-align_absolute-center"
+                @input="onSelect($event)"/>
         </td>
 
         <template v-for="(column, index) in columns">
@@ -28,7 +31,7 @@
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"
                 :type-attributes="column.typeAttributes"
-                @action="onActionLink"/>
+                @action="onAction"/>
 
             <slds-cell-avatar
                 v-else-if="column.type === 'avatar'"
@@ -51,8 +54,10 @@
             <slds-cell-button
                 v-else-if="column.type === 'button'"
                 :key="index"
+                :cell="getCell(column.fieldName)"
                 :align="column.align"
-                :type-attributes="column.typeAttributes"/>
+                :type-attributes="column.typeAttributes"
+                @action="onAction"/>
 
             <slds-cell-date
                 v-else-if="column.type === 'date'"
@@ -162,8 +167,8 @@
 
                 return cell;
             },
-            onActionLink(action) {
-                this.$emit('actionlink', action);
+            onAction(action) {
+                this.$emit('action', action);
             },
             onSelect(event) {
                 this.$emit('select', event);

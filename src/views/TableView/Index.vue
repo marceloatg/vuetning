@@ -69,7 +69,7 @@
                                 :has-checkbox-button-column="hasCheckboxButtonColumn"
                                 :has-checkbox-column="hasCheckboxColumn"
                                 :has-number-column="hasNumberColumn"
-                                @actionlink="onActionLink"
+                                @action="onAction"
                                 @select="onSelect(...arguments)"
                                 @selectall="onSelectAll($event)"/>
 
@@ -192,7 +192,7 @@
             },
         },
         methods: {
-            onActionLink(action, row) {
+            onAction(action, row) {
                 this.$emit(action, row);
             },
             onFilter() {

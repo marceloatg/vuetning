@@ -17,7 +17,11 @@
         :total-pages="totalPages"
         :total-rows="rows.length"
         :update-time="updateTime"
-        @details="onDetails">
+        @access="onAccess"
+        @details="onDetails"
+        @edit="onAction"
+        @block="onAction"
+        @delete="onAction">
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
@@ -67,11 +71,13 @@
                         },
                     },
                     {
+                        fieldName: 'access',
                         label: 'Access',
                         fixedWidth: 120,
                         resizable: false,
                         type: 'button',
                         typeAttributes: {
+                            action: 'access',
                             label: 'access',
                             iconName: 'utility:salesforce1',
                             variant: 'outline-brand',
@@ -125,14 +131,17 @@
                             rowActions: [{
                                 label: 'Edit',
                                 name: 'edit',
+                                action: 'edit',
                                 leftIconName: 'utility:edit',
                             }, {
                                 label: 'Block',
                                 name: 'block',
+                                action: 'block',
                                 leftIconName: 'utility:ban',
                             }, {
                                 label: 'Delete',
                                 name: 'delete',
+                                action: 'delete',
                                 leftIconName: 'utility:delete',
                             }]
                         },
@@ -157,6 +166,14 @@
                 refreshing: false,
                 rows: [
                     {
+                        "access": {
+                            "label": "Access",
+                            "disabled": false,
+                            "iconName": "utility:salesforce1",
+                            "variant": "success",
+                            "class": "slds-button_in-table",
+                            "spinnerActive": false,
+                        },
                         "duration": 15,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764c5",
                         "name": "John Doe",
@@ -180,6 +197,13 @@
                         "usedStorage": 100000000
                     },
                     {
+                        "access": {
+                            "label": "Access",
+                            "disabled": true,
+                            "iconName": "utility:emoji",
+                            "variant": "outline-brand",
+                            "class": "slds-button_in-table",
+                        },
                         "duration": 2,
                         "id": "3ca1d2a6-6f25-4c17-a0b9-37f9e01764d5",
                         "name": "John Doe",
@@ -350,6 +374,14 @@
             }
         },
         methods: {
+            onAccess(row) {
+                if (row.access == null) return;
+
+                row.access.spinnerActive = true;
+                setTimeout(function () {
+                    row.access.spinnerActive = false;
+                }, 2000);
+            },
             onClick() {
                 this.modalOpened = true;
             },
@@ -358,6 +390,9 @@
             },
             onDetails(row) {
                 console.log(row);
+            },
+            onAction(foo, bar) {
+                console.log({foo: foo, bar: bar});
             },
         },
     }

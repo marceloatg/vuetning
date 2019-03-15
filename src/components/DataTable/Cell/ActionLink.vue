@@ -41,6 +41,9 @@
         },
         methods: {
             onClick() {
+                if (this.typeAttributes == null) return;
+                if (this.typeAttributes.action == null) return;
+
                 this.$emit('action', this.typeAttributes.action);
             },
         },
