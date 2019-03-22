@@ -3,20 +3,23 @@
 
         <slds-button-icon
             icon-name="utility:chevronleft"
-            :disabled="isInFirstPage"
+            :disabled="isInFirstPage || disabled"
             @click.stop="onClickPreviousPage"/>
 
-        <slds-button
-            v-for="page in pages"
-            :key="page"
-            :label="`${page}`"
-            :variant="buttonVariant(page)"
-            :style="{padding: '0 12px'}"
-            @click="onClickPage(page)"/>
+        <template v-for="page in pages">
+            <slds-button
+                v-if="page !== 0"
+                :key="page"
+                :label="`${page}`"
+                :variant="buttonVariant(page)"
+                :style="{padding: '0 12px'}"
+                :disabled="disabled"
+                @click="onClickPage(page)"/>
+        </template>
 
         <slds-button-icon
             icon-name="utility:chevronright"
-            :disabled="isInLastPage"
+            :disabled="isInLastPage || disabled"
             @click="onClickNextPage"/>
 
     </div>
@@ -29,13 +32,17 @@
                 type: Number,
                 required: true
             },
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
             range: {
                 type: Number,
-                default: 3
+                default: 3,
             },
             totalPages: {
                 type: Number,
-                required: true
+                required: true,
             },
         },
         computed: {
