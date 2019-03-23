@@ -7,6 +7,7 @@
                 <!-- Icon -->
                 <slds-icon
                     :icon-name="iconName"
+                    :icon-class="adjustmentClass"
                     size="small"
                     class="slds-media__figure"
                     :class="iconClass"/>
@@ -39,7 +40,7 @@
     import SldsButtonIcon from '../ButtonIcon/Index'
 
     export default {
-        components:{
+        components: {
             SldsIcon,
             SldsButtonIcon,
         },
@@ -51,11 +52,18 @@
                 type: String,
                 required: true,
             },
-            message:{
+            message: {
                 type: String,
             },
-            subject:{
-              type: String,
+            subject: {
+                type: String,
+            },
+        },
+        computed: {
+            adjustmentClass() {
+                if (this.iconName == null) return null;
+                if (this.iconName.startsWith('utility')) return 'utility-category-adjustment';
+                return null;
             },
         },
         methods: {
@@ -68,3 +76,13 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .slds-media__figure {
+        .slds-icon_container {
+            svg {
+                border-radius: .25rem;
+            }
+        }
+    }
+</style>

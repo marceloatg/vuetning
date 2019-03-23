@@ -50,6 +50,10 @@
     }
 
     .utility-category-adjustment {
+        &.slds-icon_small {
+            padding: 4px;
+        }
+
         &.slds-icon_medium {
             padding: 6px;
         }
