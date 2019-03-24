@@ -25,9 +25,13 @@
 
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+
+                <slds-menu :items="items" :length="10" class="slds-m-right_xx-small"/>
+
                 <div class="slds-button-group">
                     <slds-button label="Create" icon-name="utility:add" @click="onClick"/>
                 </div>
+
             </div>
         </template>
 
@@ -45,6 +49,34 @@
         data() {
             return {
                 modalOpened: true,
+                items: [
+                    {
+                        heading: 'Safe zone',
+                    },
+                    {
+                        label: 'Edit',
+                        name: 'edit',
+                        value: 'edit',
+                        iconName: 'utility:edit',
+                    },
+                    {
+                        label: 'Block',
+                        name: 'block',
+                        value: 'block',
+                        iconName: 'utility:ban',
+                        prefixIconName: 'utility:user',
+                    },
+                    {
+                        heading: 'Danger zone',
+                    },
+                    {
+                        label: 'Delete or not delete?',
+                        name: 'delete',
+                        value: 'delete',
+                        prefixIconName: 'utility:delete',
+                        disabled: true,
+                    },
+                ],
                 columns: [
                     {
                         align: 'center',
@@ -128,22 +160,26 @@
                         resizable: false,
                         fixedWidth: 52,
                         typeAttributes: {
-                            rowActions: [{
-                                label: 'Edit',
-                                name: 'edit',
-                                action: 'edit',
-                                leftIconName: 'utility:edit',
-                            }, {
-                                label: 'Block',
-                                name: 'block',
-                                action: 'block',
-                                leftIconName: 'utility:ban',
-                            }, {
-                                label: 'Delete',
-                                name: 'delete',
-                                action: 'delete',
-                                leftIconName: 'utility:delete',
-                            }]
+                            rowActions: [
+                                {
+                                    label: 'Edit',
+                                    name: 'edit',
+                                    value: 'edit',
+                                    prefixIconName: 'utility:edit',
+                                },
+                                {
+                                    label: 'Block',
+                                    name: 'block',
+                                    value: 'block',
+                                    prefixIconName: 'utility:ban',
+                                },
+                                {
+                                    label: 'Delete',
+                                    name: 'delete',
+                                    value: 'delete',
+                                    prefixIconName: 'utility:delete',
+                                }
+                            ]
                         },
                     }
                 ],

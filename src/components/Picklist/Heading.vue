@@ -1,8 +1,8 @@
 <template>
-    <li role="presentation" class="slds-listbox__item">
+    <li role="separator" class="slds-listbox__item">
         <div role="presentation" class="slds-media slds-listbox__option slds-listbox__option_plain">
             <h3 role="presentation" class="slds-listbox__option-header">
-                {{ group }}
+                {{ heading }}
             </h3>
         </div>
     </li>
@@ -12,7 +12,7 @@
     export default {
         name: "SldsPicklistHeading",
         props: {
-            group: {
+            heading: {
                 type: String,
                 required: true,
             },

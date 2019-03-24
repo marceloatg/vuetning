@@ -1,83 +1,63 @@
-<!--
-    @Description: A Menu offers a list of actions or functions that a user can access.
-    @Documentation: https://www.lightningdesignsystem.com/components/menus/
--->
-
 <template>
     <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
         <!-- Button -->
         <slds-button-icon
-            icon-name="utility:down"
+            :icon-name="iconName"
             :size="size"
+            :disabled="disabled"
             @click="toggle"
             @blur="close"
             @keyup="keyUp"/>
 
         <!-- Items -->
-        <transition enter-active-class="animated fadeIn quicker" leave-active-class="animated fadeOut quicker">
-            <div
-                v-if="isOpen"
-                class="slds-dropdown"
-                :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]">
-                <ul class="slds-dropdown__list" role="menu">
+        <div
+            v-if="isOpen"
+            class="slds-dropdown"
+            :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]">
+            <ul class="slds-dropdown__list" role="menu">
+                <template v-for="(item, index) in items">
 
-                    <template v-for="item in items">
+                    <slds-menu-heading
+                        v-if="item.heading != null"
+                        :key="index"
+                        :heading="item.heading"/>
 
-                        <!-- Heading -->
-                        <li
-                            v-if="item.type === 'heading'"
-                            :key="item.name"
-                            class="slds-dropdown__header slds-truncate"
-                            :title="item.label"
-                            role="separator">
-                            <span>
-                                {{ item.label }}
-                            </span>
-                        </li>
+                    <slds-menu-option
+                        v-else
+                        :key="item.value"
+                        :disabled="item.disabled"
+                        :icon-name="item.iconName"
+                        :label="item.label"
+                        :prefix-icon-name="item.prefixIconName"
+                        :value="item.value"
+                        @click="onClick"/>
 
-                        <!-- Separator -->
-                        <li
-                            v-else-if="item.type === 'separator'"
-                            :key="item.name"
-                            class="slds-has-divider_top-space"
-                            role="separator"/>
-
-                        <!-- Item -->
-                        <li
-                            v-else
-                            :key="item.name"
-                            class="slds-dropdown__item"
-                            role="presentation">
-                            <a role="menuitem" tabindex="0">
-
-                                <span class="slds-truncate" :title="item.label">
-                                    <slds-svg
-                                        v-if="item.leftIconName !== undefined"
-                                        :icon-name="item.leftIconName"
-                                        class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
-                                    {{ item.label }}
-                                </span>
-
-                                <slds-svg
-                                    v-if="item.rightIconName !== undefined"
-                                    :icon-name="item.rightIconName"
-                                    class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-left_small slds-shrink-none"/>
-                            </a>
-                        </li>
-
-                    </template>
-
-                </ul>
-            </div>
-        </transition>
+                </template>
+            </ul>
+        </div>
 
     </div>
 </template>
 
 <script>
+    import SldsMenuHeading from "./Heading";
+    import SldsMenuOption from "./Option";
+
     export default {
+        components: {
+            SldsMenuHeading,
+            SldsMenuOption
+        },
         props: {
+            disabled: {
+                type: Boolean,
+                default: false,
+            },
+            iconName: {
+                type: String,
+                default: 'utility:down',
+            },
             items: {
                 type: Array,
                 default: () => [],
@@ -145,6 +125,9 @@
                         this.isOpen = false;
                         break;
                 }
+            },
+            onClick(value) {
+                this.$emit('click', value);
             },
         }
     }
