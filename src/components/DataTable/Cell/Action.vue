@@ -20,7 +20,7 @@
         },
         methods: {
             onClick(value) {
-                this.$emit('click', value);
+                this.$emit('action', value);
             },
         },
     }

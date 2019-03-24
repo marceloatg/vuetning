@@ -22,7 +22,8 @@
                 v-if="column.type === 'action'"
                 :key="index"
                 :align="column.align"
-                :type-attributes="column.typeAttributes"/>
+                :type-attributes="column.typeAttributes"
+                @action="onAction"/>
 
             <slds-cell-action-link
                 v-else-if="column.type === 'action-link'"
