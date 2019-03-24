@@ -18,8 +18,9 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 
 ### Events
 
-| Name        | Arguments | Description |
-| ----------- | --------- | ----------- |
+| Name  | Arguments | Description |
+| ----- | --------- | ----------- |
+| input | value     | Fired when a option is selected.<br>`v-model` binding available. |
 
 ### Object examples
 

@@ -165,6 +165,7 @@
                 this.$emit('click', value);
             },
             toggle() {
+                if (this.disabled) return;
                 this.isOpen = !this.isOpen;
             },
         }
