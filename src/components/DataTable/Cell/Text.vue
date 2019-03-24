@@ -27,7 +27,6 @@
         props: {
             cell: {
                 type: String,
-                required: true,
             },
             hasCopyButton: {
                 type: Boolean,
