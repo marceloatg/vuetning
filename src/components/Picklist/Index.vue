@@ -43,18 +43,19 @@
                     <!-- Options -->
                     <div
                         v-show="isOpen"
+                        ref="dropdown"
                         class="slds-dropdown slds-dropdown_fluid"
-                        :class="[`slds-dropdown_length-${length}`, `slds-dropdown_${orientation === 'upwards' ? 'bottom' : 'top'}`]"
-                        role="listbox">
+                        :class="[`slds-dropdown_length-${length}`, `slds-dropdown_${orientation}`]"
+                        :style="{opacity: dropdownOpacity}">
 
                         <ul role="presentation" class="slds-listbox slds-listbox_vertical">
 
                             <template v-for="option in options">
 
                                 <slds-picklist-heading
-                                    v-if="option.group != null"
+                                    v-if="option.heading != null"
                                     :key="option.value"
-                                    :group="option.group"/>
+                                    :heading="option.heading"/>
 
                                 <slds-picklist-option
                                     v-else
@@ -141,16 +142,6 @@
                 type: Array,
                 required: true,
             },
-            orientation: {
-                type: String,
-                default: 'downwards',
-                validator(value) {
-                    return [
-                        'downwards',
-                        'upwards',
-                    ].indexOf(value) !== -1
-                }
-            },
             placeholder: {
                 type: String,
                 default: 'Select an option',
@@ -182,7 +173,9 @@
         },
         data() {
             return {
+                dropdownOpacity: 0,
                 isOpen: false,
+                orientation: 'top',
                 selectedValue: null,
                 selectedLabel: null,
             }
@@ -190,6 +183,22 @@
         computed: {
             disabledAttribute() {
                 return this.disabled ? {['disabled']: 'disabled'} : {};
+            },
+        },
+        watch: {
+            async isOpen(opened) {
+                if (!opened) return;
+                await this.$nextTick();
+
+                let dropdown = this.$refs["dropdown"];
+                const positioning = this.getDropdownPositioning(dropdown);
+
+                // Setting vertical orientation of dropdown
+                if (positioning.element.y + positioning.element.height > positioning.parent.height) {
+                    this.orientation = 'bottom';
+                }
+
+                this.dropdownOpacity = 1;
             },
         },
         created() {
@@ -204,6 +213,32 @@
                 this.selectedValue = null;
                 this.selectedLabel = null;
                 this.$emit('input', null);
+            },
+            getDropdownPositioning(element) {
+                const elementPositioning = {
+                    y: 0,
+                    height: element.offsetHeight,
+                };
+
+                const parentPositioning = {
+                    y: 0,
+                    height: 0,
+                };
+
+                while (element.offsetParent !== null) {
+                    elementPositioning.y += element.offsetTop;
+                    element = element.offsetParent;
+
+                    if (element !== null) {
+                        parentPositioning.y = element.offsetTop;
+                        parentPositioning.height = element.offsetHeight;
+                    }
+                }
+
+                return {
+                    element: elementPositioning,
+                    parent: parentPositioning
+                };
             },
             onClick() {
                 this.isOpen = true;

@@ -10,8 +10,7 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 | label          | String          | false    |                  | Text label for the picklist. |
 | length         | String, Number  | false    | fluid            | The dropdown length for the picklist. If fluid, the dropdown will expand according to the amount of items to show, otherwise forces overflow scrolling after the specified length of items.<br>Accepted lengths include "fluid", 5, 7, and 10.<br>The default is fluid. |
 | option         | Object (Option) | false    |                  | A preselected option.<br>Does not need to be present within the list of options. |
-| options        | Array           | true     |                  | A list of options that are available for selection and optionally headings for grouping.<br>Each **option** has the following attributes: disabled, label, meta, and value.<br>Each **heading** has the following attributes: group.<br> |
-| orientation    | String          | false    | downwards        | The orientation of the dropdown.<br>Accepted orientations include downwards and upwards.<br>The default is downwards. |
+| options        | Array           | true     |                  | A list of options that are available for selection and optionally headings for grouping.<br>Each **option** has the following attributes: disabled, label, meta, and value.<br>Each **heading** has the following attributes: heading.<br> |
 | placeholder    | String          | false    | Select an Option | Text that is displayed before an option is selected, to prompt the user to select an option.<br>The default is "Select an Option". |
 | required       | Boolean         | false    | false            | If true, a value must be selected before the form can be submitted. |
 | size           | String          | false    | full             | The container size for the picklist.<br>Accepted sizes include xx-small, x-small, small, medium, large, x-large, xx-large, and full.<br>The default is full. |
@@ -19,8 +18,9 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 
 ### Events
 
-| Name        | Arguments | Description |
-| ----------- | --------- | ----------- |
+| Name  | Arguments | Description |
+| ----- | --------- | ----------- |
+| input | value     | Fired when a option is selected.<br>`v-model` binding available. |
 
 ### Object examples
 
@@ -37,7 +37,7 @@ A Picklist provides a user with an read-only input field that is accompanied wit
 #### Heading
 ```json
 {
-  "group": "My group heading"
+  "heading": "My group heading"
 }
 ```
 

@@ -1,10 +1,7 @@
 <template>
     <td class="slds-cell-edit">
         <span class="slds-grid" :class="alignment">
-            <slds-menu
-                :items="items"
-                size="x-small"
-                position="right"/>
+            <slds-menu :items="items" size="x-small" @click="onClick"/>
         </span>
     </td>
 </template>
@@ -19,6 +16,11 @@
             items() {
                 if (this.typeAttributes == null || this.typeAttributes.rowActions == null) return [];
                 return this.typeAttributes.rowActions;
+            },
+        },
+        methods: {
+            onClick(value) {
+                this.$emit('click', value);
             },
         },
     }

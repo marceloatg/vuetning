@@ -66,9 +66,13 @@
         },
         methods: {
             onClick() {
+                if (this.cell != null && this.cell.action != null) {
+                    this.$emit('action', this.cell.action);
+                    return;
+                }
+
                 if (this.typeAttributes == null) return;
                 if (this.typeAttributes.action == null) return;
-
                 this.$emit('action', this.typeAttributes.action);
             },
         },

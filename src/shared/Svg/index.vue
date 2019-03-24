@@ -50,6 +50,11 @@
     }
 
     .utility-category-adjustment {
+        &.slds-icon_small {
+            padding: 4px;
+            border-radius: .25rem;
+        }
+
         &.slds-icon_medium {
             padding: 6px;
         }
