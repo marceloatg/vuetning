@@ -4,6 +4,7 @@
         <!-- Button -->
         <slds-button-icon
             :icon-name="iconName"
+            :has-dropdown="iconName !== 'utility:down'"
             :size="size"
             :disabled="disabled"
             @click="toggle"

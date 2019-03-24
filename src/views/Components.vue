@@ -26,7 +26,11 @@
         <template #header-actions>
             <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 
-                <slds-menu :items="items" :length="10" class="slds-m-right_xx-small"/>
+                <slds-menu
+                    :items="items"
+                    icon-name="utility:settings"
+                    :length="10"
+                    class="slds-m-right_xx-small"/>
 
                 <div class="slds-button-group">
                     <slds-button label="Create" icon-name="utility:add" @click="onClick"/>
