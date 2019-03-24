@@ -76,13 +76,3 @@
         },
     }
 </script>
-
-<style scoped lang="scss">
-    .slds-media__figure {
-        .slds-icon_container {
-            svg {
-                border-radius: .25rem;
-            }
-        }
-    }
-</style>
