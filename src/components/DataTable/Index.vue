@@ -142,17 +142,17 @@
             this.getColumnLeftOffsets();
 
             this.$el
-                .getElementsByClassName('slds-scrollable_area')[0]
+                .querySelector('.slds-scrollable_area')
                 .addEventListener('scroll', this.onScroll);
         },
         destroyed() {
             this.$el
-                .getElementsByClassName('slds-scrollable_area')[0]
+                .querySelector('.slds-scrollable_area')
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
             getTableWidth() {
-                const table = this.$el.getElementsByTagName('table')[0];
+                const table = this.$el.querySelector('table')
                 this.tableWidth = table.offsetWidth;
             },
             getColumnWidths() {
@@ -174,7 +174,7 @@
                     }
                 }
 
-                const rowWidth = this.$el.getElementsByTagName('tr')[0].offsetWidth;
+                const rowWidth = this.$el.querySelector('tr').offsetWidth;
                 const initialWidth = Math.floor((rowWidth - knownWidth) / unknownWidthColumns);
 
                 for (let column of this.columns) {
@@ -188,7 +188,7 @@
                 if (this.hasCheckboxColumn) indexOffset++;
                 if (this.hasCheckboxButtonColumn) indexOffset++;
 
-                const header = this.$el.getElementsByTagName('th');
+                const header = this.$el.querySelectorAll('th');
 
                 for (let index = indexOffset; index < header.length; index++) {
                     this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
@@ -213,7 +213,7 @@
                 this.$emit('action', action, row);
             },
             onScroll() {
-                const scrollLeft = this.$el.getElementsByClassName('slds-scrollable_area')[0].scrollLeft;
+                const scrollLeft = this.$el.querySelector('.slds-scrollable_area').scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
             },
             onSelect(selected, key) {

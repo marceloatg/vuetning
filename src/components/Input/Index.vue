@@ -174,7 +174,7 @@
 
             if (this.postFixedText == null) return;
 
-            const postFixedText = this.$el.getElementsByClassName('post-fixed-text')[0];
+            const postFixedText = this.$el.querySelector('.post-fixed-text');
             this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
         },
         methods: {

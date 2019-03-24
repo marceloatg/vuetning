@@ -29,7 +29,6 @@
 
 <script>
     export default {
-        name: 'SldsPicklistOption',
         props: {
             disabled: {
                 type: Boolean,

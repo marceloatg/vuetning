@@ -10,7 +10,6 @@
 
 <script>
     export default {
-        name: "SldsPicklistHeading",
         props: {
             heading: {
                 type: String,

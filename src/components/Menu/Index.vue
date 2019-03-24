@@ -111,6 +111,9 @@
                 isOpen: false,
             }
         },
+        mounted(){
+
+        },
         methods: {
             toggle() {
                 this.isOpen = !this.isOpen;
