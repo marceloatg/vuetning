@@ -70,7 +70,7 @@
                         heading: 'Danger zone',
                     },
                     {
-                        label: 'Delete or not delete?',
+                        label: 'Delete',
                         name: 'delete',
                         value: 'delete',
                         prefixIconName: 'utility:delete',

@@ -13,8 +13,10 @@
         <!-- Items -->
         <div
             v-if="isOpen"
+            ref="dropdown"
             class="slds-dropdown"
-            :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]">
+            :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]"
+            :style="{opacity: dropdownOpacity}">
             <ul class="slds-dropdown__list" role="menu">
                 <template v-for="(item, index) in items">
 
@@ -83,41 +85,38 @@
                     return [5, 7, 10].indexOf(value) !== -1
                 }
             },
-            position: {
-                type: String,
-                default: 'left',
-                note: 'Dropdown position. Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'left',
-                        'right',
-                    ].indexOf(value) !== -1
-                }
-            },
-            orientation: {
-                type: String,
-                default: 'top',
-                note: 'Dropdown orientation. Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'top',
-                        'bottom',
-                    ].indexOf(value) !== -1
-                }
-            },
         },
         data() {
             return {
                 isOpen: false,
+                dropdownOpacity: 0,
+                orientation: 'top',
+                position: 'left',
             }
         },
-        mounted(){
+        watch: {
+            async isOpen(opened) {
+                if (!opened) return;
+                await this.$nextTick();
 
+                let dropdown = this.$refs["dropdown"];
+                const positioning = this.getDropdownPositioning(dropdown);
+                console.log(positioning);
+
+                // Setting horizontal position of dropdown
+                if (positioning.element.x + positioning.element.width > positioning.parent.width) {
+                    this.position = 'right';
+                }
+
+                // Setting vertical orientation of dropdown
+                if (positioning.element.y + positioning.element.height > positioning.parent.height) {
+                    this.orientation = 'bottom';
+                }
+
+                this.dropdownOpacity = 1;
+            },
         },
         methods: {
-            toggle() {
-                this.isOpen = !this.isOpen;
-            },
             close() {
                 this.isOpen = false;
             },
@@ -129,13 +128,45 @@
                         break;
                 }
             },
+            getDropdownPositioning(element) {
+                const elementPositioning = {
+                    x: 0,
+                    y: 0,
+                    height: element.offsetHeight,
+                    width: element.offsetWidth,
+                };
+
+                const parentPositioning = {
+                    x: 0,
+                    y: 0,
+                    height: 0,
+                    width: 0,
+                };
+
+                while (element.offsetParent !== null) {
+                    elementPositioning.x += element.offsetLeft;
+                    elementPositioning.y += element.offsetTop;
+                    element = element.offsetParent;
+
+                    if (element !== null) {
+                        parentPositioning.x = element.offsetLeft;
+                        parentPositioning.y = element.offsetTop;
+                        parentPositioning.height = element.offsetHeight;
+                        parentPositioning.width = element.offsetWidth;
+                    }
+                }
+
+                return {
+                    element: elementPositioning,
+                    parent: parentPositioning
+                };
+            },
             onClick(value) {
                 this.$emit('click', value);
+            },
+            toggle() {
+                this.isOpen = !this.isOpen;
             },
         }
     }
 </script>
-
-<style scoped lang="scss">
-
-</style>
