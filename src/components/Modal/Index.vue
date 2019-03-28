@@ -6,7 +6,11 @@
             <div class="slds-modal__container">
 
                 <!-- Header -->
-                <slds-modal-header :header-empty="headerEmpty" :heading="heading" @close="onClose">
+                <slds-modal-header
+                    :header-empty="headerEmpty"
+                    :heading="heading"
+                    :class="headerClass"
+                    @close="onClose">
                     <template #tagline>
                         <slot name="tagline"/>
                     </template>
@@ -51,6 +55,9 @@
             bodyClass: {
                 type: String,
                 default: 'slds-p-around_medium',
+            },
+            headerClass: {
+                type: String,
             },
             headerEmpty: {
                 type: Boolean,
