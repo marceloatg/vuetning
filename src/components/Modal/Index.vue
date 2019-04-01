@@ -22,12 +22,12 @@
                 </div>
 
                 <!-- Footer -->
-                <footer v-if="$slots.footer" class="slds-modal__footer">
+                <footer v-if="$slots.footer && !footerEmpty" class="slds-modal__footer">
                     <slot name="footer"/>
                 </footer>
 
                 <slds-modal-footer
-                    v-else
+                    v-if="!$slots.footer && !footerEmpty"
                     :primary-button-label="primaryButtonLabel"
                     :secondary-button-label="secondaryButtonLabel"
                     @primaryclick="onPrimaryClick"
@@ -55,6 +55,10 @@
             bodyClass: {
                 type: String,
                 default: 'slds-p-around_medium',
+            },
+            footerEmpty: {
+                type: Boolean,
+                default: false,
             },
             headerClass: {
                 type: String,
