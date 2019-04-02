@@ -6,7 +6,7 @@
             <div class="slds-modal__container">
 
                 <!-- Header -->
-                <header class="slds-modal__header" :class="[{'slds-modal__header_empty': $slots.header}, headerClass]">
+                <header class="slds-modal__header" :class="[{'slds-modal__header_empty': !$slots.header}, headerClass]">
 
                     <!-- Close button -->
                     <slds-button-icon
