@@ -1,3 +1,7 @@
+<p align="center">
+    <img width="160"src="https://s3.amazonaws.com/arcthos.com/vuetning/logo.svg">
+</p>
+
 # Vuetning [![vuetning](https://img.shields.io/npm/v/vuetning.svg)](https://www.npmjs.org/package/vuetning) ![Dependencies](https://img.shields.io/david/ArcthosCompany/Vuetning.svg) [![NPM downloads](https://img.shields.io/npm/dt/vuetning.svg)](https://npmjs.org/package/vuetning) ![gzip size](http://img.badgesize.io/https://unpkg.com/vuetning/dist/vuetning.common.js?compression=gzip&label=gzip%20size)
 ### Salesforce Lightning Design System framework for Vue.js 2
 

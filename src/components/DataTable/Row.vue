@@ -22,6 +22,7 @@
                 v-if="column.type === 'action'"
                 :key="index"
                 :align="column.align"
+                :cell="getCell(column.fieldName)"
                 :type-attributes="column.typeAttributes"
                 @action="onAction"/>
 
