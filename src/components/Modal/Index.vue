@@ -6,32 +6,31 @@
             <div class="slds-modal__container">
 
                 <!-- Header -->
-                <slds-modal-header
-                    :header-empty="headerEmpty"
-                    :heading="heading"
-                    :class="headerClass"
-                    @close="onClose">
-                    <template #tagline>
-                        <slot name="tagline"/>
-                    </template>
-                </slds-modal-header>
+                <header class="slds-modal__header" :class="[{'slds-modal__header_empty': $slots.header}, headerClass]">
 
-                <!-- Body -->
-                <div class="slds-modal__content" :class="bodyClass">
-                    <slot name="body"/>
+                    <!-- Close button -->
+                    <slds-button-icon
+                        icon-name="utility:close"
+                        container="none"
+                        variant="inverse"
+                        size="large"
+                        title="close"
+                        class="slds-modal__close"
+                        @click.stop="onClose"/>
+
+                    <slot name="header"/>
+
+                </header>
+
+                <!-- Content -->
+                <div class="slds-modal__content" :class="contentClass">
+                    <slot name="content"/>
                 </div>
 
                 <!-- Footer -->
-                <footer v-if="$slots.footer" class="slds-modal__footer">
+                <footer v-if="$slots.footer" class="slds-modal__footer" :class="footerClass">
                     <slot name="footer"/>
                 </footer>
-
-                <slds-modal-footer
-                    v-else
-                    :primary-button-label="primaryButtonLabel"
-                    :secondary-button-label="secondaryButtonLabel"
-                    @primaryclick="onPrimaryClick"
-                    @secondaryclick="onSecondaryClick"/>
 
             </div>
         </section>
@@ -43,33 +42,19 @@
 </template>
 
 <script>
-    import SldsModalFooter from './Footer'
-    import SldsModalHeader from './Header'
-
     export default {
-        components: {
-            SldsModalFooter,
-            SldsModalHeader,
-        },
         props: {
-            bodyClass: {
+            contentClass: {
                 type: String,
                 default: 'slds-p-around_medium',
+            },
+            footerClass: {
+                type: String,
             },
             headerClass: {
                 type: String,
             },
-            headerEmpty: {
-                type: Boolean,
-                default: false,
-            },
             heading: {
-                type: String,
-            },
-            primaryButtonLabel: {
-                type: String,
-            },
-            secondaryButtonLabel: {
                 type: String,
             },
             size: {
@@ -96,22 +81,7 @@
                 this.$emit('close');
             },
             onKeyUp(event) {
-                switch (event.key) {
-
-                    case 'Enter':
-                        if (!this.$slots.footer) this.onPrimaryClick();
-                        break;
-
-                    case 'Escape':
-                        this.onClose();
-                        break;
-                }
-            },
-            onPrimaryClick() {
-                this.$emit('primaryclick');
-            },
-            onSecondaryClick() {
-                this.$emit('secondaryclick');
+                if (event.key === 'Escape') this.onClose();
             },
         },
     }
