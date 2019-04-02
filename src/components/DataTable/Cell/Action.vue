@@ -11,11 +11,16 @@
 
     export default {
         extends: SldsCell,
-        props: {},
+        props: {
+            cell: {
+                type: Array,
+            },
+        },
         computed: {
             items() {
                 if (this.typeAttributes == null || this.typeAttributes.rowActions == null) return [];
-                return this.typeAttributes.rowActions;
+                if (this.cell == null) return this.typeAttributes.rowActions;
+                return this.typeAttributes.rowActions.filter(action => this.cell.includes(action.name));
             },
         },
         methods: {
