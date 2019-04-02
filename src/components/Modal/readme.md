@@ -6,60 +6,43 @@ Modals are used to display content in a layer above the app. This paradigm is us
 
 | Name                 | Type    | Required | Default              | Description |
 | -------------------- | ------- | -------- | -------------------- | ----------- |
-| bodyClass            | String  | false    | slds-p-around_medium | The class to be applied to the modal content element.Default is 'slds-p-around_medium'. |
-| headerEmpty          | Boolean | false    | false                | Indicates whether or not the modal header has no content.<br>Default is false. |
-| heading              | String  | true*    |                      | The modal heading text.<br>Not required when the header is empty. |
-| primaryButtonLabel   | String  | false    | Save                 | The label to be displayed in the primary button when no footer slot is provided.<br>Default is 'Save'. |
-| secondaryButtonLabel | String  | false    | Cancel               | The label to be displayed in the secondary button when no footer slot is provided.<br>Default is 'Cancel'. |
+| bodyClass            | String  | false    | slds-p-around_medium | The class to be applied to the modal content element.<br>Default is 'slds-p-around_medium'. |
+| footerClass          | String  | false    | slds-p-around_medium | The class to be applied to the modal content element. |
+| headerClass          | String  | false    | slds-p-around_medium | The class to be applied to the modal content element. |
 | size                 | String  | false    | default              | The size of the modal.<br>Accepted sizes include default, small, medium, and large.<br>Default is 'default'. |
 
 ## Slots
 
 | Name    | Optional | Description |
 | ------- | -------- | ----------- |
-| tagline | true     | Tagline placed bellow the heading text inside the header. |
-| body    | false    | The content to be placed inside the modal. |
-| footer  | true     | Replaces the default footer. |
+| header  | true     | The modal header. |
+| content | false    | The content to be placed inside the modal. |
+| footer  | true     | The modal footer. |
 
 ## Events
 
 | Name           | Arguments | Description |
 | -------------- | --------- | ----------- |
 | close          |           | Fired when the close button inside the header is clicked. |
-| primaryclick   |           | Fired when the primary button in the default footer is clicked. |
-| secondaryclick |           | Fired when the secondary button in the default footer is clicked. |
 
 ## Examples
 
 ```vue
-<!-- Generic modal -->
-<slds-modal heading="My modal" @close="onClose" @primaryclick="onPrimaryClick" @secondaryclick="onSecondaryClick">
-    <template #body>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-    </template>
-</slds-modal>
+<slds-modal @close="onClose">
 
-<!-- Empty header modal -->
-<slds-modal :header-empty="true" @close="onClose" @primaryclick="onPrimaryClick" @secondaryclick="onSecondaryClick">
-    <template #body>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-    </template>
-</slds-modal>
+    <template #header>
 
-<!-- Custom modal -->
-<slds-modal heading="My custom modal" @close="onClose">
+        <h2 class="slds-text-heading_medium slds-hyphenate">
+            My custom modal
+        </h2>
 
-    <template #tagline>
         <p class="slds-m-top_x-small">
             Cras quam sapien, eleifend id dapibus vel, porta et massa.
         </p>
+
     </template>
 
-    <template #body>
+    <template #content>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
@@ -70,6 +53,15 @@ Modals are used to display content in a layer above the app. This paradigm is us
         <slds-button label="Confirm" variant="brand"/>
     </template>
 
+</slds-modal>
+
+<!-- body only -->
+<slds-modal @close="onClose">
+    <template #content>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+    </template>
 </slds-modal>
 ```
 
