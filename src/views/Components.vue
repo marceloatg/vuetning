@@ -160,6 +160,7 @@
                         }
                     },
                     {
+                        fieldName: 'actions',
                         type: 'action',
                         resizable: false,
                         fixedWidth: 52,
@@ -234,7 +235,8 @@
                             "color": "outline-brand",
                             "iconName": "utility:error"
                         },
-                        "usedStorage": 100000000
+                        "usedStorage": 100000000,
+                        "actions": ["delete", "edit"],
                     },
                     {
                         "access": {
