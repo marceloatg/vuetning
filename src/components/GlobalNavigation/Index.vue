@@ -37,10 +37,11 @@
             <div class="slds-context-bar__vertical-divider"/>
             <ul class="slds-grid" role="tablist">
 
-                <!-- Tab -->
+                <!--
+                !-- Tab --
                 <li class="slds-context-bar__item slds-context-bar__item_tab" role="presentation">
 
-                    <!-- Identification -->
+                    !-- Identification --
                     <a
                         href="javascript:void(0);"
                         tabindex="-1"
@@ -48,22 +49,22 @@
                         title="Home"
                         class="slds-context-bar__label-action">
 
-                        <!-- Indicator -->
+                        !-- Indicator --
                         <span class="slds-indicator-container"/>
 
-                        <!-- Icon -->
+                        !-- Icon --
                         <span class="slds-icon_container" title="Home">
                             <slds-svg icon-name="standard:home" class="slds-icon slds-icon_small slds-icon-text-default"/>
                         </span>
 
-                        <!-- Text -->
+                        !-- Text --
                         <span class="slds-truncate" title="Home">
                             Home
                         </span>
 
                     </a>
 
-                    <!-- Dropdown menu -->
+                    !-- Dropdown menu --
                     <div class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-p-left_none slds-p-right_none">
                         <button
                             class="slds-button slds-button_icon slds-button_icon-current-color slds-button_icon-container slds-button_icon-x-small"
@@ -111,7 +112,7 @@
                         </div>
                     </div>
 
-                    <!-- Close button -->
+                    !-- Close button --
                     <div class="slds-context-bar__icon-action slds-col_bump-left slds-p-left_none">
                         <button
                             tabindex="-1"
@@ -122,6 +123,7 @@
                     </div>
 
                 </li>
+                -->
 
             </ul>
         </div>
