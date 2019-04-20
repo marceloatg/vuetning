@@ -6,14 +6,7 @@
                 {{ duration }}
             </span>
 
-            <slds-button-icon
-                v-if="hasCopyButton"
-                v-clipboard="duration"
-                icon-name="utility:copy_to_clipboard"
-                container="none"
-                class="slds-cell-edit__button slds-m-left_x-small"
-                icon-class="slds-button__icon_hint slds-button__icon_edit"
-                title="Copy to clipboard"/>
+            <slds-copy-to-clipboard-button v-if="hasCopyButton" :value="duration"/>
 
         </span>
     </td>
@@ -22,8 +15,12 @@
 <script>
     import humanizeDuration from 'humanize-duration'
     import SldsCell from './Cell'
+    import SldsCopyToClipboardButton from './CopyToClipboardButton'
 
     export default {
+        components: {
+            SldsCopyToClipboardButton,
+        },
         extends: SldsCell,
         props: {
             cell: {
