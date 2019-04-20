@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import SldsView from "./views/Components";
+    import SldsView from "./views/VerticalNavigation";
 
     export default {
         name: 'App',
