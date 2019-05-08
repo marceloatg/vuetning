@@ -162,9 +162,11 @@
 
                 const fields = fieldName.split('.');
                 let cell = this.row[fields[0]];
+                if (cell == null) return null;
 
                 for (let i = 1; i < fields.length; i++) {
                     cell = cell[fields[i]];
+                    if (cell == null) return null;
                 }
 
                 return cell;
