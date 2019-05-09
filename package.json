@@ -55,7 +55,7 @@
     "eslint-plugin-vue": "^5.2.2",
     "eslint-teamcity": "^2.1.0",
     "jest-teamcity-reporter": "^0.9.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
   }
