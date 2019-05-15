@@ -20,6 +20,7 @@
         <slds-global-navigation
             app-name="Vuetning"
             :tabs="tabs"
+            :overflowed-tabs="overflowedTabs"
             @close="onCloseTab"/>
 
         <!-- Brand band -->
@@ -54,6 +55,8 @@
                         <div class="slds-form">
                             <slds-input v-model="tabTitle" label="Title"/>
                             <slds-input v-model="tabIcon" label="Icon" default="standard:home"/>
+                            <slds-checkbox v-model="hasSubTas" label="Has sub tabs?"/>
+                            <slds-checkbox v-model="isOverflowed" label="Overflowed?"/>
                         </div>
                     </div>
 
@@ -85,29 +88,45 @@
                     message: 'Oops, it looks like you\'re offline. Check your internet connection and try again.'
                 },
                 showDockedComposer: true,
+                isOverflowed: null,
+                hasSubTas: null,
                 tabIcon: null,
                 tabTitle: null,
                 tabs: [],
+                overflowedTabs: [],
             }
         },
         methods: {
             addTab() {
                 for (const tab of this.tabs) tab.isActive = false;
 
-                this.tabs.push({
+                let subTabs = [];
+                if (this.hasSubTas) subTabs.push({
                     id: Date.now(),
                     title: this.tabTitle,
                     icon: this.tabIcon,
                     isActive: true,
-                    subTabs:[
-                        {
+                });
 
-                        },
-                        {
+                if (this.isOverflowed) {
+                    this.overflowedTabs.push({
+                        id: Date.now(),
+                        title: this.tabTitle,
+                        icon: this.tabIcon,
+                        isActive: true,
+                        subTabs: subTabs,
+                    })
+                }
+                else {
+                    this.tabs.push({
+                        id: Date.now(),
+                        title: this.tabTitle,
+                        icon: this.tabIcon,
+                        isActive: true,
+                        subTabs: subTabs,
+                    })
+                }
 
-                        },
-                    ],
-                })
             },
             clearTabs() {
                 this.tabs.splice(0, this.tabs.length);
@@ -126,7 +145,7 @@
 </script>
 
 <style lang="scss">
-    $default_height: 90px;
+    $default_height: 130px;
     $trial_bar_height: 50px;
     $alert_height: 35px;
     $background-color: rgb(176, 196, 223);

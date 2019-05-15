@@ -40,12 +40,19 @@
 
                 <div class="slds-context-bar__vertical-divider"/>
 
-                <ul class="slds-grid" role="tablist">
+                <ul class="slds-grid tab-list">
+
                     <slds-tab
                         v-for="(tab, index) in tabs"
                         :key="tab.id"
                         :tab="tab"
+                        @click="onClick(index, tab)"
                         @close="onClose(index, tab)"/>
+
+                    <slds-more-tabs
+                        v-if="overflowedTabs.length > 0"
+                        :overflowed-tabs="overflowedTabs"/>
+
                 </ul>
 
             </div>
@@ -53,12 +60,7 @@
         </div>
 
         <!-- Sub Tabs -->
-        <div
-            v-if="false"
-            id="context-tab-panel-1"
-            class="slds-show"
-            role="tabpanel"
-            aria-labelledby="context-tab-id-1">
+        <div v-if="showingSubTabs" class="slds-show">
             <div class="slds-tabs_default slds-sub-tabs">
                 <ul class="slds-tabs_default__nav" role="tablist">
 
@@ -130,9 +132,11 @@
 
 <script>
     import SldsTab from './Tab'
+    import SldsMoreTabs from './MoreTabs'
 
     export default {
         components: {
+            SldsMoreTabs,
             SldsTab,
         },
         props: {
@@ -144,8 +148,22 @@
                 type: Array,
                 required: true,
             },
+            overflowedTabs: {
+                type: Array,
+                default: () => [],
+            },
+        },
+        computed: {
+            showingSubTabs() {
+                const activeTab = this.tabs.find(tab => tab.isActive);
+                if (activeTab == null) return false;
+                return (activeTab.subTabs.length > 0);
+            },
         },
         methods: {
+            onClick(index, tab) {
+                this.$emit('click', index, tab);
+            },
             onClose(index, tab) {
                 this.$emit('close', index, tab);
             },

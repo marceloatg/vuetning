@@ -2,7 +2,9 @@
     <li
         class="slds-context-bar__item slds-context-bar__item_tab"
         :class="[{'slds-is-active': tab.isActive}, {'slds-has-sub-tabs': tab.subTabs.length > 0}]"
-        role="presentation">
+        role="presentation"
+        @click.stop="onClick"
+        @click.middle="onClickClose">
 
         <!-- Identification -->
         <a
@@ -16,7 +18,7 @@
 
             <!-- Icon -->
             <span class="slds-icon_container">
-                <slds-svg :icon-name="tab.icon" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                <slds-svg :icon-name="tab.icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
@@ -27,7 +29,7 @@
         </a>
 
         <!-- Dropdown menu -->
-        <div class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-p-left_none slds-p-right_none">
+        <div v-if="false" class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none">
 
             <slds-button-icon
                 icon-name="utility:chevrondown"
@@ -84,7 +86,7 @@
                 container="bare"
                 title="Close"
                 class="slds-button_icon-current-color"
-                @click="onClickClose"/>
+                @click.stop="onClickClose"/>
         </div>
 
     </li>
@@ -98,7 +100,18 @@
                 required: true,
             },
         },
+        computed: {
+            adjustmentClass() {
+                const iconName = this.tab.icon;
+                if (iconName == null) return null;
+                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
+                return null;
+            },
+        },
         methods: {
+            onClick() {
+                this.$emit('click');
+            },
             onClickClose() {
                 this.$emit('close');
             },
