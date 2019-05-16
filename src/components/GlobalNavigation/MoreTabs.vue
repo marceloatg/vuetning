@@ -1,8 +1,8 @@
 <template>
-    <li class="slds-context-bar__item slds-context-bar__dropdown-trigger">
+    <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
         <!-- More tabs button -->
-        <button class="slds-button slds-context-bar__label-action" title="More">
+        <button class="slds-button slds-context-bar__label-action" title="More" @click="toggleDropdown">
 
             <span class="slds-indicator-container"/>
 
@@ -17,7 +17,10 @@
         </button>
 
         <!-- More tabs dropdown -->
-        <div v-if="false" class="slds-dropdown slds-dropdown_right">
+        <div
+            v-if="isDropdownActive"
+            v-on-clickaway="away"
+            class="slds-dropdown slds-dropdown_right">
             <ul class="slds-dropdown__list" role="menu">
                 <li
                     v-for="(tab, index) in overflowedTabs"
@@ -31,7 +34,7 @@
                             <span class="slds-indicator-container"/>
 
                             <span class="slds-icon_container">
-                                <slds-svg :icon-name="tab.icon" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                <slds-svg :icon-name="tab.icon" :class="adjustmentClass(tab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
                             </span>
 
                             <span>
@@ -49,16 +52,36 @@
 </template>
 
 <script>
+    import {mixin as clickaway} from 'vue-clickaway'
+
     export default {
+        mixins: [clickaway],
         props: {
             overflowedTabs: {
                 type: Array,
                 required: true,
             },
         },
+        data() {
+            return {
+                isDropdownActive: false,
+            }
+        },
         methods: {
+            adjustmentClass(iconName) {
+                if (iconName == null) return null;
+                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
+                return null;
+            },
+            away() {
+                this.isDropdownActive = false;
+            },
             onClick(index, tab) {
+                this.isDropdownActive = false;
                 this.$emit('click', index, tab);
+            },
+            toggleDropdown() {
+                this.isDropdownActive = !this.isDropdownActive;
             },
         },
     }

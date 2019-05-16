@@ -40,7 +40,8 @@
     "humanize-duration": "^3.18.0",
     "moment": "^2.24.0",
     "v-clipboard": "^2.2.2",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-clickaway": "^2.2.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",

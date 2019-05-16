@@ -51,7 +51,8 @@
 
                     <slds-more-tabs
                         v-if="overflowedTabs.length > 0"
-                        :overflowed-tabs="overflowedTabs"/>
+                        :overflowed-tabs="overflowedTabs"
+                        @click="onClick"/>
 
                 </ul>
 
@@ -173,6 +174,6 @@
 
 <style scoped lang="scss">
     .slds-context-bar {
-        z-index: 0;
+        z-index: 99;
     }
 </style>
