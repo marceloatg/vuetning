@@ -9,6 +9,7 @@ import SldsAlert from './components/Alert/Index'
 import SldsAvatar from './components/Avatar/Index'
 import SldsBadge from './components/Badge/Index'
 import SldsBrandBand from './components/BrandBand/Index'
+import SldsBreadcrumb from './components/Breadcrumb/Index'
 import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCheckbox from './components/Checkbox/Index'
@@ -37,8 +38,9 @@ import SldsVerticalNavigation from './components/VerticalNavigation/Index'
 // Registering lightning components
 Vue.component('slds-alert', SldsAlert);
 Vue.component('slds-avatar', SldsAvatar);
-Vue.component('slds-brand-band', SldsBrandBand);
 Vue.component('slds-badge', SldsBadge);
+Vue.component('slds-brand-band', SldsBrandBand);
+Vue.component('slds-breadcrumb', SldsBreadcrumb);
 Vue.component('slds-button', SldsButton);
 Vue.component('slds-button-icon', SldsButtonIcon);
 Vue.component('slds-checkbox', SldsCheckbox);
