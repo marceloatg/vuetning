@@ -89,14 +89,8 @@
 
 <style scoped lang="scss">
     .slds-modal {
-        z-index: 90001;
-
         .slds-modal__content.slds-overflow_initial {
             overflow: initial;
         }
-    }
-
-    .slds-backdrop {
-        z-index: 90000;
     }
 </style>
