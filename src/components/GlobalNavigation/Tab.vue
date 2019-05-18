@@ -3,7 +3,7 @@
         class="slds-context-bar__item slds-context-bar__item_tab"
         :class="[{'slds-is-active': tab.isActive}, {'slds-has-sub-tabs': tab.subTabs.length > 0}]"
         role="presentation"
-        @click.stop="onClick"
+        @click.prevent="onClick"
         @click.middle="onClickClose">
 
         <!-- Identification -->
