@@ -4,7 +4,7 @@
         class="slds-button"
         :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
         v-bind="disabledAttribute"
-        @click.stop="onClick">
+        @click="onClick">
 
         <!-- Text for right icon -->
         <span v-if="iconPosition === 'right'" :class="{'slds-hidden': spinnerActive}">
