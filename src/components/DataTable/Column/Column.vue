@@ -27,6 +27,7 @@
                         'date',
                         'duration',
                         'email',
+                        'icon',
                         'number',
                         'percent',
                         'text',

@@ -83,6 +83,12 @@
                 :cell="getCell(column.fieldName)"
                 :has-copy-button="column.hasCopyButton"/>
 
+            <slds-cell-icon
+                v-else-if="column.type === 'icon'"
+                :key="index"
+                :align="column.align"
+                :cell="getCell(column.fieldName)"/>
+
             <slds-cell-number
                 v-else-if="column.type === 'number'"
                 :key="index"
@@ -113,6 +119,7 @@
     import SldsCellDate from './Cell/Date';
     import SldsCellDuration from './Cell/Duration';
     import SldsCellEmail from './Cell/Email';
+    import SldsCellIcon from './Cell/Icon';
     import SldsCellNumber from './Cell/Number';
     import SldsCellText from './Cell/Text';
 
@@ -127,6 +134,7 @@
             SldsCellDate,
             SldsCellDuration,
             SldsCellEmail,
+            SldsCellIcon,
             SldsCellNumber,
             SldsCellText,
         },
