@@ -57,36 +57,6 @@
                     label: 'Link 2',
                     href: 'breadcrumbs_link_2'
                 },
-                {
-                    id: '2',
-                    label: 'Dashboard',
-                    href: 'breadcrumbs_dashboard'
-                },
-                {
-                    id: '3',
-                    label: 'Link 1',
-                    href: 'breadcrumbs_link_1'
-                },
-                {
-                    id: '4',
-                    label: 'Link 2',
-                    href: 'breadcrumbs_link_2'
-                },
-                {
-                    id: '5',
-                    label: 'Dashboard',
-                    href: 'breadcrumbs_dashboard'
-                },
-                {
-                    id: '6',
-                    label: 'Link 1',
-                    href: 'breadcrumbs_link_1'
-                },
-                {
-                    id: '7',
-                    label: 'Link 2',
-                    href: 'breadcrumbs_link_2'
-                },
             ]
         }),
     }
