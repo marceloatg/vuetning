@@ -41,7 +41,8 @@
     "moment": "^2.24.0",
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
-    "vue-clickaway": "^2.2.2"
+    "vue-clickaway": "^2.2.2",
+    "vue-virtual-scroller": "^1.0.0-rc.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
