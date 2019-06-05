@@ -45,14 +45,17 @@
                     <slds-tab
                         v-for="(tab, index) in tabs"
                         :key="tab.id"
-                        :tab="tab"
-                        @click="onClick(index, tab)"
-                        @close="onClose(index, tab)"/>
+                        :has-sub-tabs="hasSubTabs"
+                        :icon-name="tab.iconName"
+                        :is-active="tab.isActive"
+                        :title="tab.title"
+                        @click="onClickTab(index, tab)"
+                        @close="onCloseTab(index, tab)"/>
 
                     <slds-more-tabs
                         v-if="overflowedTabs.length > 0"
                         :overflowed-tabs="overflowedTabs"
-                        @click="onClick"/>
+                        @click="onClickTab"/>
 
                 </ul>
 
@@ -61,67 +64,24 @@
         </div>
 
         <!-- Sub Tabs -->
-        <div v-if="showingSubTabs" class="slds-show">
+        <div v-if="hasSubTabs" class="slds-show">
             <div class="slds-tabs_default slds-sub-tabs">
-                <ul class="slds-tabs_default__nav" role="tablist">
+                <ul class="slds-tabs_default__nav">
 
-                    <li class="slds-tabs_default__item slds-sub-tabs__item slds-grid slds-grid_vertical-align-center slds-active" role="presentation">
-                        <a
-                            id="subtab-tabitem-01"
-                            aria-controls="subtab-tabpanel-01"
-                            aria-selected="true"
-                            class="slds-tabs_default__link slds-p-horizontal_xx-small"
-                            href="javascript:void(0);"
-                            role="tab"
-                            tabindex="0"
-                            title="00071938">
-                            <span class="slds-indicator-container"/>
-                            <span class="slds-icon_container" title="Case">
-                                <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case"/>
-                                </svg>
-                                <span class="slds-assistive-text">Case</span>
-                            </span>
-                            <span class="slds-truncate" title="00071938">00071938</span>
-                        </a>
-                        <div class="slds-col_bump-left slds-p-left_none slds-p-right_none">
-                            <button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-x-small" tabindex="0" title="Close 00071938">
-                                <svg class="slds-button__icon" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"/>
-                                </svg>
-                                <span class="slds-assistive-text">Close 00071938</span>
-                            </button>
-                        </div>
-                    </li>
+                    <slds-sub-tab
+                        v-for="(subTab, index) in subTabs"
+                        :key="subTab.id"
+                        :icon-name="subTab.iconName"
+                        :is-active="subTab.isActive"
+                        :is-main="subTab.isMain"
+                        :title="subTab.title"
+                        @click="onClickSubTab(index, subTab)"
+                        @close="onCloseSubTab(index, subTab)"/>
 
-                    <li class="slds-tabs_default__item slds-sub-tabs__item slds-grid slds-grid_vertical-align-center" role="presentation">
-                        <a
-                            id="subtab-tabitem-02"
-                            aria-controls="subtab-tabpanel-02"
-                            aria-selected="false"
-                            class="slds-tabs_default__link slds-p-horizontal_xx-small"
-                            href="javascript:void(0);"
-                            role="tab"
-                            tabindex="-1"
-                            title="Chat - Customer">
-                            <span class="slds-indicator-container"/>
-                            <span class="slds-icon_container" title="Live Chat">
-                                <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#live_chat"/>
-                                </svg>
-                                <span class="slds-assistive-text">Live Chat</span>
-                            </span>
-                            <span class="slds-truncate" title="Chat - Customer">Chat - Customer</span>
-                        </a>
-                        <div class="slds-col_bump-left slds-p-left_none slds-p-right_none">
-                            <button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-x-small" tabindex="-1" title="Close Chat - Customer">
-                                <svg class="slds-button__icon" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"/>
-                                </svg>
-                                <span class="slds-assistive-text">Close Chat - Customer</span>
-                            </button>
-                        </div>
-                    </li>
+                    <slds-more-sub-tabs
+                        v-if="overflowedSubTabs.length > 0"
+                        :overflowed-sub-tabs="overflowedSubTabs"
+                        @click="onClickSubTab"/>
 
                 </ul>
             </div>
@@ -132,12 +92,16 @@
 </template>
 
 <script>
+    import SldsSubTab from './SubTab'
     import SldsTab from './Tab'
     import SldsMoreTabs from './MoreTabs'
+    import SldsMoreSubTabs from './MoreSubTabs'
 
     export default {
         components: {
             SldsMoreTabs,
+            SldsMoreSubTabs,
+            SldsSubTab,
             SldsTab,
         },
         props: {
@@ -149,24 +113,36 @@
                 type: Array,
                 required: true,
             },
+            subTabs: {
+                type: Array,
+                default: () => [],
+            },
             overflowedTabs: {
+                type: Array,
+                default: () => [],
+            },
+            overflowedSubTabs: {
                 type: Array,
                 default: () => [],
             },
         },
         computed: {
-            showingSubTabs() {
-                const activeTab = this.tabs.find(tab => tab.isActive);
-                if (activeTab == null) return false;
-                return (activeTab.subTabs.length > 0);
+            hasSubTabs() {
+                return ((this.subTabs != null) && (this.subTabs.length > 0));
             },
         },
         methods: {
-            onClick(index, tab) {
-                this.$emit('click', index, tab);
+            onClickTab(index, tab) {
+                this.$emit('clicktab', index, tab);
             },
-            onClose(index, tab) {
-                this.$emit('close', index, tab);
+            onCloseTab(index, tab) {
+                this.$emit('closetab', index, tab);
+            },
+            onClickSubTab(index, subTab) {
+                this.$emit('clicksubtab', index, subTab);
+            },
+            onCloseSubTab(index, subTab) {
+                this.$emit('closesubtab', index, subTab);
             },
         },
     }

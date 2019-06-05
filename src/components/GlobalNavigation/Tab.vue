@@ -1,29 +1,25 @@
 <template>
     <li
         class="slds-context-bar__item slds-context-bar__item_tab"
-        :class="[{'slds-is-active': tab.isActive}, {'slds-has-sub-tabs': tab.subTabs.length > 0}]"
+        :class="[{'slds-is-active': isActive}, {'slds-has-sub-tabs': hasSubTabs}]"
         role="presentation"
-        @click.prevent="onClick"
+        @click.prevent="onClickTab"
         @click.middle="onClickClose">
 
         <!-- Identification -->
-        <a
-            tabindex="-1"
-            role="tab"
-            :title="tab.title"
-            class="slds-context-bar__label-action">
+        <a role="tab" :title="title" class="slds-context-bar__label-action">
 
             <!-- Indicator -->
             <span class="slds-indicator-container"/>
 
             <!-- Icon -->
             <span class="slds-icon_container">
-                <slds-svg :icon-name="tab.icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                <slds-svg :icon-name="iconName" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
             <span class="slds-truncate">
-                {{ tab.title }}
+                {{ title }}
             </span>
 
         </a>
@@ -86,7 +82,7 @@
                 container="bare"
                 title="Close"
                 class="slds-button_icon-current-color"
-                @click.stop="onClickClose"/>
+                @click.prevent="onClickClose"/>
         </div>
 
     </li>
@@ -95,21 +91,32 @@
 <script>
     export default {
         props: {
-            tab: {
-                type: Object,
+            hasSubTabs: {
+                type: Boolean,
+                default: false,
+            },
+            iconName: {
+                type: String,
+                required: true,
+            },
+            isActive: {
+                type: Boolean,
+                default: false,
+            },
+            title: {
+                type: String,
                 required: true,
             },
         },
         computed: {
             adjustmentClass() {
-                const iconName = this.tab.icon;
-                if (iconName == null) return null;
+                const iconName = this.iconName;
                 if (iconName.startsWith('utility')) return 'utility-category-adjustment';
                 return null;
             },
         },
         methods: {
-            onClick() {
+            onClickTab() {
                 this.$emit('click');
             },
             onClickClose() {
@@ -118,7 +125,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -2,12 +2,12 @@
     <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
         <!-- More tabs button -->
-        <button class="slds-button slds-context-bar__label-action" title="More" @click="toggleDropdown">
+        <button class="slds-button slds-context-bar__label-action" :title="`More (${overflowedTabs.length})`" @click="toggleDropdown">
 
             <span class="slds-indicator-container"/>
 
             <span class="slds-truncate">
-                More
+                {{ `More (${overflowedTabs.length})` }}
             </span>
 
             <svg class="slds-button__icon slds-button__icon_small slds-button__icon_right">
@@ -17,10 +17,7 @@
         </button>
 
         <!-- More tabs dropdown -->
-        <div
-            v-if="isDropdownActive"
-            v-on-clickaway="away"
-            class="slds-dropdown slds-dropdown_right">
+        <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
             <ul class="slds-dropdown__list" role="menu">
                 <li
                     v-for="(tab, index) in overflowedTabs"
@@ -34,7 +31,7 @@
                             <span class="slds-indicator-container"/>
 
                             <span class="slds-icon_container">
-                                <slds-svg :icon-name="tab.icon" :class="adjustmentClass(tab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                <slds-svg :icon-name="tab.iconName" :class="adjustmentClass(tab.iconName)" class="slds-icon slds-icon_small slds-icon-text-default"/>
                             </span>
 
                             <span>
@@ -86,7 +83,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -28,20 +28,53 @@
 
         <!-- Global content -->
         <div class="slds-global-content">
-            <slds-view/>
+            <main class="slds-container_small slds-container_center">
+                <article class="slds-card">
+
+                    <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"/>
+                                    </svg>
+                                    <span class="slds-assistive-text">account</span>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+                                        <span>Tabs</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-form">
+                            <slds-input v-model="tabTitle" label="Title"/>
+                            <slds-input v-model="tabIcon" label="Icon" default="standard:home"/>
+                            <slds-checkbox v-model="hasSubTas" label="Has sub tabs?"/>
+                            <slds-checkbox v-model="isOverflowed" label="Overflowed?"/>
+                        </div>
+                    </div>
+
+                    <footer class="slds-card__footer">
+                        <slds-button label="Clear" @click="clearTabs"/>
+                        <slds-button label="Add tab" variant="brand" @click="addTab"/>
+                    </footer>
+
+                </article>
+            </main>
         </div>
 
     </div>
 </template>
 
 <script>
-    import SldsView from './views/Default/Index'
-
     export default {
         name: 'App',
-        components: {
-            SldsView,
-        },
         data() {
             return {
                 trial: {
@@ -112,7 +145,7 @@
 </script>
 
 <style lang="scss">
-    $default_height: 90px;
+    $default_height: 130px;
     $trial_bar_height: 50px;
     $alert_height: 35px;
     $background-color: rgb(176, 196, 223);
