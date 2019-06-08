@@ -2,7 +2,7 @@
     <div class="container">
         <div class="table">
 
-            <div class="header">
+            <div class="header" :style="{ width: `${tableWidth}px` }">
 
                 <div v-if="hasLineNumberColumn" class="line-number"/>
 
@@ -33,7 +33,7 @@
                     <div class="row" :style="{ width: `${rowWidth}px` }">
 
                         <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
-                            {{ index }}
+                            {{ index + 1 }}
                         </div>
 
                         <div class="cell slds-truncate" :title="item.name" :style="{width: `${columns[0].width}px`}">
@@ -95,6 +95,15 @@
             this.getTableWidth();
             this.getColumnWidths();
             this.getColumnLeftOffsets();
+
+            this.$el
+                .querySelector('.vue-recycle-scroller')
+                .addEventListener('scroll', this.onScroll);
+        },
+        beforeDestroy() {
+            this.$el
+                .querySelector('.vue-recycle-scroller')
+                .removeEventListener('scroll', this.onScroll);
         },
         methods: {
             enrichColumns() {
@@ -106,16 +115,15 @@
 
             },
             getColumnLeftOffsets() {
-                let indexOffset = 0;
-                if (this.hasNumberColumn) indexOffset++;
-                if (this.hasCheckboxColumn) indexOffset++;
-                if (this.hasCheckboxButtonColumn) indexOffset++;
+                let columnLeftSum = 0;
+                if (this.hasLineNumberColumn) columnLeftSum += Commons.LINE_COUNTER_WIDTH;
+                if (this.hasCheckboxColumn) columnLeftSum += Commons.LINE_CHECKBOX_WIDTH;
+                if (this.hasCheckboxButtonColumn) columnLeftSum += Commons.LINE_CHECKBOX_BUTTON_WIDTH;
 
-                const header = this.$el.querySelectorAll('.column');
-
-                for (let index = indexOffset; index < header.length; index++) {
-                    this.$set(this.columns[index - indexOffset], 'offsetLeft', header [index].offsetLeft);
-                    this.$set(this.columns[index - indexOffset], 'left', header [index].offsetLeft);
+                for (let column of this.columns) {
+                    this.$set(column, 'offsetLeft', columnLeftSum);
+                    this.$set(column, 'left', columnLeftSum);
+                    columnLeftSum += column.width;
                 }
             },
             getColumnWidths() {
@@ -149,14 +157,20 @@
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - 19;
             },
+            onScroll() {
+                const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
+                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+            },
             onResize(index, delta) {
                 this.columns[index].width += delta;
                 this.tableWidth += delta;
+                this.rowWidth += delta;
 
                 for (++index; index < this.columns.length; index++) {
                     this.columns[index].left += delta;
                     this.columns[index].offsetLeft += delta;
                 }
+
             },
         },
     }
@@ -182,7 +196,6 @@
 
     .table {
         position: relative;
-        background-color: $color-background-alt;
         font-size: inherit;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
         border: 1px solid #dddbda;
@@ -191,6 +204,9 @@
     }
 
     .header {
+        position: static;
+        height: 2rem;
+
         display: flex;
         color: #514f4d;
         font-weight: 700;
@@ -199,18 +215,23 @@
 
         .line-number {
             min-width: 3.75rem;
-            border-bottom: 1px solid #dddbda;
+            position: absolute;
+        }
+
+        .column {
+            position: absolute;
         }
 
         .scrollbar {
             min-width: 17px;
-            border-bottom: 1px solid #dddbda;
+            position: absolute;
         }
     }
 
     .body {
         height: 512px;
         overflow-x: auto;
+        border-top: 1px solid #dddbda;
     }
 
     .row {
@@ -218,6 +239,7 @@
         height: 2rem;
         align-items: center;
         border-bottom: 1px solid #dddbda;
+        background-color: $color-background-alt;
 
         .cell {
             padding: .25rem .5rem;
@@ -226,6 +248,7 @@
 
             &:hover {
                 background-color: $color-background-alt;
+                box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
             }
         }
 
@@ -239,6 +262,7 @@
     .hover {
         .row {
             background-color: #f3f2f2;
+            box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
         }
     }
 </style>

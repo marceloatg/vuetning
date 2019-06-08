@@ -1,5 +1,4 @@
 <template>
-
     <div class="column" :style="{ width: `${initialWidth}px`, left: `${left}px` }">
 
         <!-- Label -->
@@ -7,12 +6,12 @@
             {{ label }}
         </span>
 
-        <span
-            class="handle"
-            :style="{transform: `translateX(${resizerTranslation}px)`}"
-            @mousedown.prevent.stop="onResizerMouseDown"/>
-    </div>
+        <!-- Handle -->
+        <span class="handle" :style="{transform: `translateX(${resizerTranslation}px)`}" @mousedown.prevent.stop="onResizerMouseDown">
+            <span class="divider"/>
+        </span>
 
+    </div>
 </template>
 
 <script>
@@ -133,7 +132,6 @@
         width: 100%;
         align-items: center;
         cursor: pointer;
-        border-bottom: 1px solid #dddbda;
 
         .label {
             padding: .25rem .5rem;
@@ -147,11 +145,20 @@
             cursor: col-resize;
             opacity: 0;
             will-change: transform;
+            z-index: 5000;
 
             &:hover,
             &:focus,
             &:active {
                 opacity: 1;
+
+                .divider {
+                    position: absolute;
+                    right: 0;
+                    height: 100vh;
+                    width: 1px;
+                    background: $color-background-button-brand;
+                }
             }
         }
 
