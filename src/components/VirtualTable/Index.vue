@@ -36,17 +36,21 @@
                             {{ index + 1 }}
                         </div>
 
-                        <div class="cell slds-truncate" :title="item.name" :style="{width: `${columns[0].width}px`}">
-                            {{ item.name }}
-                        </div>
+                        <template
+                            v-for="(column, index) in columns"
+                            class="cell"
+                            :style="{width: `${column.width}px`}">
 
-                        <div class="cell slds-truncate" :title="item.email" :style="{width: `${columns[1].width}px`}">
-                            {{ item.email }}
-                        </div>
+                            <div
+                                v-if="column.type === 'text'"
+                                :key="index"
+                                :title="item.name"
+                                class="cell slds-truncate"
+                                :style="{width: `${column.width}px`}">
+                                {{ getFieldValue(column.fieldName, item) }}
+                            </div>
 
-                        <div class="cell slds-truncate" :title="item.phone" :style="{width: `${columns[2].width}px`}">
-                            {{ item.phone }}
-                        </div>
+                        </template>
 
                     </div>
                 </template>
@@ -151,6 +155,20 @@
                     if (!column.resizable) continue;
                     if (column.width == null) this.$set(column, 'width', width);
                 }
+            },
+            getFieldValue(fieldName, row){
+                if (fieldName == null) return null;
+
+                const fields = fieldName.split('.');
+                let fieldValue = row[fields[0]];
+                if (fieldValue == null) return null;
+
+                for (let i = 1; i < fields.length; i++) {
+                    fieldValue = fieldValue[fields[i]];
+                    if (fieldValue == null) return null;
+                }
+
+                return fieldValue;
             },
             getTableWidth() {
                 const table = this.$el.querySelector('.table');
