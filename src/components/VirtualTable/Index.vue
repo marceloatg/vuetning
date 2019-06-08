@@ -33,7 +33,7 @@
                     <div class="row" :style="{ width: `${rowWidth}px` }">
 
                         <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
-                            {{ index + 1 }}
+                            {{ lineNumber(index) }}
                         </div>
 
                         <template
@@ -44,7 +44,7 @@
                             <div
                                 v-if="column.type === 'text'"
                                 :key="index"
-                                :title="item.name"
+                                :title="getFieldValue(column.fieldName, item)"
                                 class="cell slds-truncate"
                                 :style="{width: `${column.width}px`}">
                                 {{ getFieldValue(column.fieldName, item) }}
@@ -62,6 +62,8 @@
 <script>
     import Commons from "../DataTable/commons";
     import SldsColumn from "./Column";
+    import numeral from 'numeral'
+    import 'numeral/locales/pt-br'
 
     export default {
         components: {
@@ -92,6 +94,7 @@
             }
         },
         created() {
+            numeral.locale('pt-br');
             this.enrichColumns();
             this.enrichRows();
         },
@@ -156,7 +159,7 @@
                     if (column.width == null) this.$set(column, 'width', width);
                 }
             },
-            getFieldValue(fieldName, row){
+            getFieldValue(fieldName, row) {
                 if (fieldName == null) return null;
 
                 const fields = fieldName.split('.');
@@ -170,6 +173,9 @@
 
                 return fieldValue;
             },
+            lineNumber(index) {
+                return numeral(index + 1).format('0,0').toString();
+            },
             getTableWidth() {
                 const table = this.$el.querySelector('.table');
                 this.tableWidth = table.offsetWidth;
@@ -178,6 +184,7 @@
             onScroll() {
                 const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+                // TODO: decouple column/row dependency to improve performance in extreme cases, this way vue doesn't need to rerender all rows when columns are updated.
             },
             onResize(index, delta) {
                 this.columns[index].width += delta;
@@ -196,6 +203,7 @@
 
 <style lang="scss">
     $color-background-alt: #ffffff;
+    $header-height: 2rem;
     $table-color-background-header: #fafaf9;
 
     .vue-recycle-scroller.ready.direction-vertical {
@@ -206,24 +214,23 @@
     }
 
     .container {
+        height: 100%;
         width: 100%;
         position: relative;
-        background-color: #fafaf9;
         overflow: hidden;
+        background-color: #fafaf9;
     }
 
     .table {
-        position: relative;
+        height: 100%;
         font-size: inherit;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
         border: 1px solid #dddbda;
-        border-radius: .25rem;
-        height: 544px;
     }
 
     .header {
         position: static;
-        height: 2rem;
+        height: $header-height;
 
         display: flex;
         color: #514f4d;
@@ -247,7 +254,7 @@
     }
 
     .body {
-        height: 512px;
+        height: calc(100% - #{$header-height});
         overflow-x: auto;
         border-top: 1px solid #dddbda;
     }

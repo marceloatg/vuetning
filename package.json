@@ -39,6 +39,7 @@
   "dependencies": {
     "humanize-duration": "^3.18.0",
     "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
     "vue-clickaway": "^2.2.2",

@@ -1,8 +1,10 @@
 <template>
-    <slds-virtual-table
-        :columns="columns"
-        :key-field="keyField"
-        :rows="rows"/>
+    <div style="height: 600px; background: red;">
+        <slds-virtual-table
+            :columns="columns"
+            :key-field="keyField"
+            :rows="rows"/>
+    </div>
 </template>
 
 <script>
