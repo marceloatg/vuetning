@@ -19,8 +19,6 @@
                     :type="column.type"
                     @resize="onResize"/>
 
-                <div class="scrollbar"/>
-
             </div>
 
             <RecycleScroller
@@ -90,6 +88,7 @@
         data() {
             return {
                 rowWidth: null,
+                scrollbarWidth: 0,
                 tableWidth: null,
             }
         },
@@ -98,7 +97,8 @@
             this.enrichColumns();
             this.enrichRows();
         },
-        mounted() {
+        async mounted() {
+            await this.getScrollbarWidth();
             this.getTableWidth();
             this.getColumnWidths();
             this.getColumnLeftOffsets();
@@ -176,10 +176,21 @@
             lineNumber(index) {
                 return numeral(index + 1).format('0,0').toString();
             },
+            async getScrollbarWidth() {
+                const scroller = this.$el.querySelector('.vue-recycle-scroller');
+                if (scroller == null) return;
+
+                await this.$nextTick();
+
+                const noVerticalOverflow = scroller.scrollHeight <= scroller.clientHeight;
+                if (noVerticalOverflow) return;
+
+                this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth;
+            },
             getTableWidth() {
                 const table = this.$el.querySelector('.table');
                 this.tableWidth = table.offsetWidth;
-                this.rowWidth = this.tableWidth - 19;
+                this.rowWidth = this.tableWidth - this.scrollbarWidth;
             },
             onScroll() {
                 const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
@@ -225,7 +236,6 @@
         height: 100%;
         font-size: inherit;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
-        border: 1px solid #dddbda;
     }
 
     .header {
@@ -244,11 +254,6 @@
         }
 
         .column {
-            position: absolute;
-        }
-
-        .scrollbar {
-            min-width: 17px;
             position: absolute;
         }
     }
