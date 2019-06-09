@@ -21,10 +21,12 @@
 
             </div>
 
+            <!-- No single file components inside RecycleScroller due to performance restrictions. -->
             <RecycleScroller
                 class="body"
                 :items="rows"
                 :item-size="32"
+                :key-field="keyField"
                 :buffer="100">
 
                 <template v-slot="{ item, index }">
@@ -39,12 +41,35 @@
                             class="cell"
                             :style="{width: `${column.width}px`}">
 
-                            <div
-                                :key="column.id"
-                                :title="item.cells[index]"
-                                class="cell slds-truncate"
-                                :style="{width: `${column.width}px`}">
-                                {{ item.cells[index] }}
+                            <div :key="column.id" class="cell" :style="{width: `${column.width}px`}">
+                                <span class="slds-grid slds-grid_align-spread">
+
+                                    <!-- Field value -->
+                                    <span :title="getFieldValue(column, item)" class="slds-truncate" :class="{'slds-text-font_monospace': column.monospaced}">
+                                        {{ getFieldValue(column, item) }}
+                                    </span>
+
+                                    <!-- Copy to clipboard button -->
+                                    <button
+                                        v-if="column.hasCopyButton"
+                                        class="slds-button slds-button_icon slds-cell-copy__button slds-m-left_x-small"
+                                        title="Copy to clipboard"
+                                        @click="copyToClipboard(column, item)">
+
+                                        <svg
+                                            fill="#b0adab"
+                                            style="width: .875rem;height: .875rem;"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="100%"
+                                            height="100%">
+                                            <path d="M8 5.4h8c.4 0 .8-.4.8-.8V3.1c0-1.2-1-2.2-2.2-2.2H9.5c-1.2 0-2.2 1-2.2 2.2v1.5c0 .4.3.8.7.8zm12-2.6h-.8c-.2 0-.3.1-.3.3v1.5c0 1.6-1.3 3-2.9 3H8c-1.6 0-2.9-1.4-2.9-3V3.1c0-.2-.1-.3-.3-.3H4c-1.2 0-2.2 1-2.2 2.2v15.9c0 1.2 1 2.2 2.2 2.2h16c1.2 0 2.2-1 2.2-2.2V5c0-1.2-1-2.2-2.2-2.2z"/>
+                                        </svg>
+
+                                    </button>
+
+                                </span>
+
                             </div>
 
                         </template>
@@ -59,7 +84,6 @@
 <script>
     import Commons from "../DataTable/commons";
     import SldsColumn from "./Column";
-    import moment from 'moment'
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
     import uuid from 'uuid/v4';
@@ -96,7 +120,6 @@
         created() {
             numeral.locale('pt-br');
             this.enrichColumns();
-            this.enrichRows();
         },
         async mounted() {
             await this.getScrollbarWidth();
@@ -114,19 +137,15 @@
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
+            copyToClipboard(column, row) {
+                const value = this.getFieldValue(column, row);
+                if (value != null) this.$clipboard(value);
+            },
             enrichColumns() {
                 for (const column of this.columns) {
                     this.$set(column, 'id', uuid());
                     if (column.resizable == null) this.$set(column, 'resizable', true);
-                }
-            },
-            enrichRows() {
-                for (const row of this.rows) {
-                    this.$set(row, 'cells', []);
-
-                    for (const column of this.columns) {
-                        this.setFieldValue(column, row);
-                    }
+                    if (column.hasCopyButton == null) this.$set(column, 'hasCopyButton', true);
                 }
             },
             getColumnLeftOffsets() {
@@ -167,11 +186,12 @@
                     if (column.width == null) this.$set(column, 'width', width);
                 }
             },
-            setFieldValue(column, row) {
+            getFieldValue(column, row) {
                 if (column.fieldName == null) return null;
 
                 const fields = column.fieldName.split('.');
                 let fieldValue = row[fields[0]];
+
                 if (fieldValue == null) return null;
 
                 for (let i = 1; i < fields.length; i++) {
@@ -179,15 +199,10 @@
                     if (fieldValue == null) return null;
                 }
 
-                if (column.type === 'date') {
-                    if (column.typeAttributes.format == null) fieldValue = moment(fieldValue).format('YYYY/MM/DD hh:mm:ss');
-                    else fieldValue = moment(fieldValue).format(column.typeAttributes.format);
-                }
-
-                row.cells.push(fieldValue);
+                return fieldValue;
             },
             lineNumber(index) {
-                return numeral(index + 1).format('0,0').toString();
+                return numeral(index + 1).format('0,0');
             },
             async getScrollbarWidth() {
                 const scroller = this.$el.querySelector('.vue-recycle-scroller');
@@ -289,9 +304,24 @@
             height: 100%;
             line-height: 1.5rem;
 
+            .slds-cell-copy__button {
+                opacity: 0;
+                width: 1.25rem;
+                height: 1.25rem;
+                flex-shrink: 0;
+            }
+
             &:hover {
                 background-color: $color-background-alt;
                 box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
+
+                .slds-cell-copy__button {
+                    opacity: 0.5;
+                }
+
+                .slds-cell-copy__button:hover {
+                    opacity: 1;
+                }
             }
         }
 
@@ -308,4 +338,23 @@
             box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
         }
     }
+
+    .slds-button_icon {
+
+        &:active {
+            animation: click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
+        }
+    }
+
+    @keyframes click-effect {
+
+        25% {
+            transform: scale(0.94, 0.94);
+        }
+
+        100% {
+            transform: scale(0.98, 0.98);
+        }
+    }
+
 </style>
