@@ -34,6 +34,7 @@ import SldsSvg from './shared/Svg'
 import SldsToast from './components/Toast/Index'
 import SldsTrialBar from './components/TrialBar/Index'
 import SldsVerticalNavigation from './components/VerticalNavigation/Index'
+import SldsVirtualTable from './components/VirtualTable/Index'
 
 // Registering lightning components
 Vue.component('slds-alert', SldsAlert);
@@ -65,3 +66,4 @@ Vue.component('slds-svg', SldsSvg);
 Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
+Vue.component('slds-virtual-table', SldsVirtualTable);

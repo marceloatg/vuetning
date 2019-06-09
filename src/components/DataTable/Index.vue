@@ -145,7 +145,7 @@
                 .querySelector('.slds-scrollable_area')
                 .addEventListener('scroll', this.onScroll);
         },
-        destroyed() {
+        beforeDestroy() {
             this.$el
                 .querySelector('.slds-scrollable_area')
                 .removeEventListener('scroll', this.onScroll);
