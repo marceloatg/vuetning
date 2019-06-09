@@ -45,8 +45,8 @@
                                 <span class="slds-grid slds-grid_align-spread">
 
                                     <!-- Field value -->
-                                    <span :title="item.cells[index]" class="slds-truncate">
-                                        {{ item.cells[index] }}
+                                    <span :title="getFieldValue(column, item)" class="slds-truncate" :class="{'slds-text-font_monospace': column.monospaced}">
+                                        {{ getFieldValue(column, item) }}
                                     </span>
 
                                     <!-- Copy to clipboard button -->
@@ -54,7 +54,7 @@
                                         v-if="column.hasCopyButton"
                                         class="slds-button slds-button_icon slds-cell-copy__button slds-m-left_x-small"
                                         title="Copy to clipboard"
-                                        @click="copyToClipboard(item.cells[index])">
+                                        @click="copyToClipboard(column, item)">
 
                                         <svg
                                             fill="#b0adab"
@@ -84,7 +84,6 @@
 <script>
     import Commons from "../DataTable/commons";
     import SldsColumn from "./Column";
-    import moment from 'moment'
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
     import uuid from 'uuid/v4';
@@ -121,7 +120,6 @@
         created() {
             numeral.locale('pt-br');
             this.enrichColumns();
-            this.enrichRows();
         },
         async mounted() {
             await this.getScrollbarWidth();
@@ -139,7 +137,8 @@
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
-            copyToClipboard(value) {
+            copyToClipboard(column, row) {
+                const value = this.getFieldValue(column, row);
                 if (value != null) this.$clipboard(value);
             },
             enrichColumns() {
@@ -147,16 +146,6 @@
                     this.$set(column, 'id', uuid());
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                     if (column.hasCopyButton == null) this.$set(column, 'hasCopyButton', true);
-                }
-            },
-            enrichRows() {
-                console.log('enrichRows')
-                for (const row of this.rows) {
-                    this.$set(row, 'cells', []);
-
-                    for (const column of this.columns) {
-                        this.setFieldValue(column, row);
-                    }
                 }
             },
             getColumnLeftOffsets() {
@@ -197,37 +186,23 @@
                     if (column.width == null) this.$set(column, 'width', width);
                 }
             },
-            setFieldValue(column, row) {
-                if (column.fieldName == null) {
-                    row.cells.push(null);
-                    return;
-                }
+            getFieldValue(column, row) {
+                if (column.fieldName == null) return null;
 
                 const fields = column.fieldName.split('.');
                 let fieldValue = row[fields[0]];
 
-                if (fieldValue == null) {
-                    row.cells.push(null);
-                    return;
-                }
+                if (fieldValue == null) return null;
 
                 for (let i = 1; i < fields.length; i++) {
                     fieldValue = fieldValue[fields[i]];
-                    if (fieldValue == null) {
-                        row.cells.push(null);
-                        return;
-                    }
+                    if (fieldValue == null) return null;
                 }
 
-                if (column.type === 'date') {
-                    if (column.typeAttributes.format == null) fieldValue = moment(fieldValue).format('YYYY/MM/DD hh:mm:ss');
-                    else fieldValue = moment(fieldValue).format(column.typeAttributes.format);
-                }
-
-                row.cells.push(fieldValue);
+                return fieldValue;
             },
             lineNumber(index) {
-                return numeral(index + 1).format('0,0').toString();
+                return numeral(index + 1).format('0,0');
             },
             async getScrollbarWidth() {
                 const scroller = this.$el.querySelector('.vue-recycle-scroller');
