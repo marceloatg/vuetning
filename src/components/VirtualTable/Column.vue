@@ -46,6 +46,7 @@
                 validator(value) {
                     return [
                         'text',
+                        'date',
                     ].indexOf(value) !== -1
                 },
             },

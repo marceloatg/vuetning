@@ -40,12 +40,11 @@
                             :style="{width: `${column.width}px`}">
 
                             <div
-                                v-if="column.type === 'text'"
-                                :key="index"
-                                :title="getFieldValue(column.fieldName, item)"
+                                :key="column.id"
+                                :title="item.cells[index]"
                                 class="cell slds-truncate"
                                 :style="{width: `${column.width}px`}">
-                                {{ getFieldValue(column.fieldName, item) }}
+                                {{ item.cells[index] }}
                             </div>
 
                         </template>
@@ -60,8 +59,10 @@
 <script>
     import Commons from "../DataTable/commons";
     import SldsColumn from "./Column";
+    import moment from 'moment'
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
+    import uuid from 'uuid/v4';
 
     export default {
         components: {
@@ -115,11 +116,18 @@
         methods: {
             enrichColumns() {
                 for (const column of this.columns) {
+                    this.$set(column, 'id', uuid());
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                 }
             },
             enrichRows() {
+                for (const row of this.rows) {
+                    this.$set(row, 'cells', []);
 
+                    for (const column of this.columns) {
+                        this.setFieldValue(column, row);
+                    }
+                }
             },
             getColumnLeftOffsets() {
                 let columnLeftSum = 0;
@@ -159,10 +167,10 @@
                     if (column.width == null) this.$set(column, 'width', width);
                 }
             },
-            getFieldValue(fieldName, row) {
-                if (fieldName == null) return null;
+            setFieldValue(column, row) {
+                if (column.fieldName == null) return null;
 
-                const fields = fieldName.split('.');
+                const fields = column.fieldName.split('.');
                 let fieldValue = row[fields[0]];
                 if (fieldValue == null) return null;
 
@@ -171,7 +179,12 @@
                     if (fieldValue == null) return null;
                 }
 
-                return fieldValue;
+                if (column.type === 'date') {
+                    if (column.typeAttributes.format == null) fieldValue = moment(fieldValue).format('YYYY/MM/DD hh:mm:ss');
+                    else fieldValue = moment(fieldValue).format(column.typeAttributes.format);
+                }
+
+                row.cells.push(fieldValue);
             },
             lineNumber(index) {
                 return numeral(index + 1).format('0,0').toString();

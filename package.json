@@ -43,7 +43,8 @@
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
     "vue-clickaway": "^2.2.2",
-    "vue-virtual-scroller": "^1.0.0-rc.2"
+    "vue-virtual-scroller": "^1.0.0-rc.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

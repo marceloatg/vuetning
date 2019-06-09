@@ -35,12 +35,22 @@
                 type: 'text',
             });
 
+            this.columns.push({
+                fieldName: 'date',
+                label: 'Date',
+                type: 'date',
+                typeAttributes: {
+                    format: 'DD/MMM/YYYY hh:mm:ss',
+                },
+            });
+
             for (let i = 0; i < 1000; i++) {
                 this.rows.push({
                     id: i,
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     phone: `(55) ${i}-${i}`,
+                    date: Date.now(),
                 })
             }
         },
