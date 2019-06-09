@@ -37,7 +37,7 @@
                         </div>
 
                         <template
-                            v-for="(column, index) in columns"
+                            v-for="column in columns"
                             class="cell"
                             :style="{width: `${column.width}px`}">
 
