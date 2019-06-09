@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Clipboard from 'v-clipboard'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 // Using imports
 Vue.use(Clipboard);
@@ -37,6 +39,7 @@ import SldsVerticalNavigation from './components/VerticalNavigation/Index'
 import SldsVirtualTable from './components/VirtualTable/Index'
 
 // Registering lightning components
+Vue.component('RecycleScroller', RecycleScroller);
 Vue.component('slds-alert', SldsAlert);
 Vue.component('slds-avatar', SldsAvatar);
 Vue.component('slds-badge', SldsBadge);
