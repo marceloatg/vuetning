@@ -45,9 +45,22 @@
                                 <span class="slds-grid slds-grid_align-spread">
 
                                     <!-- Field value -->
-                                    <span :title="getFieldValue(column, item)" class="slds-truncate" :class="{'slds-text-font_monospace': column.monospaced}">
+                                    <span
+                                        v-if="column.type === 'text'"
+                                        :title="getFieldValue(column, item)"
+                                        class="slds-truncate"
+                                        :class="{'slds-text-font_monospace': column.monospaced}">
                                         {{ getFieldValue(column, item) }}
                                     </span>
+
+                                    <a
+                                        v-if="column.type === 'action-link'"
+                                        :title="getFieldValue(column, item)"
+                                        class="slds-truncate"
+                                        :class="{'slds-text-font_monospace': column.monospaced}"
+                                        @click="onClickActionLink(item)">
+                                        {{ getFieldValue(column, item) }}
+                                    </a>
 
                                     <!-- Copy to clipboard button -->
                                     <button
@@ -235,6 +248,9 @@
                     this.columns[index].offsetLeft += delta;
                 }
 
+            },
+            onClickActionLink(item) {
+                this.$emit('action', item)
             },
         },
     }

@@ -3,7 +3,8 @@
         <slds-virtual-table
             :columns="columns"
             :key-field="keyField"
-            :rows="rows"/>
+            :rows="rows"
+            @action="onAction"/>
     </div>
 </template>
 
@@ -20,7 +21,7 @@
             this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
-                type: 'text',
+                type: 'action-link',
             });
 
             this.columns.push({
@@ -52,6 +53,11 @@
                     phone: `(55) ${i}-${i}`,
                     date: Date.now(),
                 })
+            }
+        },
+        methods: {
+            onAction(item) {
+               console.log(item)
             }
         },
     }
