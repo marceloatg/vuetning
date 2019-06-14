@@ -58,7 +58,7 @@
                                         :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.monospaced}"
-                                        @click="onClickActionLink(item)">
+                                        @click="onClickActionLink(column, item)">
                                         {{ getFieldValue(column, item) }}
                                     </a>
 
@@ -249,8 +249,11 @@
                 }
 
             },
-            onClickActionLink(item) {
-                this.$emit('action', item)
+            onClickActionLink(column, item) {
+                if (column.typeAttributes == null) return;
+                if (column.typeAttributes.action == null) return;
+
+                this.$emit(column.typeAttributes.action, item);
             },
         },
     }

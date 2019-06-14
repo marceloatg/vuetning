@@ -4,7 +4,7 @@
             :columns="columns"
             :key-field="keyField"
             :rows="rows"
-            @action="onAction"/>
+            @detail="onAction"/>
     </div>
 </template>
 
@@ -22,6 +22,9 @@
                 fieldName: 'name',
                 label: 'Name',
                 type: 'action-link',
+                typeAttributes: {
+                    action: 'detail',
+                }
             });
 
             this.columns.push({
@@ -36,14 +39,6 @@
                 type: 'text',
             });
 
-            this.columns.push({
-                fieldName: 'date',
-                label: 'Date',
-                type: 'date',
-                typeAttributes: {
-                    format: 'DD/MMM/YYYY hh:mm:ss',
-                },
-            });
 
             for (let i = 0; i < 1000; i++) {
                 this.rows.push({
@@ -51,7 +46,6 @@
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     phone: `(55) ${i}-${i}`,
-                    date: Date.now(),
                 })
             }
         },
