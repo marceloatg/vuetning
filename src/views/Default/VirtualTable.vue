@@ -21,7 +21,7 @@
             this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
-                type: 'action-link',
+                type: 'event-link',
                 typeAttributes: {
                     action: 'detail',
                 }

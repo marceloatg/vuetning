@@ -54,7 +54,7 @@
                                     </span>
 
                                     <a
-                                        v-if="column.type === 'action-link'"
+                                        v-if="column.type === 'event-link'"
                                         :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.monospaced}"

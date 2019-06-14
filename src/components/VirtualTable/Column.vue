@@ -46,7 +46,7 @@
                 validator(value) {
                     return [
                         'text',
-                        'action-link',
+                        'event-link',
                     ].indexOf(value) !== -1
                 },
             },
