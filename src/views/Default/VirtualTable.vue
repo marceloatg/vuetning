@@ -3,7 +3,8 @@
         <slds-virtual-table
             :columns="columns"
             :key-field="keyField"
-            :rows="rows"/>
+            :rows="rows"
+            @detail="onAction"/>
     </div>
 </template>
 
@@ -20,7 +21,10 @@
             this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
-                type: 'text',
+                type: 'event-link',
+                typeAttributes: {
+                    action: 'detail',
+                }
             });
 
             this.columns.push({
@@ -35,14 +39,6 @@
                 type: 'text',
             });
 
-            this.columns.push({
-                fieldName: 'date',
-                label: 'Date',
-                type: 'date',
-                typeAttributes: {
-                    format: 'DD/MMM/YYYY hh:mm:ss',
-                },
-            });
 
             for (let i = 0; i < 1000; i++) {
                 this.rows.push({
@@ -50,8 +46,12 @@
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     phone: `(55) ${i}-${i}`,
-                    date: Date.now(),
                 })
+            }
+        },
+        methods: {
+            onAction(item) {
+               console.log(item)
             }
         },
     }
