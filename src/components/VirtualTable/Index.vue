@@ -126,6 +126,7 @@
         data() {
             return {
                 rowWidth: null,
+                scrollTop: 0,
                 scrollbarWidth: 0,
                 tableWidth: null,
             }
@@ -143,6 +144,9 @@
             this.$el
                 .querySelector('.vue-recycle-scroller')
                 .addEventListener('scroll', this.onScroll);
+        },
+        activated() {
+            this.$el.querySelector('.body').scrollTop = this.scrollTop;
         },
         beforeDestroy() {
             this.$el
@@ -233,7 +237,9 @@
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
             },
-            onScroll() {
+            onScroll(event) {
+                this.scrollTop = event.target.scrollTop;
+
                 const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
                 // TODO: decouple column/row dependency to improve performance in extreme cases, this way vue doesn't need to rerender all rows when columns are updated.
