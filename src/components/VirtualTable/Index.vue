@@ -25,7 +25,7 @@
             <RecycleScroller
                 class="body"
                 :items="rows"
-                :item-size="32"
+                :item-size="30"
                 :key-field="keyField"
                 :buffer="100">
 
@@ -268,6 +268,7 @@
 <style lang="scss">
     $color-background-alt: #ffffff;
     $header-height: 2rem;
+    $row-height: 1.875rem;
     $table-color-background-header: #fafaf9;
 
     .vue-recycle-scroller.ready.direction-vertical {
@@ -319,7 +320,7 @@
 
     .row {
         display: flex;
-        height: 2rem;
+        height: $row-height;
         align-items: center;
         border-bottom: 1px solid #dddbda;
         background-color: $color-background-alt;
@@ -327,7 +328,7 @@
         .cell {
             padding: .25rem .5rem;
             height: 100%;
-            line-height: 1.5rem;
+            line-height: 1.375rem;
 
             .slds-cell-copy__button {
                 opacity: 0;
