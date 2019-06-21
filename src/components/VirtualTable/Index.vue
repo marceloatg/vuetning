@@ -16,8 +16,11 @@
                     :left="column.left"
                     :minimum-width="column.minimumWidth"
                     :sortable="column.sortable"
+                    :sorted-ascending="column.sortedAscending"
+                    :sorted-descending="column.sortedDescending"
                     :type="column.type"
-                    @resize="onResize"/>
+                    @resize="onResize"
+                    @sort="(order) => onSort(order, column)"/>
 
             </div>
 
@@ -54,11 +57,11 @@
                                     </span>
 
                                     <a
-                                        v-if="column.type === 'event-link'"
+                                        v-else-if="column.type === 'event-link'"
                                         :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.monospaced}"
-                                        @click="onClickActionLink(column, item)">
+                                        @click="onClickEventLink(column, item)">
                                         {{ getFieldValue(column, item) }}
                                     </a>
 
@@ -89,7 +92,9 @@
 
                     </div>
                 </template>
+
             </RecycleScroller>
+
         </div>
     </div>
 </template>
@@ -128,6 +133,7 @@
                 rowWidth: null,
                 scrollTop: 0,
                 scrollbarWidth: 0,
+                sortedColumnId: null,
                 tableWidth: null,
             }
         },
@@ -161,8 +167,10 @@
             enrichColumns() {
                 for (const column of this.columns) {
                     this.$set(column, 'id', uuid());
-                    if (column.resizable == null) this.$set(column, 'resizable', true);
                     if (column.hasCopyButton == null) this.$set(column, 'hasCopyButton', true);
+                    if (column.resizable == null) this.$set(column, 'resizable', true);
+                    this.$set(column, 'sortedAscending', false);
+                    this.$set(column, 'sortedDescending', false);
                 }
             },
             getColumnLeftOffsets() {
@@ -218,6 +226,19 @@
 
                 return fieldValue;
             },
+            getSorterValue(column, row) {
+                const fields = column.sortBy.split('.');
+                let sorterValue = row[fields[0]];
+
+                if (sorterValue == null) return null;
+
+                for (let i = 1; i < fields.length; i++) {
+                    sorterValue = sorterValue[fields[i]];
+                    if (sorterValue == null) return null;
+                }
+
+                return sorterValue;
+            },
             lineNumber(index) {
                 return numeral(index + 1).format('0,0');
             },
@@ -237,12 +258,11 @@
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
             },
-            onScroll(event) {
-                this.scrollTop = event.target.scrollTop;
+            onClickEventLink(column, item) {
+                if (column.typeAttributes == null) return;
+                if (column.typeAttributes.action == null) return;
 
-                const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
-                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
-                // TODO: decouple column/row dependency to improve performance in extreme cases, this way vue doesn't need to rerender all rows when columns are updated.
+                this.$emit(column.typeAttributes.action, item);
             },
             onResize(index, delta) {
                 this.columns[index].width += delta;
@@ -253,13 +273,68 @@
                     this.columns[index].left += delta;
                     this.columns[index].offsetLeft += delta;
                 }
-
             },
-            onClickActionLink(column, item) {
-                if (column.typeAttributes == null) return;
-                if (column.typeAttributes.action == null) return;
+            onScroll(event) {
+                this.scrollTop = event.target.scrollTop;
 
-                this.$emit(column.typeAttributes.action, item);
+                const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
+                for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
+                // TODO: decouple column/row dependency to improve performance in extreme cases, this way vue doesn't need to rerender all rows when columns are updated.
+            },
+            onSort(order, sortedColumn) {
+                this.sortedColumnId = sortedColumn.id;
+
+                for (let column of this.columns) {
+                    column.sortedAscending = false;
+                    column.sortedDescending = false;
+                }
+
+                if (order === 'asc') {
+                    sortedColumn.sortedAscending = true;
+                    sortedColumn.sortedDescending = false;
+                    this.rows.sort(this.sortAscending);
+                }
+                else {
+                    sortedColumn.sortedAscending = false;
+                    sortedColumn.sortedDescending = true;
+                    this.rows.sort(this.sortDescending);
+                }
+            },
+            sortAscending(rowA, rowB) {
+                const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
+                let valueA;
+                let valueB;
+
+                if (sortedColumn.sortBy != null) {
+                    valueA = this.getSorterValue(sortedColumn, rowA);
+                    valueB = this.getSorterValue(sortedColumn, rowB);
+                }
+                else {
+                    valueA = this.getFieldValue(sortedColumn, rowA);
+                    valueB = this.getFieldValue(sortedColumn, rowB);
+                }
+
+                if (valueA < valueB) return 1;
+                if (valueA > valueB) return -1;
+                return 0;
+            },
+            sortDescending(rowA, rowB) {
+                const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
+                let valueA;
+                let valueB;
+
+                if (sortedColumn.sortBy != null) {
+                    valueA = this.getSorterValue(sortedColumn, rowA);
+                    valueB = this.getSorterValue(sortedColumn, rowB);
+                }
+                else {
+                    valueA = this.getFieldValue(sortedColumn, rowA);
+                    valueB = this.getFieldValue(sortedColumn, rowB);
+                }
+
+                if (valueA < valueB) return -1;
+                if (valueA > valueB) return 1;
+                return 0;
             },
         },
     }

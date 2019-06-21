@@ -22,6 +22,7 @@
                 fieldName: 'name',
                 label: 'Name',
                 type: 'event-link',
+                sortable: false,
                 typeAttributes: {
                     action: 'detail',
                 }
@@ -39,6 +40,12 @@
                 type: 'text',
             });
 
+            this.columns.push({
+                fieldName: 'sorterLabel',
+                label: 'Sorter',
+                type: 'text',
+                sortBy: 'sorterValue'
+            });
 
             for (let i = 0; i < 1000; i++) {
                 this.rows.push({
@@ -46,6 +53,8 @@
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     phone: `(55) ${i}-${i}`,
+                    sorterLabel: `Label-${i}`,
+                    sorterValue: i,
                 })
             }
         },
