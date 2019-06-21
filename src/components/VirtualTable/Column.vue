@@ -1,13 +1,30 @@
 <template>
-    <div class="column" :style="{ width: `${initialWidth}px`, left: `${left}px` }">
+    <div
+        class="column"
+        :class="{'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
+        :style="{ width: `${initialWidth}px`, left: `${left}px` }"
+        @click="onClick">
 
-        <!-- Label -->
-        <span class="label slds-truncate" :title="label">
-            {{ label }}
-        </span>
+        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+
+            <!-- Label -->
+            <span class="label slds-truncate" :title="label">
+                {{ label }}
+            </span>
+
+            <!-- Sort icon -->
+            <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
+                <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+            </span>
+
+        </div>
 
         <!-- Handle -->
-        <span class="handle" :style="{transform: `translateX(${resizerTranslation}px)`}" @mousedown.prevent.stop="onResizerMouseDown">
+        <span
+            class="handle"
+            :style="{transform: `translateX(${resizerTranslation}px)`}"
+            @mousedown.prevent.stop="onResizerMouseDown"
+            @click.stop>
             <span class="divider"/>
         </span>
 
@@ -39,6 +56,12 @@
             sortable: {
                 type: Boolean,
                 default: true,
+            },
+            sortedAscending: {
+                type: Boolean,
+            },
+            sortedDescending: {
+                type: Boolean,
             },
             type: {
                 type: String,
@@ -74,6 +97,12 @@
             }
         },
         methods: {
+            onClick() {
+                if (!this.sortable) return;
+
+                if (this.sortedDescending) this.$emit('sort', 'asc');
+                else this.$emit('sort', 'desc');
+            },
             onResizerMouseDown(event) {
                 this.startX = event.pageX;
                 this.currentX = this.startX;
@@ -132,7 +161,11 @@
         height: 2rem;
         width: 100%;
         align-items: center;
-        cursor: pointer;
+        user-select: none;
+
+        &.slds-is-sortable {
+            cursor: pointer;
+        }
 
         .label {
             padding: .25rem .5rem;
@@ -167,6 +200,11 @@
             background-color: white;
             color: currentColor;
             box-shadow: inset -0.25rem 0 0 #dddbda;
+
+            .slds-is-sortable__icon {
+                display: inline-block;
+                fill: #0070d2;
+            }
         }
     }
 </style>
