@@ -20,7 +20,11 @@
         </div>
 
         <!-- Handle -->
-        <span class="handle" :style="{transform: `translateX(${resizerTranslation}px)`}" @mousedown.prevent.stop="onResizerMouseDown">
+        <span
+            class="handle"
+            :style="{transform: `translateX(${resizerTranslation}px)`}"
+            @mousedown.prevent.stop="onResizerMouseDown"
+            @click.stop>
             <span class="divider"/>
         </span>
 
