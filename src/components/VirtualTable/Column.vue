@@ -1,7 +1,7 @@
 <template>
     <div
         class="column"
-        :class="{'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_asc': sortedAscending, 'slds-is-sorted slds-is-sorted_desc': sortedDescending}"
+        :class="{'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
         :style="{ width: `${initialWidth}px`, left: `${left}px` }"
         @click="onClick">
 
@@ -13,8 +13,8 @@
             </span>
 
             <!-- Sort icon -->
-            <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowdown">
-                <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+            <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
+                <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
             </span>
 
         </div>

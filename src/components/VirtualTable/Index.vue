@@ -304,33 +304,33 @@
             },
             sorter(rowA, rowB) {
                 const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
-                let valueA;
-                let valueB;
+                let a;
+                let b;
 
                 if (sortedColumn.sortBy != null) {
-                    valueA = this.getSorterValue(sortedColumn, rowA);
-                    valueB = this.getSorterValue(sortedColumn, rowB);
+                    a = this.getSorterValue(sortedColumn, rowA);
+                    b = this.getSorterValue(sortedColumn, rowB);
                 }
                 else {
-                    valueA = this.getFieldValue(sortedColumn, rowA);
-                    valueB = this.getFieldValue(sortedColumn, rowB);
+                    a = this.getFieldValue(sortedColumn, rowA);
+                    b = this.getFieldValue(sortedColumn, rowB);
                 }
 
-                if (typeof valueA === 'string') valueA = valueA.toLowerCase();
-                if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+                if (typeof a === 'string') a = a.toLowerCase();
+                if (typeof b === 'string') b = b.toLowerCase();
+                const bothStringValues = ((typeof a === 'string') && (typeof b === 'string'));
 
-                if (this.sortedOrder === 'asc') return this.sortAscending(valueA, valueB);
-                else return this.sortDescending(valueA, valueB);
-            },
-            sortAscending(valueA, valueB) {
-                if (valueA < valueB) return 1;
-                if (valueA > valueB) return -1;
-                return 0;
-            },
-            sortDescending(valueA, valueB) {
-                if (valueA < valueB) return -1;
-                if (valueA > valueB) return 1;
-                return 0;
+                if (a === b) return 0;
+                else if (a === null) return 1;
+                else if (b === null) return -1;
+                else if (this.sortedOrder === 'asc') {
+                    if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1;
+                    return (a < b) ? -1 : 1;
+                }
+                else {
+                    if (bothStringValues) return (a.localeCompare(b) < 0) ? 1 : -1;
+                    return (a < b) ? 1 : -1;
+                }
             },
         },
     }
