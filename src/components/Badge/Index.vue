@@ -68,8 +68,11 @@
         'warning': #ffb75d,
     );
 
-    @each $name, $color in $colors {
+    .slds-badge {
+        padding: 3px 8px;
+    }
 
+    @each $name, $color in $colors {
         .slds-badge_#{$name},
         .slds-badge__icon_#{$name} {
             color: white;
@@ -80,7 +83,7 @@
             border: 1px solid $color;
             background-color: white;
             color: $color;
-            padding: 3px 8px;
+            padding: 2px 8px;
 
             svg {
                 fill: $color;
