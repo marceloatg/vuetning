@@ -161,6 +161,7 @@
         height: 2rem;
         width: 100%;
         align-items: center;
+        user-select: none;
 
         &.slds-is-sortable {
             cursor: pointer;
