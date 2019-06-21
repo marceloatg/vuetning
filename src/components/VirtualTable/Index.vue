@@ -15,6 +15,7 @@
                     :label="column.label"
                     :left="column.left"
                     :minimum-width="column.minimumWidth"
+                    :resizable="column.resizable"
                     :sortable="column.sortable"
                     :sorted-ascending="column.sortedAscending"
                     :sorted-descending="column.sortedDescending"
@@ -35,10 +36,12 @@
                 <template v-slot="{ item, index }">
                     <div class="row" :style="{ width: `${rowWidth}px` }">
 
+                        <!-- Line number -->
                         <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
-                            {{ lineNumber(index) }}
+                            {{ getLineNumber(index) }}
                         </div>
 
+                        <!-- Dynamic cells -->
                         <template
                             v-for="column in columns"
                             class="cell"
@@ -47,7 +50,7 @@
                             <div :key="column.id" class="cell" :style="{width: `${column.width}px`}">
                                 <span class="slds-grid slds-grid_align-spread">
 
-                                    <!-- Field value -->
+                                    <!-- Text -->
                                     <span
                                         v-if="column.type === 'text'"
                                         :title="getFieldValue(column, item)"
@@ -56,6 +59,7 @@
                                         {{ getFieldValue(column, item) }}
                                     </span>
 
+                                    <!-- Event link -->
                                     <a
                                         v-else-if="column.type === 'event-link'"
                                         :title="getFieldValue(column, item)"
@@ -64,6 +68,21 @@
                                         @click="onClickEventLink(column, item)">
                                         {{ getFieldValue(column, item) }}
                                     </a>
+
+                                    <!-- Badge -->
+                                    <slds-badge
+                                        v-else-if="column.type === 'badge' && getFieldObject(column, item) != null"
+                                        :label="getFieldObject(column, item).label"
+                                        :color="getFieldObject(column, item).color"
+                                        :icon-name="getFieldObject(column, item).iconName"
+                                        :icon-position="getFieldObject(column, item).iconPosition"/>
+
+                                    <!-- Action -->
+                                    <slds-menu
+                                        v-else-if="column.type === 'action' && getFieldObject(column, item) != null"
+                                        :items="items"
+                                        size="x-small"
+                                        @click="this.$emit(value, item)"/>
 
                                     <!-- Copy to clipboard button -->
                                     <button
@@ -85,10 +104,60 @@
                                     </button>
 
                                 </span>
-
                             </div>
 
                         </template>
+
+                        <!-- Actions -->
+                        <div v-if="hasActions" class="cell line-actions">
+                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+
+                                <!-- Button -->
+                                <button
+                                    class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                                    title="Actions"
+                                    @click="onActionsClick(item)">
+                                    <svg class="slds-button__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M3.8 6.5h16.4c.4 0 .8.6.4 1l-8 9.8c-.3.3-.9.3-1.2 0l-8-9.8c-.4-.4-.1-1 .4-1z"/>
+                                    </svg>
+                                </button>
+
+                                <!-- Items -->
+                                <div
+                                    v-if="actionMenu.openedRowId === item[keyField]"
+                                    ref="dropdown"
+                                    v-on-clickaway="closeActionMenu"
+                                    class="slds-dropdown slds-dropdown_length-5 slds-dropdown_right"
+                                    :class="[`slds-dropdown_${actionMenu.orientation}`]"
+                                    :style="{opacity: actionMenu.opacity}">
+
+                                    <ul class="slds-dropdown__list" role="menu">
+                                        <li
+                                            v-for="action in item.actions"
+                                            :key="action"
+                                            class="slds-dropdown__item"
+                                            role="presentation"
+                                            @mousedown.prevent="onActionMouseDown(action, item)">
+
+                                            <a role="menuitem">
+                                                <span class="slds-truncate" :title="getAction(action).label">
+                                                    <slds-icon
+                                                        v-if="getAction(action).iconName != null"
+                                                        :icon-name="getAction(action).iconName"
+                                                        variant="default"
+                                                        size="x-small"
+                                                        class="slds-m-right_x-small"/>
+                                                    {{ getAction(action).label }}
+                                                </span>
+                                            </a>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                 </template>
@@ -105,12 +174,17 @@
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
     import uuid from 'uuid/v4';
+    import {mixin as clickaway} from 'vue-clickaway'
 
     export default {
         components: {
             SldsColumn
         },
+        mixins: [clickaway],
         props: {
+            actions: {
+                type: Array,
+            },
             columns: {
                 type: Array,
                 required: true,
@@ -134,6 +208,11 @@
         },
         data() {
             return {
+                actionMenu: {
+                    openedRowId: null,
+                    orientation: 'top',
+                    opacity: 0,
+                },
                 rowWidth: null,
                 scrollTop: 0,
                 scrollbarWidth: 0,
@@ -157,6 +236,10 @@
 
                     return false;
                 })
+            },
+            hasActions() {
+                if (this.actions == null) return false;
+                return (this.actions.length > 0);
             },
         },
         created() {
@@ -182,6 +265,11 @@
                 .removeEventListener('scroll', this.onScroll);
         },
         methods: {
+            closeActionMenu() {
+                this.actionMenu.openedRowId = null;
+                this.actionMenu.opacity = 0;
+                this.actionMenu.orientation = 'top';
+            },
             copyToClipboard(column, row) {
                 const value = this.getFieldValue(column, row);
                 if (value != null) this.$clipboard(value);
@@ -193,7 +281,12 @@
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                     this.$set(column, 'sortedAscending', false);
                     this.$set(column, 'sortedDescending', false);
+
+                    if (column.type === 'badge') column.hasCopyButton = false;
                 }
+            },
+            getAction(actionValue) {
+                return this.actions.find(action => action.value === actionValue);
             },
             getColumnLeftOffsets() {
                 let columnLeftSum = 0;
@@ -214,6 +307,7 @@
                 if (this.hasLineNumberColumn) knownWidth += Commons.LINE_COUNTER_WIDTH;
                 if (this.hasCheckboxColumn) knownWidth += Commons.LINE_CHECKBOX_WIDTH;
                 if (this.hasCheckboxButtonColumn) knownWidth += Commons.LINE_CHECKBOX_BUTTON_WIDTH;
+                if (this.hasActions) knownWidth += Commons.LINE_ACTIONS_WIDTH;
 
                 for (let column of this.columns) {
                     if (column.resizable) {
@@ -221,17 +315,27 @@
                         else knownWidth += column.width;
                     }
                     else {
-                        if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
-                        else knownWidth += column.fixedWidth;
+                        if (column.fixedWidth == null) {
+                            knownWidth += Commons.DEFAULT_FIXED_WIDTH;
+                            this.$set(column, 'width', Commons.DEFAULT_FIXED_WIDTH);
+                        }
+                        else {
+                            knownWidth += column.fixedWidth;
+                            this.$set(column, 'width', column.fixedWidth);
+                        }
                     }
                 }
 
                 const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns);
 
                 for (let column of this.columns) {
-                    if (!column.resizable) continue;
                     if (column.width == null) this.$set(column, 'width', width);
                 }
+            },
+            getFieldObject(column, row) {
+                const value = this.getFieldValue(column, row);
+                if (value instanceof Object) return value;
+                return null;
             },
             getFieldValue(column, row) {
                 if (column.fieldName == null) return null;
@@ -248,20 +352,7 @@
 
                 return fieldValue;
             },
-            getSorterValue(column, row) {
-                const fields = column.sortBy.split('.');
-                let sorterValue = row[fields[0]];
-
-                if (sorterValue == null) return null;
-
-                for (let i = 1; i < fields.length; i++) {
-                    sorterValue = sorterValue[fields[i]];
-                    if (sorterValue == null) return null;
-                }
-
-                return sorterValue;
-            },
-            lineNumber(index) {
+            getLineNumber(index) {
                 return numeral(index + 1).format('0,0');
             },
             async getScrollbarWidth() {
@@ -275,10 +366,53 @@
 
                 this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth;
             },
+            getSorterValue(column, row) {
+                const fields = column.sortBy.split('.');
+                let sorterValue = row[fields[0]];
+
+                if (sorterValue == null) return null;
+
+                for (let i = 1; i < fields.length; i++) {
+                    sorterValue = sorterValue[fields[i]];
+                    if (sorterValue == null) return null;
+                }
+
+                return sorterValue;
+            },
             getTableWidth() {
                 const table = this.$el.querySelector('.table');
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
+            },
+            async onActionsClick(item) {
+                this.closeActionMenu();
+                this.actionMenu.openedRowId = item[this.keyField];
+                await this.$nextTick();
+
+                // Adjusting z-index
+                const items = this.$el.querySelectorAll('.vue-recycle-scroller__item-view');
+                for (const item of items) {
+                    if (item.querySelector('.slds-dropdown') == null) item.style.zIndex = "0";
+                    else item.style.zIndex = "1000";
+                }
+
+                // Setting vertical orientation of dropdown
+                const dropdown = this.$refs["dropdown"];
+                let parent = dropdown.offsetParent;
+
+                while (!parent.classList.contains('vue-recycle-scroller')) {
+                    parent = parent.offsetParent;
+                }
+
+                if (dropdown.getBoundingClientRect().bottom > parent.getBoundingClientRect().bottom) {
+                    this.actionMenu.orientation = 'bottom';
+                }
+
+                this.actionMenu.opacity = 1;
+            },
+            onActionMouseDown(action, item) {
+                this.$emit(action, item);
+                this.closeActionMenu();
             },
             onClickEventLink(column, item) {
                 if (column.typeAttributes == null) return;
@@ -297,7 +431,11 @@
                 }
             },
             onScroll(event) {
-                this.scrollTop = event.target.scrollTop;
+                if (this.scrollTop !== event.target.scrollTop) {
+                    this.scrollTop = event.target.scrollTop;
+                    if (this.actionMenu.openedRowId !== null) this.closeActionMenu();
+                    return;
+                }
 
                 const scrollLeft = this.$el.querySelector('.vue-recycle-scroller').scrollLeft;
                 for (let column of this.columns) column.left = column.offsetLeft - scrollLeft;
@@ -447,6 +585,16 @@
             min-width: 3.75rem;
             width: 3.75rem;
             text-align: center;
+        }
+
+        .line-actions {
+            min-width: 3rem;
+            width: 3rem;
+
+            .slds-button:focus {
+                box-shadow: none;
+                color: #706e6b;
+            }
         }
     }
 
