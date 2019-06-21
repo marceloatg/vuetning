@@ -134,6 +134,7 @@
                 scrollTop: 0,
                 scrollbarWidth: 0,
                 sortedColumnId: null,
+                sortedOrder: null,
                 tableWidth: null,
             }
         },
@@ -282,6 +283,7 @@
                 // TODO: decouple column/row dependency to improve performance in extreme cases, this way vue doesn't need to rerender all rows when columns are updated.
             },
             onSort(order, sortedColumn) {
+                this.sortedOrder = order;
                 this.sortedColumnId = sortedColumn.id;
 
                 for (let column of this.columns) {
@@ -292,15 +294,15 @@
                 if (order === 'asc') {
                     sortedColumn.sortedAscending = true;
                     sortedColumn.sortedDescending = false;
-                    this.rows.sort(this.sortAscending);
                 }
                 else {
                     sortedColumn.sortedAscending = false;
                     sortedColumn.sortedDescending = true;
-                    this.rows.sort(this.sortDescending);
                 }
+
+                this.rows.sort(this.sorter)
             },
-            sortAscending(rowA, rowB) {
+            sorter(rowA, rowB) {
                 const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
                 let valueA;
                 let valueB;
@@ -314,24 +316,18 @@
                     valueB = this.getFieldValue(sortedColumn, rowB);
                 }
 
+                if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+                if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+
+                if (this.sortedOrder === 'asc') return this.sortAscending(valueA, valueB);
+                else return this.sortDescending(valueA, valueB);
+            },
+            sortAscending(valueA, valueB) {
                 if (valueA < valueB) return 1;
                 if (valueA > valueB) return -1;
                 return 0;
             },
-            sortDescending(rowA, rowB) {
-                const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
-                let valueA;
-                let valueB;
-
-                if (sortedColumn.sortBy != null) {
-                    valueA = this.getSorterValue(sortedColumn, rowA);
-                    valueB = this.getSorterValue(sortedColumn, rowB);
-                }
-                else {
-                    valueA = this.getFieldValue(sortedColumn, rowA);
-                    valueB = this.getFieldValue(sortedColumn, rowB);
-                }
-
+            sortDescending(valueA, valueB) {
                 if (valueA < valueB) return -1;
                 if (valueA > valueB) return 1;
                 return 0;
