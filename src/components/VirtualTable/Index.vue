@@ -27,7 +27,7 @@
             <!-- No single file components inside RecycleScroller due to performance restrictions. -->
             <RecycleScroller
                 class="body"
-                :items="rows"
+                :items="filteredRows"
                 :item-size="30"
                 :key-field="keyField"
                 :buffer="100">
@@ -127,6 +127,10 @@
                 type: Array,
                 required: true,
             },
+            filter: {
+                type: String,
+                default: null,
+            },
         },
         data() {
             return {
@@ -137,6 +141,23 @@
                 sortedOrder: null,
                 tableWidth: null,
             }
+        },
+        computed: {
+            filteredRows() {
+                if (this.filter == null) return this.rows;
+
+                return this.rows.filter((row) => {
+                    for (let column of this.columns) {
+                        const value = this.getFieldValue(column, row);
+
+                        if (String(value).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                })
+            },
         },
         created() {
             numeral.locale('pt-br');
