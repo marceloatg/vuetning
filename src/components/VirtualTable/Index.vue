@@ -48,7 +48,7 @@
                             <div :key="column.id" class="cell" :style="{width: `${column.width}px`}">
                                 <span class="slds-grid slds-grid_align-spread">
 
-                                    <!-- Field value -->
+                                    <!-- Text -->
                                     <span
                                         v-if="column.type === 'text'"
                                         :title="getFieldValue(column, item)"
@@ -57,6 +57,7 @@
                                         {{ getFieldValue(column, item) }}
                                     </span>
 
+                                    <!-- Event link -->
                                     <a
                                         v-else-if="column.type === 'event-link'"
                                         :title="getFieldValue(column, item)"
@@ -65,6 +66,13 @@
                                         @click="onClickEventLink(column, item)">
                                         {{ getFieldValue(column, item) }}
                                     </a>
+
+                                    <slds-badge
+                                        v-else-if="column.type === 'badge' && getBadge(column, item) != null"
+                                        :label="getBadge(column, item).label"
+                                        :color="getBadge(column, item).color"
+                                        :icon-name="getBadge(column, item).iconName"
+                                        :icon-position="getBadge(column, item).iconPosition"/>
 
                                     <!-- Copy to clipboard button -->
                                     <button
@@ -86,7 +94,6 @@
                                     </button>
 
                                 </span>
-
                             </div>
 
                         </template>
@@ -194,7 +201,14 @@
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                     this.$set(column, 'sortedAscending', false);
                     this.$set(column, 'sortedDescending', false);
+
+                    if (column.type === 'badge') column.hasCopyButton = false;
                 }
+            },
+            getBadge(column, row) {
+                const value = this.getFieldValue(column, row);
+                if (value instanceof Object) return value;
+                return null;
             },
             getColumnLeftOffsets() {
                 let columnLeftSum = 0;

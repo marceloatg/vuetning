@@ -46,7 +46,14 @@
                 fieldName: 'sorterLabel',
                 label: 'Sorter',
                 type: 'text',
-                sortBy: 'sorterValue'
+                sortBy: 'sorterValue',
+            });
+
+            this.columns.push({
+                fieldName: 'badge',
+                label: 'Badge',
+                type: 'badge',
+                sortBy: 'badge.label',
             });
 
             for (let i = 0; i < 1000; i++) {
@@ -57,6 +64,10 @@
                     phone: `(55) ${i}-${i}`,
                     sorterLabel: `Label-${i}`,
                     sorterValue: i,
+                    badge: {
+                        label: `Badge-${i}`,
+                        color: 'outline-success',
+                    },
                 })
             }
         },

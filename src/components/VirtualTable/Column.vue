@@ -73,8 +73,9 @@
                 default: 'text',
                 validator(value) {
                     return [
-                        'text',
+                        'badge',
                         'event-link',
+                        'text',
                     ].indexOf(value) !== -1
                 },
             },
