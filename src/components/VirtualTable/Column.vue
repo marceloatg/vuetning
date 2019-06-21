@@ -73,6 +73,7 @@
                 default: 'text',
                 validator(value) {
                     return [
+                        'action',
                         'badge',
                         'event-link',
                         'text',
@@ -106,8 +107,8 @@
             onClick() {
                 if (!this.sortable) return;
 
-                if (this.sortedDescending) this.$emit('sort', 'asc');
-                else this.$emit('sort', 'desc');
+                if (this.sortedAscending) this.$emit('sort', 'desc');
+                else this.$emit('sort', 'asc');
             },
             onResizerMouseDown(event) {
                 this.startX = event.pageX;
