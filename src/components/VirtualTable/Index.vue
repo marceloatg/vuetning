@@ -15,6 +15,7 @@
                     :label="column.label"
                     :left="column.left"
                     :minimum-width="column.minimumWidth"
+                    :resizable="column.resizable"
                     :sortable="column.sortable"
                     :sorted-ascending="column.sortedAscending"
                     :sorted-descending="column.sortedDescending"
@@ -221,15 +222,20 @@
                         else knownWidth += column.width;
                     }
                     else {
-                        if (column.fixedWidth == null) knownWidth += Commons.DEFAULT_FIXED_WIDTH;
-                        else knownWidth += column.fixedWidth;
+                        if (column.fixedWidth == null) {
+                            knownWidth += Commons.DEFAULT_FIXED_WIDTH;
+                            this.$set(column, 'width', Commons.DEFAULT_FIXED_WIDTH);
+                        }
+                        else {
+                            knownWidth += column.fixedWidth;
+                            this.$set(column, 'width', column.fixedWidth);
+                        }
                     }
                 }
 
                 const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns);
 
                 for (let column of this.columns) {
-                    if (!column.resizable) continue;
                     if (column.width == null) this.$set(column, 'width', width);
                 }
             },

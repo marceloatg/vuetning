@@ -1,7 +1,7 @@
 <template>
     <div
         class="column"
-        :class="{'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
+        :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
         :style="{ width: `${initialWidth}px`, left: `${left}px` }"
         @click="onClick">
 
@@ -21,6 +21,7 @@
 
         <!-- Handle -->
         <span
+            v-if="resizable"
             class="handle"
             :style="{transform: `translateX(${resizerTranslation}px)`}"
             @mousedown.prevent.stop="onResizerMouseDown"
@@ -52,6 +53,10 @@
             minimumWidth: {
                 type: Number,
                 default: Commons.DEFAULT_MINIMUM_WIDTH,
+            },
+            resizable: {
+                type: Boolean,
+                default: true,
             },
             sortable: {
                 type: Boolean,
@@ -199,7 +204,10 @@
         &:hover {
             background-color: white;
             color: currentColor;
-            box-shadow: inset -0.25rem 0 0 #dddbda;
+
+            &.is-resizable {
+                box-shadow: inset -0.25rem 0 0 #dddbda;
+            }
 
             .slds-is-sortable__icon {
                 display: inline-block;

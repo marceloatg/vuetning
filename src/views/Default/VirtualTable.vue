@@ -38,6 +38,8 @@
                 fieldName: 'phone',
                 label: 'Phone',
                 type: 'text',
+                resizable: false,
+                fixedWidth: 128,
             });
 
             this.columns.push({
@@ -60,7 +62,7 @@
         },
         methods: {
             onAction(item) {
-               console.log(item)
+                console.log(item)
             }
         },
     }
