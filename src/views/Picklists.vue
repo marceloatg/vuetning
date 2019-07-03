@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--
         <slds-picklist
             v-model="selection"
             label="My awesome picklist"
@@ -12,18 +13,17 @@
             Value selected is: {{ selection }}
         </p>
         <br>
+        -->
         <slds-input
             v-model="input"
             label="My input"
-            :required="true"
-            placeholder="Type something nice!"
-            :disabled="true"
-            :read-only="false"
-            :maxlength="10"/>
+            maxlength="10"
+            @input="onChange"/>
         <p>
             Value input is: {{ input }}
         </p>
         <br>
+        <!--
         <slds-input left-icon-name="utility:search"/>
         <br>
         <slds-input right-icon-name="utility:preview"/>
@@ -49,6 +49,7 @@
             :spinner-active="true"/>
         <br>
         <slds-input label="Phone" inline-help="ex: (415)111-2222"/>
+        -->
     </div>
 </template>
 
@@ -63,12 +64,17 @@
                     {label: 'In Progress', value: 'inProgress'},
                     {label: 'Finished', value: 'finished'},
                     {group: 'Fruits'},
-                    {label: 'Banana', meta:"BA-NA-NA", value: 'ed691c6f-44b9-4850-91ca-caec35b49922', disabled: true},
+                    {label: 'Banana', meta: "BA-NA-NA", value: 'ed691c6f-44b9-4850-91ca-caec35b49922', disabled: true},
                     {label: 'Pear', value: '4f639702-72fc-455c-8dc9-10610c919d8a'},
                     {label: 'Apple', value: '28d56658-5005-440b-b5e4-eb6e5f661d04'},
                 ],
                 selection: null,
                 input: null,
+            }
+        },
+        methods: {
+            onChange() {
+                console.log(this.input)
             }
         },
     }
