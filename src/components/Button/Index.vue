@@ -1,31 +1,30 @@
 <template>
     <button
-        type="button"
         class="slds-button"
-        :class="['slds-button_' + variant, {'slds-not-clickable': spinnerActive}]"
-        v-bind="disabledAttribute"
-        @click="onClick">
+        :class="buttonClass"
+        @click="onClick"
+        v-on="listeners">
 
-        <!-- Text for right icon -->
-        <span v-if="iconPosition === 'right'" :class="{'slds-hidden': spinnerActive}">
+        <!-- Label for right icon -->
+        <span v-if="icon && right" :class="{'slds-hidden': spinner}">
             {{ label }}
         </span>
 
         <!-- Icon -->
         <slds-svg
-            v-if="hasIcon"
-            :icon-name="iconName"
+            v-if="icon"
+            :icon-name="icon"
             class="slds-button__icon"
-            :class="['slds-button__icon_' + iconPosition, {'slds-hidden': spinnerActive}]"/>
+            :class="iconClass"/>
 
-        <!-- Text for left icon -->
-        <span v-if="iconPosition === 'left'" :class="{'slds-hidden': spinnerActive}">
+        <!-- Label for left icon -->
+        <span v-if="left && !right" :class="{'slds-hidden': spinner}">
             {{ label }}
         </span>
 
         <!-- Spinner -->
-        <div v-if="spinnerActive">
-            <div class="slds-spinner slds-spinner_x-small" :class="['slds-spinner-variant_' + variant]">
+        <div v-if="spinner">
+            <div class="slds-spinner slds-spinner_x-small" :class="spinnerClass">
                 <div class="slds-spinner__dot-a"/>
                 <div class="slds-spinner__dot-b"/>
             </div>
@@ -37,58 +36,83 @@
 <script>
     export default {
         props: {
-            disabled: {
+            brand: {
                 type: Boolean,
-                default: false,
             },
-            iconName: {
+            destructive: {
+                type: Boolean,
+            },
+            icon: {
                 type: String,
             },
-            iconPosition: {
-                type: String,
-                default: 'left',
-                validator(value) {
-                    return [
-                        'left',
-                        'right',
-                    ].indexOf(value) !== -1
-                },
+            inverse: {
+                type: Boolean,
             },
             label: {
                 type: String,
             },
-            spinnerActive: {
+            left: {
                 type: Boolean,
-                default: false,
+                default: true,
             },
-            variant: {
-                type: String,
-                default: 'neutral',
-                validator(value) {
-                    return [
-                        'bare',
-                        'neutral',
-                        'brand',
-                        'outline-brand',
-                        'destructive',
-                        'label-destructive',
-                        'inverse',
-                        'success',
-                    ].indexOf(value) !== -1
-                },
+            neutral: {
+                type: Boolean,
+            },
+            outlineBrand: {
+                type: Boolean,
+            },
+            right: {
+                type: Boolean,
+            },
+            spinner: {
+                type: Boolean,
+            },
+            success: {
+                type: Boolean,
+            },
+            stretch: {
+                type: Boolean,
+            },
+            textDestructive: {
+                type: Boolean,
             },
         },
         computed: {
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
+            buttonClass() {
+                return {
+                    'slds-button_neutral': this.neutral,
+                    'slds-button_brand': this.brand,
+                    'slds-button_outline-brand': this.outlineBrand,
+                    'slds-button_destructive': this.destructive,
+                    'slds-button_text-destructive': this.textDestructive,
+                    'slds-button_success': this.success,
+                    'slds-button_inverse': this.inverse,
+                    'slds-button_stretch': this.stretch,
+                    'slds-not-clickable': this.spinner,
+                }
             },
-            hasIcon() {
-                return (this.iconName != null)
+            iconClass() {
+                return {
+                    'slds-hidden': this.spinner,
+                    'slds-button__icon_right': this.icon && this.right,
+                    'slds-button__icon_left': this.icon && this.left && !this.right,
+                }
+            },
+            spinnerClass() {
+                return {
+                    'slds-spinner-white': this.spinner && (this.brand || this.destructive || this.success),
+                    'slds-spinner-brand': this.spinner && this.outlineBrand,
+                }
+            },
+            listeners() {
+                const listeners = {...this.$listeners};
+                delete listeners.click;
+                return listeners
             },
         },
         methods: {
             onClick() {
-                if (this.spinnerActive || this.disabled) return;
+                if (this.spinner) return;
                 this.$emit('click');
             }
         },
@@ -108,9 +132,7 @@
             pointer-events: none;
         }
 
-        .slds-spinner-variant_brand,
-        .slds-spinner-variant_destructive,
-        .slds-spinner-variant_success {
+        .slds-spinner-white {
             &.slds-spinner:before,
             &.slds-spinner:after,
             & .slds-spinner__dot-a:before,
@@ -121,7 +143,7 @@
             }
         }
 
-        .slds-spinner-variant_outline-brand {
+        .slds-spinner-brand {
             &.slds-spinner:before,
             &.slds-spinner:after,
             & .slds-spinner__dot-a:before,

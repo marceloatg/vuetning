@@ -3,33 +3,48 @@
 Buttons are clickable items used to perform an action.
 
 ## Props
+Any button html tag attributes can be set to slds-button, plus the following custom attributes:
 
-| Name          | Type    | Required | Default | Description |
-| ------------- | ------- | -------- | ------- | ----------- |
-| disabled      | Boolean | false    | false   | Specifies whether this button should be displayed in a disabled state.<br>Disabled buttons can't be clicked.<br>This value defaults to false. |
-| iconName      | String  | false    |         | The Lightning Design System name of the icon.<br>Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed. |
-| iconPosition  | String  | false    | left    | Describes the position of the icon with respect to body.<br>Options include left and right.<br>This value defaults to left. |
-| label         | String  | false    |         | The text to be displayed inside the button. |
-| spinnerActive | Boolean | false    | false   | Set the spinner as visible and hide the button label and icon.<br>When the spinner is shown the button becomes unclickable. |
-| variant       | String  | false    | neutral | The variant changes the appearance of the button.<br>Accepted variants include base, neutral, brand, outline-brand, destructive, label-destructive, inverse and success.<br>This value defaults to neutral. |
+### General
 
-## Events
+| Name     | Type    | Required | Default | Description |
+| -------- | ------- | -------- | ------- | ----------- |
+| label    | String  | false    |         | The text to be displayed inside the button. |
+| spinner  | Boolean | false    | false   | Set the spinner as visible and hide the button label and icon.<br>When the spinner is shown the button becomes unclickable. |
+| stretch  | Boolean | false    | false   | allow the button's width to take up the entire width available. |
 
-### click
-The event fired when the button is clicked. The click event returns no parameters.
+### Variants
+
+| Name            | Type    | Required | Default | Description |
+| --------------- | ------- | -------- | ------- | ----------- |
+| neutral         | Boolean | false    | false   | Add the `slds-button_neutral` class to create a neutral button. |
+| brand           | Boolean | false    | false   | Add the `slds-button_brand` class to create a neutral button. |
+| outlineBrand    | Boolean | false    | false   | Add the `slds-button_outline-brand` class to create a outline brand button. |
+| destructive     | Boolean | false    | false   | Add the `slds-button_destructive` class to create a destructive button. |
+| textDestructive | Boolean | false    | false   | Add the `slds-button_text-destructive` class to create a text destructive button. |
+| success         | Boolean | false    | false   | Add the `slds-button_success` class to create a success button. |
+| inverse         | Boolean | false    | false   | Add the `slds-button_inverse` class to create a inverse  button. |
+
+### Icon
+
+| Name  | Type    | Required | Default | Description |
+| ----- | ------- | -------- | ------- | ----------- |
+| icon  | String  | false    |         | The Lightning Design System name of the icon.<br>Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed. |
+| left  | Boolean | false    | true    | Set the position of the icon to the left with respect to body.<br>This value defaults to left. |
+| right | Boolean | false    | false   | Set the position of the icon to the right with respect to body. |
 
 ## Examples
 
 ```vue
 <slds-button label="My button"/>
 
-<slds-button label="My brand button" variant="brand"/>
+<slds-button label="My brand button" brand/>
 
-<slds-button label="Add" icon-name="utility:add"/>
+<slds-button label="Add" icon="utility:add"/>
 
-<slds-button label="Delete" icon-name="utility:delete" icon-position="right"/>
+<slds-button label="Delete" icon="utility:delete" right/>
 
-<slds-button label="My button" :spinner-active="true"/>
+<slds-button label="My button" :spinner/>
 
 ```
 
