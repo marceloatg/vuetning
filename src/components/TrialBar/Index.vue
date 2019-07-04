@@ -18,7 +18,7 @@
         <div class="slds-grid slds-grid_vertical-align-center slds-col_bump-left">
             <span class="slds-box slds-box_xx-small slds-theme_default">{{ daysLeft }}</span>
             <span class="slds-m-horizontal_x-small">Days left in trial</span>
-            <slds-button text="Subscribe Now" variant="success"/>
+            <slds-button text="Subscribe Now" success/>
         </div>
 
     </div>

@@ -42,7 +42,7 @@ Docked Composer is a persistent utility bar that allows a user to continually us
 
         <template #footer>
             <div class="slds-col_bump-left slds-text-align_right">
-                <slds-button label="Action" variant="brand"/>
+                <slds-button label="Action" brand/>
             </div>
         </template>
 
