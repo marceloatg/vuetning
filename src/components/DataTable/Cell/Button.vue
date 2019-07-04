@@ -4,10 +4,9 @@
             <slds-button
                 :label="label"
                 :disabled="disabled"
-                :spinner-active="spinnerActive"
-                :icon-name="iconName"
-                :icon-position="iconPosition"
-                :variant="variant"
+                :active="spinnerActive"
+                :icon="iconName"
+                outline-brand
                 :class="style"
                 @click="onClick"/>
         </span>
@@ -57,11 +56,6 @@
                 if (this.cell != null) return this.cell.spinnerActive;
                 if (this.typeAttributes != null) return this.typeAttributes.spinnerActive;
                 return false;
-            },
-            variant() {
-                if (this.cell != null) return this.cell.variant;
-                if (this.typeAttributes != null) return this.typeAttributes.variant;
-                return null;
             },
         },
         methods: {
