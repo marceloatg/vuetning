@@ -1,76 +1,69 @@
 <template>
-    <div class="slds-form-element" :class="{ 'slds-has-error': hasError }">
+    <div class="slds-form-element" :class="{ 'slds-has-error': error }">
 
         <!-- Label -->
         <label v-if="label != null" class="slds-form-element__label">
-            <abbr v-if="required" class="slds-required" title="required">*</abbr> {{ label }}
+            <abbr v-if="required" class="slds-required" title="Required">*</abbr> {{ label }}
         </label>
 
-        <!-- Input -->
-        <div class="slds-form-element__control" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
+        <!-- Control -->
+        <div class="slds-form-element__control slds-input-has-icon" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
 
             <!-- Pre fixed text -->
-            <span v-if="preFixedText" class="slds-form-element__addon">
-                {{ preFixedText }}
+            <span v-if="addonPre" class="slds-form-element__addon">
+                {{ addonPre }}
             </span>
 
-            <!-- Left icon -->
-            <slds-svg
-                v-if="leftIconName != null"
-                :icon-name="leftIconName"
-                class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
-
-            <!-- Right icon -->
-            <slds-svg
-                v-if="rightIconName != null && !hasClearButton"
-                :icon-name="rightIconName"
-                class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"/>
+            <!-- Icon -->
+            <slds-svg v-if="icon != null" :icon-name="icon" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
 
             <!-- Input -->
             <input
-                :type="type"
-                :placeholder="placeholder"
+                ref="input"
                 :value="value"
-                :maxlength="maxlength"
+                v-bind="$attrs"
                 class="slds-input"
-                v-bind="[disabledAttribute, readOnlyAttribute]"
-                @blur="onBlur"
-                @change="onChange($event)"
-                @input="onInput($event)">
+                @input="$emit('input', $event.target.value)"
+                v-on="listeners">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
 
-                <slds-spinner
-                    v-if="spinnerActive"
-                    variant="brand"
-                    size="x-small"
-                    class="slds-input__spinner"
-                    :style="{right: spinnerRight}"/>
+                <transition name="fade">
+                    <slds-spinner
+                        v-if="spinner"
+                        variant="brand"
+                        size="x-small"
+                        class="slds-input__spinner"
+                        :style="{right: spinnerRight}"/>
+                </transition>
 
-                <slds-button-icon
-                    v-if="hasClearButton && value"
-                    icon-name="utility:clear"
-                    class="slds-input__icon slds-input__icon_right"
-                    title="Clear"
-                    @click.stop="onClear"/>
+                <transition name="fade">
+                    <slds-button-icon
+                        v-if="value && $attrs.readonly == null"
+                        icon-name="utility:clear"
+                        class="slds-input__icon slds-input__icon_right"
+                        title="Clear"
+                        @click.prevent="onClear"/>
+                </transition>
+
             </div>
 
             <!-- Post fixed text -->
-            <span v-if="postFixedText" class="slds-form-element__addon post-fixed-text">
-                {{ postFixedText }}
+            <span v-if="addonPost" ref="addonPost" class="slds-form-element__addon">
+                {{ addonPost }}
             </span>
 
         </div>
 
         <!-- Inline help -->
-        <div v-if="!hasError && inlineHelp != null" class="slds-form-element__help">
-            {{ inlineHelp }}
+        <div v-if="!error && inlineHelp != null" class="slds-form-element__help">
+            <slot name="inline-help"/>
         </div>
 
         <!-- Error messages -->
-        <div v-if="hasError" class="slds-form-element__help">
-            <slot name="errors"/>
+        <div v-if="error" class="slds-form-element__help">
+            <slot name="error"/>
         </div>
 
     </div>
@@ -79,21 +72,19 @@
 <script>
     export default {
         name: 'Input',
+        inheritAttrs: false,
         props: {
-            default: {
-                default: null,
+            addonPost: {
+                type: String,
             },
-            disabled: {
-                type: Boolean,
-                default: false,
+            addonPre: {
+                type: String,
             },
-            hasClearButton: {
+            error: {
                 type: Boolean,
-                default: false,
             },
-            hasError: {
-                type: Boolean,
-                default: false,
+            icon: {
+                type: String,
             },
             inlineHelp: {
                 type: String,
@@ -101,105 +92,72 @@
             label: {
                 type: String,
             },
-            leftIconName: {
-                type: String,
-            },
-            maxlength: {
-                type: Number,
-            },
-            placeholder: {
-                type: String,
-            },
-            postFixedText: {
-                type: String,
-            },
-            preFixedText: {
-                type: String,
-            },
             required: {
                 type: Boolean,
-                default: false,
             },
-            rightIconName: {
-                type: String,
-            },
-            readOnly: {
+            spinner: {
                 type: Boolean,
-                default: false,
             },
-            spinnerActive: {
-                type: Boolean,
-                default: false,
-            },
-            type: {
-                type: String,
-                default: 'text',
-            },
+            value: {}
         },
         data() {
             return {
-                value: null,
                 rightGroupOffset: '0px',
             }
         },
         computed: {
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
-            },
             hasFixedText() {
-                return (this.postFixedText != null || this.preFixedText != null);
-            },
-            hasIcon() {
-                return (this.leftIconName != null || this.rightIconName != null || this.hasClearButton);
+                return (this.addonPre != null || this.addonPost != null);
             },
             iconClass() {
-                if (!this.hasIcon) return null;
-                else if (this.leftIconName != null && (this.rightIconName == null && !this.hasClearButton)) return 'slds-input-has-icon slds-input-has-icon_left';
-                else if ((this.rightIconName != null || this.hasClearButton) && this.leftIconName == null) return 'slds-input-has-icon slds-input-has-icon_right';
-                else return 'slds-input-has-icon slds-input-has-icon_left-right';
+                return (this.icon == null)
+                    ? 'slds-input-has-icon_right'
+                    : 'slds-input-has-icon_left-right';
             },
-            readOnlyAttribute() {
-                return this.readOnly ? {['readonly']: ''} : {};
+            listeners() {
+                const listeners = {...this.$listeners};
+                delete listeners.input;
+                return listeners
             },
             spinnerRight() {
-                if (this.rightIconName != null || (this.hasClearButton && this.value)) return '1.5rem';
+                if (this.value) return '1.5rem';
                 return '.2rem';
             },
         },
+        watch: {
+            async addonPost() {
+                await this.$nextTick();
+
+                const addonPost = this.$refs.addonPost;
+
+                if (this.addonPost == null || addonPost == null) {
+                    this.rightGroupOffset = '0px';
+                    return;
+                }
+
+                this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
+            },
+        },
         mounted() {
-            if (this.default != null) {
-                this.value = this.default;
-                this.$emit('input', this.value);
-            }
-
-            if (this.postFixedText == null) return;
-
-            const postFixedText = this.$el.querySelector('.post-fixed-text');
-            this.rightGroupOffset = `${postFixedText.offsetWidth + 16}px`;
+            if (this.addonPost == null) return;
+            const addonPost = this.$refs.addonPost;
+            this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
         },
         methods: {
             onClear() {
-                this.value = null;
-                this.$emit('input', this.value);
-            },
-            onBlur() {
-                this.$emit('blur');
-            },
-            onChange(event){
-                this.$emit('change', event);
-            },
-            onClick(event) {
-                this.value = event.target.value;
-                this.$emit('input', this.value);
-            },
-            onInput(event) {
-                this.value = event.target.value;
-                this.$emit('input', this.value);
+                this.$refs.input.value = null;
+                this.$emit('input', null);
             },
         },
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 150ms;
+    }
 
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
 </style>
