@@ -63,7 +63,11 @@
             <slds-input v-model="input" label="Disabled input" disabled/>
             <br>
 
-            <slds-input v-model="input" label="Fixed text input" addon-pre="$" addon-post="euro"/>
+            <slds-input
+                v-model="input"
+                label="Fixed text input"
+                addon-pre="$"
+                addon-post="euro"/>
             <br>
 
             <slds-input v-model="input" label="Icon input" icon="utility:search"/>
