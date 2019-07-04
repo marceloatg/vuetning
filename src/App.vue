@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Picklists'
+    import SldsView from './views/Input'
 
     export default {
         name: 'App',
