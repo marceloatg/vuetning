@@ -20,7 +20,7 @@ describe('SldsButton', () => {
         const wrapper = shallowMount(SldsButton);
 
         // trigger click
-        wrapper.find('button').trigger('click');
+        wrapper.trigger('click');
 
         // assert event has been emitted
         expect(wrapper.emitted().click).toBeTruthy();
@@ -35,7 +35,7 @@ describe('SldsButton', () => {
         });
 
         // trigger click
-        wrapper.find('button').trigger('click');
+        wrapper.trigger('click');
 
         // assert event has not been emitted
         expect(wrapper.emitted().click).toBeFalsy();
@@ -44,13 +44,13 @@ describe('SldsButton', () => {
     it('does no emit click when clicked when spinner is active', () => {
 
         // shallow mount the button setting a disabled state
-        const spinnerActive = true;
+        const spinner = true;
         const wrapper = shallowMount(SldsButton, {
-            propsData: {spinnerActive}
+            propsData: {spinner}
         });
 
         // trigger click
-        wrapper.find('button').trigger('click')
+        wrapper.trigger('click')
 
         // assert event has not been emitted
         expect(wrapper.emitted().click).toBeFalsy();

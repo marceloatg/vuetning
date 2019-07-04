@@ -50,7 +50,7 @@ Modals are used to display content in a layer above the app. This paradigm is us
 
     <template #footer>
         <slds-button label="Discard"/>
-        <slds-button label="Confirm" variant="brand"/>
+        <slds-button label="Confirm" brand/>
     </template>
 
 </slds-modal>
