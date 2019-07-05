@@ -11,7 +11,7 @@
                 v-if="page !== 0"
                 :key="page"
                 :label="`${page}`"
-                :variant="buttonVariant(page)"
+                :class="buttonVariant(page)"
                 :style="{padding: '0 12px'}"
                 :disabled="disabled"
                 @click="onClickPage(page)"/>
@@ -78,8 +78,8 @@
                 this.$emit('pagechanged', this.currentPage + 1);
             },
             buttonVariant(page) {
-                if (page === this.currentPage) return 'brand';
-                return 'neutral';
+                if (page === this.currentPage) return 'slds-button_brand';
+                return 'slds-button_neutral';
             },
         }
     }
