@@ -447,6 +447,7 @@
                 if (column.fullWidth == null) {
                     for (const row of this.rows) {
                         const value = this.getFieldValue(column, row);
+                        if (value == null) continue;
                         if (value.length > this.ruler.value.length) this.ruler.value = value;
                     }
 
