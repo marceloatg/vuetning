@@ -83,12 +83,13 @@
                                         :icon-name="getFieldObject(column, item).iconName"
                                         :icon-position="getFieldObject(column, item).iconPosition"/>
 
-                                    <!-- Action -->
-                                    <slds-menu
-                                        v-else-if="column.type === 'action' && getFieldObject(column, item) != null"
-                                        :items="items"
-                                        size="x-small"
-                                        @click="this.$emit(value, item)"/>
+                                    <!-- Button -->
+                                    <button
+                                        v-else-if="column.type === 'button' && getFieldObject(column, item) != null"
+                                        class="slds-button slds-button_outline-brand"
+                                        @click="$emit(getFieldObject(column, item).action, item)">
+                                        {{ getFieldObject(column, item).label }}
+                                    </button>
 
                                     <!-- Copy to clipboard button -->
                                     <button
@@ -293,7 +294,7 @@
                     this.$set(column, 'sortedDescending', false);
                     this.$set(column, 'fullWidth', null);
 
-                    if (column.type === 'badge') column.hasCopyButton = false;
+                    if (column.type === 'badge' || column.type === 'button') column.hasCopyButton = false;
                 }
             },
             getAction(actionValue) {
@@ -638,6 +639,25 @@
             .slds-button:focus {
                 box-shadow: none;
                 color: #706e6b;
+            }
+        }
+
+        .slds-button_outline-brand {
+            padding: 0 6px;
+            line-height: 1.125rem;
+
+            &:active {
+                animation: click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
+            }
+
+            &:focus {
+                box-shadow: none;
+                color: #0070d2;
+                background-color: #fff;
+            }
+
+            .slds-button__icon_left {
+                margin-right: 0;
             }
         }
     }

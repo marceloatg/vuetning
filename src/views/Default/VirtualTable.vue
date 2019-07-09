@@ -56,6 +56,12 @@
         },
         created() {
             this.columns.push({
+                fieldName: 'button',
+                width: 100,
+                type: 'button',
+            });
+
+            this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
                 type: 'event-link',
@@ -97,6 +103,10 @@
             for (let i = 0; i < 1000; i++) {
                 this.rows.push({
                     id: i,
+                    button: {
+                        label: 'button',
+                        action: 'button',
+                    },
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     phone: `(55) ${i}-${i}`,
