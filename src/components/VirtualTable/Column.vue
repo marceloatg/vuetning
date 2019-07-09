@@ -1,5 +1,5 @@
 <template>
-    <clicker @single-click="onSingleClick" @double-click="onDoubleClick">
+    <clicker :class="{unclickable: touchingResizer}" @single-click="onSingleClick" @double-click="onDoubleClick">
         <div
             class="column"
             :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
@@ -225,5 +225,9 @@
                 fill: #0070d2;
             }
         }
+    }
+
+    .unclickable {
+        pointer-events: none;
     }
 </style>
