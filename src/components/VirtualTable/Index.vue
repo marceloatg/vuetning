@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+
+        <div v-if="ruler.active" ref="ruler" class="ruler">
+            {{ ruler.value }}
+        </div>
+
         <div class="table">
 
             <div class="header" :style="{ width: `${tableWidth}px` }">
@@ -21,6 +26,7 @@
                     :sorted-descending="column.sortedDescending"
                     :type="column.type"
                     @resize="onResize"
+                    @fullwidth="onResizeFullWidth(index, column)"
                     @sort="(order) => onSort(order, column)"/>
 
             </div>
@@ -214,6 +220,10 @@
                     opacity: 0,
                 },
                 rowWidth: null,
+                ruler: {
+                    value: '',
+                    active: false
+                },
                 scrollTop: 0,
                 scrollbarWidth: 0,
                 sortedColumnId: null,
@@ -281,6 +291,7 @@
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                     this.$set(column, 'sortedAscending', false);
                     this.$set(column, 'sortedDescending', false);
+                    this.$set(column, 'fullWidth', null);
 
                     if (column.type === 'badge') column.hasCopyButton = false;
                 }
@@ -430,6 +441,29 @@
                     this.columns[index].offsetLeft += delta;
                 }
             },
+            async onResizeFullWidth(index, column) {
+                if (column.width === column.fullWidth) return;
+
+                if (column.fullWidth == null) {
+                    for (const row of this.rows) {
+                        const value = this.getFieldValue(column, row);
+                        if (value.length > this.ruler.value.length) this.ruler.value = value;
+                    }
+
+                    this.ruler.active = true;
+                    await this.$nextTick();
+
+                    const ruler = this.$refs.ruler;
+                    column.fullWidth = (ruler.clientWidth + 24);
+                    if (column.hasCopyButton) column.fullWidth += 24;
+
+                    this.ruler.value = '';
+                    this.ruler.active = false;
+                }
+
+                const delta = column.fullWidth - column.width;
+                this.onResize(index, delta);
+            },
             onScroll(event) {
                 if (this.scrollTop !== event.target.scrollTop) {
                     this.scrollTop = event.target.scrollTop;
@@ -500,6 +534,14 @@
     $header-height: 2rem;
     $row-height: 1.875rem;
     $table-color-background-header: #fafaf9;
+
+    .ruler {
+        position: absolute;
+        visibility: hidden;
+        height: auto;
+        width: auto;
+        white-space: nowrap;
+    }
 
     .vue-recycle-scroller.ready.direction-vertical {
         .vue-recycle-scroller__item-wrapper {

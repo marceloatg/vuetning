@@ -84,6 +84,7 @@
                 label: 'Sorter',
                 type: 'text',
                 sortBy: 'sorterValue',
+                hasCopyButton: false,
             });
 
             this.columns.push({
