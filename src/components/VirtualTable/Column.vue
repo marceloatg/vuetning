@@ -1,41 +1,46 @@
 <template>
-    <div
-        class="column"
-        :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
-        :style="{ width: `${initialWidth}px`, left: `${left}px` }"
-        @click="onClick">
+    <clicker @single-click="onSingleClick" @double-click="onDoubleClick">
+        <div
+            class="column"
+            :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
+            :style="{ width: `${initialWidth}px`, left: `${left}px` }">
 
-        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
 
-            <!-- Label -->
-            <span class="label slds-truncate" :title="label">
-                {{ label }}
-            </span>
+                <!-- Label -->
+                <span class="label slds-truncate" :title="label">
+                    {{ label }}
+                </span>
 
-            <!-- Sort icon -->
-            <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
-                <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+                <!-- Sort icon -->
+                <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
+                    <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+                </span>
+
+            </div>
+
+            <!-- Handle -->
+            <span
+                v-if="resizable"
+                class="handle"
+                :style="{transform: `translateX(${resizerTranslation}px)`}"
+                @mousedown.prevent.stop="onResizerMouseDown"
+                @click.stop>
+                <span class="divider"/>
             </span>
 
         </div>
-
-        <!-- Handle -->
-        <span
-            v-if="resizable"
-            class="handle"
-            :style="{transform: `translateX(${resizerTranslation}px)`}"
-            @mousedown.prevent.stop="onResizerMouseDown"
-            @click.stop>
-            <span class="divider"/>
-        </span>
-
-    </div>
+    </clicker>
 </template>
 
 <script>
     import Commons from "../DataTable/commons";
+    import Clicker from "./Clicker"
 
     export default {
+        components: {
+            Clicker,
+        },
         props: {
             index: {
                 type: Number,
@@ -104,11 +109,9 @@
             }
         },
         methods: {
-            onClick() {
-                if (!this.sortable) return;
-
-                if (this.sortedAscending) this.$emit('sort', 'desc');
-                else this.$emit('sort', 'asc');
+            onDoubleClick() {
+                if (!this.resizable || (this.type !== 'text' && this.type !== 'event-link')) return;
+                this.$emit('fullwidth');
             },
             onResizerMouseDown(event) {
                 this.startX = event.pageX;
@@ -128,10 +131,6 @@
 
                 this.resizing(delta);
             },
-            resizing(delta) {
-                if (this.initialWidth + delta < this.minimumWidth) delta = this.minimumWidth - this.initialWidth;
-                this.resizerTranslation = delta;
-            },
             onResizerMoveEnd() {
                 if (!this.touchingResizer) return;
 
@@ -142,6 +141,12 @@
 
                 const delta = this.currentX - this.startX;
                 this.resize(delta);
+            },
+            onSingleClick() {
+                if (!this.sortable) return;
+
+                if (this.sortedAscending) this.$emit('sort', 'desc');
+                else this.$emit('sort', 'asc');
             },
             resize(delta) {
 
@@ -154,6 +159,10 @@
                 // Emit resize event with delta
                 this.$emit('resize', this.index, delta);
                 this.resizerTranslation = 0;
+            },
+            resizing(delta) {
+                if (this.initialWidth + delta < this.minimumWidth) delta = this.minimumWidth - this.initialWidth;
+                this.resizerTranslation = delta;
             },
         },
     }
