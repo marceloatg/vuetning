@@ -3,7 +3,7 @@
         props: {
             tag: {
                 type: String,
-                default: 'a'
+                default: 'div'
             },
             delay: {
                 type: Number,
