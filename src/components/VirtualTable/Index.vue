@@ -457,6 +457,7 @@
                     const ruler = this.$refs.ruler;
                     column.fullWidth = (ruler.clientWidth + 24);
                     if (column.hasCopyButton) column.fullWidth += 24;
+                    if (column.fullWidth < Commons.DEFAULT_MINIMUM_WIDTH) column.fullWidth = Commons.DEFAULT_MINIMUM_WIDTH;
 
                     this.ruler.value = '';
                     this.ruler.active = false;
