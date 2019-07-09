@@ -1,8 +1,8 @@
 <template>
-    <clicker @single-click="onSingleClick" @double-click="onDoubleClick">
+    <clicker :class="{unclickable: touchingResizer}" @single-click="onSingleClick" @double-click="onDoubleClick">
         <div
             class="column"
-            :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
+            :class="{'is-resizable': resizable,'slds-is-sortable':isSortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
             :style="{ width: `${initialWidth}px`, left: `${left}px` }">
 
             <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
@@ -13,7 +13,7 @@
                 </span>
 
                 <!-- Sort icon -->
-                <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
+                <span v-if="isSortable" class="slds-icon_container slds-icon-utility-arrowup">
                     <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
                 </span>
 
@@ -80,6 +80,7 @@
                     return [
                         'action',
                         'badge',
+                        'button',
                         'event-link',
                         'text',
                     ].indexOf(value) !== -1
@@ -225,5 +226,9 @@
                 fill: #0070d2;
             }
         }
+    }
+
+    .unclickable {
+        pointer-events: none;
     }
 </style>
