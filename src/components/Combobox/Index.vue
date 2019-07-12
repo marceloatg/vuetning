@@ -75,6 +75,7 @@
                                     v-else
                                     :key="option.value"
                                     :disabled="option.disabled"
+                                    :filter="filter"
                                     :label="option.label"
                                     :meta="option.meta"
                                     :value="option.value"
@@ -176,6 +177,7 @@
                 if (this.filter == null) return this.options;
 
                 return this.options.filter((option) => {
+                    if (option.heading != null) return true;
                     return String(option.label).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1;
                 })
             },
@@ -203,8 +205,10 @@
             away() {
                 this.isDropdownActive = false;
             },
-            onClear() {
+            async onClear() {
                 this.filter = null;
+                await this.$nextTick();
+                this.$refs.input.focus();
             },
             onInput(event) {
                 this.filter = event.target.value
@@ -217,9 +221,7 @@
                 this.isDropdownActive = !this.isDropdownActive;
                 if (!this.isDropdownActive || this.readonly) return;
 
-                this.onClear();
-                await this.$nextTick();
-                this.$refs.input.focus();
+                await this.onClear();
             },
         },
     }
