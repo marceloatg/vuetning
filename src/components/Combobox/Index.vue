@@ -14,21 +14,46 @@
                     <!-- Input -->
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
 
-                        <input
-                            ref="input"
-                            :value="selectedOption"
-                            :readonly="readonly"
-                            v-bind="attributes"
-                            class="slds-input slds-combobox__input slds-combobox__input-value"
-                            @click="toggleDropdown"
-                            @input="$emit('input', $event.target.value)"
-                            v-on="listeners">
+                        <template v-if="!readonly && isDropdownActive">
 
-                        <slds-icon
-                            icon-name="utility:down"
-                            class="slds-input__icon slds-input__icon_right"
-                            size="x-small"
-                            variant="default"/>
+                            <input
+                                ref="input"
+                                :value="filter"
+                                v-bind="attributes"
+                                class="slds-input slds-combobox__input slds-combobox__input-value"
+                                @click="toggleDropdown"
+                                @input="onInput"
+                                v-on="listeners">
+
+                            <transition name="fade">
+                                <slds-button-icon
+                                    v-if="filter != null"
+                                    icon-name="utility:clear"
+                                    class="slds-input__icon slds-input__icon_right"
+                                    title="Clear"
+                                    @click.stop="onClear"/>
+                            </transition>
+
+                        </template>
+
+                        <template v-else>
+
+                            <input
+                                ref="input"
+                                :value="selectedOption"
+                                :readonly="readonly"
+                                v-bind="attributes"
+                                class="slds-input slds-combobox__input slds-combobox__input-value"
+                                @click="toggleDropdown"
+                                v-on="listeners">
+
+                            <slds-icon
+                                icon-name="utility:down"
+                                class="slds-input__icon slds-input__icon_right"
+                                size="x-small"
+                                variant="default"/>
+
+                        </template>
 
                     </div>
 
@@ -39,7 +64,7 @@
                         role="listbox"
                         class="slds-dropdown slds-dropdown_fluid">
                         <ul role="presentation" class="slds-listbox slds-listbox_vertical">
-                            <template v-for="option in options">
+                            <template v-for="option in filteredOptions">
 
                                 <slds-picklist-heading
                                     v-if="option.heading != null"
@@ -138,6 +163,7 @@
         },
         data() {
             return {
+                filter: null,
                 isDropdownActive: false,
             }
         },
@@ -145,6 +171,13 @@
             attributes() {
                 const attributes = {...this.$attrs};
                 return attributes
+            },
+            filteredOptions() {
+                if (this.filter == null) return this.options;
+
+                return this.options.filter((option) => {
+                    return String(option.label).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1;
+                })
             },
             listeners() {
                 const listeners = {...this.$listeners};
@@ -166,19 +199,27 @@
                 return null
             },
         },
-        watch: {},
-        created() {
-        },
         methods: {
             away() {
                 this.isDropdownActive = false;
+            },
+            onClear() {
+                this.filter = null;
+            },
+            onInput(event) {
+                this.filter = event.target.value
             },
             onSelect(value) {
                 this.$emit('input', value);
                 this.isDropdownActive = false;
             },
-            toggleDropdown() {
+            async toggleDropdown() {
                 this.isDropdownActive = !this.isDropdownActive;
+                if (!this.isDropdownActive || this.readonly) return;
+
+                this.onClear();
+                await this.$nextTick();
+                this.$refs.input.focus();
             },
         },
     }

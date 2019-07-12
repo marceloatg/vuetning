@@ -35,7 +35,6 @@
                 label="My awesome Combobox"
                 placeholder="Select an option"
                 class="slds-m-bottom_small"
-                readonly
                 @input="onChange"/>
             <p class="slds-border_bottom slds-p-bottom_medium">
                 Value input is: {{ input }}
@@ -177,7 +176,7 @@
                     {label: 'Pear', value: '4f639702-72fc-455c-8dc9-10610c919d8a'},
                     {label: 'Apple', value: '28d56658-5005-440b-b5e4-eb6e5f661d04'},
                 ],
-                input: '4f639702-72fc-455c-8dc9-10610c919d8a',
+                input: null,
             }
         },
         methods: {
