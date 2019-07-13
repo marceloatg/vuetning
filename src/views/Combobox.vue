@@ -52,8 +52,14 @@
                 readonly/>
 
             <h2 class="slds-text-heading_large slds-m-top_large slds-m-bottom_small">
-                Error
+                Spinner
             </h2>
+
+            <slds-combobox
+                label="Spinner active Combobox"
+                placeholder="Select an option"
+                class="slds-m-bottom_small"
+                spinner/>
 
             <h2 class="slds-text-heading_large slds-m-top_large slds-m-bottom_small">
                 Required
@@ -96,7 +102,7 @@
                 Size
             </h2>
             <p class="slds-text-body_regular slds-m-bottom_small">
-                To change the input size, append one of the following attributes to the button:
+                To change the input size, append one of the following attributes to the combobox:
                 <b>xx-small, x-small, small, medium, large, x-large, xx-large</b>.
             </p>
 
@@ -153,9 +159,30 @@
                 Length
             </h2>
             <p class="slds-text-body_regular slds-m-bottom_small">
-                To change the input size, append one of the following attributes to the button:
-                <b>small, medium, large</b>.
+                To change the dropdown length, append one of the length attributes to the combobox with the following
+                numeric values: <b>5, 7, 10</b>.
             </p>
+
+            <slds-combobox
+                :options="options"
+                label="Length 5"
+                placeholder="Select an option"
+                class="slds-m-bottom_small"
+                :length="5"/>
+
+            <slds-combobox
+                :options="options"
+                label="Length 7"
+                placeholder="Select an option"
+                class="slds-m-bottom_small"
+                :length="7"/>
+
+            <slds-combobox
+                :options="options"
+                label="Length 10"
+                placeholder="Select an option"
+                class="slds-m-bottom_small"
+                :length="10"/>
 
         </div>
 

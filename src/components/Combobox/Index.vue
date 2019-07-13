@@ -62,8 +62,11 @@
                         v-if="isDropdownActive"
                         v-on-clickaway="away"
                         role="listbox"
-                        class="slds-dropdown slds-dropdown_fluid">
+                        class="slds-dropdown slds-dropdown_fluid"
+                        :class="[`slds-dropdown_length-${length}`]">
                         <ul role="presentation" class="slds-listbox slds-listbox_vertical">
+
+                            <!-- Options -->
                             <template v-for="option in filteredOptions">
 
                                 <slds-picklist-heading
@@ -83,6 +86,17 @@
                                     @select="onSelect"/>
 
                             </template>
+
+                            <!-- Spinner -->
+                            <li v-if="spinner" role="presentation" class="slds-listbox__item">
+                                <div class="slds-align_absolute-center slds-p-top_medium">
+                                    <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+                                        <div class="slds-spinner__dot-a"/>
+                                        <div class="slds-spinner__dot-b"/>
+                                    </div>
+                                </div>
+                            </li>
+
                         </ul>
                     </div>
 
@@ -128,6 +142,16 @@
             },
             large: {
                 type: Boolean,
+            },
+            length: {
+                type: [Number],
+                validator(value) {
+                    return [
+                        5,
+                        7,
+                        10,
+                    ].indexOf(value) !== -1
+                },
             },
             medium: {
                 type: Boolean,
