@@ -80,10 +80,11 @@
                     return [
                         'action',
                         'badge',
+                        'boolean',
                         'button',
                         'event-link',
+                        'icon',
                         'text',
-                        'boolean',
                     ].indexOf(value) !== -1
                 },
             },
