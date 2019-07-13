@@ -75,15 +75,16 @@
             },
             type: {
                 type: String,
-                default: 'text',
+                required: true,
                 validator(value) {
                     return [
                         'action',
                         'badge',
+                        'boolean',
                         'button',
                         'event-link',
+                        'icon',
                         'text',
-                        'boolean',
                     ].indexOf(value) !== -1
                 },
             },
@@ -145,7 +146,7 @@
                 this.resize(delta);
             },
             onSingleClick() {
-                if (!this.sortable) return;
+                if (!this.isSortable) return;
 
                 if (this.sortedAscending) this.$emit('sort', 'desc');
                 else this.$emit('sort', 'asc');
