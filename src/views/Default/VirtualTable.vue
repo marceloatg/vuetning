@@ -78,6 +78,15 @@
             });
 
             this.columns.push({
+                fieldName: 'triggable',
+                label: 'Triggable',
+                type: 'boolean',
+                hasCopyButton: false,
+                resizable: false,
+                fixedWidth: 128,
+            });
+
+            this.columns.push({
                 fieldName: 'phone',
                 label: 'Phone',
                 type: 'text',
@@ -109,6 +118,7 @@
                     },
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
+                    triggable: true,
                     phone: `(55) ${i}-${i}`,
                     sorterLabel: `Label-${i}`,
                     sorterValue: i,

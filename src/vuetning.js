@@ -28,7 +28,6 @@ import SldsMenu from './components/Menu/Index'
 import SldsModal from './components/Modal/Index'
 import SldsNotification from './components/Notification/Index'
 import SldsPagination from './components/Pagination/Index'
-import SldsPicklist from './components/Picklist/Index'
 import SldsPill from './components/Pill/Index'
 import SldsExpandableSection from './components/ExpandableSection/Index'
 import SldsSpinner from './components/Spinner/Index'
@@ -61,7 +60,6 @@ Vue.component('slds-menu', SldsMenu);
 Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
 Vue.component('slds-pagination', SldsPagination);
-Vue.component('slds-picklist', SldsPicklist);
 Vue.component('slds-pill', SldsPill);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
