@@ -1,8 +1,8 @@
 <template>
     <article class="slds-card">
-        <div class="slds-card__header slds-grid">
 
-            <!-- Header -->
+        <!-- Header -->
+        <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
 
                 <!-- Figure -->
