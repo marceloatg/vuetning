@@ -164,8 +164,8 @@
                                             <a role="menuitem">
                                                 <span class="slds-truncate" :title="getAction(action).label">
                                                     <slds-icon
-                                                        v-if="getAction(action).iconName != null"
-                                                        :icon-name="getAction(action).iconName"
+                                                        v-if="getAction(action).icon != null"
+                                                        :icon-name="getAction(action).icon"
                                                         variant="default"
                                                         size="x-small"
                                                         class="slds-m-right_x-small"/>
@@ -303,13 +303,14 @@
             enrichColumns() {
                 for (const column of this.columns) {
                     this.$set(column, 'id', uuid());
+                    if (column.type == null) this.$set(column, 'type', 'text');
                     if (column.hasCopyButton == null) this.$set(column, 'hasCopyButton', true);
                     if (column.resizable == null) this.$set(column, 'resizable', true);
                     this.$set(column, 'sortedAscending', false);
                     this.$set(column, 'sortedDescending', false);
                     this.$set(column, 'fullWidth', null);
 
-                    if (column.type === 'badge' || column.type === 'button') column.hasCopyButton = false;
+                    if (column.type === 'badge' || column.type === 'button' || column.type === 'boolean') column.hasCopyButton = false;
                 }
             },
             getAction(actionValue) {
