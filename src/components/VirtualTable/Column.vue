@@ -84,6 +84,7 @@
                         'button',
                         'event-link',
                         'icon',
+                        'n-boolean',
                         'text',
                     ].indexOf(value) !== -1
                 },
