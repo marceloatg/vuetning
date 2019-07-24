@@ -35,7 +35,7 @@
             <RecycleScroller
                 class="body"
                 :items="filteredRows"
-                :item-size="30"
+                :item-size="28"
                 :key-field="keyField"
                 :buffer="100">
 
@@ -196,6 +196,7 @@
             </RecycleScroller>
 
         </div>
+
     </div>
 </template>
 
@@ -564,7 +565,7 @@
 <style lang="scss">
     $color-background-alt: #ffffff;
     $header-height: 2rem;
-    $row-height: 1.875rem;
+    $row-height: 1.75rem;
     $table-color-background-header: #fafaf9;
 
     .ruler {
@@ -632,7 +633,7 @@
         .cell {
             padding: .25rem .5rem;
             height: 100%;
-            line-height: 1.375rem;
+            line-height: 1.25rem;
 
             &-content {
                 height: 100%;
@@ -669,6 +670,10 @@
         .line-actions {
             min-width: 3rem;
             width: 3rem;
+
+            .slds-button {
+                margin-top: -2px;
+            }
 
             .slds-button:focus {
                 box-shadow: none;
