@@ -57,7 +57,7 @@
         created() {
             this.columns.push({
                 fieldName: 'button',
-                width: 100,
+                width: 72,
                 type: 'button',
             });
 
@@ -83,7 +83,7 @@
                 type: 'boolean',
                 hasCopyButton: false,
                 resizable: false,
-                fixedWidth: 128,
+                width: 128,
             });
 
             this.columns.push({
@@ -91,7 +91,7 @@
                 label: 'Phone',
                 type: 'text',
                 resizable: false,
-                fixedWidth: 128,
+                width: 128,
             });
 
             this.columns.push({
