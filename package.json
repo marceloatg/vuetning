@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "duration": "^0.2.2",
-    "humanize-duration": "^3.19.0",
+    "humanize-duration": "^3.20.0",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "uuid": "^3.3.2",
@@ -51,7 +51,7 @@
     "@vue/cli-plugin-babel": "^3.9.2",
     "@vue/cli-plugin-eslint": "^3.9.2",
     "@vue/cli-plugin-unit-jest": "^3.9.0",
-    "@vue/cli-service": "^3.9.2",
+    "@vue/cli-service": "^3.9.3",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
