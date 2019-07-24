@@ -357,13 +357,13 @@
                         else knownWidth += column.width;
                     }
                     else {
-                        if (column.fixedWidth == null) {
+                        if (column.width == null) {
                             knownWidth += Commons.DEFAULT_FIXED_WIDTH;
                             this.$set(column, 'width', Commons.DEFAULT_FIXED_WIDTH);
                         }
                         else {
-                            knownWidth += column.fixedWidth;
-                            this.$set(column, 'width', column.fixedWidth);
+                            knownWidth += column.width;
+                            this.$set(column, 'width', column.width);
                         }
                     }
                 }
