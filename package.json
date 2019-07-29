@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "duration": "^0.2.2",
-    "humanize-duration": "^3.20.0",
+    "humanize-duration": "^3.20.1",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "uuid": "^3.3.2",
@@ -58,7 +58,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
-    "eslint-teamcity": "^2.1.0",
+    "eslint-teamcity": "^2.2.0",
     "jest-teamcity-reporter": "^0.9.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
