@@ -31,6 +31,7 @@
                                     icon-name="utility:clear"
                                     class="slds-input__icon slds-input__icon_right"
                                     title="Clear"
+                                    tabindex="-1"
                                     @click.stop="onClear"/>
                             </transition>
 
