@@ -1,5 +1,6 @@
 <template>
     <button
+        :type="type"
         class="slds-button"
         :class="buttonClass"
         @click="onClick"
@@ -75,6 +76,10 @@
             },
             textDestructive: {
                 type: Boolean,
+            },
+            type: {
+                type: String,
+                default: 'button',
             },
         },
         computed: {
