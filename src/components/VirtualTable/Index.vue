@@ -439,8 +439,6 @@
                 const column = this.columns.find(col => col.fieldName.trim() === this.initialSort.columnName.trim());
 
                 if (column == null) return;
-                if (column == undefined) return;
-                if (column == {}) return;
 
                 this.onSort(this.initialSort.order, column);
             },
