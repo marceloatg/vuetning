@@ -5,8 +5,8 @@
             :columns="columns"
             :key-field="keyField"
             :rows="rows"
-            @detail="onAction"
-            :initial-sort="initialSort"/>
+            :initial-sort="initialSort"
+            @detail="onAction"/>
     </div>
 </template>
 
