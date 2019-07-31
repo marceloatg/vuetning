@@ -5,7 +5,8 @@
             :columns="columns"
             :key-field="keyField"
             :rows="rows"
-            @detail="onAction"/>
+            @detail="onAction"
+            :initial-sort="initialSort"/>
     </div>
 </template>
 
@@ -51,7 +52,11 @@
                         label: 'Test',
                         value: 'test6',
                     },
-                ]
+                ],
+                initialSort: {
+                    columnName: 'email',
+                    order: 'desc',
+                },
             }
         },
         created() {

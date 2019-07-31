@@ -225,6 +225,12 @@
                 type: Boolean,
                 default: true,
             },
+            initialSort: {
+                type: Object,
+                default: () => {
+                    return null;
+                }
+            },
             keyField: {
                 type: String,
                 required: true,
@@ -281,6 +287,7 @@
         created() {
             numeral.locale('pt-br');
             this.enrichColumns();
+            this.initializationSort();
         },
         async mounted() {
             await this.getScrollbarWidth();
@@ -425,6 +432,22 @@
                 const table = this.$el.querySelector('.table');
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
+            },
+            initializationSort() {
+                if (this.initialSort == null) return;
+
+                let column = null;
+
+                for (let col of this.columns) {
+                    if (col.fieldName.trim() === this.initialSort.columnName.trim()) {
+                        column = col;
+                        break;
+                    }
+                }
+
+                if(column == null) return;
+
+                this.onSort(this.initialSort.order, column);
             },
             async onActionsClick(item) {
                 this.closeActionMenu();
