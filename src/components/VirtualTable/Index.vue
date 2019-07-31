@@ -43,7 +43,9 @@
                     <div class="row" :style="{ width: `${rowWidth}px` }">
 
                         <!-- Line number -->
-                        <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
+                        <div
+                            v-if="hasLineNumberColumn"
+                            class="cell line-number slds-text-body_small slds-text-color_weak">
                             {{ getLineNumber(index) }}
                         </div>
 
@@ -148,7 +150,10 @@
                                     class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
                                     title="Actions"
                                     @click="onActionsClick(item)">
-                                    <svg class="slds-button__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <svg
+                                        class="slds-button__icon"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24">
                                         <path d="M3.8 6.5h16.4c.4 0 .8.6.4 1l-8 9.8c-.3.3-.9.3-1.2 0l-8-9.8c-.4-.4-.1-1 .4-1z"/>
                                     </svg>
                                 </button>
@@ -225,6 +230,9 @@
                 type: Boolean,
                 default: true,
             },
+            initialSort: {
+                type: Object,
+            },
             keyField: {
                 type: String,
                 required: true,
@@ -281,6 +289,7 @@
         created() {
             numeral.locale('pt-br');
             this.enrichColumns();
+            this.initializeSort();
         },
         async mounted() {
             await this.getScrollbarWidth();
@@ -355,13 +364,11 @@
                     if (column.resizable) {
                         if (column.width == null) unknownWidthColumns++;
                         else knownWidth += column.width;
-                    }
-                    else {
+                    } else {
                         if (column.width == null) {
                             knownWidth += Commons.DEFAULT_FIXED_WIDTH;
                             this.$set(column, 'width', Commons.DEFAULT_FIXED_WIDTH);
-                        }
-                        else {
+                        } else {
                             knownWidth += column.width;
                             this.$set(column, 'width', column.width);
                         }
@@ -425,6 +432,15 @@
                 const table = this.$el.querySelector('.table');
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
+            },
+            initializeSort() {
+                if (this.initialSort == null) return;
+
+                const column = this.columns.find(col => col.fieldName.trim() === this.initialSort.columnName.trim());
+
+                if (column == null) return;
+
+                this.onSort(this.initialSort.order, column);
             },
             async onActionsClick(item) {
                 this.closeActionMenu();
@@ -520,8 +536,7 @@
                 if (order === 'asc') {
                     sortedColumn.sortedAscending = true;
                     sortedColumn.sortedDescending = false;
-                }
-                else {
+                } else {
                     sortedColumn.sortedAscending = false;
                     sortedColumn.sortedDescending = true;
                 }
@@ -536,8 +551,7 @@
                 if (sortedColumn.sortBy != null) {
                     a = this.getSorterValue(sortedColumn, rowA);
                     b = this.getSorterValue(sortedColumn, rowB);
-                }
-                else {
+                } else {
                     a = this.getFieldValue(sortedColumn, rowA);
                     b = this.getFieldValue(sortedColumn, rowB);
                 }
@@ -552,8 +566,7 @@
                 else if (this.sortedOrder === 'asc') {
                     if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1;
                     return (a < b) ? -1 : 1;
-                }
-                else {
+                } else {
                     if (bothStringValues) return (a.localeCompare(b) < 0) ? 1 : -1;
                     return (a < b) ? 1 : -1;
                 }
