@@ -15,7 +15,11 @@
             </span>
 
             <!-- Icon -->
-            <slds-svg v-if="icon != null" :icon-name="icon" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
+            <slds-svg
+                v-if="icon != null"
+                :icon-name="icon"
+                class="slds-icon slds-input__icon slds-input__icon_left"
+                :class="iconClassVariant"/>
 
             <!-- Input -->
             <input
@@ -87,6 +91,18 @@
             icon: {
                 type: String,
             },
+            iconError: {
+                type: Boolean,
+            },
+            iconLight: {
+                type: Boolean,
+            },
+            iconSuccess: {
+                type: Boolean,
+            },
+            iconWarning: {
+                type: Boolean,
+            },
             inlineHelp: {
                 type: String,
             },
@@ -114,6 +130,23 @@
                 return (this.icon == null)
                     ? 'slds-input-has-icon_right'
                     : 'slds-input-has-icon_left-right';
+            },
+            iconClassVariant() {
+                if (this.iconError) {
+                    return {'slds-icon-text-error':true};
+                }
+                else if (this.iconLight) {
+                    return {'slds-icon-text-light':true};
+                }
+                else if (this.iconSuccess) {
+                    return {'slds-icon-text-success':true};
+                }
+                else if (this.iconWarning) {
+                    return {'slds-icon-text-warning':true};
+                }
+                else {
+                    return {'slds-icon-text-default':true};
+                }
             },
             listeners() {
                 const listeners = {...this.$listeners};
@@ -160,5 +193,21 @@
 
     .fade-enter, .fade-leave-to {
         opacity: 0;
+    }
+
+    .slds-icon-text-error {
+        fill: #c23934 !important;
+    }
+
+    .slds-icon-text-light {
+        fill: #b0adab !important;
+    }
+
+    .slds-icon-text-success {
+        fill: #027e46 !important;
+    }
+
+    .slds-icon-text-warning {
+        fill: #ffb75d !important;
     }
 </style>
