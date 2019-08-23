@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Clipboard from 'v-clipboard'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 // Using imports
 Vue.use(Clipboard);
@@ -26,7 +28,6 @@ import SldsMenu from './components/Menu/Index'
 import SldsModal from './components/Modal/Index'
 import SldsNotification from './components/Notification/Index'
 import SldsPagination from './components/Pagination/Index'
-import SldsPicklist from './components/Picklist/Index'
 import SldsPill from './components/Pill/Index'
 import SldsExpandableSection from './components/ExpandableSection/Index'
 import SldsSpinner from './components/Spinner/Index'
@@ -34,8 +35,10 @@ import SldsSvg from './shared/Svg'
 import SldsToast from './components/Toast/Index'
 import SldsTrialBar from './components/TrialBar/Index'
 import SldsVerticalNavigation from './components/VerticalNavigation/Index'
+import SldsVirtualTable from './components/VirtualTable/Index'
 
 // Registering lightning components
+Vue.component('RecycleScroller', RecycleScroller);
 Vue.component('slds-alert', SldsAlert);
 Vue.component('slds-avatar', SldsAvatar);
 Vue.component('slds-badge', SldsBadge);
@@ -57,7 +60,6 @@ Vue.component('slds-menu', SldsMenu);
 Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
 Vue.component('slds-pagination', SldsPagination);
-Vue.component('slds-picklist', SldsPicklist);
 Vue.component('slds-pill', SldsPill);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
@@ -65,3 +67,4 @@ Vue.component('slds-svg', SldsSvg);
 Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
+Vue.component('slds-virtual-table', SldsVirtualTable);
