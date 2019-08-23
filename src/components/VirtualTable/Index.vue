@@ -52,7 +52,7 @@
                 :buffer="100">
 
                 <template v-slot="{ item, index }">
-                    <div class="row" :style="{ width: `${rowWidth}px` }">
+                    <div class="row" :class="{selected: isSelected(item)}" :style="{ width: `${rowWidth}px` }">
 
                         <!-- Line number -->
                         <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
@@ -317,14 +317,6 @@
                 if (this.actions == null) return false;
                 return (this.actions.length > 0);
             },
-            isSelected() {
-                return row => {
-                    if (this.selectedRows.length === 0) return false;
-                    if (this.selectedRows.length === this.rows.length) return true;
-                    const selected = this.selectedRows.find(keyField => keyField === row[this.keyField]);
-                    return (selected != null);
-                }
-            }
         },
         created() {
             numeral.locale('pt-br');
@@ -488,6 +480,12 @@
                 if (column == null) return;
 
                 this.onSort(this.initialSort.order, column);
+            },
+            isSelected(row) {
+                if (this.selectedRows.length === 0) return false;
+                if (this.selectedRows.length === this.rows.length) return true;
+                const selected = this.selectedRows.find(keyField => keyField === row[this.keyField]);
+                return (selected != null);
             },
             async onActionsClick(item) {
                 this.closeActionMenu();
@@ -703,6 +701,10 @@
         align-items: center;
         border-bottom: 1px solid #dddbda;
         background-color: $color-background-alt;
+
+        &.selected {
+            background-color: #f3f2f2;
+        }
 
         .cell {
             padding: .25rem .5rem;
