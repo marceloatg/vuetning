@@ -11,6 +11,18 @@
 
                 <div v-if="hasLineNumberColumn" class="line-number"/>
 
+                <div
+                    v-if="hasCheckboxColumn"
+                    class="checkbox"
+                    :style="{left: `${selectAllStyle.left}px`, top: `${selectAllStyle.top}px`}">
+                    <div class="slds-checkbox" @click="onSelectAll">
+                        <input type="checkbox" :checked="rows.length === selectedRows.length">
+                        <label class="slds-checkbox__label">
+                            <span class="slds-checkbox_faux"/>
+                        </label>
+                    </div>
+                </div>
+
                 <slds-column
                     v-for="(column, index) in columns"
                     :key="column.fieldName"
@@ -43,10 +55,18 @@
                     <div class="row" :style="{ width: `${rowWidth}px` }">
 
                         <!-- Line number -->
-                        <div
-                            v-if="hasLineNumberColumn"
-                            class="cell line-number slds-text-body_small slds-text-color_weak">
+                        <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
                             {{ getLineNumber(index) }}
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div v-if="hasCheckboxColumn" class="cell checkbox">
+                            <div class="slds-checkbox" @click="onSelect(item[keyField])">
+                                <input type="checkbox" :checked="isSelected(item)">
+                                <label class="slds-checkbox__label">
+                                    <span class="slds-checkbox_faux"/>
+                                </label>
+                            </div>
                         </div>
 
                         <!-- Dynamic cells -->
@@ -226,6 +246,14 @@
                 type: Array,
                 required: true,
             },
+            filter: {
+                type: String,
+                default: null,
+            },
+            hasCheckboxColumn: {
+                type: Boolean,
+                default: false,
+            },
             hasLineNumberColumn: {
                 type: Boolean,
                 default: true,
@@ -241,9 +269,9 @@
                 type: Array,
                 required: true,
             },
-            filter: {
-                type: String,
-                default: null,
+            selectedRows: {
+                type: Array,
+                default: () => [],
             },
         },
         data() {
@@ -257,6 +285,10 @@
                 ruler: {
                     value: '',
                     active: false
+                },
+                selectAllStyle: {
+                    left: 8,
+                    top: 8,
                 },
                 scrollTop: 0,
                 scrollbarWidth: 0,
@@ -285,6 +317,14 @@
                 if (this.actions == null) return false;
                 return (this.actions.length > 0);
             },
+            isSelected() {
+                return row => {
+                    if (this.selectedRows.length === 0) return false;
+                    if (this.selectedRows.length === this.rows.length) return true;
+                    const selected = this.selectedRows.find(keyField => keyField === row[this.keyField]);
+                    return (selected != null);
+                }
+            }
         },
         created() {
             numeral.locale('pt-br');
@@ -341,7 +381,12 @@
             },
             getColumnLeftOffsets() {
                 let columnLeftSum = 0;
-                if (this.hasLineNumberColumn) columnLeftSum += Commons.LINE_COUNTER_WIDTH;
+
+                if (this.hasLineNumberColumn) {
+                    columnLeftSum += Commons.LINE_COUNTER_WIDTH;
+                    this.selectAllStyle.left += Commons.LINE_COUNTER_WIDTH;
+                }
+
                 if (this.hasCheckboxColumn) columnLeftSum += Commons.LINE_CHECKBOX_WIDTH;
                 if (this.hasCheckboxButtonColumn) columnLeftSum += Commons.LINE_CHECKBOX_BUTTON_WIDTH;
 
@@ -364,11 +409,13 @@
                     if (column.resizable) {
                         if (column.width == null) unknownWidthColumns++;
                         else knownWidth += column.width;
-                    } else {
+                    }
+                    else {
                         if (column.width == null) {
                             knownWidth += Commons.DEFAULT_FIXED_WIDTH;
                             this.$set(column, 'width', Commons.DEFAULT_FIXED_WIDTH);
-                        } else {
+                        }
+                        else {
                             knownWidth += column.width;
                             this.$set(column, 'width', column.width);
                         }
@@ -513,6 +560,12 @@
                 const delta = column.fullWidth - column.width;
                 this.onResize(index, delta);
             },
+            onSelect(keyField) {
+                this.$emit('select', keyField);
+            },
+            onSelectAll() {
+                this.$emit('selectall');
+            },
             onScroll(event) {
                 if (this.scrollTop !== event.target.scrollTop) {
                     this.scrollTop = event.target.scrollTop;
@@ -536,7 +589,8 @@
                 if (order === 'asc') {
                     sortedColumn.sortedAscending = true;
                     sortedColumn.sortedDescending = false;
-                } else {
+                }
+                else {
                     sortedColumn.sortedAscending = false;
                     sortedColumn.sortedDescending = true;
                 }
@@ -551,7 +605,8 @@
                 if (sortedColumn.sortBy != null) {
                     a = this.getSorterValue(sortedColumn, rowA);
                     b = this.getSorterValue(sortedColumn, rowB);
-                } else {
+                }
+                else {
                     a = this.getFieldValue(sortedColumn, rowA);
                     b = this.getFieldValue(sortedColumn, rowB);
                 }
@@ -566,7 +621,8 @@
                 else if (this.sortedOrder === 'asc') {
                     if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1;
                     return (a < b) ? -1 : 1;
-                } else {
+                }
+                else {
                     if (bothStringValues) return (a.localeCompare(b) < 0) ? 1 : -1;
                     return (a < b) ? 1 : -1;
                 }
@@ -625,6 +681,11 @@
             position: absolute;
         }
 
+        .checkbox {
+            min-width: 2rem;
+            position: absolute;
+        }
+
         .column {
             position: absolute;
         }
@@ -677,6 +738,12 @@
         .line-number {
             min-width: 3.75rem;
             width: 3.75rem;
+            text-align: center;
+        }
+
+        .checkbox {
+            min-width: 2rem;
+            width: 2rem;
             text-align: center;
         }
 
