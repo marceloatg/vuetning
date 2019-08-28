@@ -318,6 +318,11 @@
                 return (this.actions.length > 0);
             },
         },
+        watch: {
+            filter() {
+                this.$el.querySelector('.body').scrollTop = 0;
+            }
+        },
         created() {
             numeral.locale('pt-br');
             this.enrichColumns();
