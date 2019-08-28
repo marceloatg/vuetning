@@ -16,7 +16,7 @@
                     class="checkbox"
                     :style="{left: `${selectAllStyle.left}px`, top: `${selectAllStyle.top}px`}">
                     <div class="slds-checkbox" @click="onSelectAll">
-                        <input type="checkbox" :checked="rows.length === selectedRows.length">
+                        <input type="checkbox" :checked="(selectedRows.length > 0) && (rows.length === selectedRows.length)">
                         <label class="slds-checkbox__label">
                             <span class="slds-checkbox_faux"/>
                         </label>
