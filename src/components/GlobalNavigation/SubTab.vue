@@ -28,32 +28,30 @@
         </a>
 
         <div class="slds-col_bump-left slds-grid">
-            <div class="slds-context-bar__icon-action slds-size_1-of-2  slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none">
+            <div class="slds-context-bar__icon-action slds-size_1-of-2  slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open">
                 <slds-button-icon
                     icon-name="utility:chevrondown"
                     size="x-small"
                     container="bare"
                     title="Actions"
-                    class="slds-button_icon-current-color"/>
+                    class="slds-button_icon-current-color"
+                    @click="toggleDropdown"/>
 
-                <div class="slds-dropdown slds-dropdown_right">
+                <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
                     <ul class="slds-dropdown__list" role="menu">
                         <li class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
                                 <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
-                                <span class="slds-assistive-text">:</span>r
                             </a>
                         </li>
                         <li class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="-1" @click.prevent="onClickSetAsWorkspaceTab">
                                 <span class="slds-truncate" title="Set as workspace tab">Set As Workspace Tab</span>
-                                <span class="slds-assistive-text">:</span>r
                             </a>
                         </li>
                         <li class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="-1" @click.prevent="onClickClose">
                                 <span class="slds-truncate" title="Close">Close</span>
-                                <span class="slds-assistive-text">:</span>r
                             </a>
                         </li>
                     </ul>
@@ -75,7 +73,12 @@
 </template>
 
 <script>
+    import {mixin as clickaway} from 'vue-clickaway'
+
     export default {
+        mixins: [
+            clickaway
+        ],
         props: {
             icon: {
                 type: String,
@@ -94,6 +97,11 @@
                 required: true,
             },
         },
+        data() {
+            return {
+                isDropdownActive: false,
+            }
+        },
         computed: {
             adjustmentClass() {
                 const icon = this.icon;
@@ -102,18 +110,27 @@
             },
         },
         methods: {
+            away() {
+                this.isDropdownActive = false;
+            },
             onClickTab() {
                 this.$emit('click');
             },
             onClickRefreshTab() {
                 this.$emit('refresh');
+                this.isDropdownActive = false;
             },
             onClickSetAsWorkspaceTab() {
                 this.$emit('workspace');
+                this.isDropdownActive = false;
             },
             onClickClose() {
                 this.$emit('close');
+                this.isDropdownActive = false;
             },
+            toggleDropdown() {
+                this.isDropdownActive = !this.isDropdownActive;
+            }
         },
     }
 </script>
