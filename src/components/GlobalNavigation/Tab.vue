@@ -14,7 +14,7 @@
 
             <!-- Icon -->
             <span class="slds-icon_container">
-                <slds-svg :icon-name="iconName" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                <slds-svg :icon-name="icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
@@ -95,7 +95,7 @@
                 type: Boolean,
                 default: false,
             },
-            iconName: {
+            icon: {
                 type: String,
                 required: true,
             },
@@ -110,8 +110,8 @@
         },
         computed: {
             adjustmentClass() {
-                const iconName = this.iconName;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
+                const icon = this.icon;
+                if (icon.startsWith('utility')) return 'utility-category-adjustment';
                 return null;
             },
         },

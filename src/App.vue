@@ -20,7 +20,9 @@
         <slds-global-navigation
             app-name="Vuetning"
             :tabs="tabs"
+            :sub-tabs="subTabs"
             :overflowed-tabs="overflowedTabs"
+            :overflowed-sub-tabs="overflowedSubTabs"
             @close="onCloseTab"/>
 
         <!-- Brand band -->
@@ -93,38 +95,82 @@
                 tabIcon: null,
                 tabTitle: null,
                 tabs: [],
+                subTabsByTabId: [],
+                overflowedSubTabsByTabId: [],
                 overflowedTabs: [],
             }
+        },
+        computed: {
+            subTabs() {
+                if (this.tabs.length == 0) return [];
+
+                let selectedTabSubTabs = this.subTabsByTabId.find(element => {
+                    return element.tabId === this.tabs[this.tabs.length - 1].id
+                });
+
+                if (selectedTabSubTabs === undefined) return [];
+
+                return selectedTabSubTabs.subTabs;
+            },
+            overflowedSubTabs() {
+                if (this.tabs.length == 0) return [];
+
+                let selectedTabSubTabs = this.overflowedSubTabsByTabId.find(element => {
+                    return element.tabId === this.tabs[this.tabs.length - 1].id
+                });
+
+                if (selectedTabSubTabs === undefined) return [];
+
+                return selectedTabSubTabs.overflowedSubTabs;
+            },
         },
         methods: {
             addTab() {
                 for (const tab of this.tabs) tab.isActive = false;
 
                 let subTabs = [];
-                if (this.hasSubTas) subTabs.push({
-                    id: Date.now(),
-                    title: this.tabTitle,
-                    icon: this.tabIcon,
-                    isActive: true,
-                });
+                if (this.hasSubTas) {
+                    subTabs.push({
+                        id: Date.now(),
+                        title: this.tabTitle,
+                        icon: this.tabIcon,
+                        isActive: true,
+                    });
+                }
 
-                if (this.isOverflowed) {
+                if (this.isOverflowed && !this.hasSubTas) {
                     this.overflowedTabs.push({
                         id: Date.now(),
                         title: this.tabTitle,
                         icon: this.tabIcon,
                         isActive: true,
-                        subTabs: subTabs,
                     })
-                }
-                else {
-                    this.tabs.push({
+                } else {
+                    let tab = {
                         id: Date.now(),
                         title: this.tabTitle,
                         icon: this.tabIcon,
                         isActive: true,
-                        subTabs: subTabs,
-                    })
+                    };
+
+                    this.tabs.push(tab);
+
+                    if (this.hasSubTas && !this.isOverflowed) {
+                        this.subTabsByTabId.push({
+                            tabId: tab.id,
+                            subTabs: subTabs
+                        });
+                    } else if (this.hasSubTas && this.isOverflowed) {
+                        this.subTabsByTabId.push({
+                            tabId: tab.id,
+                            subTabs: subTabs
+                        });
+                        this.overflowedSubTabsByTabId.push({
+                            tabId: tab.id,
+                            overflowedSubTabs: subTabs
+                        });
+                    }
+
                 }
 
             },

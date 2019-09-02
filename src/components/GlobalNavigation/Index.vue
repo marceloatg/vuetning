@@ -46,7 +46,7 @@
                         v-for="(tab, index) in tabs"
                         :key="tab.id"
                         :has-sub-tabs="hasSubTabs"
-                        :icon-name="tab.iconName"
+                        :icon="tab.icon"
                         :is-active="tab.isActive"
                         :title="tab.title"
                         @click="onClickTab(index, tab)"
@@ -71,7 +71,7 @@
                     <slds-sub-tab
                         v-for="(subTab, index) in subTabs"
                         :key="subTab.id"
-                        :icon-name="subTab.iconName"
+                        :icon="subTab.icon"
                         :is-active="subTab.isActive"
                         :is-main="subTab.isMain"
                         :title="subTab.title"

@@ -30,9 +30,10 @@
                             <span class="slds-truncate" :title="subTab.title">
 
                                 <span class="slds-indicator-container"/>
+                                <span class="slds-indicator-container"/>
 
                                 <span class="slds-icon_container">
-                                    <slds-svg :icon-name="subTab.iconName" :class="adjustmentClass(subTab.iconName)" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                    <slds-svg :icon-name="subTab.icon" :class="adjustmentClass(subTab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
                                 </span>
 
                                 <span>
