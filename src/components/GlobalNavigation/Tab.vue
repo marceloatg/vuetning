@@ -1,76 +1,54 @@
 <template>
     <li
         class="slds-context-bar__item slds-context-bar__item_tab"
-        :class="[{'slds-is-active': tab.isActive}, {'slds-has-sub-tabs': tab.subTabs.length > 0}]"
+        :class="[{'slds-is-active': isActive}, {'slds-has-sub-tabs': hasSubTabs}]"
         role="presentation"
-        @click.prevent="onClick"
+        @click.prevent="onClickTab"
         @click.middle="onClickClose">
 
         <!-- Identification -->
-        <a
-            tabindex="-1"
-            role="tab"
-            :title="tab.title"
-            class="slds-context-bar__label-action">
+        <a role="tab" :title="title" class="slds-context-bar__label-action">
 
             <!-- Indicator -->
             <span class="slds-indicator-container"/>
 
             <!-- Icon -->
             <span class="slds-icon_container">
-                <slds-svg :icon-name="tab.icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                <slds-svg :icon-name="icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
             <span class="slds-truncate">
-                {{ tab.title }}
+                {{ title }}
             </span>
 
         </a>
 
         <!-- Dropdown menu -->
-        <div v-if="false" class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none">
+        <div class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open">
 
             <slds-button-icon
                 icon-name="utility:chevrondown"
                 container="bare"
                 size="x-small"
-                class="slds-button_icon-current-color"/>
+                class="slds-button_icon-current-color"
+                @click="toggleDropdown"/>
 
-            <div class="slds-dropdown slds-dropdown_right">
+            <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
                 <ul class="slds-dropdown__list" role="menu">
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
                             <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>r
-                            </span>
                         </a>
                     </li>
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span
-                                class="slds-truncate"
-                                title="Open in a new window">Open in a new window</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>⇧ + n
-                            </span>
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickCloseAll">
+                            <span class="slds-truncate" title="Close All">Close All</span>
                         </a>
                     </li>
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span class="slds-truncate" title="Pin Tab">Pin Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>p
-                            </span>
-                        </a>
-                    </li>
-                    <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span class="slds-truncate" title="Close Tab">Close Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>w
-                            </span>
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickClose">
+                            <span class="slds-truncate" title="Close">Close</span>
                         </a>
                     </li>
                 </ul>
@@ -86,39 +64,69 @@
                 container="bare"
                 title="Close"
                 class="slds-button_icon-current-color"
-                @click.stop="onClickClose"/>
+                @click.prevent="onClickClose"/>
         </div>
 
     </li>
 </template>
 
 <script>
+    import {mixin as clickaway} from 'vue-clickaway'
+
     export default {
+        mixins: [
+            clickaway
+        ],
         props: {
-            tab: {
-                type: Object,
+            hasSubTabs: {
+                type: Boolean,
+                default: false,
+            },
+            icon: {
+                type: String,
+                required: true,
+            },
+            isActive: {
+                type: Boolean,
+                default: false,
+            },
+            title: {
+                type: String,
                 required: true,
             },
         },
+        data() {
+            return {
+                isDropdownActive: false,
+            }
+        },
         computed: {
             adjustmentClass() {
-                const iconName = this.tab.icon;
-                if (iconName == null) return null;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
+                const icon = this.icon;
+                if (icon.startsWith('utility')) return 'utility-category-adjustment';
                 return null;
             },
         },
         methods: {
-            onClick() {
+            away() {
+                this.isDropdownActive = false;
+            },
+            onClickTab() {
                 this.$emit('click');
+            },
+            onClickRefreshTab() {
+                this.$emit('refresh');
+                this.isDropdownActive = false;
+            },
+            onClickCloseAll() {
+                this.$emit('closeAll');
             },
             onClickClose() {
                 this.$emit('close');
             },
+            toggleDropdown() {
+                this.isDropdownActive = !this.isDropdownActive;
+            }
         },
     }
 </script>
-
-<style scoped>
-
-</style>
