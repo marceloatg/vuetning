@@ -75,6 +75,8 @@
 </template>
 
 <script>
+    import SldsView from './views/TextArea'
+
     export default {
         name: 'App',
         data() {

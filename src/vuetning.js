@@ -32,6 +32,7 @@ import SldsPill from './components/Pill/Index'
 import SldsExpandableSection from './components/ExpandableSection/Index'
 import SldsSpinner from './components/Spinner/Index'
 import SldsSvg from './shared/Svg'
+import SldsTextArea from './components/TextArea/Index'
 import SldsToast from './components/Toast/Index'
 import SldsTrialBar from './components/TrialBar/Index'
 import SldsVerticalNavigation from './components/VerticalNavigation/Index'
@@ -64,6 +65,7 @@ Vue.component('slds-pill', SldsPill);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
 Vue.component('slds-svg', SldsSvg);
+Vue.component('slds-text-area', SldsTextArea);
 Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
