@@ -135,6 +135,7 @@
                         title: this.tabTitle,
                         icon: this.tabIcon,
                         isActive: true,
+                        isMain: true,
                     });
                 }
 

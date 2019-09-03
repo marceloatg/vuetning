@@ -25,48 +25,30 @@
         </a>
 
         <!-- Dropdown menu -->
-        <div v-if="false" class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none">
+        <div class="slds-context-bar__icon-action slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open">
 
             <slds-button-icon
                 icon-name="utility:chevrondown"
                 container="bare"
                 size="x-small"
-                class="slds-button_icon-current-color"/>
+                class="slds-button_icon-current-color"
+                @click="toggleDropdown"/>
 
-            <div class="slds-dropdown slds-dropdown_right">
+            <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
                 <ul class="slds-dropdown__list" role="menu">
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
                             <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>r
-                            </span>
                         </a>
                     </li>
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span
-                                class="slds-truncate"
-                                title="Open in a new window">Open in a new window</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>⇧ + n
-                            </span>
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickCloseAll">
+                            <span class="slds-truncate" title="Close All">Close All</span>
                         </a>
                     </li>
                     <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span class="slds-truncate" title="Pin Tab">Pin Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>p
-                            </span>
-                        </a>
-                    </li>
-                    <li class="slds-dropdown__item" role="presentation">
-                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                            <span class="slds-truncate" title="Close Tab">Close Tab</span>
-                            <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
-                                <span class="slds-assistive-text">:</span>w
-                            </span>
+                        <a role="menuitem" tabindex="-1" @click.prevent="onClickClose">
+                            <span class="slds-truncate" title="Close">Close</span>
                         </a>
                     </li>
                 </ul>
@@ -89,7 +71,12 @@
 </template>
 
 <script>
+    import {mixin as clickaway} from 'vue-clickaway'
+
     export default {
+        mixins: [
+            clickaway
+        ],
         props: {
             hasSubTabs: {
                 type: Boolean,
@@ -108,6 +95,11 @@
                 required: true,
             },
         },
+        data() {
+            return {
+                isDropdownActive: false,
+            }
+        },
         computed: {
             adjustmentClass() {
                 const icon = this.icon;
@@ -116,12 +108,25 @@
             },
         },
         methods: {
+            away() {
+                this.isDropdownActive = false;
+            },
             onClickTab() {
                 this.$emit('click');
+            },
+            onClickRefreshTab() {
+                this.$emit('refresh');
+                this.isDropdownActive = false;
+            },
+            onClickCloseAll() {
+                this.$emit('closeAll');
             },
             onClickClose() {
                 this.$emit('close');
             },
+            toggleDropdown() {
+                this.isDropdownActive = !this.isDropdownActive;
+            }
         },
     }
 </script>
