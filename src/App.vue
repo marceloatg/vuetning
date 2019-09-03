@@ -75,8 +75,6 @@
 </template>
 
 <script>
-    import SldsView from './views/TextArea'
-
     export default {
         name: 'App',
         data() {
@@ -148,7 +146,8 @@
                         icon: this.tabIcon,
                         isActive: true,
                     })
-                } else {
+                }
+                else {
                     let tab = {
                         id: Date.now(),
                         title: this.tabTitle,
@@ -163,7 +162,8 @@
                             tabId: tab.id,
                             subTabs: subTabs
                         });
-                    } else if (this.hasSubTas && this.isOverflowed) {
+                    }
+                    else if (this.hasSubTas && this.isOverflowed) {
                         this.subTabsByTabId.push({
                             tabId: tab.id,
                             subTabs: subTabs
