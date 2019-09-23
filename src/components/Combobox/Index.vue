@@ -121,6 +121,7 @@
 <script>
     import SldsPicklistOption from "./Option";
     import SldsPicklistHeading from "./Heading";
+    import ClearableInputMixin from '../../mixins/clearable-input'
     import {mixin as clickaway} from 'vue-clickaway'
 
     export default {
@@ -129,7 +130,8 @@
             SldsPicklistOption
         },
         mixins: [
-            clickaway
+            clickaway,
+            ClearableInputMixin,
         ],
         props: {
             error: {
@@ -253,6 +255,14 @@
 </script>
 
 <style scoped lang="scss">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 150ms;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+
     input {
         cursor: pointer;
     }
