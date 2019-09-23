@@ -75,8 +75,13 @@
 </template>
 
 <script>
+    import ClearableInputMixin from '../../mixins/clearable-input'
+
     export default {
         name: 'Input',
+        mixins: [
+            ClearableInputMixin,
+        ],
         inheritAttrs: false,
         props: {
             addonPost: {
@@ -133,19 +138,19 @@
             },
             iconClassVariant() {
                 if (this.iconError) {
-                    return {'slds-icon-text-error':true};
+                    return {'slds-icon-text-error': true};
                 }
                 else if (this.iconLight) {
-                    return {'slds-icon-text-light':true};
+                    return {'slds-icon-text-light': true};
                 }
                 else if (this.iconSuccess) {
-                    return {'slds-icon-text-success':true};
+                    return {'slds-icon-text-success': true};
                 }
                 else if (this.iconWarning) {
-                    return {'slds-icon-text-warning':true};
+                    return {'slds-icon-text-warning': true};
                 }
                 else {
-                    return {'slds-icon-text-default':true};
+                    return {'slds-icon-text-default': true};
                 }
             },
             listeners() {
@@ -176,12 +181,6 @@
             if (this.addonPost == null) return;
             const addonPost = this.$refs.addonPost;
             this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
-        },
-        methods: {
-            onClear() {
-                this.$refs.input.value = null;
-                this.$emit('input', null);
-            },
         },
     }
 </script>
