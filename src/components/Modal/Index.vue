@@ -78,7 +78,7 @@
         created() {
             document.body.addEventListener("keyup", this.onKeyUp);
         },
-        destroyed() {
+        beforeDestroy() {
             document.body.removeEventListener("keyup", this.onKeyUp);
         },
         methods: {

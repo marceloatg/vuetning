@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import Clipboard from 'v-clipboard'
-import { RecycleScroller } from 'vue-virtual-scroller'
+import {RecycleScroller} from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
-
-// Using imports
-Vue.use(Clipboard);
-
 // Import lightning components
 import SldsAlert from './components/Alert/Index'
 import SldsAvatar from './components/Avatar/Index'
@@ -37,6 +33,10 @@ import SldsToast from './components/Toast/Index'
 import SldsTrialBar from './components/TrialBar/Index'
 import SldsVerticalNavigation from './components/VerticalNavigation/Index'
 import SldsVirtualTable from './components/VirtualTable/Index'
+import SldsWideRadioGroupe from './components/WideRadioGroup/Index'
+
+// Using imports
+Vue.use(Clipboard);
 
 // Registering lightning components
 Vue.component('RecycleScroller', RecycleScroller);
@@ -70,3 +70,4 @@ Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
 Vue.component('slds-virtual-table', SldsVirtualTable);
+Vue.component('slds-wide-radio-group', SldsWideRadioGroupe);
