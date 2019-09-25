@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Clipboard from 'v-clipboard'
 import {RecycleScroller} from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+
 // Import lightning components
 import SldsAlert from './components/Alert/Index'
 import SldsAvatar from './components/Avatar/Index'
@@ -12,6 +13,7 @@ import SldsButton from './components/Button/Index'
 import SldsButtonIcon from './components/ButtonIcon/Index'
 import SldsCheckbox from './components/Checkbox/Index'
 import SldsCheckboxButton from './components/CheckboxButton/Index'
+import SldsCheckboxToggle from './components/CheckboxToggle/Index'
 import SldsCombobox from './components/Combobox/Index'
 import SldsDataTable from './components/DataTable/Index';
 import SldsDockedComposer from './components/DockedComposer/Index';
@@ -49,6 +51,7 @@ Vue.component('slds-button', SldsButton);
 Vue.component('slds-button-icon', SldsButtonIcon);
 Vue.component('slds-checkbox', SldsCheckbox);
 Vue.component('slds-checkbox-button', SldsCheckboxButton);
+Vue.component('slds-checkbox-toggle', SldsCheckboxToggle);
 Vue.component('slds-combobox', SldsCombobox);
 Vue.component('slds-data-table', SldsDataTable);
 Vue.component('slds-docked-composer', SldsDockedComposer);
