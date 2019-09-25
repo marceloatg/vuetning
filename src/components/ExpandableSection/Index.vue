@@ -1,8 +1,3 @@
-<!--
-    @Description: Toggle visibility of section content.
-    @Documentation: https://www.lightningdesignsystem.com/components/expandable-section/
--->
-
 <template>
     <div class="slds-section" :class="[{'slds-is-open': isOpen || !collapsible}]">
 
@@ -27,30 +22,39 @@
         </h3>
 
         <!-- content -->
-        <div class="slds-section__content">
-            <slot/>
-        </div>
+        <transition
+            @before-enter="collapse"
+            @enter="expand"
+            @after-enter="resetHeight"
+            @before-leave="expand"
+            @leave="collapse">
+            <div v-if="isOpen" role="region" class="slds-section__content_animated">
+                <slot/>
+            </div>
+        </transition>
 
     </div>
 </template>
 
 <script>
+    import SldsSvg from '../../shared/Svg'
+
     export default {
+        components: {
+            SldsSvg,
+        },
         props: {
             title: {
                 type: String,
                 required: true,
-                note: 'Title of an expandable section.'
             },
             collapsible: {
                 type: Boolean,
-                default: true,
-                note: 'Indicates if the content can be collapsed or not.'
-            },
-            expanded: {
-                type: Boolean,
                 default: false,
-                note: 'Toggle visibility of section content'
+            },
+            startOpen: {
+                type: Boolean,
+                default: true,
             }
         },
         data() {
@@ -59,9 +63,21 @@
             }
         },
         mounted() {
-            this.isOpen = this.expanded;
+            this.isOpen = this.startOpen;
         },
         methods: {
+            collapse(element) {
+                element.style.height = 0;
+                element.style.opacity = 0;
+            },
+            expand(element) {
+                element.style.height = element.scrollHeight + "px";
+                element.scrollHeight;
+                element.style.opacity = 1;
+            },
+            resetHeight(element) {
+                element.style.height = null
+            },
             toggle() {
                 this.isOpen = !this.isOpen;
             }
@@ -72,11 +88,17 @@
 <style scoped lang="scss">
 
     .slds-section__title-action-icon {
-        transition: all .4s ease-in-out;
+        transition: all 300ms ease;
     }
 
-    .slds-section__content {
-        transition: all .4s ease-in-out;
+    .slds-section__content_animated {
+        overflow: hidden;
+        transition: all 300ms ease;
+    }
+
+    .slds-section.slds-is-open .slds-section__content_animated {
+        padding-top: 0.5rem;
+        transition: all 300ms ease-out;
     }
 
 </style>

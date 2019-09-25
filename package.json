@@ -29,7 +29,9 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:storybook": "start-storybook -s ./public -p 6006",
     "build": "vue-cli-service build",
+    "build:storybook": "build-storybook",
     "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
     "lint": "vue-cli-service lint --no-fix",
     "lint:fix": "vue-cli-service lint",
@@ -48,6 +50,14 @@
     "vue-virtual-scroller": "^1.0.0-rc.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-centered": "^5.2.1",
+    "@storybook/addon-knobs": "^5.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/theming": "^5.2.1",
+    "@storybook/vue": "^5.2.1",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-plugin-unit-jest": "^3.11.0",
@@ -56,6 +66,8 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-vue": "^2.0.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "eslint-teamcity": "^2.2.0",

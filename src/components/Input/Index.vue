@@ -75,10 +75,17 @@
 </template>
 
 <script>
+    import SldsButtonIcon from '../ButtonIcon/Index'
+    import SldsSpinner from '../Spinner/Index'
+    import SldsSvg from '../../shared/Svg'
     import ClearableInputMixin from '../../mixins/clearable-input'
 
     export default {
-        name: 'Input',
+        components: {
+            SldsButtonIcon,
+            SldsSpinner,
+            SldsSvg,
+        },
         mixins: [
             ClearableInputMixin,
         ],
@@ -137,7 +144,7 @@
                     : 'slds-input-has-icon_left-right';
             },
             iconClassVariant() {
-                if (this.iconError) {
+                if (this.error || this.iconError) {
                     return {'slds-icon-text-error': true};
                 }
                 else if (this.iconLight) {
