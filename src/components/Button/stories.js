@@ -8,7 +8,7 @@ const stories = storiesOf('Button', module);
 
 stories.addDecorator(withKnobs);
 
-stories.add('Basic', () => ({
+stories.add('Base', () => ({
     components: {SldsButton},
     props: {
         disabled: {
