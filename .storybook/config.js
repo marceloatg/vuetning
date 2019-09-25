@@ -1,8 +1,14 @@
-import { configure } from '@storybook/vue';
+import {addParameters, configure} from '@storybook/vue';
+import yourTheme from './lightningTheme';
 
 // Importing styles
 import '../public/assets/styles/salesforce-lightning-design-system.min.css'
 import './style.css'
 
-// automatically import all files ending in *.stories.js
+addParameters({
+    options: {
+        theme: yourTheme,
+    },
+});
+
 configure(require.context('../src/components', true, /stories\.js$/), module);
