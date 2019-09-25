@@ -12,10 +12,13 @@ stories.add('Basic', () => ({
     components: { SldsButton },
     props: {
         disabled: {
-            default: boolean('Disabled', false)
+            default: boolean('disabled', false)
         },
         label: {
-            default: text('Label', 'Basic Button')
+            default: text('label', 'Basic Button')
+        },
+        spinner: {
+            default: boolean('spinner', false)
         },
     },
     template: '<slds-button :label="label" @click="action" :spinner="spinner" :disabled="disabled"/>',
@@ -26,13 +29,13 @@ stories.add('Neutral', () => ({
     components: { SldsButton },
     props: {
         disabled: {
-            default: boolean('Disabled', false)
+            default: boolean('disabled', false)
         },
         label: {
-            default: text('Label', 'Neutral Button')
+            default: text('label', 'Neutral Button')
         },
         spinner: {
-            default: boolean('Spinner', false)
+            default: boolean('spinner', false)
         },
     },
     template: '<slds-button :label="label" neutral @click="action" :spinner="spinner" :disabled="disabled"/>',
@@ -43,13 +46,13 @@ stories.add('Brand', () => ({
     components: { SldsButton },
     props: {
         disabled: {
-            default: boolean('Disabled', false)
+            default: boolean('disabled', false)
         },
         label: {
-            default: text('Label', 'Brand Button')
+            default: text('label', 'Brand Button')
         },
         spinner: {
-            default: boolean('Spinner', false)
+            default: boolean('spinner', false)
         },
     },
     template: '<slds-button :label="label" brand @click="action" :spinner="spinner" :disabled="disabled"/>',

@@ -35,7 +35,7 @@
     "lint:fix": "vue-cli-service lint",
     "lint:teamcity": "vue-cli-service lint --no-fix --format ./node_modules/eslint-teamcity/index.js",
     "test:unit": "vue-cli-service test:unit",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
