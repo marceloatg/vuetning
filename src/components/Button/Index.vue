@@ -35,7 +35,12 @@
 </template>
 
 <script>
+    import SldsSvg from '../../shared/Svg'
+
     export default {
+        components: {
+            SldsSvg,
+        },
         props: {
             brand: {
                 type: Boolean,
