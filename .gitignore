@@ -21,3 +21,5 @@ yarn-error.log*
 *.sw*
 
 coverage/
+
+storybook-static/

@@ -11,7 +11,10 @@ export default {
             this.$emit('input', null);
         },
         onKeyUp(event) {
-            if (event.key === 'Escape' && this.$refs.input === document.activeElement) this.onClear();
+            if (event.key === 'Escape' && this.$refs.input === document.activeElement) {
+                event.stopPropagation();
+                this.onClear();
+            }
         },
     },
 }
