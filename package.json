@@ -22,10 +22,7 @@
   },
   "files": [
     "dist/*",
-    "src/*",
-    "public/*",
-    "*.json",
-    "*.js"
+    "src/*"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import SldsCheckboxButton from './Index'
+import SldsCheckboxButton from './index'
 
 describe('SldsCheckboxButton', () => {
 

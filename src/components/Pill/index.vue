@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SldsSvg from '@/shared/Svg/index';
+    import SldsSvg from '../../shared/svg/index';
 
     export default {
         components: {

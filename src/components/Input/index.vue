@@ -75,9 +75,9 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../ButtonIcon/Index'
-    import SldsSpinner from '../Spinner/Index'
-    import SldsSvg from '../../shared/Svg'
+    import SldsButtonIcon from '../ButtonIcon/index'
+    import SldsSpinner from '../Spinner/index'
+    import SldsSvg from '../../shared/svg'
     import ClearableInputMixin from '../../mixins/clearable-input'
 
     export default {

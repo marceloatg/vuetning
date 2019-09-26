@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../../shared/Svg'
+    import SldsSvg from '../../shared/svg'
 
     export default {
         components: {

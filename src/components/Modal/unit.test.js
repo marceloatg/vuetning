@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import SldsModal from './Index'
+import SldsModal from './index'
 
 describe('SldsModal', () => {
 

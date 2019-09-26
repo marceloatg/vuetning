@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../ButtonIcon/Index'
+    import SldsButtonIcon from '../ButtonIcon/index'
 
     export default {
         components: {
