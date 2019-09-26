@@ -1,7 +1,7 @@
 import {storiesOf} from '@storybook/vue';
 import {boolean, text, withKnobs} from '@storybook/addon-knobs';
 
-import SldsInput from './Index';
+import SldsInput from './index';
 
 const stories = storiesOf('Input', module);
 

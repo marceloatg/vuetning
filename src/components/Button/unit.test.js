@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import SldsButton from './Index'
+import SldsButton from './index'
 
 describe('SldsButton', () => {
     it('renders props.label when passed', () => {

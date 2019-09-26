@@ -44,8 +44,8 @@
 </template>
 
 <script>
-    import SldsMenuHeading from "./Heading";
-    import SldsMenuOption from "./Option";
+    import SldsMenuHeading from "./heading";
+    import SldsMenuOption from "./option";
 
     export default {
         components: {

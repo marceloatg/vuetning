@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import SldsCheckbox from './Index'
+import SldsCheckbox from './index'
 
 describe('SldsCheckbox', () => {
     const label = 'test label';

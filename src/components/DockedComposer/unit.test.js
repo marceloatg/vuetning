@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
-import SldsDockedComposer from './Index'
-import SldsIcon from '../Icon/Index'
+import SldsDockedComposer from './index'
+import SldsIcon from '../Icon/index'
 
 describe('SldsDockedComposer', () => {
     const heading = 'test heading';

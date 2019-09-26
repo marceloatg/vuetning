@@ -89,7 +89,7 @@
     import Commons from './commons'
     import SldsFixedColumn from './Column/FixedColumn';
     import SldsResizableColumn from './Column/ResizableColumn';
-    import SldsRow from './Row';
+    import SldsRow from './row';
 
     export default {
         components: {
