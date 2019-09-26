@@ -92,10 +92,10 @@
 </template>
 
 <script>
-    import SldsSubTab from './SubTab'
-    import SldsTab from './Tab'
-    import SldsMoreTabs from './MoreTabs'
-    import SldsMoreSubTabs from './MoreSubTabs'
+    import SldsSubTab from './sub-tab'
+    import SldsTab from './tab'
+    import SldsMoreTabs from './more-tabs'
+    import SldsMoreSubTabs from './more-sub-tabs'
 
     export default {
         components: {

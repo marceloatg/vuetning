@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
-import SldsNotification from './Index'
-import SldsIcon from '../Icon/Index'
-import SldsButtonIcon from '../ButtonIcon/Index'
+import SldsNotification from './index'
+import SldsIcon from '../Icon/index'
+import SldsButtonIcon from '../ButtonIcon/index'
 
 describe('SldsNotification', () => {
     const iconClass = 'my-custom-icon-class';

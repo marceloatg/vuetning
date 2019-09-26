@@ -227,7 +227,7 @@
 
 <script>
     import Commons from "../DataTable/commons";
-    import SldsColumn from "./Column";
+    import SldsColumn from "./column";
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
     import uuid from 'uuid/v4';

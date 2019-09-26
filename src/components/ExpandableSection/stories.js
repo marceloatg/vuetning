@@ -2,7 +2,7 @@ import {storiesOf} from '@storybook/vue';
 import {text, withKnobs} from '@storybook/addon-knobs';
 import {action} from '@storybook/addon-actions';
 
-import SldsExpandableSection from './Index';
+import SldsExpandableSection from './index';
 
 const stories = storiesOf('Expandable Section', module);
 

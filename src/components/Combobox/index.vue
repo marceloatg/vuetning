@@ -119,8 +119,8 @@
 </template>
 
 <script>
-    import SldsPicklistOption from "./Option";
-    import SldsPicklistHeading from "./Heading";
+    import SldsPicklistOption from "./option";
+    import SldsPicklistHeading from "./heading";
     import ClearableInputMixin from '../../mixins/clearable-input'
     import {mixin as clickaway} from 'vue-clickaway'
 

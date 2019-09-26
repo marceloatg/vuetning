@@ -35,7 +35,7 @@
 
 <script>
     import Commons from "../DataTable/commons";
-    import Clicker from "./Clicker"
+    import Clicker from "./clicker"
 
     export default {
         components: {
