@@ -4,7 +4,7 @@ import {boolean, text, withKnobs} from '@storybook/addon-knobs';
 
 import SldsCheckboxToggle from './index';
 
-const stories = storiesOf('CheckboxToggle', module);
+const stories = storiesOf('Checkbox Toggle', module);
 
 stories.addDecorator(withKnobs);
 
