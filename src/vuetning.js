@@ -4,38 +4,39 @@ import {RecycleScroller} from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 // Import lightning components
-import SldsAlert from './components/Alert/Index'
-import SldsAvatar from './components/Avatar/Index'
-import SldsBadge from './components/Badge/Index'
-import SldsBrandBand from './components/BrandBand/Index'
-import SldsBreadcrumb from './components/Breadcrumb/Index'
-import SldsButton from './components/Button/Index'
-import SldsButtonIcon from './components/ButtonIcon/Index'
-import SldsCheckbox from './components/Checkbox/Index'
-import SldsCheckboxButton from './components/CheckboxButton/Index'
-import SldsCheckboxToggle from './components/CheckboxToggle/Index'
-import SldsCombobox from './components/Combobox/Index'
-import SldsDataTable from './components/DataTable/Index';
-import SldsDockedComposer from './components/DockedComposer/Index';
-import SldsGlobalHeader from './components/GlobalHeader/Index'
-import SldsGlobalNavigation from './components/GlobalNavigation/Index'
-import SldsIcon from './components/Icon/Index'
-import SldsIllustration from './components/Illustration/Index'
-import SldsInput from './components/Input/Index'
-import SldsMenu from './components/Menu/Index'
-import SldsModal from './components/Modal/Index'
-import SldsNotification from './components/Notification/Index'
-import SldsPagination from './components/Pagination/Index'
-import SldsPill from './components/Pill/Index'
-import SldsExpandableSection from './components/ExpandableSection/Index'
-import SldsSpinner from './components/Spinner/Index'
+import SldsAlert from './components/Alert'
+import SldsAvatar from './components/Avatar'
+import SldsBadge from './components/Badge'
+import SldsBrandBand from './components/BrandBand'
+import SldsBreadcrumb from './components/Breadcrumb'
+import SldsButton from './components/Button'
+import SldsButtonIcon from './components/ButtonIcon'
+import SldsCheckbox from './components/Checkbox'
+import SldsCheckboxButton from './components/CheckboxButton'
+import SldsCheckboxToggle from './components/CheckboxToggle'
+import SldsCombobox from './components/Combobox'
+import SldsDataTable from './components/DataTable';
+import SldsDockedComposer from './components/DockedComposer';
+import SldsGlobalHeader from './components/GlobalHeader'
+import SldsGlobalNavigation from './components/GlobalNavigation'
+import SldsIcon from './components/Icon'
+import SldsIllustration from './components/Illustration'
+import SldsInput from './components/Input'
+import SldsMenu from './components/Menu'
+import SldsModal from './components/Modal'
+import SldsNotification from './components/Notification'
+import SldsPagination from './components/Pagination'
+import SldsPill from './components/Pill'
+import SldsProgressBar from './components/ProgressBar'
+import SldsExpandableSection from './components/ExpandableSection'
+import SldsSpinner from './components/Spinner'
 import SldsSvg from './shared/Svg'
-import SldsTextArea from './components/TextArea/Index'
-import SldsToast from './components/Toast/Index'
-import SldsTrialBar from './components/TrialBar/Index'
-import SldsVerticalNavigation from './components/VerticalNavigation/Index'
-import SldsVirtualTable from './components/VirtualTable/Index'
-import SldsWideRadioGroupe from './components/WideRadioGroup/Index'
+import SldsTextArea from './components/TextArea'
+import SldsToast from './components/Toast'
+import SldsTrialBar from './components/TrialBar'
+import SldsVerticalNavigation from './components/VerticalNavigation'
+import SldsVirtualTable from './components/VirtualTable'
+import SldsWideRadioGroup from './components/WideRadioGroup'
 
 // Using imports
 Vue.use(Clipboard);
@@ -65,6 +66,7 @@ Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
 Vue.component('slds-pagination', SldsPagination);
 Vue.component('slds-pill', SldsPill);
+Vue.component('slds-progress-bar', SldsProgressBar);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
 Vue.component('slds-svg', SldsSvg);
@@ -73,4 +75,4 @@ Vue.component('slds-toast', SldsToast);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
 Vue.component('slds-virtual-table', SldsVirtualTable);
-Vue.component('slds-wide-radio-group', SldsWideRadioGroupe);
+Vue.component('slds-wide-radio-group', SldsWideRadioGroup);
