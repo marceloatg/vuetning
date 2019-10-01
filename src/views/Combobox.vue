@@ -26,6 +26,10 @@
             </header>
         </div>
 
+        <div>
+            <slds-breadcrumb :items="breadCrumb"/>
+        </div>
+
         <!-- Body -->
         <div class="slds-card__body slds-card__body_inner">
 
@@ -204,6 +208,28 @@
                     {label: 'Apple', value: '28d56658-5005-440b-b5e4-eb6e5f661d04'},
                 ],
                 input: null,
+                breadCrumb: [
+                    {
+                        id: 1,
+                        label: "Test 1",
+                        href: "abc.test1",
+                    },
+                    {
+                        id: 2,
+                        label: "Test 2",
+                        href: "abc.test2",
+                    },
+                    {
+                        id: 3,
+                        label: "Test 3",
+                        href: "abc.test3",
+                    },
+                    {
+                        id: 4,
+                        label: "Test 4",
+                        href: "abc.test4",
+                    },
+                ],
             }
         },
         methods: {
