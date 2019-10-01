@@ -1,9 +1,9 @@
 export default {
-    created() {
-        document.body.addEventListener("keyup", this.onKeyUp);
+    mounted() {
+        this.$refs.input.addEventListener("keyup", this.onKeyUp);
     },
     beforeDestroy() {
-        document.body.removeEventListener("keyup", this.onKeyUp);
+        this.$refs.input.removeEventListener("keyup", this.onKeyUp);
     },
     methods: {
         onClear() {
