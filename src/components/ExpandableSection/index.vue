@@ -3,7 +3,7 @@
 
         <!-- Button title -->
         <h3 v-if="collapsible" class="slds-section__title">
-            <button class="slds-button slds-section__title-action" @click="toggle">
+            <button type="button" class="slds-button slds-section__title-action" @click="toggle">
 
                 <slds-svg icon-name="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
 
@@ -28,7 +28,11 @@
             @after-enter="resetHeight"
             @before-leave="expand"
             @leave="collapse">
-            <div v-if="isOpen" role="region" class="slds-section__content_animated">
+            <div
+                v-if="isOpen"
+                role="region"
+                class="slds-section__content_animated slds-p-horizontal_xxx-small"
+                :style="[{'overflow': overflow}]">
                 <slot/>
             </div>
         </transition>
@@ -52,6 +56,10 @@
                 type: Boolean,
                 default: false,
             },
+            initialOverflow: {
+                type: Boolean,
+                default: false,
+            },
             startOpen: {
                 type: Boolean,
                 default: true,
@@ -60,23 +68,38 @@
         data() {
             return {
                 isOpen: false,
+                initialized: false,
             }
         },
-        mounted() {
+        computed: {
+            overflow() {
+                return this.initialOverflow ? 'initial' : '';
+            }
+        },
+        async mounted() {
             this.isOpen = this.startOpen;
+            await this.$nextTick();
+            this.initialized = true;
         },
         methods: {
             collapse(element) {
+                if (!this.initialized) return;
+
+                if (this.initialOverflow) element.style.overflow = '';
                 element.style.height = 0;
                 element.style.opacity = 0;
             },
             expand(element) {
+                if (!this.initialized) return;
+
+                if (this.initialOverflow) element.style.overflow = '';
                 element.style.height = element.scrollHeight + "px";
                 element.scrollHeight;
                 element.style.opacity = 1;
             },
             resetHeight(element) {
-                element.style.height = null
+                element.style.height = null;
+                if (this.initialOverflow) element.style.overflow = 'initial';
             },
             toggle() {
                 this.isOpen = !this.isOpen;
@@ -101,4 +124,7 @@
         transition: all 300ms ease-out;
     }
 
+    .slds-has-initial-overflow {
+        overflow: initial;
+    }
 </style>

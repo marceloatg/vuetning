@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Combobox'
+    import SldsView from './views/ExpandableSection'
 
     export default {
         name: 'App',
