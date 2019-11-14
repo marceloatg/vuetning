@@ -9,9 +9,9 @@
 
             <input
                 type="checkbox"
-                :value="value"
                 v-bind="$attrs"
-                @input="$emit('input', $event.target.value)"
+                :checked="value"
+                @input="onInput"
                 v-on="listeners">
 
             <span class="slds-checkbox_faux_container">
@@ -47,13 +47,20 @@
                 type: String,
                 default: 'Disabled',
             },
-            value: {}
+            value: {
+                type: Boolean,
+            }
         },
         computed: {
             listeners() {
                 const listeners = {...this.$listeners};
                 delete listeners.input;
                 return listeners
+            },
+        },
+        methods: {
+            onInput() {
+                this.$emit('input', !this.value);
             },
         },
     }

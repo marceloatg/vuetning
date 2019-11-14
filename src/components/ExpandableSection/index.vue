@@ -1,9 +1,13 @@
 <template>
-    <div class="slds-section" :class="[{'slds-is-open': isOpen || !collapsible}]">
+    <div class="slds-section" :class="[{'slds-is-open': (isOpen || !collapsible) && !disabled}]">
 
         <!-- Button title -->
         <h3 v-if="collapsible" class="slds-section__title">
-            <button type="button" class="slds-button slds-section__title-action" @click="toggle">
+            <button
+                type="button"
+                :disabled="disabled"
+                class="slds-button slds-section__title-action"
+                @click="toggle">
 
                 <slds-svg icon-name="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
 
@@ -29,7 +33,7 @@
             @before-leave="expand"
             @leave="collapse">
             <div
-                v-if="isOpen"
+                v-if="isOpen && !disabled"
                 role="region"
                 class="slds-section__content_animated slds-p-horizontal_xxx-small"
                 :style="[{'overflow': overflow}]">
@@ -53,6 +57,10 @@
                 required: true,
             },
             collapsible: {
+                type: Boolean,
+                default: false,
+            },
+            disabled: {
                 type: Boolean,
                 default: false,
             },
@@ -110,6 +118,12 @@
 
 <style scoped lang="scss">
 
+    .slds-section__title-action:disabled:hover {
+        cursor: not-allowed;
+        background: #f3f2f2;
+        color: #dddbda;
+    }
+
     .slds-section__title-action-icon {
         transition: all 300ms ease;
     }
@@ -127,4 +141,5 @@
     .slds-has-initial-overflow {
         overflow: initial;
     }
+
 </style>
