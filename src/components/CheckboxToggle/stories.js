@@ -11,6 +11,9 @@ stories.addDecorator(withKnobs);
 stories.add('Base', () => ({
     components: {SldsCheckboxToggle},
     props: {
+        disabled: {
+            default: boolean('disabled', false)
+        },
         label: {
             default: text('label', 'Toggle Label')
         },
@@ -19,9 +22,6 @@ stories.add('Base', () => ({
         },
         messageInactive: {
             default: text('message-inactive', 'Disabled')
-        },
-        disabled: {
-            default: boolean('disabled', false)
         },
     },
     data() {
