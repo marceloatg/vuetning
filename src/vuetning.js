@@ -13,6 +13,7 @@ import SldsButton from './components/Button'
 import SldsButtonIcon from './components/ButtonIcon'
 import SldsCheckbox from './components/Checkbox'
 import SldsCheckboxButton from './components/CheckboxButton'
+import SldsCheckboxButtonGroup from './components/CheckboxButtonGroup'
 import SldsCheckboxToggle from './components/CheckboxToggle'
 import SldsCombobox from './components/Combobox'
 import SldsDataTable from './components/DataTable';
@@ -52,6 +53,7 @@ Vue.component('slds-button', SldsButton);
 Vue.component('slds-button-icon', SldsButtonIcon);
 Vue.component('slds-checkbox', SldsCheckbox);
 Vue.component('slds-checkbox-button', SldsCheckboxButton);
+Vue.component('slds-checkbox-button-group', SldsCheckboxButtonGroup);
 Vue.component('slds-checkbox-toggle', SldsCheckboxToggle);
 Vue.component('slds-combobox', SldsCombobox);
 Vue.component('slds-data-table', SldsDataTable);

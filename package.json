@@ -1,41 +1,27 @@
 {
   "name": "vuetning",
-  "description": "Salesforce Lightning Design System framework for Vue.js 2",
   "version": "0.0.0",
-  "main": "./dist/vuetning.common.js",
-  "author": "Marcelo A. T. Gomes <marceloatg@outlook.com>",
-  "license": "MIT",
   "private": false,
-  "keywords": [
-    "vue",
-    "slds",
-    "lightning",
-    "salesforce"
-  ],
-  "homepage": "https://arcthoscompany.github.io/Vuetning/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ArcthosCompany/Vuetning"
+  "description": "Salesforce Lightning Design System framework for Vue.js 2",
+  "author": "Marcelo A. T. Gomes <marceloatg@outlook.com>",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint --no-fix",
+    "build:storybook": "build-storybook",
+    "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
+    "lint:fix": "vue-cli-service lint",
+    "lint:teamcity": "vue-cli-service lint --no-fix --format ./node_modules/eslint-teamcity/index.js",
+    "serve:storybook": "start-storybook -s ./public -p 6006"
   },
-  "bugs": {
-    "url": "https://github.com/ArcthosCompany/Vuetning/issues"
-  },
+  "main": "./dist/vuetning.common.js",
   "files": [
     "dist/*",
     "src/*"
   ],
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "serve:storybook": "start-storybook -s ./public -p 6006",
-    "build": "vue-cli-service build",
-    "build:storybook": "build-storybook",
-    "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
-    "lint": "vue-cli-service lint --no-fix",
-    "lint:fix": "vue-cli-service lint",
-    "lint:teamcity": "vue-cli-service lint --no-fix --format ./node_modules/eslint-teamcity/index.js",
-    "test:unit": "vue-cli-service test:unit"
-  },
   "dependencies": {
+    "core-js": "^3.3.2",
     "duration": "^0.2.2",
     "humanize-duration": "^3.21.0",
     "moment": "^2.24.0",
@@ -48,30 +34,45 @@
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@storybook/addon-actions": "^5.2.3",
-    "@storybook/addon-centered": "^5.2.3",
-    "@storybook/addon-knobs": "^5.2.3",
-    "@storybook/addon-links": "^5.2.3",
-    "@storybook/addons": "^5.2.3",
-    "@storybook/theming": "^5.2.3",
-    "@storybook/vue": "^5.2.3",
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-plugin-unit-jest": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
+    "@babel/core": "^7.7.2",
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-centered": "^5.2.6",
+    "@storybook/addon-knobs": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/theming": "^5.2.6",
+    "@storybook/vue": "^5.2.6",
+    "@vue/cli-plugin-babel": "^4.0.5",
+    "@vue/cli-plugin-eslint": "^4.0.5",
+    "@vue/cli-plugin-unit-jest": "^4.0.5",
+    "@vue/cli-service": "^4.0.5",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "babel-preset-vue": "^2.0.2",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
+    "eslint": "^6.6.0",
+    "eslint-plugin-vue": "^6.0.1",
     "eslint-teamcity": "^2.2.0",
     "jest-teamcity-reporter": "^0.9.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10"
+  },
+  "bugs": {
+    "url": "https://github.com/ArcthosCompany/Vuetning/issues"
+  },
+  "homepage": "https://arcthoscompany.github.io/Vuetning/",
+  "keywords": [
+    "vue",
+    "slds",
+    "lightning",
+    "salesforce"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArcthosCompany/Vuetning"
   }
 }
