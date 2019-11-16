@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/ExpandableSection'
+    import SldsView from './views/CheckboxButtonGroup'
 
     export default {
         name: 'App',
@@ -160,7 +160,7 @@
 </script>
 
 <style lang="scss">
-    $default_height: 130px;
+    $default_height: 90px;
     $trial_bar_height: 50px;
     $alert_height: 35px;
     $background-color: rgb(176, 196, 223);
