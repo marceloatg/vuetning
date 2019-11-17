@@ -57,6 +57,10 @@
                 Disabled
             </h2>
 
+            <slds-checkbox-button-group label="Scheduled Day(s)" :options="disabledOptions"/>
+
+            <br>
+
             <slds-checkbox-button-group label="Scheduled Day(s)" :options="options" disabled/>
 
         </div>
@@ -68,6 +72,15 @@
     export default {
         data() {
             return {
+                disabledOptions: [
+                    {label: 'Mon', value: 'monday'},
+                    {label: 'Tue', value: 'tuesday'},
+                    {label: 'Wed', value: 'wednesday'},
+                    {label: 'Thu', value: 'thursday'},
+                    {label: 'Fri', value: 'friday'},
+                    {label: 'Sat', value: 'saturday', disabled: true},
+                    {label: 'Sun', value: 'sunday', disabled: true},
+                ],
                 options: [
                     {label: 'Mon', value: 'monday'},
                     {label: 'Tue', value: 'tuesday'},
