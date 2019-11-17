@@ -14,13 +14,13 @@
                     v-for="option in options"
                     :key="option.value"
                     class="slds-button slds-checkbox_button"
-                    @click.stop="onClick(option.value)">
+                    @click.stop="onClick(option)">
 
                     <input
                         type="checkbox"
                         :checked="value.includes(option.value)"
                         :value="option.value"
-                        :disabled="disabled">
+                        :disabled="disabled || option.disabled">
 
                     <label class="slds-checkbox_button__label">
                         <span class="slds-checkbox_faux">{{ option.label }}</span>
@@ -65,11 +65,11 @@
             },
         },
         methods: {
-            onClick(value) {
-                if (this.disabled) return;
+            onClick(option) {
+                if (this.disabled || option.disabled) return;
 
-                let index = this.value.indexOf(value);
-                if (index === -1) this.value.push(value);
+                let index = this.value.indexOf(option.value);
+                if (index === -1) this.value.push(option.value);
                 else this.value.splice(index, 1);
 
                 this.$emit('input', this.value);
