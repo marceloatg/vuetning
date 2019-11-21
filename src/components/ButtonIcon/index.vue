@@ -14,10 +14,10 @@
         @keyup="onKeyUp">
 
         <!-- Button icon -->
-        <slds-svg :icon-name="iconName" class="slds-button__icon" :class="[iconSize, iconClass]"/>
+        <slds-svg :icon="iconName" class="slds-button__icon" :class="[iconSize, iconClass]"/>
 
         <!-- Dropdown icon -->
-        <slds-svg v-if="hasDropdown" icon-name="utility:down" class="slds-button__icon slds-button__icon_x-small"/>
+        <slds-svg v-if="hasDropdown" icon="utility:down" class="slds-button__icon slds-button__icon_x-small"/>
 
     </button>
 </template>

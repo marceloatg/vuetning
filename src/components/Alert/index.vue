@@ -11,7 +11,7 @@
 
         <!-- Icon -->
         <span v-if="hasIcon" class="slds-icon_container slds-icon-utility-user slds-m-right_x-small">
-            <slds-svg :icon-name="`${iconCategory}:${iconName}`" class="slds-icon slds-icon_x-small"/>
+            <slds-svg :icon="`${iconCategory}:${iconName}`" class="slds-icon slds-icon_x-small"/>
         </span>
 
         <h2>

@@ -11,7 +11,7 @@
             </span>
 
             <svg class="slds-button__icon slds-button__icon_small slds-button__icon_right">
-                <slds-svg icon-name="utility:chevrondown"/>
+                <slds-svg icon="utility:chevrondown"/>
             </svg>
 
         </button>
@@ -31,7 +31,7 @@
                             <span class="slds-indicator-container"/>
 
                             <span class="slds-icon_container">
-                                <slds-svg :icon-name="tab.icon" :class="adjustmentClass(tab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                <slds-svg :icon="tab.icon" :class="adjustmentClass(tab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
                             </span>
 
                             <span>

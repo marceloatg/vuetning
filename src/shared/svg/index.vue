@@ -7,7 +7,7 @@
 <script>
     export default {
         props: {
-            iconName: {
+            icon: {
                 type: String,
                 required: true,
             },
@@ -18,15 +18,15 @@
         },
         computed: {
             category() {
-                return this.iconName.split(':')[0];
+                return this.icon.split(':')[0];
             },
             name() {
-                return this.iconName.split(':')[1];
+                return this.icon.split(':')[1];
             }
         },
         created() {
-            if (this.iconName.split(':').length !== 2) {
-                throw 'Invalid icon-name format.';
+            if (this.icon.split(':').length !== 2) {
+                throw 'Invalid icon format.';
             }
         }
     }

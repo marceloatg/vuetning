@@ -26,7 +26,7 @@
                             <div class="slds-button slds-button--reset slds-type-focus slds-truncate">
                                 {{ listViews }}
                                 <a class="slds-m-top_xxx-small slds-p-right_xxx-small">
-                                    <slds-svg icon-name="utility:down" class="slds-icon slds-icon-text-default slds-icon_x-small"/>
+                                    <slds-svg icon="utility:down" class="slds-icon slds-icon-text-default slds-icon_x-small"/>
                                 </a>
                             </div>
                         </h1>
@@ -54,7 +54,7 @@
             <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
                 <div class="slds-form-element">
                     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
-                        <slds-svg icon-name="utility:search" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
+                        <slds-svg icon="utility:search" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
                         <input
                             class="slds-input"
                             type="text"

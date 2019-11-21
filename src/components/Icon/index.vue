@@ -1,9 +1,6 @@
 <template>
     <span class="slds-icon_container" :class="backgroundColor">
-        <slds-svg
-            :icon-name="iconName"
-            class="slds-icon"
-            :class="[iconClass, `slds-icon_${size}`, `slds-icon-text-${variant}`]"/>
+        <slds-svg :icon="iconName" class="slds-icon" :class="[iconClass, `slds-icon_${size}`, `slds-icon-text-${variant}`]"/>
     </span>
 </template>
 

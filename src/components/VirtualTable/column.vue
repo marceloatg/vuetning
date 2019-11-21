@@ -14,7 +14,7 @@
 
                 <!-- Sort icon -->
                 <span v-if="isSortable" class="slds-icon_container slds-icon-utility-arrowup">
-                    <slds-svg icon-name="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+                    <slds-svg icon="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
                 </span>
 
             </div>

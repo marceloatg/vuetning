@@ -14,7 +14,7 @@
 
             <!-- Icon -->
             <span class="slds-icon_container">
-                <slds-svg :icon-name="icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                <slds-svg :icon="icon" :class="adjustmentClass" class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
