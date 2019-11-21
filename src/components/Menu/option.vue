@@ -5,9 +5,9 @@
             <!-- Left icon -->
             <span v-if="prefixIconName != null" class="slds-truncate" title="Table View">
                 <slds-icon
-                    :icon-name="prefixIconName"
-                    :variant="variant"
-                    size="x-small"
+                    :icon="prefixIconName"
+                    x-small
+                    v-bind="variant"
                     class="slds-m-right_x-small"/>
                 {{ label }}
             </span>
@@ -22,9 +22,9 @@
             <!-- Right icon -->
             <slds-icon
                 v-if="iconName != null"
-                :icon-name="iconName"
-                :variant="variant"
-                size="x-small"
+                :icon="iconName"
+                x-small
+                v-bind="variant"
                 class="slds-m-left_small slds-shrink-none"/>
 
         </a>

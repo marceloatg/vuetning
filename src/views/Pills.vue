@@ -15,12 +15,12 @@
         <br>
         <slds-pill label="Account">
             <template #icon>
-                <slds-icon icon-name="standard:account"/>
+                <slds-icon icon="standard:account"/>
             </template>
         </slds-pill>
         <slds-pill label="Lead" :clickable="false">
             <template #icon>
-                <slds-icon icon-name="standard:lead"/>
+                <slds-icon icon="standard:lead"/>
             </template>
         </slds-pill>
 

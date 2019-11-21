@@ -31,7 +31,7 @@
                             <span class="slds-indicator-container"/>
 
                             <span class="slds-icon_container">
-                                <slds-svg :icon="tab.icon" :class="adjustmentClass(tab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                <slds-svg :icon="tab.icon" standard class="slds-icon slds-icon_small slds-icon-text-default"/>
                             </span>
 
                             <span>
@@ -65,11 +65,6 @@
             }
         },
         methods: {
-            adjustmentClass(iconName) {
-                if (iconName == null) return null;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
-                return null;
-            },
             away() {
                 this.isDropdownActive = false;
             },

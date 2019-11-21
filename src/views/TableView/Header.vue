@@ -10,7 +10,7 @@
 
                     <!-- Figure -->
                     <div class="slds-media__figure">
-                        <slds-icon :icon-name="figure.name" :icon-class="adjustmentClass" :class="figure.color"/>
+                        <slds-icon :icon="figure.name" standard :class="figure.color"/>
                     </div>
 
                     <!-- Body -->
@@ -119,14 +119,6 @@
             return {
                 relativeUpdatedTime: null,
             }
-        },
-        computed: {
-            adjustmentClass() {
-                const iconName = this.figure.name;
-                if (iconName == null) return null;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
-                return null;
-            },
         },
         watch: {
             initialized: function (newValue, oldValue) {

@@ -48,11 +48,7 @@
                                 @click="toggleDropdown"
                                 v-on="listeners">
 
-                            <slds-icon
-                                icon-name="utility:down"
-                                class="slds-input__icon slds-input__icon_right"
-                                size="x-small"
-                                variant="default"/>
+                            <slds-icon icon="utility:down" x-small class="slds-input__icon slds-input__icon_right"/>
 
                         </template>
 

@@ -8,11 +8,7 @@
             <div class="slds-media slds-media_center slds-no-space">
 
                 <!-- Figure -->
-                <slds-icon
-                    :icon-name="iconName"
-                    class="slds-media__figure slds-m-right_x-small"
-                    icon-class="slds-icon-text-default"
-                    size="x-small"/>
+                <slds-icon :icon="iconName" x-small class="slds-media__figure slds-m-right_x-small"/>
 
                 <!-- Text -->
                 <div class="slds-media__body">
