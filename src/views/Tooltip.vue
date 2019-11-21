@@ -33,43 +33,7 @@
                 Base
             </h2>
 
-            <div style="padding-left:2rem;padding-top:6.75rem;position:relative">
-                <a href="javascript:void(0)" aria-describedby="help">
-                    <span class="slds-icon_container slds-icon-utility-info">
-                        <svg class="slds-icon slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#info"/>
-                        </svg>
-                        <span class="slds-assistive-text">Click here to learn more</span>
-                    </span>
-                </a>
-                <div
-                    id="help"
-                    class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left"
-                    role="tooltip"
-                    style="position:absolute;top:-4px;left:15px">
-                    <div class="slds-popover__body">Sit nulla est ex deserunt exercitation anim occaecat. Nostrud
-                        ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi.
-                        <div class="slds-m-top_x-small" aria-hidden="true">Click
-                            <span class="slds-icon_container slds-icon-utility-info" title="Help">
-                                <svg class="slds-icon slds-icon slds-icon_xx-small" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#info"/>
-                                </svg>
-                                <span class="slds-assistive-text">Help</span>
-                            </span> to learn more.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <slds-tooltip bottom-left>
+            <slds-tooltip top-left-nubbin>
 
                 <template #trigger>
                     <a class="slds-tooltip-trigger_hover">
@@ -103,16 +67,12 @@
             <br>
             <br>
 
-            <slds-tooltip bottom-left>
+            <slds-tooltip left-nubbin>
 
                 <template #trigger>
-                    <a class="slds-tooltip-trigger_click">
-                        <span class="slds-icon_container slds-icon-utility-info">
-                            <svg class="slds-icon slds-icon slds-icon_xx-small slds-icon-text-default">
-                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#touch_action"/>
-                            </svg>
-                        </span>
-                    </a>
+                    <button class="slds-button slds-button_neutral slds-tooltip-trigger_click" style="height: 250px">
+                        Button
+                    </button>
                 </template>
 
                 Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt
