@@ -2,7 +2,7 @@
     <div class="slds-button-group">
 
         <slds-button-icon
-            icon-name="utility:chevronleft"
+            icon="utility:chevronleft"
             :disabled="isInFirstPage || disabled"
             @click.stop="onClickPreviousPage"/>
 
@@ -18,7 +18,7 @@
         </template>
 
         <slds-button-icon
-            icon-name="utility:chevronright"
+            icon="utility:chevronright"
             :disabled="isInLastPage || disabled"
             @click="onClickNextPage"/>
 

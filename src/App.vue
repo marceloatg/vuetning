@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Tooltip'
+    import SldsView from './views/Button'
 
     export default {
         name: 'App',

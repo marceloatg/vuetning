@@ -27,9 +27,9 @@
         <div class="slds-col_bump-left slds-grid">
             <div class="slds-context-bar__icon-action slds-size_1-of-2  slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open">
                 <slds-button-icon
-                    icon-name="utility:chevrondown"
-                    size="x-small"
-                    container="bare"
+                    icon="utility:chevrondown"
+                    x-small
+                    bare
                     title="Actions"
                     class="slds-button_icon-current-color"
                     @click="toggleDropdown"/>
@@ -58,9 +58,9 @@
             <!-- Close button -->
             <div v-if="!isMain" class=" slds-p-left_none slds-size_1-of-2 slds-p-right_none">
                 <slds-button-icon
-                    icon-name="utility:close"
-                    size="x-small"
-                    container="bare"
+                    icon="utility:close"
+                    x-small
+                    bare
                     title="Close"
                     class="slds-button_icon-current-color"
                     @click.prevent="onClickClose"/>

@@ -1,20 +1,15 @@
-<!--
-    @Description: Button icons provide the user with visual iconography that is typically used to invoke an event or action.
-    @Documentation: https://www.lightningdesignsystem.com/components/button-icons/
--->
-
 <template>
     <button
-        type="button"
+        :type="type"
         class="slds-button slds-button_icon"
-        :class="['slds-button_icon-' + variant, containerType, containerSize, {'slds-button_icon-container-more': hasDropdown}]"
-        v-bind="disabledAttribute"
+        :class="[variant, container, containerSize, {'slds-button_icon-container-more': hasDropdown}]"
         @click="onClick"
         @blur="onBlur"
-        @keyup="onKeyUp">
+        @keyup="onKeyUp"
+        v-on="listeners">
 
         <!-- Button icon -->
-        <slds-svg :icon="iconName" class="slds-button__icon" :class="[iconSize, iconClass]"/>
+        <slds-svg :icon="icon" class="slds-button__icon" :class="[iconSize, iconClass]"/>
 
         <!-- Dropdown icon -->
         <slds-svg v-if="hasDropdown" icon="utility:down" class="slds-button__icon slds-button__icon_x-small"/>
@@ -30,113 +25,90 @@
             SldsSvg,
         },
         props: {
-            iconName: {
+            bordered: {
+                type: Boolean,
+            },
+            borderedFilled: {
+                type: Boolean,
+            },
+            borderedInverse: {
+                type: Boolean,
+            },
+            bare: {
+                type: Boolean,
+            },
+            brand: {
+                type: Boolean,
+            },
+            error: {
+                type: Boolean,
+            },
+            hasDropdown: {
+                type: Boolean,
+            },
+            icon: {
                 type: String,
                 required: true,
-                note:
-                    'The Lightning Design System name of the icon. ' +
-                    'Names are written in the format "utility:down" where "utility" is the category, and "down" is the specific icon to be displayed.'
             },
             iconClass: {
                 type: String,
                 required: false,
-                note: 'The class to be applied to the contained icon element.'
             },
-            size: {
-                type: String,
-                default: 'medium',
-                note:
-                    'The size of the buttonIcon. ' +
-                    'For the bare variant, options include x-small, small, medium, and large. ' +
-                    'For non-bare variants, options include xx-small, x-small, small, and medium. ' +
-                    'This value defaults to medium.',
-                validator(value) {
-                    return [
-                        'xx-small',
-                        'x-small',
-                        'small',
-                        'medium',
-                        'large',
-                    ].indexOf(value) !== -1
-                }
-            },
-            container: {
-                type: String,
-                default: 'bordered-filled',
-                note:
-                    'The container variant of the buttonIcon. ' +
-                    'Icon containers create a button that looks like a plain icon. ' +
-                    'Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'none',
-                        'bare',
-                        'bordered',
-                        'bordered-filled',
-                        'bordered-inverse',
-                    ].indexOf(value) !== -1
-                }
-            },
-            variant: {
-                type: String,
-                default: 'default',
-                note:
-                    'The variant changes the appearance of buttonIcon. ' +
-                    'Accepted variants include bare, container, brand, border, border-filled, bare-inverse, and border-inverse. ' +
-                    'This value defaults to border.',
-                validator(value) {
-                    return [
-                        'default',
-                        'brand',
-                        'inverse',
-                        'error',
-                    ].indexOf(value) !== -1
-                }
-            },
-            hasDropdown: {
+            inverse: {
                 type: Boolean,
-                default: false,
-                note: 'Indicates if the button opens a menu. Cannot be used with size property.'
             },
-            disabled: {
+            large: {
                 type: Boolean,
-                default: false,
-                note: 'Use a disabled attribute when a button can’t be clicked.'
+            },
+            small: {
+                type: Boolean,
+            },
+            type: {
+                type: String,
+                default: 'button',
+            },
+            xSmall: {
+                type: Boolean,
+            },
+            xxSmall: {
+                type: Boolean,
             },
         },
         computed: {
-            containerType() {
-                switch (this.container) {
-
-                    case 'bare':
-                        return 'slds-button_icon-container';
-
-                    case 'bordered':
-                        return 'slds-button_icon-border';
-
-                    case 'bordered-filled':
-                        return 'slds-button_icon-border-filled';
-
-                    case 'bordered-inverse':
-                        return 'slds-button_icon-border-inverse';
-
-                    default:
-                        return '';
-                }
-            },
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
-            },
-            iconSize() {
-                return (this.container === 'none' && this.size !== 'xx-small' && !this.hasDropdown)
-                    ? `slds-button__icon_${this.size}`
-                    : '';
+            container() {
+                if (this.bare) return 'slds-button_icon-container';
+                if (this.bordered) return 'slds-button_icon-border';
+                if (this.borderedFilled) return 'slds-button_icon-border-filled';
+                if (this.borderedInverse) return 'slds-button_icon-border-inverse';
+                return '';
             },
             containerSize() {
-                return (this.container !== 'none' && this.size !== 'medium' && !this.hasDropdown)
-                    ? `slds-button_icon-${this.size}`
-                    : '';
-            }
+                if (this.hasDropdown) return '';
+                if (!this.bare && !this.bordered && !this.borderedFilled && !this.borderedInverse) return '';
+                if (this.xxSmall) return 'slds-button_icon-xx-small';
+                if (this.xSmall) return 'slds-button_icon-x-small';
+                if (this.small) return 'slds-button_icon-small';
+                return '';
+            },
+            iconSize() {
+                if (this.hasDropdown) return '';
+                if (this.bare || this.bordered || this.borderedFilled || this.borderedInverse) return '';
+                if (this.xSmall) return 'slds-button__icon_x-small';
+                if (this.small) return 'slds-button__icon_small';
+                if (this.large) return 'slds-button__icon_large';
+                return '';
+            },
+            listeners() {
+                const listeners = {...this.$listeners};
+                delete listeners.click;
+                return listeners
+            },
+            variant() {
+                if (this.brand) return 'slds-button_icon-brand';
+                if (this.inverse) return 'slds-button_icon-inverse';
+                if (this.error) return 'slds-button_icon-error';
+                return '';
+            },
         },
         methods: {
             onClick(event) {

@@ -45,7 +45,7 @@
                 <transition name="fade">
                     <slds-button-icon
                         v-if="value && $attrs.readonly == null"
-                        icon-name="utility:clear"
+                        icon="utility:clear"
                         class="slds-input__icon slds-input__icon_right"
                         title="Clear"
                         tabindex="-1"

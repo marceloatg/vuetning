@@ -4,9 +4,9 @@
             <li v-if="menuItems.length > 0" class="slds-breadcrumb__item">
                 <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
                     <slds-button-icon
-                        icon-name="utility:threedots"
-                        size="x-small"
-                        container="bordered-filled"
+                        icon="utility:threedots"
+                        x-small
+                        bordered-filled
                         @click="toggleDropdown"/>
                     <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_left slds-dropdown_actions">
                         <ul class="slds-dropdown__list" role="menu">

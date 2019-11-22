@@ -20,10 +20,9 @@
         <!-- Close button -->
         <div class="slds-notify__close">
             <slds-button-icon
-                icon-name="utility:close"
-                size="large"
-                variant="inverse"
-                container="none"
+                icon="utility:close"
+                large
+                inverse
                 @click="onClickClose"/>
         </div>
 

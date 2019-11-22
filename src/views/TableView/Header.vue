@@ -69,10 +69,10 @@
                 <div class="slds-m-left_xx-small">
 
                     <!-- Filter -->
-                    <slds-button-icon icon-name="utility:filterList" @click="onFilter"/>
+                    <slds-button-icon icon="utility:filterList" @click="onFilter"/>
 
                     <!-- Refresh -->
-                    <slds-button-icon icon-name="utility:refresh" :disabled="refreshing" @click="onRefresh"/>
+                    <slds-button-icon icon="utility:refresh" :disabled="refreshing" @click="onRefresh"/>
 
                 </div>
             </div>

@@ -26,8 +26,8 @@
 
             <!-- Close button -->
             <slds-button-icon
-                icon-name="utility:close"
-                container="bare"
+                icon="utility:close"
+                bare
                 class="slds-notification__close"
                 @click="onClose"/>
 

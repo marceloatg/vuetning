@@ -21,10 +21,10 @@
         <!-- Close button -->
         <div class="slds-notify__close">
             <slds-button-icon
-                icon-name="utility:close"
-                variant="inverse"
-                container="bare"
-                size="small"
+                icon="utility:close"
+                inverse
+                bare
+                small
                 title="Close"
                 @click="$emit('close')"/>
         </div>

@@ -3,10 +3,10 @@
 
         <!-- Button -->
         <slds-button-icon
-            :icon-name="iconName"
+            :icon="iconName"
             :has-dropdown="iconName !== 'utility:down'"
-            :size="size"
             :disabled="disabled"
+            v-bind="size"
             @click="toggle"
             @blur="close"
             @keyup="keyUp"/>
