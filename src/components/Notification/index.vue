@@ -6,9 +6,9 @@
 
                 <!-- Icon -->
                 <slds-icon
-                    :icon-name="iconName"
-                    :icon-class="adjustmentClass"
-                    size="small"
+                    :icon="iconName"
+                    small
+                    standard
                     class="slds-media__figure"
                     :class="iconClass"/>
 
@@ -26,8 +26,8 @@
 
             <!-- Close button -->
             <slds-button-icon
-                icon-name="utility:close"
-                container="bare"
+                icon="utility:close"
+                bare
                 class="slds-notification__close"
                 @click="onClose"/>
 
@@ -57,13 +57,6 @@
             },
             subject: {
                 type: String,
-            },
-        },
-        computed: {
-            adjustmentClass() {
-                if (this.iconName == null) return null;
-                if (this.iconName.startsWith('utility')) return 'utility-category-adjustment';
-                return null;
             },
         },
         methods: {

@@ -12,7 +12,7 @@
                 </span>
 
                 <svg class="slds-button__icon slds-button__icon_small slds-button__icon_right">
-                    <slds-svg icon-name="utility:chevrondown"/>
+                    <slds-svg icon="utility:chevrondown"/>
                 </svg>
 
             </button>
@@ -33,7 +33,7 @@
                                 <span class="slds-indicator-container"/>
 
                                 <span class="slds-icon_container">
-                                    <slds-svg :icon-name="subTab.icon" :class="adjustmentClass(subTab.icon)" class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                    <slds-svg :icon="subTab.icon" standard class="slds-icon slds-icon_small slds-icon-text-default"/>
                                 </span>
 
                                 <span>
@@ -68,11 +68,6 @@
             }
         },
         methods: {
-            adjustmentClass(iconName) {
-                if (iconName == null) return null;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
-                return null;
-            },
             away() {
                 this.isDropdownActive = false;
             },

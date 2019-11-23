@@ -131,10 +131,9 @@
                                     <!-- Icon -->
                                     <slds-icon
                                         v-else-if="column.type === 'icon' && getFieldObject(column, item) != null"
-                                        :icon-name="getFieldObject(column, item).icon"
-                                        :size="getFieldObject(column, item).size"
+                                        :icon="getFieldObject(column, item).icon"
                                         :title="getFieldObject(column, item).title"
-                                        :variant="getFieldObject(column, item).variant"
+                                        v-bind="[getFieldObject(column, item).size, getFieldObject(column, item).variant]"
                                         class="icon-in-table"/>
 
                                     <!-- Copy to clipboard button -->
@@ -199,9 +198,8 @@
                                                 <span class="slds-truncate" :title="getAction(action).label">
                                                     <slds-icon
                                                         v-if="getAction(action).icon != null"
-                                                        :icon-name="getAction(action).icon"
-                                                        variant="default"
-                                                        size="x-small"
+                                                        :icon="getAction(action).icon"
+                                                        x-small
                                                         class="slds-m-right_x-small"/>
                                                     {{ getAction(action).label }}
                                                 </span>

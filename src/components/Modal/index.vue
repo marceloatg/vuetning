@@ -10,10 +10,9 @@
 
                     <!-- Close button -->
                     <slds-button-icon
-                        icon-name="utility:close"
-                        container="none"
-                        variant="inverse"
-                        size="large"
+                        icon="utility:close"
+                        inverse
+                        large
                         title="close"
                         class="slds-modal__close"
                         @click.stop="onClose"/>

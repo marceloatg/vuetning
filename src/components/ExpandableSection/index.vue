@@ -9,7 +9,7 @@
                 class="slds-button slds-section__title-action"
                 @click="toggle">
 
-                <slds-svg icon-name="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
+                <slds-svg icon="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
 
                 <span class="slds-truncate" :title="title">
                     {{ title }}

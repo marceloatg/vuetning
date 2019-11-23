@@ -42,12 +42,12 @@
 
             <!-- View mode faux checked-->
             <span v-else-if="readOnly && checked" class="slds-icon_container slds-icon-utility-check slds-current-color" title="True">
-                <slds-svg icon-name="utility:check" class="slds-icon slds-icon_x-small"/>
+                <slds-svg icon="utility:check" class="slds-icon slds-icon_x-small"/>
             </span>
 
             <!-- View mode faux unchecked-->
             <span v-else-if="readOnly && !checked" class="slds-icon_container slds-icon-utility-steps slds-current-color" title="False">
-                <slds-svg icon-name="utility:steps" class="slds-icon slds-icon_x-small"/>
+                <slds-svg icon="utility:steps" class="slds-icon slds-icon_x-small"/>
             </span>
 
         </div>

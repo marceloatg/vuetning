@@ -3,11 +3,10 @@
         <span class="slds-grid" :class="alignment">
             <slds-icon
                 v-if="cell != null"
-                :icon-name="cell.iconName"
+                :icon="cell.iconName"
                 :icon-class="cell.iconClass"
-                :size="cell.size"
-                :title="cell.title"
-                :variant="cell.variant"/>
+                v-bind="[cell.size, cell.variant]"
+                :title="cell.title"/>
         </span>
     </td>
 </template>

@@ -28,7 +28,7 @@
                             <transition name="fade">
                                 <slds-button-icon
                                     v-if="filter != null"
-                                    icon-name="utility:clear"
+                                    icon="utility:clear"
                                     class="slds-input__icon slds-input__icon_right"
                                     title="Clear"
                                     tabindex="-1"
@@ -48,11 +48,7 @@
                                 @click="toggleDropdown"
                                 v-on="listeners">
 
-                            <slds-icon
-                                icon-name="utility:down"
-                                class="slds-input__icon slds-input__icon_right"
-                                size="x-small"
-                                variant="default"/>
+                            <slds-icon icon="utility:down" x-small class="slds-input__icon slds-input__icon_right"/>
 
                         </template>
 

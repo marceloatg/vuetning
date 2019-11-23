@@ -7,7 +7,7 @@
 
             <!-- Figure -->
             <span class="slds-media__figure">
-                <slds-svg icon-name="utility:check" class="slds-icon slds-icon_x-small slds-listbox__icon-selected"/>
+                <slds-svg icon="utility:check" class="slds-icon slds-icon_x-small slds-listbox__icon-selected"/>
             </span>
 
             <!-- Body -->

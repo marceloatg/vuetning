@@ -9,9 +9,10 @@
                     <!-- Figure-->
                     <div class="slds-media__figure">
                         <slds-icon
-                            icon-name="utility:settings"
-                            icon-class="slds-page-header__icon utility-category-adjustment"
-                            class="slds-icon-standard-custom"/>
+                            icon="utility:settings"
+                            icon-class="slds-page-header__icon"
+                            class="slds-icon-standard-custom"
+                            standard/>
                     </div>
 
                     <!-- Body -->
