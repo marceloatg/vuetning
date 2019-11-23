@@ -1,19 +1,42 @@
 <template>
-    <div class="slds-tooltip__container">
+    <div class="slds-popover__container">
 
         <slot name="trigger"/>
 
-        <div
+        <section
             v-if="visible"
-            ref="tooltip"
-            class="slds-popover slds-popover_tooltip"
-            :class="nubbinPlacement"
+            ref="popover"
+            class="slds-popover"
+            :class="[nubbinPlacement, size, state]"
             :style="style"
-            role="tooltip">
-            <div class="slds-popover__body">
+            role="dialog">
+
+            <!-- Close button -->
+            <slds-button-icon
+                icon="utility:close"
+                bare
+                small
+                :inverse="error || walkthrough || feature"
+                class="slds-float_right slds-popover__close"
+                title="Close"
+                @click="hide"/>
+
+            <!-- Header -->
+            <header v-if="($slots.header || walkthrough) && !feature" class="slds-popover__header">
+                <slot name="header"/>
+            </header>
+
+            <!-- Body -->
+            <div class="slds-popover__body" :class="{'slds-popover__body_small': maxHeight}">
                 <slot/>
             </div>
-        </div>
+
+            <!-- Footer -->
+            <footer v-if="$slots.footer" class="slds-popover__footer">
+                <slot name="footer"/>
+            </footer>
+
+        </section>
 
     </div>
 </template>
@@ -30,6 +53,18 @@
             bottomRightNubbin: {
                 type: Boolean,
             },
+            error: {
+                type: Boolean,
+            },
+            feature: {
+                type: Boolean,
+            },
+            full: {
+                type: Boolean,
+            },
+            large: {
+                type: Boolean,
+            },
             leftNubbin: {
                 type: Boolean,
             },
@@ -37,6 +72,9 @@
                 type: Boolean,
             },
             leftTopNubbin: {
+                type: Boolean,
+            },
+            maxHeight: {
                 type: Boolean,
             },
             rightNubbin: {
@@ -48,6 +86,9 @@
             rightTopNubbin: {
                 type: Boolean,
             },
+            small: {
+                type: Boolean,
+            },
             topNubbin: {
                 type: Boolean,
             },
@@ -55,6 +96,12 @@
                 type: Boolean,
             },
             topRightNubbin: {
+                type: Boolean,
+            },
+            walkthrough: {
+                type: Boolean,
+            },
+            warning: {
                 type: Boolean,
             },
         },
@@ -72,7 +119,7 @@
         },
         computed: {
             clickable() {
-                return this.triggerElement.classList.contains('slds-tooltip-trigger_click');
+                return this.triggerElement.classList.contains('slds-popover-trigger_click');
             },
             nubbinPlacement() {
                 if (this.leftNubbin) return 'slds-nubbin_left';
@@ -89,8 +136,21 @@
                 else if (this.topRightNubbin) return 'slds-nubbin_top-right';
                 else return 'slds-nubbin_bottom-left';
             },
+            size() {
+                if (this.small) return 'slds-popover_small';
+                else if (this.large) return 'slds-popover_large';
+                else if (this.full) return 'slds-popover_full-width';
+                else return 'slds-popover_medium';
+            },
+            state() {
+                if (this.error) return 'slds-popover_error';
+                else if (this.warning) return 'slds-popover_warning';
+                else if (this.walkthrough) return 'slds-popover_walkthrough';
+                else if (this.feature) return 'slds-popover_walkthrough slds-popover_feature';
+                else return null;
+            },
             triggerElement() {
-                return this.$el.querySelector('.slds-tooltip-trigger_hover, .slds-tooltip-trigger_click');
+                return this.$el.querySelector('.slds-popover-trigger_hover, .slds-popover-trigger_click');
             },
         },
         mounted() {
@@ -101,11 +161,11 @@
         },
         methods: {
             clickAwayDetector(event) {
-                const tooltipElement = this.$refs.tooltip;
+                const popoverElement = this.$refs.popover;
                 let targetElement = event.target;
 
                 do {
-                    if ((targetElement === tooltipElement) || (targetElement === this.triggerElement)) return;
+                    if ((targetElement === popoverElement) || (targetElement === this.triggerElement)) return;
                     targetElement = targetElement.parentNode;
                 } while (targetElement);
 
@@ -145,7 +205,7 @@
                 this.visible = true;
                 await this.$nextTick();
 
-                let tooltipRect = this.$refs.tooltip.getBoundingClientRect();
+                let popoverRect = this.$refs.popover.getBoundingClientRect();
                 let triggerRect = this.triggerElement.getBoundingClientRect();
 
                 const nubbinHeightOffset = 16;
@@ -155,33 +215,33 @@
                     this.style.top = `${triggerRect.height + nubbinHeightOffset}px`;
                 }
                 else if (this.nubbinPlacement.startsWith('slds-nubbin_bottom')) {
-                    this.style.top = `-${tooltipRect.height + nubbinHeightOffset}px`;
+                    this.style.top = `-${popoverRect.height + nubbinHeightOffset}px`;
                 }
                 else if (this.nubbinPlacement.startsWith('slds-nubbin_left')) {
                     this.style.left = `${triggerRect.width + nubbinHeightOffset}px`;
                 }
                 else if (this.nubbinPlacement.startsWith('slds-nubbin_right')) {
-                    this.style.left = `${-tooltipRect.width - nubbinHeightOffset}px`;
+                    this.style.left = `${-popoverRect.width - nubbinHeightOffset}px`;
                 }
 
                 if (this.nubbinPlacement.endsWith('-top')) {
                     this.style.top = `${(triggerRect.height / 2) - nubbinWidthOffset}px`;
                 }
                 else if (this.nubbinPlacement.endsWith('-bottom')) {
-                    this.style.top = `${(triggerRect.height / 2) - (tooltipRect.height / 2) - nubbinWidthOffset}px`;
+                    this.style.top = `${(triggerRect.height / 2) - (popoverRect.height / 2) - nubbinWidthOffset}px`;
                 }
                 else if (this.nubbinPlacement.endsWith('-left')) {
                     this.style.left = `${(triggerRect.width / 2) - nubbinWidthOffset}px`;
                 }
                 else if (this.nubbinPlacement.endsWith('-right')) {
-                    this.style.left = `${(triggerRect.width / 2) + nubbinWidthOffset - (tooltipRect.width)}px`;
+                    this.style.left = `${(triggerRect.width / 2) + nubbinWidthOffset - (popoverRect.width)}px`;
                 }
 
                 if (this.topNubbin || this.bottomNubbin) {
-                    this.style.left = `-${(tooltipRect.width / 2) - (triggerRect.width / 2) + tooltipRect.left - triggerRect.left}px`;
+                    this.style.left = `-${(popoverRect.width / 2) - (triggerRect.width / 2) + popoverRect.left - triggerRect.left}px`;
                 }
                 else if (this.leftNubbin || this.rightNubbin) {
-                    this.style.top = `${(triggerRect.height / 2) - (tooltipRect.height / 2)}px`;
+                    this.style.top = `${(triggerRect.height / 2) - (popoverRect.height / 2)}px`;
                 }
 
                 this.style.opacity = '1';
@@ -200,7 +260,7 @@
         opacity: 0;
     }
 
-    .slds-tooltip__container {
+    .slds-popover__container {
         position: relative;
     }
 

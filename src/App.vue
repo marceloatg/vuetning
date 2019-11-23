@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Button'
+    import SldsView from './views/Popover'
 
     export default {
         name: 'App',

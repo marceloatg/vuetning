@@ -28,6 +28,7 @@ import SldsModal from './components/Modal'
 import SldsNotification from './components/Notification'
 import SldsPagination from './components/Pagination'
 import SldsPill from './components/Pill'
+import SldsPopover from './components/Popover'
 import SldsProgressBar from './components/ProgressBar'
 import SldsExpandableSection from './components/ExpandableSection'
 import SldsSpinner from './components/Spinner'
@@ -69,6 +70,7 @@ Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
 Vue.component('slds-pagination', SldsPagination);
 Vue.component('slds-pill', SldsPill);
+Vue.component('slds-popover', SldsPopover);
 Vue.component('slds-progress-bar', SldsProgressBar);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
