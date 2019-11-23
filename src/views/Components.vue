@@ -28,7 +28,7 @@
 
                 <slds-menu
                     :items="items"
-                    icon-name="utility:settings"
+                    icon="utility:settings"
                     :length="10"
                     class="slds-m-right_xx-small"/>
 

@@ -3,7 +3,7 @@
         class="slds-context-bar__item slds-context-bar__item_tab"
         :class="[{'slds-is-active': isActive}, {'slds-has-sub-tabs': hasSubTabs}]"
         role="presentation"
-        @click.prevent="onClickTab"
+        @click.self="onClickTab"
         @click.middle="onClickClose">
 
         <!-- Identification -->
@@ -64,7 +64,7 @@
                 bare
                 title="Close"
                 class="slds-button_icon-current-color"
-                @click.prevent="onClickClose"/>
+                @click="onClickClose"/>
         </div>
 
     </li>

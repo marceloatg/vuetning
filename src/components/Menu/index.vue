@@ -3,10 +3,12 @@
 
         <!-- Button -->
         <slds-button-icon
-            :icon="iconName"
-            :has-dropdown="iconName !== 'utility:down'"
+            :icon="icon"
+            :has-dropdown="icon !== 'utility:down'"
             :disabled="disabled"
-            v-bind="size"
+            :small="small"
+            :x-mall="xSmall"
+            :xx-mall="xxSmall"
             @click="toggle"
             @blur="close"
             @keyup="keyUp"/>
@@ -30,9 +32,9 @@
                         v-else
                         :key="item.value"
                         :disabled="item.disabled"
-                        :icon-name="item.iconName"
+                        :icon="item.icon"
                         :label="item.label"
-                        :prefix-icon-name="item.prefixIconName"
+                        :prefix-icon="item.prefixIcon"
                         :value="item.value"
                         @click="onClick"/>
 
@@ -55,29 +57,14 @@
         props: {
             disabled: {
                 type: Boolean,
-                default: false,
             },
-            iconName: {
+            icon: {
                 type: String,
                 default: 'utility:down',
             },
             items: {
                 type: Array,
                 default: () => [],
-                note: 'Represents a list item in a menu.',
-            },
-            size: {
-                type: String,
-                default: 'medium',
-                note: 'Button size. Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'xx-small',
-                        'x-small',
-                        'small',
-                        'medium',
-                    ].indexOf(value) !== -1
-                }
             },
             length: {
                 type: Number,
@@ -85,6 +72,15 @@
                 validator(value) {
                     return [5, 7, 10].indexOf(value) !== -1
                 }
+            },
+            small: {
+                type: Boolean,
+            },
+            xSmall: {
+                type: Boolean,
+            },
+            xxSmall: {
+                type: Boolean,
             },
         },
         data() {
