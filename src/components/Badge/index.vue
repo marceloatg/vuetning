@@ -6,7 +6,7 @@
             class="slds-badge__icon"
             :class="['slds-badge__icon_' + color, 'slds-badge__icon_' + iconPosition]">
             <span class="slds-icon_container slds-current-color">
-                <slds-svg :icon-name="iconName" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
+                <slds-svg :icon="iconName" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
             </span>
         </span>{{ (iconPosition === 'left') ? label : '' }}
     </span>

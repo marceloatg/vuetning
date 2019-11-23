@@ -8,7 +8,7 @@
             </button>
             <div class="slds-grid slds-dropdown-trigger slds-dropdown-trigger_click">
                 <button class="slds-button">
-                    <slds-svg icon-name="utility:right" class="slds-button__icon slds-button__icon_left"/>
+                    <slds-svg icon="utility:right" class="slds-button__icon slds-button__icon_left"/>
                     Choose your tour
                 </button>
             </div>

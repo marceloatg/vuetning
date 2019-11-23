@@ -19,7 +19,7 @@
 
                     <!-- Sort icon -->
                     <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowdown">
-                        <slds-svg icon-name="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
+                        <slds-svg icon="utility:arrowdown" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
                     </span>
 
                 </div>

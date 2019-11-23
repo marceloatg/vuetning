@@ -3,7 +3,7 @@
         <span class="slds-grid" :class="alignment">
 
             <a :href="`mailto:${cell}`" class="slds-truncate" :title="cell">
-                <slds-icon icon-name="utility:email" size="x-small" variant="default"/>
+                <slds-icon icon="utility:email" x-small/>
                 {{ cell }}
             </a>
 

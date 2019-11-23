@@ -10,7 +10,7 @@
 
                     <!-- Figure -->
                     <div class="slds-media__figure">
-                        <slds-icon :icon-name="figure.name" :icon-class="adjustmentClass" :class="figure.color"/>
+                        <slds-icon :icon="figure.name" standard :class="figure.color"/>
                     </div>
 
                     <!-- Body -->
@@ -26,7 +26,7 @@
                             <div class="slds-button slds-button--reset slds-type-focus slds-truncate">
                                 {{ listViews }}
                                 <a class="slds-m-top_xxx-small slds-p-right_xxx-small">
-                                    <slds-svg icon-name="utility:down" class="slds-icon slds-icon-text-default slds-icon_x-small"/>
+                                    <slds-svg icon="utility:down" class="slds-icon slds-icon-text-default slds-icon_x-small"/>
                                 </a>
                             </div>
                         </h1>
@@ -54,7 +54,7 @@
             <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
                 <div class="slds-form-element">
                     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
-                        <slds-svg icon-name="utility:search" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
+                        <slds-svg icon="utility:search" class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"/>
                         <input
                             class="slds-input"
                             type="text"
@@ -69,10 +69,10 @@
                 <div class="slds-m-left_xx-small">
 
                     <!-- Filter -->
-                    <slds-button-icon icon-name="utility:filterList" @click="onFilter"/>
+                    <slds-button-icon icon="utility:filterList" @click="onFilter"/>
 
                     <!-- Refresh -->
-                    <slds-button-icon icon-name="utility:refresh" :disabled="refreshing" @click="onRefresh"/>
+                    <slds-button-icon icon="utility:refresh" :disabled="refreshing" @click="onRefresh"/>
 
                 </div>
             </div>
@@ -119,14 +119,6 @@
             return {
                 relativeUpdatedTime: null,
             }
-        },
-        computed: {
-            adjustmentClass() {
-                const iconName = this.figure.name;
-                if (iconName == null) return null;
-                if (iconName.startsWith('utility')) return 'utility-category-adjustment';
-                return null;
-            },
         },
         watch: {
             initialized: function (newValue, oldValue) {

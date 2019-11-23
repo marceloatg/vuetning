@@ -1,5 +1,5 @@
 <template>
-    <svg>
+    <svg :class="offset">
         <use :xlink:href="`/assets/icons/${category}-sprite/svg/symbols.svg#${name}`"/>
     </svg>
 </template>
@@ -7,7 +7,7 @@
 <script>
     export default {
         props: {
-            iconName: {
+            icon: {
                 type: String,
                 required: true,
             },
@@ -15,18 +15,25 @@
                 type: Number,
                 default: null,
             },
+            standard: {
+                type: Boolean,
+            },
         },
         computed: {
             category() {
-                return this.iconName.split(':')[0];
+                return this.icon.split(':')[0];
             },
             name() {
-                return this.iconName.split(':')[1];
-            }
+                return this.icon.split(':')[1];
+            },
+            offset() {
+                if (this.category !== 'utility') return '';
+                return (this.standard) ? 'utility-offset' : '';
+            },
         },
         created() {
-            if (this.iconName.split(':').length !== 2) {
-                throw 'Invalid icon-name format.';
+            if (this.icon.split(':').length !== 2) {
+                throw 'Invalid icon format.';
             }
         }
     }
@@ -49,7 +56,7 @@
         }
     }
 
-    .utility-category-adjustment {
+    .utility-offset {
         &.slds-icon_small {
             padding: 4px;
             border-radius: .25rem;

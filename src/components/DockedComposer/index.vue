@@ -8,11 +8,7 @@
             <div class="slds-media slds-media_center slds-no-space">
 
                 <!-- Figure -->
-                <slds-icon
-                    :icon-name="iconName"
-                    class="slds-media__figure slds-m-right_x-small"
-                    icon-class="slds-icon-text-default"
-                    size="x-small"/>
+                <slds-icon :icon="iconName" x-small class="slds-media__figure slds-m-right_x-small"/>
 
                 <!-- Text -->
                 <div class="slds-media__body">
@@ -29,31 +25,27 @@
                 <slds-button-icon
                     v-if="hasMinimizeButton && state === 'close'"
                     ref="erectButton"
-                    icon-name="utility:erect_window"
-                    container="none"
+                    icon="utility:erect_window"
                     title="Erect window"
                     @click="onErect"/>
 
                 <slds-button-icon
                     v-if="hasMinimizeButton && state === 'open'"
                     ref="minimizeButton"
-                    icon-name="utility:minimize_window"
-                    container="none"
+                    icon="utility:minimize_window"
                     title="Minimize window"
                     @click="onMinimize"/>
 
                 <slds-button-icon
                     v-if="hasExpandButton"
                     ref="expandButton"
-                    icon-name="utility:expand_alt"
-                    container="none"
+                    icon="utility:expand_alt"
                     title="Expand Composer"
                     @click="onExpand"/>
 
                 <slds-button-icon
                     ref="closeButton"
-                    icon-name="utility:close"
-                    container="none"
+                    icon="utility:close"
                     title="Close"
                     @click="onClose"/>
 

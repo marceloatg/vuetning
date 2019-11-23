@@ -28,12 +28,14 @@ import SldsModal from './components/Modal'
 import SldsNotification from './components/Notification'
 import SldsPagination from './components/Pagination'
 import SldsPill from './components/Pill'
+import SldsPopover from './components/Popover'
 import SldsProgressBar from './components/ProgressBar'
 import SldsExpandableSection from './components/ExpandableSection'
 import SldsSpinner from './components/Spinner'
 import SldsSvg from './shared/svg'
 import SldsTextArea from './components/TextArea'
 import SldsToast from './components/Toast'
+import SldsTooltip from './components/Tooltip'
 import SldsTrialBar from './components/TrialBar'
 import SldsVerticalNavigation from './components/VerticalNavigation'
 import SldsVirtualTable from './components/VirtualTable'
@@ -68,12 +70,14 @@ Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
 Vue.component('slds-pagination', SldsPagination);
 Vue.component('slds-pill', SldsPill);
+Vue.component('slds-popover', SldsPopover);
 Vue.component('slds-progress-bar', SldsProgressBar);
 Vue.component('slds-expandable-section', SldsExpandableSection);
 Vue.component('slds-spinner', SldsSpinner);
 Vue.component('slds-svg', SldsSvg);
 Vue.component('slds-text-area', SldsTextArea);
 Vue.component('slds-toast', SldsToast);
+Vue.component('slds-tooltip', SldsTooltip);
 Vue.component('slds-trial-bar', SldsTrialBar);
 Vue.component('slds-vertical-navigation', SldsVerticalNavigation);
 Vue.component('slds-virtual-table', SldsVirtualTable);

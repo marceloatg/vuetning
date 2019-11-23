@@ -3,17 +3,17 @@
         <a role="menuitemcheckbox" tabindex="0" :class="{'slds-is-disabled': disabled}">
 
             <!-- Left icon -->
-            <span v-if="prefixIconName != null" class="slds-truncate" title="Table View">
+            <span v-if="prefixIcon != null" class="slds-truncate" title="Table View">
                 <slds-icon
-                    :icon-name="prefixIconName"
-                    :variant="variant"
-                    size="x-small"
+                    :icon="prefixIcon"
+                    x-small
+                    v-bind="variant"
                     class="slds-m-right_x-small"/>
                 {{ label }}
             </span>
 
             <!-- No icon -->
-            <div v-if="prefixIconName == null" role="menuitem" tabindex="-1">
+            <div v-if="prefixIcon == null" role="menuitem" tabindex="-1">
                 <span class="slds-truncate" :title="label">
                     {{ label }}
                 </span>
@@ -21,10 +21,10 @@
 
             <!-- Right icon -->
             <slds-icon
-                v-if="iconName != null"
-                :icon-name="iconName"
-                :variant="variant"
-                size="x-small"
+                v-if="icon != null"
+                :icon="icon"
+                x-small
+                v-bind="variant"
                 class="slds-m-left_small slds-shrink-none"/>
 
         </a>
@@ -42,10 +42,10 @@
                 type: String,
                 required: true,
             },
-            iconName: {
+            icon: {
                 type: String,
             },
-            prefixIconName: {
+            prefixIcon: {
                 type: String,
             },
             value: {

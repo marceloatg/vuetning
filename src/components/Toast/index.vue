@@ -3,7 +3,7 @@
 
         <!-- Icon -->
         <span v-if="iconName != null" class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top">
-            <slds-icon :icon-name="iconName" size="small"/>
+            <slds-icon :icon="iconName" small/>
         </span>
 
         <!-- Content -->
@@ -20,10 +20,9 @@
         <!-- Close button -->
         <div class="slds-notify__close">
             <slds-button-icon
-                icon-name="utility:close"
-                size="large"
-                variant="inverse"
-                container="none"
+                icon="utility:close"
+                large
+                inverse
                 @click="onClickClose"/>
         </div>
 

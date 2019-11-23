@@ -14,7 +14,7 @@
         <!-- Icon -->
         <slds-svg
             v-if="icon"
-            :icon-name="icon"
+            :icon="icon"
             class="slds-button__icon"
             :class="iconClass"/>
 
