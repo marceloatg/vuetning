@@ -1,9 +1,9 @@
 <template>
-    <div class="slds-notify slds-notify_toast" :class="`slds-theme_${variant}`">
+    <div class="slds-notify slds-notify_toast" :class="variant" role="status">
 
         <!-- Icon -->
-        <span v-if="iconName != null" class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top">
-            <slds-icon :icon="iconName" small/>
+        <span v-if="icon != null" class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top" :class="iconVariant">
+            <slds-icon :icon="icon" small/>
         </span>
 
         <!-- Content -->
@@ -39,20 +39,31 @@
             SldsIcon,
         },
         props: {
-            iconName: {
+            error: {
                 type: String,
             },
-            variant: {
+            icon: {
                 type: String,
-                default: 'base',
-                validator(value) {
-                    return [
-                        'base',
-                        'error',
-                        'success',
-                        'warning',
-                    ].indexOf(value) !== -1
-                },
+            },
+            success: {
+                type: String,
+            },
+            warning: {
+                type: String,
+            },
+        },
+        computed: {
+            iconVariant() {
+                if (this.error) return 'slds-icon-utility-error';
+                if (this.success) return 'slds-icon-utility-success';
+                if (this.warning) return 'slds-icon-utility-warning';
+                return 'slds-icon-utility-info';
+            },
+            variant() {
+                if (this.error) return 'slds-theme_error';
+                if (this.success) return 'slds-theme_success';
+                if (this.warning) return 'slds-theme_warning';
+                return 'slds-theme_info';
             },
         },
         methods: {
