@@ -2,9 +2,13 @@
     <div class="slds-notify slds-notify_toast" :class="variant" role="status">
 
         <!-- Icon -->
-        <span v-if="icon != null" class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top" :class="iconVariant">
-            <slds-icon :icon="icon" small/>
-        </span>
+        <slds-icon
+            v-if="icon != null"
+            :icon="icon"
+            small
+            inverse
+            class="slds-m-right_small slds-no-flex slds-align-top"
+            :class="iconVariant"/>
 
         <!-- Content -->
         <div class="slds-notify__content">
@@ -40,16 +44,16 @@
         },
         props: {
             error: {
-                type: String,
+                type: Boolean,
             },
             icon: {
                 type: String,
             },
             success: {
-                type: String,
+                type: Boolean,
             },
             warning: {
-                type: String,
+                type: Boolean,
             },
         },
         computed: {

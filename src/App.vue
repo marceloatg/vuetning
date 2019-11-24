@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Popover'
+    import SldsView from './views/Toast'
 
     export default {
         name: 'App',
