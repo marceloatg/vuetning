@@ -3,7 +3,7 @@
         class="slds-context-bar__item slds-context-bar__item_tab"
         :class="[{'slds-is-active': isActive}, {'slds-has-sub-tabs': hasSubTabs}]"
         role="presentation"
-        @click.self="onClickTab"
+        @click="onClickTab"
         @click.middle="onClickClose">
 
         <!-- Identification -->
@@ -32,7 +32,7 @@
                 bare
                 x-small
                 class="slds-button_icon-current-color"
-                @click="toggleDropdown"/>
+                @click.stop="toggleDropdown"/>
 
             <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
                 <ul class="slds-dropdown__list" role="menu">
@@ -64,7 +64,7 @@
                 bare
                 title="Close"
                 class="slds-button_icon-current-color"
-                @click="onClickClose"/>
+                @click.stop="onClickClose"/>
         </div>
 
     </li>
