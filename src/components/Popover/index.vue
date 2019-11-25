@@ -262,6 +262,7 @@
 
     .slds-popover__container {
         position: relative;
+        display: inline;
     }
 
     .slds-popover {

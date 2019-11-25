@@ -96,5 +96,14 @@
         .slds-modal__content.slds-overflow_initial {
             overflow: initial;
         }
+
+        .slds-modal__footer .slds-popover__container {
+            text-align: left;
+
+            & + .slds-popover__container,
+            & + .slds-button {
+                margin-left: 0.5rem;
+            }
+        }
     }
 </style>
