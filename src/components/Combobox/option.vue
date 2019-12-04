@@ -13,7 +13,7 @@
             <!-- Body -->
             <span class="slds-media__body">
 
-                <span class="slds-truncate" :title="label" v-html="filteredLabel"/>
+                <span class="slds-truncate slds-listbox__option_label" :title="label" v-html="filteredLabel"/>
 
                 <span v-if="meta != null" class="slds-listbox__option-meta">
                     {{ meta }}
@@ -100,6 +100,10 @@
 </script>
 
 <style scoped lang="scss">
+    .slds-listbox__option_label {
+        font-size: 13px;
+    }
+
     .slds-is-disabled {
         color: #c9c7c5;
         cursor: not-allowed;
