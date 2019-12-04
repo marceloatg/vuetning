@@ -76,7 +76,7 @@
 
             <span class="slds-m-horizontal_x-small">Days left in trial</span>
 
-            <slds-button label="Subscribe Now" success/>
+            <slds-button label="Subscribe Now" success @click="onClickSubscribe"/>
 
         </div>
 
@@ -94,6 +94,11 @@
             daysLeft: {
                 type: Number,
                 required: true
+            }
+        },
+        methods: {
+            onClickSubscribe() {
+                this.$emit('subscribe')
             }
         }
     }
