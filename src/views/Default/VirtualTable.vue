@@ -72,6 +72,12 @@
             });
 
             this.columns.push({
+                fieldName: 'avatar',
+                label: 'Avatar',
+                type: 'avatar',
+            });
+
+            this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
                 type: 'event-link',
@@ -126,6 +132,7 @@
                         label: 'button',
                         action: 'button',
                     },
+                    avatar: '\\assets\\images\\group_avatar_200.png',
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
                     triggable: true,

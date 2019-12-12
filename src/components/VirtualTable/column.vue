@@ -79,6 +79,7 @@
                 validator(value) {
                     return [
                         'action',
+                        'avatar',
                         'badge',
                         'boolean',
                         'button',
