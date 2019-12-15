@@ -78,7 +78,6 @@
                 required: true,
                 validator(value) {
                     return [
-                        'action',
                         'avatar',
                         'badge',
                         'boolean',
@@ -102,7 +101,6 @@
             isSortable() {
                 switch (this.type) {
                     case 'avatar':
-                    case 'action':
                     case 'button':
                     case 'button-icon':
                         return false;
