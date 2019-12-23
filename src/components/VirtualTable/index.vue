@@ -169,7 +169,7 @@
                         </template>
 
                         <!-- Actions -->
-                        <div v-if="hasActions && item.actions.length > 0" class="cell line-actions">
+                        <div v-if="hasActions && item.actions != null && item.actions.length > 0" class="cell line-actions">
                             <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                                 <!-- Button -->

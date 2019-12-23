@@ -80,6 +80,7 @@
             variant() {
                 if (this.iconCategory !== 'utility') return '';
 
+                if (this.brand) return 'slds-icon-text-brand';
                 if (this.error) return 'slds-icon-text-error';
                 if (this.inverse) return 'slds-icon-text-inverse';
                 if (this.light) return 'slds-icon-text-light';
