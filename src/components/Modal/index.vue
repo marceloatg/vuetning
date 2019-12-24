@@ -69,6 +69,9 @@
             large: {
                 type: Boolean,
             },
+            maxHeight: {
+                type: Boolean,
+            },
             medium: {
                 type: Boolean,
             },
@@ -79,6 +82,7 @@
         computed: {
             contentClasses() {
                 return {
+                    'slds-grow': this.maxHeight,
                     'slds-modal_fixed-height': this.fixedHeight,
                     'slds-overflow_initial': this.initialOverflow
                 };
