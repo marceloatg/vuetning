@@ -2,7 +2,7 @@
     <div>
 
         <!-- Modal -->
-        <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="`slds-modal_${size}`">
+        <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="size">
             <div class="slds-modal__container">
 
                 <!-- Header -->
@@ -22,7 +22,9 @@
                 </header>
 
                 <!-- Content -->
-                <div class="slds-modal__content" :class="contentClass">
+                <div
+                    class="slds-modal__content"
+                    :class="[contentClass, contentClasses]">
                     <slot name="content"/>
                 </div>
 
@@ -52,26 +54,44 @@
                 type: String,
                 default: 'slds-p-around_medium',
             },
+            fixedHeight: {
+                type: Boolean,
+            },
             footerClass: {
                 type: String,
             },
             headerClass: {
                 type: String,
             },
-            heading: {
-                type: String,
+            initialOverflow: {
+                type: Boolean,
             },
-            size: {
-                type: String,
-                default: 'default',
-                validator(value) {
-                    return [
-                        'default',
-                        'small',
-                        'medium',
-                        'large',
-                    ].indexOf(value) !== -1
-                },
+            large: {
+                type: Boolean,
+            },
+            maxHeight: {
+                type: Boolean,
+            },
+            medium: {
+                type: Boolean,
+            },
+            small: {
+                type: Boolean,
+            },
+        },
+        computed: {
+            contentClasses() {
+                return {
+                    'slds-grow': this.maxHeight,
+                    'slds-modal_fixed-height': this.fixedHeight,
+                    'slds-overflow_initial': this.initialOverflow
+                };
+            },
+            size() {
+                if (this.small) return 'slds-modal_small';
+                if (this.medium) return 'slds-modal_medium';
+                if (this.large) return 'slds-modal_large';
+                return '';
             },
         },
         created() {
@@ -95,6 +115,16 @@
     .slds-modal {
         .slds-modal__content.slds-overflow_initial {
             overflow: initial;
+        }
+
+        .slds-modal__content.slds-modal_fixed-height {
+            height: 500px;
+        }
+
+        @media (max-height: 700px) {
+            .slds-modal__content.slds-modal_fixed-height {
+                height: 400px;
+            }
         }
 
         .slds-modal__footer .slds-popover__container {

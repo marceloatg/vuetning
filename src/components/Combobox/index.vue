@@ -12,7 +12,7 @@
                 <div role="combobox" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                     <!-- Input -->
-                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <div role="none" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
 
                         <template v-if="!readonly && isDropdownActive">
 
@@ -21,7 +21,9 @@
                                 :value="filter"
                                 v-bind="attributes"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
-                                @click="toggleDropdown"
+                                @blur="onBlur"
+                                @click="onClick"
+                                @focus="onFocus"
                                 @input="onInput"
                                 v-on="listeners">
 
@@ -45,7 +47,9 @@
                                 :readonly="readonly"
                                 v-bind="attributes"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
-                                @click="toggleDropdown"
+                                @blur="onBlur"
+                                @click="onClick"
+                                @focus="onFocus"
                                 v-on="listeners">
 
                             <slds-icon icon="utility:down" x-small class="slds-input__icon slds-input__icon_right"/>
@@ -57,7 +61,6 @@
                     <!-- Options -->
                     <div
                         v-if="isDropdownActive"
-                        v-on-clickaway="away"
                         role="listbox"
                         class="slds-dropdown slds-dropdown_fluid"
                         :class="[`slds-dropdown_length-${length}`]">
@@ -117,8 +120,7 @@
 <script>
     import SldsPicklistOption from "./option";
     import SldsPicklistHeading from "./heading";
-    import ClearableInputMixin from '../../mixins/clearable-input'
-    import {mixin as clickaway} from 'vue-clickaway'
+    import ClearableInputMixin from "../../mixins/clearable-input";
 
     export default {
         components: {
@@ -126,7 +128,6 @@
             SldsPicklistOption
         },
         mixins: [
-            clickaway,
             ClearableInputMixin,
         ],
         props: {
@@ -188,13 +189,14 @@
         data() {
             return {
                 filter: null,
+                keepFocus: false,
+                hasFocus: false,
                 isDropdownActive: false,
             }
         },
         computed: {
             attributes() {
-                const attributes = {...this.$attrs};
-                return attributes
+                return {...this.$attrs}
             },
             filteredOptions() {
                 if (this.filter == null) return this.options;
@@ -225,26 +227,37 @@
             },
         },
         methods: {
-            away() {
+            async onBlur() {
+                this.filter = null;
+
+                if (this.keepFocus) {
+                    await this.$nextTick();
+                    this.$refs.input.focus();
+                    this.keepFocus = false;
+                }
+                else {
+                    this.hasFocus = false;
+                }
+
                 this.isDropdownActive = false;
             },
-            async onClear() {
+            onClear() {
                 this.filter = null;
-                await this.$nextTick();
-                this.$refs.input.focus();
+                this.$refs.input.value = null;
+            },
+            onClick() {
+                if (this.hasFocus && !this.isDropdownActive) this.isDropdownActive = true;
+            },
+            onFocus() {
+                this.isDropdownActive = true;
+                this.hasFocus = true;
             },
             onInput(event) {
                 this.filter = event.target.value
             },
             onSelect(value) {
                 this.$emit('input', value);
-                this.isDropdownActive = false;
-            },
-            async toggleDropdown() {
-                this.isDropdownActive = !this.isDropdownActive;
-                if (!this.isDropdownActive || this.readonly) return;
-
-                await this.onClear();
+                this.keepFocus = true;
             },
         },
     }

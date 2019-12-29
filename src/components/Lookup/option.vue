@@ -1,21 +1,18 @@
 <template>
     <li role="presentation" class="slds-listbox__item" @mousedown.stop="select">
-        <div
-            role="option"
-            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
-            :class="[{'slds-is-selected': isSelected}, {'slds-is-disabled': disabled}]">
+        <div role="option" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" :class="{'slds-is-disabled': disabled}">
 
             <!-- Figure -->
-            <span class="slds-media__figure">
-                <slds-svg icon="utility:check" class="slds-icon slds-icon_x-small slds-listbox__icon-selected"/>
+            <span v-if="icon != null" class="slds-media__figure slds-listbox__option-icon">
+                <slds-icon :icon="icon" small/>
             </span>
 
             <!-- Body -->
             <span class="slds-media__body">
 
-                <span class="slds-truncate slds-listbox__option_label" :title="label" v-html="filteredLabel"/>
+                <span class="slds-listbox__option-text slds-listbox__option-text_entity" :title="label" v-html="filteredLabel"/>
 
-                <span v-if="meta != null" class="slds-listbox__option-meta">
+                <span v-if="meta != null" class="slds-listbox__option-meta slds-listbox__option-meta_entity">
                     {{ meta }}
                 </span>
 
@@ -35,9 +32,9 @@
             filter: {
                 type: String,
             },
-            isSelected: {
-                type: Boolean,
-                default: false,
+            icon: {
+                type: String,
+                default: 'standard:default'
             },
             label: {
                 type: String,

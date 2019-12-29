@@ -46,8 +46,9 @@
             <!-- No single file components inside RecycleScroller due to performance restrictions. -->
             <RecycleScroller
                 class="body"
+                :class="{'has-avatar': hasAvatar}"
                 :items="filteredRows"
-                :item-size="28"
+                :item-size="hasAvatar ? 40 : 28"
                 :key-field="keyField"
                 :buffer="100">
 
@@ -96,6 +97,13 @@
                                         @click="onClickEventLink(column, item)">
                                         {{ getFieldValue(column, item) }}
                                     </a>
+
+                                    <!-- Avatar -->
+                                    <span
+                                        v-else-if="column.type === 'avatar'"
+                                        class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                                        <img alt="avatar" :src="getFieldValue(column, item)">
+                                    </span>
 
                                     <!-- Badge -->
                                     <slds-badge
@@ -161,7 +169,7 @@
                         </template>
 
                         <!-- Actions -->
-                        <div v-if="hasActions" class="cell line-actions">
+                        <div v-if="hasActions && item.actions != null && item.actions.length > 0" class="cell line-actions">
                             <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                                 <!-- Button -->
@@ -315,6 +323,17 @@
                 if (this.actions == null) return false;
                 return (this.actions.length > 0);
             },
+            hasAvatar() {
+                let hasAvatar = false;
+                for (let column of this.columns) {
+                    if (column.type === 'avatar') {
+                        hasAvatar = true;
+                        break;
+                    }
+                }
+
+                return hasAvatar;
+            },
         },
         watch: {
             filter() {
@@ -364,7 +383,8 @@
                     this.$set(column, 'sortedDescending', false);
                     this.$set(column, 'fullWidth', null);
 
-                    if (column.type === 'badge' ||
+                    if (column.type === 'avatar' ||
+                        column.type === 'badge' ||
                         column.type === 'boolean' ||
                         column.type === 'button' ||
                         column.type === 'icon'
@@ -636,6 +656,7 @@
     $color-background-alt: #ffffff;
     $header-height: 2rem;
     $row-height: 1.75rem;
+    $avatar-row-height: 2.5rem;
     $table-color-background-header: #fafaf9;
 
     .ruler {
@@ -696,6 +717,12 @@
         height: calc(100% - #{$header-height});
         overflow-x: auto;
         border-top: 1px solid #dddbda;
+
+        &.has-avatar {
+            .row {
+                height: $avatar-row-height;
+            }
+        }
     }
 
     .row {
@@ -724,6 +751,18 @@
                 width: 1.25rem;
                 height: 1.25rem;
                 flex-shrink: 0;
+            }
+
+            &.line-actions {
+                position: relative;
+
+                .slds-dropdown-trigger {
+                    margin: 0;
+                    position: absolute;
+                    top: 50%;
+                    -ms-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                }
             }
 
             &:hover {
