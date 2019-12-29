@@ -12,7 +12,7 @@
                 <div role="combobox" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                     <!-- Input -->
-                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <div role="none" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
 
                         <template v-if="!readonly && isDropdownActive">
 
@@ -196,8 +196,7 @@
         },
         computed: {
             attributes() {
-                const attributes = {...this.$attrs};
-                return attributes
+                return {...this.$attrs}
             },
             filteredOptions() {
                 if (this.filter == null) return this.options;

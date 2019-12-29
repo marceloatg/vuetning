@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Default/VirtualTable'
+    import SldsView from './views/Lookup'
 
     export default {
         name: 'App',
