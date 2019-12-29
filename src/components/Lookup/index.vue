@@ -146,7 +146,7 @@
                         <ul role="presentation" class="slds-listbox slds-listbox_vertical">
 
                             <li
-                                v-if="filter != null"
+                                v-if="filter != null && filter.length > 0"
                                 role="presentation"
                                 class="slds-listbox__item slds-theme_shade"
                                 @mousedown.prevent.stop="">
@@ -281,7 +281,6 @@
                 if (this.filter == null) return this.options;
 
                 return this.options.filter((option) => {
-                    if (option.heading != null) return true;
                     return String(option.label).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1;
                 })
             },
@@ -341,7 +340,8 @@
                 this.hasFocus = true;
             },
             onInput(event) {
-                this.filter = event.target.value
+                this.filter = event.target.value;
+                this.$emit('search', event.target.value);
             },
             onSelect(value) {
                 this.$emit('input', value);
