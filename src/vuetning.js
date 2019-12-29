@@ -23,6 +23,7 @@ import SldsGlobalNavigation from './components/GlobalNavigation'
 import SldsIcon from './components/Icon'
 import SldsIllustration from './components/Illustration'
 import SldsInput from './components/Input'
+import SldsLookup from './components/Lookup'
 import SldsMenu from './components/Menu'
 import SldsModal from './components/Modal'
 import SldsNotification from './components/Notification'
@@ -65,6 +66,7 @@ Vue.component('slds-global-navigation', SldsGlobalNavigation);
 Vue.component('slds-icon', SldsIcon);
 Vue.component('slds-illustration', SldsIllustration);
 Vue.component('slds-input', SldsInput);
+Vue.component('slds-lookup', SldsLookup);
 Vue.component('slds-menu', SldsMenu);
 Vue.component('slds-modal', SldsModal);
 Vue.component('slds-notification', SldsNotification);
