@@ -1,16 +1,16 @@
 <template>
-    <nav class="slds-nav-vertical">
+    <nav class="slds-nav-vertical" :class="{'slds-nav-vertical_shade': shaded}">
 
         <!-- Quickfind -->
         <div v-if="hasQuickfind" class="slds-form-element slds-p-horizontal_large slds-p-top_large">
-            <slds-input left-icon-name="utility:search" placeholder="Quick Find"/>
+            <slds-input v-model="filter" icon="utility:search" placeholder="Quick Find"/>
         </div>
 
         <!-- Section -->
         <div v-for="section in sections" :key="section.key" class="slds-nav-vertical__section">
 
             <!-- Header -->
-            <h2 class="slds-nav-vertical__title">
+            <h2 v-if="section.heading" class="slds-nav-vertical__title">
                 {{ section.heading }}
             </h2>
 
@@ -23,6 +23,7 @@
                     :class="{'slds-is-active': isActive(item.key)}">
 
                     <a class="slds-nav-vertical__action" @click="onClick(item)">
+                        <slds-icon v-if="item.icon" :icon="item.icon" x-small class="slds-line-height_reset slds-m-right_x-small"/>
                         {{ item.label }}
                     </a>
 
@@ -40,12 +41,19 @@
             activeItem: {},
             hasQuickfind: {
                 type: Boolean,
-                default: false,
             },
             sections: {
                 type: Array,
                 required: true,
             },
+            shaded: {
+                type: Boolean,
+            },
+        },
+        data() {
+            return {
+                filter: null,
+            }
         },
         methods: {
             isActive(key) {
