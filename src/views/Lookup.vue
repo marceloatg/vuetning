@@ -178,6 +178,8 @@
                 class="slds-m-bottom_small"
                 :length="10"/>
 
+            <slds-counter label="Number of users" required/>
+
         </div>
 
     </article>

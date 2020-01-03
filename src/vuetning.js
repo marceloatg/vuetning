@@ -16,6 +16,7 @@ import SldsCheckboxButton from './components/CheckboxButton'
 import SldsCheckboxButtonGroup from './components/CheckboxButtonGroup'
 import SldsCheckboxToggle from './components/CheckboxToggle'
 import SldsCombobox from './components/Combobox'
+import SldsCounter from './components/Counter'
 import SldsDataTable from './components/DataTable';
 import SldsDockedComposer from './components/DockedComposer';
 import SldsGlobalHeader from './components/GlobalHeader'
@@ -59,6 +60,7 @@ Vue.component('slds-checkbox-button', SldsCheckboxButton);
 Vue.component('slds-checkbox-button-group', SldsCheckboxButtonGroup);
 Vue.component('slds-checkbox-toggle', SldsCheckboxToggle);
 Vue.component('slds-combobox', SldsCombobox);
+Vue.component('slds-counter', SldsCounter);
 Vue.component('slds-data-table', SldsDataTable);
 Vue.component('slds-docked-composer', SldsDockedComposer);
 Vue.component('slds-global-header', SldsGlobalHeader);
