@@ -65,14 +65,12 @@
         methods: {
             onClickPlus() {
                 let newValue = this.value + 1;
-                this.value = newValue;
                 this.$emit('input', newValue)
             },
             onClickMinus() {
                 if (this.value <= this.minValue) return;
 
                 let newValue = this.value - 1;
-                this.value = newValue;
                 this.$emit('input', newValue)
             },
         }
