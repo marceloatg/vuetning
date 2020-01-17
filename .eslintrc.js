@@ -50,7 +50,7 @@ module.exports = {
             "math": "always"
         }],
         "vue/max-attributes-per-line": ["error", {
-            "singleline": 3,
+            "singleline": 5,
             "multiline": {
                 "max": 1,
                 "allowFirstLine": false

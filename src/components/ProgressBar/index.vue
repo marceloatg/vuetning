@@ -2,13 +2,13 @@
     <div>
 
         <!-- Label -->
-        <div v-if="label != null" class="slds-grid slds-grid_align-spread slds-p-bottom_x-small">
+        <div v-if="label || showPercentage" class="slds-grid slds-grid_align-spread slds-p-bottom_x-small">
 
-            <span>
+            <span v-if="label">
                 {{ label }}
             </span>
 
-            <span>
+            <span v-if="showPercentage">
                 <strong>{{ progress }}% Complete</strong>
             </span>
 
@@ -33,14 +33,15 @@
         props: {
             circular: {
                 type: Boolean,
-                default: false,
             },
             error: {
                 type: Boolean,
-                default: false,
             },
             label: {
                 type: String,
+            },
+            showPercentage: {
+                type: Boolean,
             },
             progress: {
                 type: Number,
@@ -48,7 +49,6 @@
             },
             large: {
                 type: Boolean,
-                default: false,
             },
             medium: {
                 type: Boolean,
@@ -56,15 +56,12 @@
             },
             success: {
                 type: Boolean,
-                default: false,
             },
             small: {
                 type: Boolean,
-                default: false,
             },
             xSmall: {
                 type: Boolean,
-                default: false,
             },
         },
         computed: {
