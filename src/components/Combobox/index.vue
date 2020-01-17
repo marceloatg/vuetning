@@ -20,6 +20,7 @@
                                 ref="input"
                                 :value="filter"
                                 v-bind="attributes"
+                                :placeholder="placeholder"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
                                 @blur="onBlur"
                                 @click="onClick"
@@ -46,6 +47,7 @@
                                 :value="selectedOption"
                                 :readonly="readonly"
                                 v-bind="attributes"
+                                :placeholder="placeholder"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
                                 @blur="onBlur"
                                 @click="onClick"
@@ -159,6 +161,10 @@
             options: {
                 type: Array,
                 default: () => [],
+            },
+            placeholder: {
+                // TODO: Figure out why the placeholder needs a prop to work
+                type: String,
             },
             readonly: {
                 type: Boolean,
