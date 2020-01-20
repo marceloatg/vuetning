@@ -28,8 +28,13 @@
 </template>
 
 <script>
+    import SldsSvg from '../../shared/svg/index'
+
     export default {
         name: 'SldsAlert',
+        components: {
+            SldsSvg,
+        },
         props: {
             theme: {
                 type: String,

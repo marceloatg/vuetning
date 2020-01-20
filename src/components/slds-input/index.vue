@@ -75,8 +75,8 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index'
-    import SldsSpinner from '../slds-spinner/index'
+    import SldsButtonIcon from '../slds-button-icon/index.vue'
+    import SldsSpinner from '../slds-spinner/index.vue'
     import SldsSvg from '../../shared/svg'
     import ClearableInputMixin from '../../mixins/clearable-input'
 

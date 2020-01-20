@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../../shared/svg'
+    import SldsSvg from '../../shared/svg/index'
 
     export default {
         name: 'SldsButtonIcon',

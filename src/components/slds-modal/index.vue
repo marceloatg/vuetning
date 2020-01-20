@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index'
+    import SldsButtonIcon from '../slds-button-icon/index.vue'
 
     export default {
         name: 'SldsModal',

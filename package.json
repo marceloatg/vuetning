@@ -10,12 +10,14 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --no-fix",
     "build:storybook": "build-storybook",
-    "bundle": "vue-cli-service build --target lib --name vuetning ./src/vuetning.js",
+    "bundle": "vue-cli-service build --target lib --name vuetning src/index.js",
     "lint:fix": "vue-cli-service lint",
     "lint:teamcity": "vue-cli-service lint --no-fix --format ./node_modules/eslint-teamcity/index.js",
     "serve:storybook": "start-storybook -s ./public -p 6006"
   },
   "main": "./dist/vuetning.common.js",
+  "unpkg": "dist/vuetning.umd.min.js",
+  "jsdelivr": "dist/vuetning.umd.min.js",
   "files": [
     "dist/*",
     "src/*"
@@ -65,10 +67,13 @@
   },
   "homepage": "https://arcthoscompany.github.io/Vuetning/",
   "keywords": [
+    "vuetning",
     "vue",
+    "vuejs",
     "slds",
     "lightning",
-    "salesforce"
+    "salesforce",
+    "framework"
   ],
   "license": "MIT",
   "repository": {

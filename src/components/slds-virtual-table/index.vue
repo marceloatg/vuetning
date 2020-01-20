@@ -44,7 +44,7 @@
             </div>
 
             <!-- No single file components inside RecycleScroller due to performance restrictions. -->
-            <RecycleScroller
+            <recycle-scroller
                 class="body"
                 :class="{'has-avatar': hasAvatar}"
                 :items="filteredRows"
@@ -224,7 +224,7 @@
                     </div>
                 </template>
 
-            </RecycleScroller>
+            </recycle-scroller>
 
         </div>
 
@@ -238,11 +238,14 @@
     import 'numeral/locales/pt-br'
     import uuid from 'uuid/v4';
     import {mixin as clickaway} from 'vue-clickaway'
+    import {RecycleScroller} from 'vue-virtual-scroller'
+    import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
     export default {
         name: 'SldsVirtualTable',
         components: {
-            SldsColumn
+            RecycleScroller,
+            SldsColumn,
         },
         mixins: [clickaway],
         props: {

@@ -26,7 +26,12 @@
 </template>
 
 <script>
+    import SldsSvg from '../../shared/svg/index'
+
     export default {
+        components: {
+            SldsSvg,
+        },
         props: {
             disabled: {
                 type: Boolean,

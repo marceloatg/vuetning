@@ -83,12 +83,10 @@
         },
         data() {
             return {
-                id: null,
+                id: uuid(),
             }
         },
         created() {
-            this.id = uuid();
-
             for (let option of this.options) {
                 if (option == null || option.value == null)
                     throw 'Missing value for option.';
@@ -139,5 +137,4 @@
             word-wrap: break-word;
         }
     }
-
 </style>

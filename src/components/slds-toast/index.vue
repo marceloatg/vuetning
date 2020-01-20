@@ -34,8 +34,8 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index'
-    import SldsIcon from '../slds-icon/index'
+    import SldsButtonIcon from '../slds-button-icon/index.vue'
+    import SldsIcon from '../slds-icon/index.vue'
 
     export default {
         name: 'SldsToast',
