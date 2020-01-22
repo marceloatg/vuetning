@@ -10,6 +10,7 @@ export {default as SldsCheckboxButton} from './slds-checkbox-button'
 export {default as SldsCheckboxButtonGroup} from './slds-checkbox-button-group'
 export {default as SldsCheckboxToggle} from './slds-checkbox-toggle'
 export {default as SldsCombobox} from './slds-combobox'
+export {default as SldsCounter} from './slds-counter'
 export {default as SldsDataTable} from './slds-data-table';
 export {default as SldsDockedComposer} from './slds-docked-composer';
 export {default as SldsGlobalHeader} from './slds-global-header'
