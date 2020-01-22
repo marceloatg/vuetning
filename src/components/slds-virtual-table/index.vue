@@ -656,7 +656,7 @@
     }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
     $color-background-alt: #ffffff;
     $header-height: 2rem;
     $row-height: 1.75rem;
