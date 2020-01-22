@@ -17,7 +17,6 @@
                 type="number"
                 :value="value"
                 v-bind="$attrs"
-                placeholder="1"
                 class="slds-input slds-input_counter"
                 @input="$emit('input', $event.target.value)"
                 v-on="listeners">
