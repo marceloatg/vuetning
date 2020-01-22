@@ -23,3 +23,5 @@ yarn-error.log*
 coverage/
 
 storybook-static/
+
+docs/.vuepress/dist/

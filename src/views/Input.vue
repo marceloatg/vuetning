@@ -90,6 +90,7 @@
             </slds-input>
             <br>
 
+            <slds-counter label="Counter" min-value="0"/>
         </div>
 
     </article>
