@@ -1,11 +1,12 @@
 <template>
     <svg :class="offset">
-        <use :xlink:href="`/assets/icons/${category}-sprite/svg/symbols.svg#${name}`"/>
+        <use :xlink:href="`${root}/assets/icons/${category}-sprite/svg/symbols.svg#${name}`"/>
     </svg>
 </template>
 
 <script>
     export default {
+        name: 'SldsSvg',
         props: {
             icon: {
                 type: String,
@@ -29,6 +30,10 @@
             offset() {
                 if (this.category !== 'utility') return '';
                 return (this.standard) ? 'utility-offset' : '';
+            },
+            root() {
+                // TODO make configurable
+                return '';
             },
         },
         created() {

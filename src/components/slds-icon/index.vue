@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../../shared/svg/index'
+    import SldsSvg from '../slds-svg/index'
 
     export default {
         name: 'SldsIcon',
