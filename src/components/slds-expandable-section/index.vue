@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../../shared/svg'
+    import SldsSvg from '../slds-svg/index.vue'
 
     export default {
         name: 'SldsExpandableSection',

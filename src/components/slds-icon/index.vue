@@ -1,15 +1,11 @@
 <template>
     <span class="slds-icon_container" :class="[background, {'slds-current-color':current}]">
-        <slds-svg
-            :icon="icon"
-            class="slds-icon"
-            :standard="standard"
-            :class="[iconClass, size, variant]"/>
+        <slds-svg :icon="icon" class="slds-icon" :standard="standard" :class="[iconClass, size, variant]"/>
     </span>
 </template>
 
 <script>
-    import SldsSvg from '../../shared/svg/index'
+    import SldsSvg from '../slds-svg/index.vue'
 
     export default {
         name: 'SldsIcon',
@@ -102,7 +98,9 @@
         },
         methods: {
             parseBackground() {
-                const classes = this.$el.classList;
+                let classes = this.$el.classList;
+                if (classes == null) classes = [];
+
                 if (this.background != null) classes.remove(this.background);
 
                 for (let i = 0; i < classes.length; i++) {

@@ -7,56 +7,75 @@
 
 ## Introduction
 
-## Install
+## Components
 
-Vuetning is available as an [npm package](https://www.npmjs.com/package/vuetning).
+* [Button](https://marceloatg.github.io/vuetning/components/button.html)
 
+## Browser Support
+Vuetning is being developed in recent versions of **Chrome**. Support for **Safari**, **Firefox**, **Edge** and **Opera** will be added in the future.
+
+## Quick-start CDN
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <vs-button vs-type="filled">Hello World</vs-button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetning/dist/vuetning.umd.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
 ```
-npm install vuetning
+
+## CDN Links
+
+- https://cdn.jsdelivr.net/npm/vuetning/dist/vuetning.umd.min.js
+- https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system
+
+# Install inside a NPM project
+Vuetning is available as an [NPM package](https://www.npmjs.com/package/vuetning).
+
+``` bash
+npm install vuesax
 ```
 
 ## Usage
+### All components
 
-In your `main.js`, or a similar entry point, simply import vuetning using:
+```javascript
+import Vue from 'vue'
+import Vuetning from 'vuetning'
 
-```vue
-import 'vuetning';
+Vue.use(Vuetning)
 ```
 
-Since vuetning globally register its components, you can start using them out of the box, that simple!
+### Or use individual components:
+
+```javascript
+import Vue from 'vue'
+import { sldsButton, sldsCombobox, sldsModal } from 'vuetning'
+import 'vuesax/dist/vuesax.css'
+
+Vue.use(sldsButton)
+Vue.use(sldsCombobox)
+Vue.use(sldsModal)
+```
 
 ## Assets
 
 TBD 
-
-## Components
-
-* [Alert](src/components/slds-alert)
-* [Avatar](src/components/slds-avatar)
-* [Badge](src/components/slds-badge)
-* [Brand Band](src/components/slds-brand-band)
-* [Button](src/components/slds-button)
-* [Button Icon](src/components/slds-button-icon)
-* [Combobox](src/components/slds-combobox)
-* [Checkbox](src/components/slds-checkbox)
-* [Checkbox Button](src/components/slds-checkbox-button)
-* [Data Table](src/components/slds-data-table)
-* [Docked Composer](src/components/slds-docked-composer)
-* [Expandable Section](src/components/slds-expandable-section)
-* [Global Header](src/components/slds-global-header)
-* [Global Navigation](src/components/slds-global-navigation)
-* [Icon](src/components/slds-icon)
-* [Illustration](src/components/slds-illustration)
-* [Input](src/components/slds-input)
-* [Menu](src/components/slds-menu)
-* [Modal](src/components/slds-modal)
-* [Notification](src/components/slds-notification)
-* [Pagination](src/components/slds-pagination)
-* [Picklist](./src/components/Picklist)
-* [Pill](src/components/slds-pill)
-* [Spinner](src/components/slds-spinner)
-* [Toast](src/components/slds-toast)
-* [Trial Bar](src/components/slds-trial-bar)
 
 ## License
 

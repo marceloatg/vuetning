@@ -35,7 +35,7 @@
 
 <script>
     import Commons from "../slds-data-table/commons";
-    import SldsSvg from '../../shared/svg/index'
+    import SldsSvg from '../slds-svg/index.vue'
     import Clicker from "./clicker"
 
     export default {

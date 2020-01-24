@@ -1,15 +1,15 @@
 <template>
-    <div class="container">
+    <div class="slds-virtual-table-container">
 
         <div v-if="ruler.active" ref="ruler" class="ruler">
             {{ ruler.value }}
         </div>
 
-        <div class="table">
+        <div class="slds-virtual-table">
 
-            <div class="header" :style="{ width: `${tableWidth}px` }">
+            <div class="slds-virtual-table_header" :style="{ width: `${tableWidth}px` }">
 
-                <div v-if="hasLineNumberColumn" class="line-number"/>
+                <div v-if="hasLineNumberColumn" class="line-number" style="height: 32px"/>
 
                 <div
                     v-if="hasCheckboxColumn"
@@ -26,7 +26,6 @@
                 <slds-column
                     v-for="(column, index) in columns"
                     :key="column.fieldName"
-                    :column="column"
                     :index="index"
                     :initial-width="column.width"
                     :label="column.label"
@@ -45,7 +44,7 @@
 
             <!-- No single file components inside RecycleScroller due to performance restrictions. -->
             <recycle-scroller
-                class="body"
+                class="slds-virtual-table_body"
                 :class="{'has-avatar': hasAvatar}"
                 :items="filteredRows"
                 :item-size="hasAvatar ? 40 : 28"
@@ -53,7 +52,7 @@
                 :buffer="100">
 
                 <template v-slot="{ item, index }">
-                    <div class="row" :class="{selected: isSelected(item)}" :style="{ width: `${rowWidth}px` }">
+                    <div class="slds-virtual-table_row" :class="{selected: isSelected(item)}" :style="{ width: `${rowWidth}px` }">
 
                         <!-- Line number -->
                         <div v-if="hasLineNumberColumn" class="cell line-number slds-text-body_small slds-text-color_weak">
@@ -110,8 +109,7 @@
                                         v-else-if="column.type === 'badge' && getFieldObject(column, item) != null"
                                         :label="getFieldObject(column, item).label"
                                         :color="getFieldObject(column, item).color"
-                                        :icon-name="getFieldObject(column, item).iconName"
-                                        :icon-position="getFieldObject(column, item).iconPosition"/>
+                                        :icon-name="getFieldObject(column, item).icon"/>
 
                                     <!-- Boolean -->
                                     <span
@@ -232,6 +230,8 @@
 </template>
 
 <script>
+    import SldsBadge from '../slds-badge/index.vue';
+    import SldsIcon from '../slds-icon/index.vue';
     import Commons from "../slds-data-table/commons";
     import SldsColumn from "./column";
     import numeral from 'numeral'
@@ -245,7 +245,9 @@
         name: 'SldsVirtualTable',
         components: {
             RecycleScroller,
+            SldsBadge,
             SldsColumn,
+            SldsIcon,
         },
         mixins: [clickaway],
         props: {
@@ -341,7 +343,7 @@
         },
         watch: {
             filter() {
-                this.$el.querySelector('.body').scrollTop = 0;
+                this.$el.querySelector('.slds-virtual-table_body').scrollTop = 0;
             }
         },
         created() {
@@ -360,7 +362,7 @@
                 .addEventListener('scroll', this.onScroll);
         },
         activated() {
-            this.$el.querySelector('.body').scrollTop = this.scrollTop;
+            this.$el.querySelector('.slds-virtual-table_body').scrollTop = this.scrollTop;
         },
         beforeDestroy() {
             this.$el
@@ -495,7 +497,7 @@
                 return sorterValue;
             },
             getTableWidth() {
-                const table = this.$el.querySelector('.table');
+                const table = this.$el.querySelector('.slds-virtual-table');
                 this.tableWidth = table.offsetWidth;
                 this.rowWidth = this.tableWidth - this.scrollbarWidth;
             },
@@ -656,7 +658,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     $color-background-alt: #ffffff;
     $header-height: 2rem;
     $row-height: 1.75rem;
@@ -678,168 +680,167 @@
         }
     }
 
-    .container {
+    .slds-virtual-table-container {
         height: 100%;
         width: 100%;
         position: relative;
         overflow: hidden;
         background-color: #fafaf9;
-    }
 
-    .table {
-        height: 100%;
-        font-size: inherit;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
-    }
-
-    .header {
-        position: static;
-        height: $header-height;
-
-        display: flex;
-        color: #514f4d;
-        font-weight: 700;
-        line-height: normal;
-        background-color: $table-color-background-header;
-
-        .line-number {
-            min-width: 3.75rem;
-            position: absolute;
-        }
-
-        .checkbox {
-            min-width: 2rem;
-            position: absolute;
-        }
-
-        .column {
-            position: absolute;
-        }
-    }
-
-    .body {
-        height: calc(100% - #{$header-height});
-        overflow-x: auto;
-        border-top: 1px solid #dddbda;
-
-        &.has-avatar {
-            .row {
-                height: $avatar-row-height;
-            }
-        }
-    }
-
-    .row {
-        display: flex;
-        height: $row-height;
-        align-items: center;
-        border-bottom: 1px solid #dddbda;
-        background-color: $color-background-alt;
-
-        &.selected {
-            background-color: #f3f2f2;
-        }
-
-        .cell {
-            padding: .25rem .5rem;
+        .slds-virtual-table {
             height: 100%;
-            line-height: 1.25rem;
+            font-size: inherit;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
 
-            &-content {
-                height: 100%;
-                align-items: center;
-            }
+            &_header {
+                position: static;
+                height: $header-height;
 
-            .slds-cell-copy__button {
-                opacity: 0;
-                width: 1.25rem;
-                height: 1.25rem;
-                flex-shrink: 0;
-            }
+                display: flex;
+                color: #514f4d;
+                font-weight: 700;
+                line-height: normal;
+                background-color: $table-color-background-header;
 
-            &.line-actions {
-                position: relative;
-
-                .slds-dropdown-trigger {
-                    margin: 0;
+                .line-number {
+                    min-width: 3.75rem;
                     position: absolute;
-                    top: 50%;
-                    -ms-transform: translateY(-50%);
-                    transform: translateY(-50%);
+                }
+
+                .checkbox {
+                    min-width: 2rem;
+                    position: absolute;
+                }
+
+                .column {
+                    position: absolute;
                 }
             }
 
-            &:hover {
+            &_body {
+                height: calc(100% - #{$header-height});
+                overflow-x: auto;
+                border-top: 1px solid #dddbda;
+
+                &.has-avatar {
+                    .slds-virtual-table_row {
+                        height: $avatar-row-height;
+                    }
+                }
+            }
+
+            &_row {
+                display: flex;
+                height: $row-height;
+                align-items: center;
+                border-bottom: 1px solid #dddbda;
                 background-color: $color-background-alt;
-                box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
 
-                .slds-cell-copy__button {
-                    opacity: 0.5;
+                &.selected {
+                    background-color: #f3f2f2;
                 }
 
-                .slds-cell-copy__button:hover {
-                    opacity: 1;
+                .cell {
+                    padding: .25rem .5rem;
+                    height: 100%;
+                    line-height: 1.25rem;
+
+                    &-content {
+                        height: 100%;
+                        align-items: center;
+                    }
+
+                    .slds-cell-copy__button {
+                        opacity: 0;
+                        width: 1.25rem;
+                        height: 1.25rem;
+                        flex-shrink: 0;
+                    }
+
+                    &.line-actions {
+                        position: relative;
+
+                        .slds-dropdown-trigger {
+                            margin: 0;
+                            position: absolute;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);
+                        }
+                    }
+
+                    &:hover {
+                        background-color: $color-background-alt;
+                        box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
+
+                        .slds-cell-copy__button {
+                            opacity: 0.5;
+                        }
+
+                        .slds-cell-copy__button:hover {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                .line-number {
+                    min-width: 3.75rem;
+                    width: 3.75rem;
+                    text-align: center;
+                }
+
+                .checkbox {
+                    min-width: 2rem;
+                    width: 2rem;
+                    text-align: center;
+                }
+
+                .line-actions {
+                    min-width: 3rem;
+                    width: 3rem;
+
+                    .slds-button {
+                        margin-top: -2px;
+                    }
+
+                    .slds-button:focus {
+                        box-shadow: none;
+                        color: #706e6b;
+                    }
+                }
+
+                .slds-button_outline-brand {
+                    padding: 0 6px;
+                    line-height: 1.125rem;
+
+                    &:active {
+                        animation: click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
+                    }
+
+                    &:focus {
+                        box-shadow: none;
+                        color: #0070d2;
+                        background-color: #fff;
+                    }
+
+                    .slds-button__icon_left {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            .hover {
+                .slds-virtual-table_row {
+                    background-color: #f3f2f2;
+                    box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
                 }
             }
         }
 
-        .line-number {
-            min-width: 3.75rem;
-            width: 3.75rem;
-            text-align: center;
-        }
-
-        .checkbox {
-            min-width: 2rem;
-            width: 2rem;
-            text-align: center;
-        }
-
-        .line-actions {
-            min-width: 3rem;
-            width: 3rem;
-
-            .slds-button {
-                margin-top: -2px;
-            }
-
-            .slds-button:focus {
-                box-shadow: none;
-                color: #706e6b;
-            }
-        }
-
-        .slds-button_outline-brand {
-            padding: 0 6px;
-            line-height: 1.125rem;
-
+        .slds-button_icon {
             &:active {
                 animation: click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
             }
-
-            &:focus {
-                box-shadow: none;
-                color: #0070d2;
-                background-color: #fff;
-            }
-
-            .slds-button__icon_left {
-                margin-right: 0;
-            }
-        }
-    }
-
-    .hover {
-        .row {
-            background-color: #f3f2f2;
-            box-shadow: #dddbda 0 -1px 0 inset, #dddbda 0 1px 0 inset;
-        }
-    }
-
-    .slds-button_icon {
-
-        &:active {
-            animation: click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
         }
     }
 

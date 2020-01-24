@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Input'
+    import SldsView from './views/Default/Index'
 
     export default {
         name: 'App',

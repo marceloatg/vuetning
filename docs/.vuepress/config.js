@@ -62,6 +62,7 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/components/',
+                    '/components/avatar',
                     '/components/button',
                 ]
             },
