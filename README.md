@@ -3,12 +3,13 @@
 </p>
 
 # Vuetning [![vuetning](https://img.shields.io/npm/v/vuetning.svg)](https://www.npmjs.org/package/vuetning) ![Dependencies](https://img.shields.io/david/ArcthosCompany/Vuetning.svg) [![NPM downloads](https://img.shields.io/npm/dt/vuetning.svg)](https://npmjs.org/package/vuetning) ![gzip size](http://img.badgesize.io/https://unpkg.com/vuetning/dist/vuetning.common.js?compression=gzip&label=gzip%20size)
-### Salesforce Lightning Design System framework for Vue.js 2
 
 ## Introduction
+[Vuetning](https://marceloatg.github.io/vuetning) is a Salesforce Lightning Design System framework for Vue.js 2...
 
 ## Components
 
+* [Avatar](https://marceloatg.github.io/vuetning/components/avatar.html)
 * [Button](https://marceloatg.github.io/vuetning/components/button.html)
 
 ## Browser Support
@@ -25,7 +26,7 @@ Vuetning is being developed in recent versions of **Chrome**. Support for **Safa
 </head>
 <body>
   <div id="app">
-    <vs-button vs-type="filled">Hello World</vs-button>
+    <slds-button brand label="Hello World"/>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

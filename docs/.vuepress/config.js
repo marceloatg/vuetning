@@ -1,5 +1,5 @@
 module.exports = {
-    base: '/Vuetning/',
+    base: '/vuetning/',
     docsDir: 'docs',
     host: 'localhost',
     port: 7070,
@@ -10,7 +10,7 @@ module.exports = {
 
     ],
     themeConfig: {
-        repo: 'ArcthosCompany/Vuetning',
+        repo: 'marceloatg/vuetning',
         repoLabel: 'Contribute!',
         docsDir: 'docs',
         logo:'/logo.svg',
@@ -24,16 +24,16 @@ module.exports = {
                     {
                         text: 'Social',
                         items: [
-                            { text: 'GitHub', link: 'https://github.com/ArcthosCompany/Vuetning' },
+                            { text: 'GitHub', link: 'https://github.com/marceloatg/vuetning' },
                         ]
                     },
                     {
                         text: 'Help',
                         items: [
-                            { text: 'Issues', link: 'https://github.com/ArcthosCompany/Vuetning/issues' },
-                            { text: 'Edit Page', link: 'https://github.com/ArcthosCompany/Vuetning' },
-                            { text: 'Latest Releases', link: 'https://github.com/ArcthosCompany/Vuetning/releases' },
-                            { text: 'FAQ', link: 'https://github.com/ArcthosCompany/Vuetning/wiki' }
+                            { text: 'Issues', link: 'https://github.com/marceloatg/vuetning/issues' },
+                            { text: 'Edit Page', link: 'https://github.com/marceloatg/vuetning' },
+                            { text: 'Latest Releases', link: 'https://github.com/marceloatg/vuetning/releases' },
+                            { text: 'FAQ', link: 'https://github.com/marceloatg/vuetning/wiki' }
                         ]
                     },
                     {
@@ -41,7 +41,7 @@ module.exports = {
                         items: [
                             { text: 'Blue Bear', link: 'https://bluebear.app' },
                             { text: 'Email', link: 'mailto:social@bluebear.app' },
-                            { text: 'Pull Request', link: 'https://github.com/ArcthosCompany/Vuetning/pulls' },
+                            { text: 'Pull Request', link: 'https://github.com/marceloatg/vuetning/pulls' },
                         ]
                     }
                 ]
