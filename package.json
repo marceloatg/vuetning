@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": false,
   "description": "Salesforce Lightning Design System framework for Vue.js 2",
-  "author": "Marcelo A. T. Gomes <marceloatg@outlook.com>",
+  "author": "Marcelo A. T. Gomes <marceloatg@outlook.com> (https://github.com/marceloatg)",
+  "contributors": [
+    "Marcelo A. T. Gomes <marceloatg@outlook.com> (https://github.com/marceloatg)",
+    "Vinicius Damiati <viniciusdamiati@gmail.com> (https://github.com/ViniciusDamiati)"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -58,9 +62,9 @@
     "vuepress": "^1.2.0"
   },
   "bugs": {
-    "url": "https://github.com/ArcthosCompany/Vuetning/issues"
+    "url": "https://github.com/marceloatg/vuetning/issues"
   },
-  "homepage": "https://arcthoscompany.github.io/Vuetning/",
+  "homepage": "https://marceloatg.github.io/vuetning/",
   "keywords": [
     "vuetning",
     "vue",

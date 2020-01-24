@@ -1,70 +1,80 @@
 <template>
-    <span class="slds-avatar" :class="[`slds-avatar_${variant}`, 'slds-avatar_' + size]">
+    <span class="slds-avatar" :class="[size, variant]">
 
         <!-- Initials -->
         <abbr
-            v-if="initials !== null"
+            v-if="initials"
             class="slds-avatar__initials"
             :class="[backgroundColor, {'slds-avatar__initials_inverse': inverse}]">
             {{ initials }}
         </abbr>
 
         <!-- Image -->
-        <img v-else alt="Avatar" :src="src">
+        <img v-else-if="src" alt="Avatar" :src="src">
+
+        <!-- Fallback icon -->
+        <slds-icon v-else :icon="fallbackIcon"/>
 
     </span>
 </template>
 
 <script>
+    import SldsIcon from '../slds-icon/index.vue'
+
     export default {
         name: 'SldsAvatar',
+        components: {
+            SldsIcon
+        },
         props: {
-            fallbackIconName: {
+            circle: {
+                type: Boolean,
+            },
+            fallbackIcon: {
                 type: String,
-                default: null,
+                default: 'standard:user',
             },
             initials: {
                 type: String,
-                default: null,
             },
             inverse: {
                 type: Boolean,
                 default: false,
             },
-            size: {
-                type: String,
-                default: 'medium',
-                validator(value) {
-                    return [
-                        'x-small',
-                        'small',
-                        'medium',
-                        'large'
-                    ].indexOf(value) !== -1
-                }
+            large: {
+                type: Boolean,
+            },
+            medium: {
+                type: Boolean,
+            },
+            small: {
+                type: Boolean,
+            },
+            xSmall: {
+                type: Boolean,
             },
             src: {
                 type: String,
-                default: null,
-            },
-            variant: {
-                type: String,
-                default: 'square',
-                validator(value) {
-                    return [
-                        'square',
-                        'circle'
-                    ].indexOf(value) !== -1
-                }
             },
         },
         computed: {
             backgroundColor() {
-                if (this.fallbackIconName == null) return;
+                if (this.fallbackIcon == null) return;
 
-                const category = this.fallbackIconName.split(':')[0];
-                const name = this.fallbackIconName.split(':')[1];
+                const category = this.fallbackIcon.split(':')[0];
+                const name = this.fallbackIcon.split(':')[1];
                 return `slds-icon-${category}-${name}`;
+            },
+            size() {
+                if (this.xSmall) return 'slds-avatar_x-small';
+                if (this.small) return 'slds-avatar_small';
+                if (this.medium) return 'slds-avatar_medium';
+                if (this.large) return 'slds-avatar_large';
+                return 'slds-avatar_medium';
+            },
+            variant() {
+                if (this.circle) return 'slds-avatar_circle';
+                return null;
             },
         },
     }

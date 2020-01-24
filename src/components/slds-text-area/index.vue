@@ -34,7 +34,7 @@
 
 <script>
     export default {
-        name: "SldsTextArea",
+        name: 'SldsTextArea',
         inheritAttrs: false,
         props: {
             error: {
