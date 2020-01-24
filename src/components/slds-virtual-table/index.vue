@@ -110,8 +110,7 @@
                                         v-else-if="column.type === 'badge' && getFieldObject(column, item) != null"
                                         :label="getFieldObject(column, item).label"
                                         :color="getFieldObject(column, item).color"
-                                        :icon-name="getFieldObject(column, item).iconName"
-                                        :icon-position="getFieldObject(column, item).iconPosition"/>
+                                        :icon="getFieldObject(column, item).icon"/>
 
                                     <!-- Boolean -->
                                     <span

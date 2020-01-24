@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/index'
+    import SldsSvg from '../slds-svg/index.vue'
 
     export default {
         name: 'SldsAlert',
