@@ -1,29 +1,40 @@
 <template>
-    <div class="slds-checkbox_add-button" @click.stop="onClick">
+    <label
+        class="slds-checkbox-button"
+        :class="[{'slds-checkbox-button_is-checked': value}, {'slds-checkbox-button_is-disabled': disabled}]">
 
         <input
             type="checkbox"
-            :checked="value"
-            :value="value"
             class="slds-assistive-text"
-            v-bind="[disabledAttribute]">
+            :value="value"
+            v-bind="$attrs"
+            @input="onClick"
+            v-on="listeners">
 
-        <label class="slds-checkbox_faux"/>
+        <slds-icon :icon="icon" current x-small/>
 
-    </div>
+    </label>
 </template>
 
 <script>
+    import SldsIcon from '../slds-icon/index.vue'
+
     export default {
-        name: 'SldsCheckboxGroup',
+        name: 'SldsCheckboxButton',
+        components: {
+            SldsIcon,
+        },
+        inheritAttrs: false,
         props: {
             checked: {
                 type: Boolean,
-                default: false,
             },
             disabled: {
                 type: Boolean,
-                default: false,
+            },
+            icon: {
+                type: String,
+                default: 'utility:add',
             },
         },
         data() {
@@ -32,8 +43,10 @@
             }
         },
         computed: {
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
+            listeners() {
+                const listeners = {...this.$listeners};
+                delete listeners.input;
+                return listeners
             },
         },
         watch: {
@@ -56,11 +69,12 @@
 </script>
 
 <style scoped lang="scss">
-    .slds-checkbox_faux {
-        transition: all 250ms ease-in-out;
+    .slds-checkbox-button {
+        user-select: none;
+        transition: all 140ms ease-in-out;
 
         &:after {
-            transition: all 250ms ease-in-out;
+            transition: all 140ms ease-in-out;
         }
     }
 </style>

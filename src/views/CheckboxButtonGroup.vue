@@ -43,15 +43,7 @@
 
             <br>
 
-            <slds-checkbox-button-group
-                label="Scheduled Day(s)"
-                :options="options"
-                required
-                error>
-                <template #error>
-                    <p>This field is required.</p>
-                </template>
-            </slds-checkbox-button-group>
+            <slds-checkbox-button v-model="input"/>
 
             <h2 class="slds-text-heading_large slds-m-top_large slds-m-bottom_small">
                 Disabled
