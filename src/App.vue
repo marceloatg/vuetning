@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Default/Index'
+    import SldsView from './views/CheckboxButtonGroup'
 
     export default {
         name: 'App',

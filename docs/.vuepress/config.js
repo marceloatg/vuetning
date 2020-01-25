@@ -64,6 +64,7 @@ module.exports = {
                     '/components/',
                     '/components/avatar',
                     '/components/button',
+                    '/components/checkbox-button',
                 ]
             },
         ]
