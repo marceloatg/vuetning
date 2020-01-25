@@ -4,13 +4,13 @@ An avatar component represents an object or entity.
 <vuecode md>
 
 <div slot="demo">
-<slds-avatar src="/assets/images/avatar1.jpg"/>
+<slds-avatar src="/vuetning/assets/images/avatar1.jpg"/>
 </div>
 
 <div slot="code">
 
 ```html
-<slds-avatar src="/assets/images/avatar1.jpg"/>
+<slds-avatar src="/vuetning/assets/images/avatar1.jpg"/>
 ```
 
 </div>
@@ -22,13 +22,13 @@ An avatar component represents an object or entity.
 <vuecode md>
 
 <div slot="demo">
-<slds-avatar src="/assets/images/avatar2.jpg" circle/>
+<slds-avatar src="/vuetning/assets/images/avatar2.jpg" circle/>
 </div>
 
 <div slot="code">
 
 ```html
-<slds-avatar src="/assets/images/avatar2.jpg" circle/>
+<slds-avatar src="/vuetning/assets/images/avatar2.jpg" circle/>
 ```
 
 </div>
@@ -76,19 +76,19 @@ An avatar component represents an object or entity.
 <vuecode md>
 
 <div slot="demo">
-<slds-avatar src="/assets/images/avatar3.jpg" large/>
-<slds-avatar src="/assets/images/avatar3.jpg" medium/>
-<slds-avatar src="/assets/images/avatar3.jpg" small/>
-<slds-avatar src="/assets/images/avatar3.jpg" x-small/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" large/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" medium/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" small/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" x-small/>
 </div>
 
 <div slot="code">
 
 ```html
-<slds-avatar src="/assets/images/avatar3.jpg" large/>
-<slds-avatar src="/assets/images/avatar3.jpg" medium/>
-<slds-avatar src="/assets/images/avatar3.jpg" small/>
-<slds-avatar src="/assets/images/avatar3.jpg" x-small/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" large/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" medium/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" small/>
+<slds-avatar src="/vuetning/assets/images/avatar3.jpg" x-small/>
 ```
 
 </div>

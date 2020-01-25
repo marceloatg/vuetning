@@ -11,6 +11,7 @@
 
 * [Avatar](https://marceloatg.github.io/vuetning/components/avatar.html)
 * [Button](https://marceloatg.github.io/vuetning/components/button.html)
+* [Checkbox Button](https://marceloatg.github.io/vuetning/components/checkbox-button.html)
 
 ## Browser Support
 Vuetning is being developed in recent versions of **Chrome**. Support for **Safari**, **Firefox**, **Edge** and **Opera** will be added in the future.
@@ -46,13 +47,21 @@ Vuetning is being developed in recent versions of **Chrome**. Support for **Safa
 - https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system
 
 # Install inside a NPM project
-Vuetning is available as an [NPM package](https://www.npmjs.com/package/vuetning).
+Vuetning is available as [npm](https://www.npmjs.com/package/vuetning) and [yarn](https://yarnpkg.com/package/vuetning) packages.
 
 ``` bash
-npm install vuesax
+# npm
+npm install vuetning
+```
+
+``` bash
+# yarn
+yarn add vuetning
 ```
 
 ## Usage
+In your `main.js`, or similar entry point, install vuetning using:
+
 ### All components
 
 ```javascript
@@ -67,7 +76,6 @@ Vue.use(Vuetning)
 ```javascript
 import Vue from 'vue'
 import { sldsButton, sldsCombobox, sldsModal } from 'vuetning'
-import 'vuesax/dist/vuesax.css'
 
 Vue.use(sldsButton)
 Vue.use(sldsCombobox)
