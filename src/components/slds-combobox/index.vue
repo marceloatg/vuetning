@@ -20,6 +20,7 @@
                                 ref="input"
                                 :value="filter"
                                 v-bind="attributes"
+                                :placeholder="placeholder"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
                                 @blur="onBlur"
                                 @click="onClick"
@@ -46,6 +47,7 @@
                                 :value="selectedOption"
                                 :readonly="readonly"
                                 v-bind="attributes"
+                                :placeholder="placeholder"
                                 class="slds-input slds-combobox__input slds-combobox__input-value"
                                 @blur="onBlur"
                                 @click="onClick"
@@ -162,6 +164,9 @@
                 type: Array,
                 default: () => [],
             },
+            placeholder: {
+                type: String,
+            },
             readonly: {
                 type: Boolean,
             },
@@ -198,6 +203,7 @@
         },
         computed: {
             attributes() {
+                console.log(this.$attrs)
                 return {...this.$attrs}
             },
             filteredOptions() {

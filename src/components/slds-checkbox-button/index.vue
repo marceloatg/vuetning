@@ -11,7 +11,8 @@
             @input="onClick"
             v-on="listeners">
 
-        <slds-icon :icon="icon" current x-small/>
+        <slds-icon v-if="value" :icon="iconChecked" current x-small/>
+        <slds-icon v-else :icon="icon" current x-small/>
 
     </label>
 </template>
@@ -35,6 +36,10 @@
             icon: {
                 type: String,
                 default: 'utility:add',
+            },
+            iconChecked: {
+                type: String,
+                default: 'utility:check',
             },
         },
         data() {
