@@ -203,7 +203,6 @@
         },
         computed: {
             attributes() {
-                console.log(this.$attrs)
                 return {...this.$attrs}
             },
             filteredOptions() {
