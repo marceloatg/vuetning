@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-form-element">
+    <div class="slds-form-element" :dir="rightToLeft ? 'rtl' : 'ltr'">
         <label class="slds-checkbox_toggle slds-grid">
 
             <!-- Label -->
@@ -16,13 +16,13 @@
 
             <span class="slds-checkbox_faux_container">
 
-                <span class="slds-checkbox_faux"/>
+                <span class="slds-checkbox_faux slds-m-right_x-small"/>
 
-                <span v-if="messageActive != null" class="slds-checkbox_on">
+                <span v-if="!noMessage" class="slds-checkbox_on">
                     {{ messageActive }}
                 </span>
 
-                <span v-if="messageInactive != null" class="slds-checkbox_off">
+                <span v-if="!noMessage" class="slds-checkbox_off">
                     {{ messageInactive }}
                 </span>
 
@@ -47,6 +47,12 @@
             messageInactive: {
                 type: String,
                 default: 'Disabled',
+            },
+            noMessage: {
+                type: Boolean,
+            },
+            rightToLeft: {
+                type: Boolean,
             },
             value: {
                 type: Boolean,
