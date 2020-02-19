@@ -224,6 +224,11 @@
                 if (this.selectedValues.length === 0) return;
                 if (this.selectedList !== 'source') return;
 
+                if (this.max) {
+                    const newLength = this.values.length + this.selectedValues.length;
+                    if (newLength > this.max) return;
+                }
+
                 for (let selectedValue of this.selectedValues) {
                     let selectedOption = this.sourceOptions.find(option => option.value === selectedValue);
                     let index = this.sourceOptions.indexOf(selectedOption);
@@ -240,6 +245,11 @@
             onclickDeselect() {
                 if (this.selectedValues.length === 0) return;
                 if (this.selectedList !== 'selected') return;
+
+                if (this.min) {
+                    const newLength = this.values.length - this.selectedValues.length;
+                    if (newLength < this.min) return;
+                }
 
                 for (let selectedValue of this.selectedValues) {
                     let selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
