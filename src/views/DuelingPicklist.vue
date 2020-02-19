@@ -34,7 +34,6 @@
                 source-label="Available"
                 selected-label="Selected"
                 :options="options"
-                :min="3"
                 reorderable/>
         </div>
 

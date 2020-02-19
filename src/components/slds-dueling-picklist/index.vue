@@ -22,7 +22,7 @@
 
                     <!-- Items -->
                     <div class="slds-dueling-list__options" :class="{'slds-is-disabled': disabled}">
-                        <ul role="listbox" class="slds-listbox slds-listbox_vertical">
+                        <transition-group name="listbox-source" tag="ul" role="listbox" class="slds-listbox slds-listbox_vertical">
                             <dueling-picklist-option
                                 v-for="(option, index) in sourceOptions"
                                 :key="option.value"
@@ -34,7 +34,7 @@
                                 @click="onClick('source', option.value, index)"
                                 @ctrl-click="onCtrlClick('source', option.value, index)"
                                 @shift-click="onShiftClick('source', option.value, index)"/>
-                        </ul>
+                        </transition-group>
                     </div>
 
                 </div>
@@ -53,7 +53,7 @@
 
                     <!-- Items -->
                     <div class="slds-dueling-list__options" :class="{'slds-is-disabled': disabled}">
-                        <ul role="listbox" class="slds-listbox slds-listbox_vertical">
+                        <transition-group name="listbox-selected" tag="ul" role="listbox" class="slds-listbox slds-listbox_vertical">
                             <dueling-picklist-option
                                 v-for="(option, index) in selectedOptions"
                                 :key="option.value"
@@ -63,10 +63,11 @@
                                 :value="option.value"
                                 :disabled="option.disabled"
                                 :is-selected="selectedValues.includes(option.value)"
+                                class="listbox-item"
                                 @click="onClick('selected', option.value, index)"
                                 @ctrl-click="onCtrlClick('selected', option.value, index)"
                                 @shift-click="onShiftClick('selected', option.value, index)"/>
-                        </ul>
+                        </transition-group>
                     </div>
 
                 </div>
@@ -130,12 +131,8 @@
                 selectedOptions: [],
                 selectedValues: [],
                 sourceOptions: [],
+                values: [],
             }
-        },
-        computed: {
-            values() {
-                return this.selectedOptions.map(option => option.value);
-            },
         },
         watch: {
             value(newValues) {
@@ -147,6 +144,9 @@
             this.initializeOptions();
         },
         methods: {
+            calculateValues() {
+                this.values = this.selectedOptions.map(option => option.value);
+            },
             initializeOptions() {
                 this.selectedOptions.splice(0, this.selectedOptions.length);
                 this.sourceOptions.splice(0, this.sourceOptions.length);
@@ -160,6 +160,8 @@
                     this.sourceOptions.splice(index, 1);
                     this.selectedOptions.push(selectedOption);
                 }
+
+                this.calculateValues();
             },
             onClick(list, selectedValue, index) {
                 if (this.disabled) return;
@@ -240,6 +242,7 @@
                 this.selectedValues.splice(0, this.selectedValues.length);
                 this.selectedList = null;
 
+                this.calculateValues();
                 this.$emit('input', this.values);
             },
             onclickDeselect() {
@@ -262,27 +265,75 @@
                 this.selectedValues.splice(0, this.selectedValues.length);
                 this.selectedList = null;
 
+                this.calculateValues();
                 this.$emit('input', this.values);
             },
             onClickUp() {
                 if (this.selectedValues.length === 0) return;
+                if (this.selectedList === 'source') return;
+
+                let selectedOptionsByIndex = new Map();
 
                 for (let selectedValue of this.selectedValues) {
-                    if (this.selectedList === 'source') {
-                        console.log(selectedValue)
-                    }
-                    else {
-                        console.log(selectedValue)
-                    }
+                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
+                    const index = this.selectedOptions.indexOf(selectedOption);
+                    selectedOptionsByIndex.set(index, selectedOption);
                 }
+
+                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort());
+
+                for (let [index, option] of selectedOptionsByIndex.entries()) {
+                    if (index === 0) continue;
+                    this.selectedOptions.splice(index, 1);
+                    this.selectedOptions.splice(index - 1, 0, option);
+                }
+
+                this.calculateValues();
+                this.$emit('input', this.values);
             },
             onClickDown() {
                 if (this.selectedValues.length === 0) return;
+                if (this.selectedList === 'source') return;
+
+                let selectedOptionsByIndex = new Map();
+
+                for (let selectedValue of this.selectedValues) {
+                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
+                    const index = this.selectedOptions.indexOf(selectedOption);
+                    selectedOptionsByIndex.set(index, selectedOption);
+                }
+
+                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse());
+                console.log(selectedOptionsByIndex)
+
+                for (let [index, option] of selectedOptionsByIndex.entries()) {
+                    if (index === (this.selectedOptions.length - 1)) continue;
+                    this.selectedOptions.splice(index, 1);
+                    this.selectedOptions.splice(index + 1, 0, option);
+                }
+
+                this.calculateValues();
+                this.$emit('input', this.values);
             },
         },
     }
 </script>
 
 <style scoped lang="scss">
+    .slds-dueling-list__options {
+        overflow-x: hidden;
+    }
 
+    .listbox-source-enter, .listbox-source-leave-to {
+        opacity: 0;
+        transform: translateX(1rem);
+    }
+
+    .listbox-selected-enter, .listbox-selected-leave-to {
+        opacity: 0;
+        transform: translateX(-1rem);
+    }
+
+    .listbox-leave-active {
+    }
 </style>

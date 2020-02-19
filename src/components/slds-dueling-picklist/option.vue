@@ -77,17 +77,21 @@
 </script>
 
 <style scoped lang="scss">
-    .slds-listbox__option-label {
-        font-size: 13px;
-        user-select: none;
-    }
+    .slds-listbox__item {
+        transition: all 300ms;
 
-    .slds-listbox__option-meta {
-        font-size: 12px;
-        user-select: none;
+        .slds-listbox__option-label {
+            font-size: 13px;
+            user-select: none;
+        }
 
-        &.is-selected {
-            color: #ecebea;
+        .slds-listbox__option-meta {
+            font-size: 12px;
+            user-select: none;
+
+            &.is-selected {
+                color: #ecebea;
+            }
         }
     }
 
