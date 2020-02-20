@@ -1,5 +1,5 @@
 <template>
-    <span class="slds-icon_container" :class="[background, {'slds-current-color':current}]">
+    <span class="slds-icon_container" :class="[background, {'slds-current-color':currentColor}]">
         <slds-svg :icon="icon" class="slds-icon" :standard="standard" :class="[iconClass, size, variant]"/>
     </span>
 </template>
@@ -13,7 +13,7 @@
             SldsSvg,
         },
         props: {
-            current: {
+            currentColor: {
                 type: Boolean,
             },
             error: {

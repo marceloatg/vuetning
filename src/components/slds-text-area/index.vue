@@ -58,5 +58,18 @@
                 return listeners
             },
         },
+        mounted() {
+            this.$refs.input.addEventListener("keyup", this.onKeyUp);
+        },
+        beforeDestroy() {
+            this.$refs.input.removeEventListener("keyup", this.onKeyUp);
+        },
+        methods: {
+            onKeyUp(event) {
+                if (event.key === 'Enter' && this.$refs.input === document.activeElement) {
+                    event.stopPropagation();
+                }
+            },
+        },
     }
 </script>
