@@ -85,11 +85,12 @@
 </template>
 
 <script>
+    import SldsButtonIcon from "../slds-button-icon/index.vue";
     import DuelingPicklistOption from "./option";
 
     export default {
         name: "SldsDuelingPicklist",
-        components: {DuelingPicklistOption},
+        components: {DuelingPicklistOption, SldsButtonIcon},
         props: {
             disabled: {
                 type: Boolean,
@@ -121,6 +122,7 @@
             },
             value: {
                 type: Array,
+                default: () => [],
             },
         },
         data() {

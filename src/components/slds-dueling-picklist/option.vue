@@ -35,8 +35,11 @@
 </template>
 
 <script>
+    import SldsIcon from '../slds-icon/index.vue'
+
     export default {
         name: "Option",
+        components: {SldsIcon},
         props: {
             disabled: {
                 type: Boolean,
