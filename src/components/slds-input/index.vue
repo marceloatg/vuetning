@@ -2,7 +2,7 @@
     <div class="slds-form-element" :class="{ 'slds-has-error': error }">
 
         <!-- Label -->
-        <label v-if="label != null" class="slds-form-element__label">
+        <label v-if="label" class="slds-form-element__label">
             <abbr v-if="required" class="slds-required" title="Required">*</abbr> {{ label }}
         </label>
 
@@ -62,8 +62,8 @@
         </div>
 
         <!-- Inline help -->
-        <div v-if="!error && inlineHelp != null" class="slds-form-element__help">
-            <slot name="inline-help"/>
+        <div v-if="!error && $slots.help" class="slds-form-element__help">
+            <slot name="help"/>
         </div>
 
         <!-- Error messages -->
@@ -115,9 +115,6 @@
             },
             iconWarning: {
                 type: Boolean,
-            },
-            inlineHelp: {
-                type: String,
             },
             label: {
                 type: String,

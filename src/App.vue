@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/DuelingPicklist'
+    import SldsView from './views/Counter'
 
     export default {
         name: 'App',

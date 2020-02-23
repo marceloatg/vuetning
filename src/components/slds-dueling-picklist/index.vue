@@ -137,6 +137,10 @@
             }
         },
         watch: {
+            options() {
+                if (this.options == null) this.options = [];
+                this.initializeOptions();
+            },
             value(newValues) {
                 if (JSON.stringify(newValues) === JSON.stringify(this.values)) return;
                 this.initializeOptions();
@@ -153,7 +157,8 @@
                 this.selectedOptions.splice(0, this.selectedOptions.length);
                 this.sourceOptions.splice(0, this.sourceOptions.length);
 
-                this.sourceOptions = [...this.options];
+                if (this.options)
+                    this.sourceOptions = [...this.options];
 
                 for (let value of this.value) {
                     let selectedOption = this.sourceOptions.find(option => option.value === value);
@@ -168,9 +173,16 @@
             onClick(list, selectedValue, index) {
                 if (this.disabled) return;
 
-                this.selectedList = list;
-                this.selectedValues.splice(0, this.selectedValues.length);
-                this.selectedValues.push(selectedValue);
+                if (this.selectedList === list && this.selectedValues.length === 1 && this.selectedValues[0] === selectedValue) {
+                    this.selectedList = null;
+                    this.selectedValues.splice(0, 1);
+                }
+                else {
+                    this.selectedList = list;
+                    this.selectedValues.splice(0, this.selectedValues.length);
+                    this.selectedValues.push(selectedValue);
+                }
+
                 this.lastIndex = index;
                 this.lastList = list;
             },
@@ -306,7 +318,6 @@
                 }
 
                 selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse());
-                console.log(selectedOptionsByIndex)
 
                 for (let [index, option] of selectedOptionsByIndex.entries()) {
                     if (index === (this.selectedOptions.length - 1)) continue;
@@ -322,6 +333,10 @@
 </script>
 
 <style scoped lang="scss">
+    .slds-form-element__label {
+        user-select: none;
+    }
+
     .slds-dueling-list__options {
         overflow-x: hidden;
     }
