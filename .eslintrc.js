@@ -17,8 +17,8 @@ module.exports = {
         "vue/attributes-order": ["error", {
             "order": [
                 "DEFINITION",
-                "LIST_RENDERING",
                 "CONDITIONALS",
+                "LIST_RENDERING",
                 "RENDER_MODIFIERS",
                 "GLOBAL",
                 "UNIQUE",

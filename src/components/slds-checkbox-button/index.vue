@@ -11,7 +11,7 @@
             @input="onClick"
             v-on="listeners">
 
-        <slds-icon v-if="value" :icon="iconChecked" current x-small/>
+        <slds-icon v-if="value" :icon="iconChecked" inverse x-small/>
         <slds-icon v-else :icon="icon" current x-small/>
 
     </label>
