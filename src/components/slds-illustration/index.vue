@@ -1,7 +1,9 @@
 <template>
-    <div class="slds-illustration" :class="['slds-illustration_' + size]">
+    <div class="slds-illustration" :class="size">
 
-        <img :src="src" class="slds-illustration__svg">
+        <!-- Image -->
+        <img v-if="src" :src="src" :alt="alt" class="slds-illustration__svg">
+        <slot v-else/>
 
         <div class="slds-text-longform">
 
@@ -23,31 +25,22 @@
     export default {
         name: 'SldsIllustration',
         props: {
-            src: {
-                type: String,
-                note: 'Image path.'
+            alt: String,
+            heading: String,
+            large: Boolean,
+            message: String,
+            src: String,
+            small: Boolean,
+            xSmall: Boolean,
+        },
+        computed: {
+            size() {
+                if (this.xSmall) return 'slds-illustration_x-small';
+                if (this.small) return 'slds-illustration_small';
+                if (this.large) return 'slds-illustration_large';
+                return 'slds-illustration_small';
             },
-            heading: {
-                type: String,
-                note: 'Heading text.'
-            },
-            message: {
-                type: String,
-                note: 'Message text.'
-            },
-            size: {
-                type: String,
-                default: 'small',
-                note: 'Illustration size. Check the validator for available options.',
-                validator(value) {
-                    return [
-                        'x-small',
-                        'small',
-                        'large',
-                    ].indexOf(value) !== -1
-                }
-            }
-        }
+        },
     }
 </script>
 
