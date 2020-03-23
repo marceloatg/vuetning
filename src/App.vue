@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Tabs'
+    import SldsView from './views/Publisher'
 
     export default {
         name: 'App',
