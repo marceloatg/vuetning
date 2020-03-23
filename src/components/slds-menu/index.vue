@@ -3,6 +3,7 @@
 
         <!-- Button -->
         <slds-button-icon
+            bordered-filled
             :icon="icon"
             :has-dropdown="icon !== 'utility:down'"
             :disabled="disabled"

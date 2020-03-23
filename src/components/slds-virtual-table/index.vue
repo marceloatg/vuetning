@@ -236,7 +236,7 @@
     import SldsColumn from "./column";
     import numeral from 'numeral'
     import 'numeral/locales/pt-br'
-    import uuid from 'uuid/v4';
+    import uuid from 'uuid/v4'; // import { v4 as uuid } from 'uuid';
     import {mixin as clickaway} from 'vue-clickaway'
     import {RecycleScroller} from 'vue-virtual-scroller'
     import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
@@ -251,40 +251,15 @@
         },
         mixins: [clickaway],
         props: {
-            actions: {
-                type: Array,
-            },
-            columns: {
-                type: Array,
-                required: true,
-            },
-            filter: {
-                type: String,
-                default: null,
-            },
-            hasCheckboxColumn: {
-                type: Boolean,
-                default: false,
-            },
-            hasLineNumberColumn: {
-                type: Boolean,
-                default: true,
-            },
-            initialSort: {
-                type: Object,
-            },
-            keyField: {
-                type: String,
-                required: true,
-            },
-            rows: {
-                type: Array,
-                required: true,
-            },
-            selectedRows: {
-                type: Array,
-                default: () => [],
-            },
+            actions: Array,
+            columns: {type: Array, required: true},
+            filter: {type: String, default: null},
+            hasCheckboxColumn: Boolean,
+            hasLineNumberColumn: {type: Boolean, default: true},
+            initialSort: Object,
+            keyField: {type: String, default: 'id'},
+            rows: {type: Array, required: true},
+            selectedRows: {type: Array, default: () => []},
         },
         data() {
             return {

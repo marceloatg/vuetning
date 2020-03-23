@@ -1,37 +1,26 @@
 <template>
-    <div class="slds-tabs_default">
+    <div class="slds-tabs_scoped">
 
-        <ul class="slds-tabs_default__nav" role="tablist">
+        <ul class="slds-tabs_scoped__nav" role="tablist">
 
             <!-- Tabs -->
             <li
                 v-for="item in items"
                 :key="item.key"
                 :title="item.label"
-                class="slds-tabs_default__item"
+                class="slds-tabs_scoped__item"
                 :class="{'slds-is-active': activeItem === item.key}"
                 role="presentation"
                 @click="$emit('click', item.key)">
 
                 <a
-                    :id="`tab-default-${item.key}__item`"
-                    class="slds-tabs_default__link"
+                    :id="`tab-scoped-${item.key}__item`"
+                    :aria-selected="activeItem === item.key"
+                    class="slds-tabs_scoped__link"
                     href="javascript:void(0);"
                     role="tab"
                     tabindex="0">
-
-                    <span v-if="item.icon" class="slds-tabs__left-icon">
-                        <slds-icon small :icon="item.icon"/>
-                    </span>
-
                     {{ item.label }}
-
-                    <span v-if="item.error" class="slds-tabs__right-icon">
-                        <span class="slds-icon_container slds-icon-utility-error" title="This item has an error">
-                            <slds-icon x-small error icon="utility:error"/>
-                        </span>
-                    </span>
-
                 </a>
 
             </li>
@@ -44,9 +33,9 @@
         <!-- Content -->
         <div
             v-for="item in items"
-            :id="`tab-default-${item.key}`"
+            :id="`tab-scoped-${item.key}`"
             :key="item.key"
-            class="slds-tabs_default__content"
+            class="slds-tabs_scoped__content"
             :class="[(activeItem === item.key) ? 'slds-show' : 'slds-hide']"
             role="tabpanel">
 
@@ -59,7 +48,7 @@
 
 <script>
     export default {
-        name: "SldsTabs",
+        name: "SldsScopedTabs",
         props: {
             activeItem: {
                 required: true,
@@ -71,9 +60,3 @@
         },
     }
 </script>
-
-<style scoped lang="scss">
-    li {
-        cursor: pointer;
-    }
-</style>
