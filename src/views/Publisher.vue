@@ -1,7 +1,14 @@
 <template>
     <article class="slds-card">
         <div class="slds-card__body slds-card__body_inner">
-            <slds-publisher label="To: My followers" placeholder="Write a comment..." rich-text>
+
+            <slds-publisher
+                v-model="value"
+                label="To: My followers"
+                placeholder="Write a comment..."
+                :spinner-active="spinnerActive"
+                rich-text
+                @click="onClick">
                 <template #actions>
 
                     <!-- Mention people and groups -->
@@ -15,6 +22,26 @@
 
                 </template>
             </slds-publisher>
+
+            <slds-output :value="value"/>
+
         </div>
     </article>
 </template>
+
+
+<script>
+    export default {
+        data() {
+            return {
+                value: null,
+                spinnerActive: false,
+            }
+        },
+        methods: {
+            onClick() {
+                this.spinnerActive = true;
+            },
+        },
+    }
+</script>

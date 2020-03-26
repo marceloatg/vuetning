@@ -23,7 +23,7 @@
             </div>
 
             <!-- Button -->
-            <slds-button brand label="Share" @click="onClickShare"/>
+            <slds-button brand label="Share" :spinner="spinnerActive" @click="onClickShare"/>
 
         </div>
 
@@ -37,6 +37,8 @@
         props: {
             label: String,
             richText: Boolean,
+            spinnerActive: Boolean,
+            value: {}
         },
         data() {
             return {
