@@ -8,8 +8,8 @@
             :has-dropdown="icon !== 'utility:down'"
             :disabled="disabled"
             :small="small"
-            :x-mall="xSmall"
-            :xx-mall="xxSmall"
+            :x-small="xSmall"
+            :xx-small="xxSmall"
             @click="toggle"
             @blur="close"
             @keyup="keyUp"/>
@@ -127,6 +127,7 @@
                 }
             },
             getDropdownPositioning(element) {
+                // TODO: consider scroll position
                 const elementPositioning = {
                     x: 0,
                     y: 0,
@@ -160,7 +161,7 @@
                 };
             },
             onClick(value) {
-                this.$emit('click', value);
+                this.$emit(value);
             },
             toggle() {
                 if (this.disabled) return;
