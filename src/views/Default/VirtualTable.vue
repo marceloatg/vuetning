@@ -21,7 +21,7 @@
                 columns: [],
                 keyField: 'id',
                 rows: [],
-                selectedRows: [999, 998, 997, 995],
+                selectedRows: [],
                 actions: [
                     {
                         label: 'Compare Again',
@@ -125,7 +125,7 @@
                 sortBy: 'badge.label',
             });
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 100000; i++) {
                 this.rows.push({
                     id: i,
                     button: {
