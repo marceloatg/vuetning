@@ -157,9 +157,8 @@
                 console.log(item)
             },
             onSelect(id) {
-                const index = this.selectedRows.indexOf(id);
-                if (index === -1) this.selectedRows.push(id);
-                else this.selectedRows.splice(index, 1);
+                const row = this.rows.find(r => r.id === id);
+                row.isSelected = !row.isSelected;
             },
             onSelectAll() {
                 if (this.selectedRows.length === 0) {
