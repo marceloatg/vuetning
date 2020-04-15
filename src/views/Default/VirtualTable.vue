@@ -128,6 +128,7 @@
             for (let i = 0; i < 100000; i++) {
                 this.rows.push({
                     id: i,
+                    isSelected: false,
                     button: {
                         label: 'button',
                         action: 'button',
@@ -146,6 +147,10 @@
                     actions: ['redo', 'delete', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6'],
                 })
             }
+
+            this.rows[0].isSelected = true;
+            this.rows[7].isSelected = true;
+            this.rows[999].isSelected = true;
         },
         methods: {
             onAction(item) {
