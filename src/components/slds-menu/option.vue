@@ -4,11 +4,7 @@
 
             <!-- Left icon -->
             <span v-if="prefixIcon != null" class="slds-truncate" title="Table View">
-                <slds-icon
-                    :icon="prefixIcon"
-                    x-small
-                    v-bind="variant"
-                    class="slds-m-right_x-small"/>
+                <slds-icon :icon="prefixIcon" x-small class="slds-m-right_x-small"/>
                 {{ label }}
             </span>
 
@@ -20,12 +16,7 @@
             </div>
 
             <!-- Right icon -->
-            <slds-icon
-                v-if="icon != null"
-                :icon="icon"
-                x-small
-                v-bind="variant"
-                class="slds-m-left_small slds-shrink-none"/>
+            <slds-icon v-if="icon != null" :icon="icon" x-small class="slds-m-left_small slds-shrink-none"/>
 
         </a>
     </li>

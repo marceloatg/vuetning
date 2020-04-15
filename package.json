@@ -27,11 +27,11 @@
     "humanize-duration": "^3.22.0",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
-    "uuid": "^3.4.0",
+    "uuid": "^7.0.3",
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.11",
     "vue-clickaway": "^2.2.2",
-    "vue-virtual-scroller": "^1.0.6",
+    "vue-virtual-scroller": "^1.0.9",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {

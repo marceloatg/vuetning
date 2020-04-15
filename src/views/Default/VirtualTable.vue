@@ -1,27 +1,47 @@
 <template>
-    <div style="height: 600px; background: red;">
+    <div style="height: 640px; background: white;">
+
+        <div class="slds-grid slds-grid_align-spread slds-p-around_medium">
+
+            <div class="slds-col">
+                <div class="slds-text-heading_large ">
+                    Total items: {{ totalItems }}
+                </div>
+            </div>
+
+            <div class="slds-col">
+                <slds-input v-model="filter" placeholder="Filter..."/>
+            </div>
+
+        </div>
+
         <slds-virtual-table
-            :actions="actions"
             :columns="columns"
-            :has-checkbox-column="true"
-            :key-field="keyField"
             :rows="rows"
-            :selected-rows="selectedRows"
-            :initial-sort="initialSort"
+            :actions="actions"
+            has-selection
+            :are-all-rows-selected="areAllRowsSelected"
+            :filter="filter"
+            class="slds-border_top"
             @detail="onAction"
             @select="onSelect"
-            @selectall="onSelectAll"/>
+            @select-all="onSelectAll"/>
+
     </div>
 </template>
 
 <script>
+    import 'numeral/locales/pt-br'
+    import numeral from "numeral";
+
     export default {
         data() {
             return {
+                areAllRowsSelected: false,
+                filter: null,
                 columns: [],
-                keyField: 'id',
                 rows: [],
-                selectedRows: [],
+                rowCount: 500000,
                 actions: [
                     {
                         label: 'Compare Again',
@@ -64,11 +84,21 @@
                 },
             }
         },
+        computed: {
+            totalItems() {
+                return numeral(this.rowCount).format('0,0');
+            }
+        },
         created() {
+            numeral.locale('pt-br');
+
             this.columns.push({
                 fieldName: 'button',
                 width: 72,
                 type: 'button',
+                typeAttributes: {
+                    action: 'button',
+                }
             });
 
             this.columns.push({
@@ -80,8 +110,9 @@
             this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
-                type: 'event-link',
+                type: 'link',
                 sortable: false,
+                hasMenu: true,
                 typeAttributes: {
                     action: 'detail',
                 }
@@ -91,6 +122,7 @@
                 fieldName: 'email',
                 label: 'Email',
                 type: 'text',
+                hasMenu: true,
             });
 
             this.columns.push({
@@ -116,23 +148,21 @@
                 type: 'text',
                 sortBy: 'sorterValue',
                 hasCopyButton: false,
+                isMonospaced: true,
             });
 
             this.columns.push({
                 fieldName: 'badge',
                 label: 'Badge',
                 type: 'badge',
-                sortBy: 'badge.label',
+                sortBy: 'sorterValue',
             });
 
-            for (let i = 0; i < 100000; i++) {
+            for (let i = 0; i < this.rowCount; i++) {
                 this.rows.push({
                     id: i,
                     isSelected: false,
-                    button: {
-                        label: 'button',
-                        action: 'button',
-                    },
+                    button: 'button',
                     avatar: '\\assets\\images\\group_avatar_200.png',
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
                     email: `user_${i}@arcthos.com`,
@@ -159,17 +189,19 @@
             onSelect(id) {
                 const row = this.rows.find(r => r.id === id);
                 row.isSelected = !row.isSelected;
+
+                if (this.rows.every(row => row.isSelected)) {
+                    this.areAllRowsSelected = true;
+                }
             },
             onSelectAll() {
-                if (this.selectedRows.length === 0) {
-                    for (let id of this.rows.map(row => row.id)) this.selectedRows.push(id);
-                }
-                else if (this.selectedRows.length === this.rows.length) {
-                    this.selectedRows.splice(0, this.selectedRows.length);
+                if (this.rows.every(row => row.isSelected)) {
+                    for (let row of this.rows) row.isSelected = false;
+                    this.areAllRowsSelected = false;
                 }
                 else {
-                    this.selectedRows.splice(0, this.selectedRows.length);
-                    for (let id of this.rows.map(row => row.id)) this.selectedRows.push(id);
+                    for (let row of this.rows) row.isSelected = true;
+                    this.areAllRowsSelected = true;
                 }
             },
         },

@@ -3,14 +3,15 @@
 
         <!-- Button -->
         <slds-button-icon
-            bordered-filled
+            :bare="bare"
+            :bordered-filled="!bare"
             :icon="icon"
             :has-dropdown="icon !== 'utility:down'"
             :disabled="disabled"
             :small="small"
             :x-small="xSmall"
             :xx-small="xxSmall"
-            @click="toggle"
+            @click.stop="toggle"
             @blur="close"
             @keyup="keyUp"/>
 
@@ -21,6 +22,9 @@
             class="slds-dropdown"
             :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]"
             :style="{opacity: dropdownOpacity}">
+
+            <slot name="before"/>
+
             <ul class="slds-dropdown__list" role="menu">
                 <template v-for="(item, index) in items">
 
@@ -41,6 +45,9 @@
 
                 </template>
             </ul>
+
+            <slot name="after"/>
+
         </div>
 
     </div>
@@ -57,9 +64,8 @@
             SldsMenuOption
         },
         props: {
-            disabled: {
-                type: Boolean,
-            },
+            bare: Boolean,
+            disabled: Boolean,
             icon: {
                 type: String,
                 default: 'utility:down',
