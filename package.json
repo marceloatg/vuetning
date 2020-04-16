@@ -54,7 +54,7 @@
     "sass-loader": "^8.0.2",
     "viewcode": "0.0.27",
     "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.4.0"
+    "vuepress": "^1.4.1"
   },
   "bugs": {
     "url": "https://github.com/marceloatg/vuetning/issues"
