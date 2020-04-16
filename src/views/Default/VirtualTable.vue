@@ -15,7 +15,7 @@
 
         </div>
 
-        <slds-virtual-table
+        <slds-data-table
             :columns="columns"
             :rows="rows"
             :actions="actions"
@@ -41,7 +41,7 @@
                 filter: null,
                 columns: [],
                 rows: [],
-                rowCount: 500000,
+                rowCount: 50000,
                 actions: [
                     {
                         label: 'Compare Again',
