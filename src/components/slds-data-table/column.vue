@@ -6,10 +6,10 @@
             :style="{ width: `${width}px`, left: `${left}px` }">
 
             <!-- Label -->
-            <div class="slds-has-flexi-truncate">
+            <div class="cell slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
 
                 <!-- Label -->
-                <span class="label slds-truncate" :title="label">
+                <span class="slds-truncate" :title="label">
                     {{ label }}
                 </span>
 
@@ -128,7 +128,7 @@
         },
         methods: {
             onDoubleClick() {
-                if (!this.resizable || (this.type !== 'text' && this.type !== 'event-link')) return;
+                if (!this.resizable || (this.type !== 'text' && this.type !== 'link')) return;
                 this.$emit('expand');
             },
             onResizerMouseDown(event) {
@@ -200,7 +200,7 @@
             cursor: pointer;
         }
 
-        .label {
+        .cell {
             padding: .25rem .5rem;
         }
 

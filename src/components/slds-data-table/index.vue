@@ -5,40 +5,42 @@
         <div ref="container" class="slds-virtual-table_container">
 
             <!-- Header -->
-            <div class="slds-virtual-table_header">
+            <div ref="header" class="slds-virtual-table_header-container">
+                <div class="slds-virtual-table_header">
 
-                <!-- Line number header-->
-                <div v-if="!hideLineNumber" class="slds-virtual-table_header-line-number"/>
+                    <!-- Line number header-->
+                    <div v-if="!hideLineNumber" class="slds-virtual-table_header-line-number"/>
 
-                <!-- Selection all header -->
-                <div v-if="hasSelection" class="slds-virtual-table_header-select-all" @click="$emit('select-all')">
-                    <div class="slds-checkbox">
-                        <input type="checkbox" :checked="areAllRowsSelected">
-                        <label class="slds-checkbox__label">
-                            <span class="slds-checkbox_faux"/>
-                        </label>
+                    <!-- Selection all header -->
+                    <div v-if="hasSelection" class="slds-virtual-table_header-select-all" @click="$emit('select-all')">
+                        <div class="slds-checkbox">
+                            <input type="checkbox" :checked="areAllRowsSelected">
+                            <label class="slds-checkbox__label">
+                                <span class="slds-checkbox_faux"/>
+                            </label>
+                        </div>
                     </div>
+
+                    <!-- Dynamic headers -->
+                    <column
+                        v-for="(column, index) in columns"
+                        :key="column.fieldName"
+                        :has-menu="column.hasMenu"
+                        :index="index"
+                        :label="column.label"
+                        :left="column.left"
+                        :minimum-width="column.minimumWidth"
+                        :resizable="column.resizable"
+                        :sortable="column.sortable"
+                        :sorted-ascending="column.sortedAscending"
+                        :sorted-descending="column.sortedDescending"
+                        :type="column.type"
+                        :width="column.width"
+                        @resize="onResizeColumn"
+                        @expand="onExpandColumn(index, column)"
+                        @sort="(order) => onSort(order, column)"/>
+
                 </div>
-
-                <!-- Dynamic headers -->
-                <column
-                    v-for="(column, index) in columns"
-                    :key="column.fieldName"
-                    :has-menu="column.hasMenu"
-                    :index="index"
-                    :label="column.label"
-                    :left="column.left"
-                    :minimum-width="column.minimumWidth"
-                    :resizable="column.resizable"
-                    :sortable="column.sortable"
-                    :sorted-ascending="column.sortedAscending"
-                    :sorted-descending="column.sortedDescending"
-                    :type="column.type"
-                    :width="column.width"
-                    @resize="onResizeColumn"
-                    @expand="onExpandColumn(index, column)"
-                    @sort="(order) => onSort(order, column)"/>
-
             </div>
 
             <!-- Body -->
@@ -73,40 +75,40 @@
                                     <!-- Text -->
                                     <span
                                         v-if="column.type === 'text'"
-                                        :title="item[column.fieldName]"
+                                        :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.isMonospaced}">
-                                        {{ item[column.fieldName] }}
+                                        {{ getFieldValue(column, item) }}
                                     </span>
 
                                     <!-- Link -->
                                     <a
                                         v-else-if="column.type === 'link'"
-                                        :title="item[column.fieldName]"
+                                        :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.isMonospaced}"
                                         @click="onClickAction(column, item)">
-                                        {{ item[column.fieldName] }}
+                                        {{ getFieldValue(column, item) }}
                                     </a>
 
                                     <!-- Badge -->
                                     <span
-                                        v-else-if="column.type === 'badge' && item[column.fieldName] != null"
+                                        v-else-if="column.type === 'badge' && getFieldValue(column, item) != null"
                                         class="slds-badge"
-                                        :class="['slds-badge_' + item[column.fieldName].color]">
+                                        :class="['slds-badge_' + getFieldValue(column, item).color]">
                                         <span
-                                            v-if="item[column.fieldName].icon"
+                                            v-if="getFieldValue(column, item).icon"
                                             class="slds-badge__icon slds-badge__icon_left"
-                                            :class="'slds-badge__icon_' + item[column.fieldName].color">
+                                            :class="'slds-badge__icon_' + getFieldValue(column, item).color">
                                             <span class="slds-icon_container slds-current-color">
-                                                <slds-svg :icon="item[column.fieldName].icon" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
+                                                <slds-svg :icon="getFieldValue(column, item).icon" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
                                             </span>
-                                        </span>{{ item[column.fieldName].label }}
+                                        </span>{{ getFieldValue(column, item).label }}
                                     </span>
 
                                     <!-- Boolean -->
                                     <span
-                                        v-else-if="column.type === 'boolean' && item[column.fieldName]"
+                                        v-else-if="column.type === 'boolean' && getFieldValue(column, item)"
                                         class="slds-truncate">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -123,15 +125,15 @@
                                     <span
                                         v-else-if="column.type === 'avatar'"
                                         class="slds-avatar slds-avatar_circle slds-avatar_medium">
-                                        <img alt="avatar" :src="item[column.fieldName]">
+                                        <img alt="avatar" :src="getFieldValue(column, item)">
                                     </span>
 
                                     <!-- Button -->
                                     <button
-                                        v-else-if="column.type === 'button' && item[column.fieldName] != null"
+                                        v-else-if="column.type === 'button' && getFieldValue(column, item) != null"
                                         class="slds-button slds-button_outline-brand"
-                                        @click="onClickAction(column, item)">
-                                        {{ item[column.fieldName] }}
+                                        @click="onClickButton(column, item)">
+                                        {{ getFieldValue(column, item).label }}
                                     </button>
 
                                     <!-- Copy to clipboard button -->
@@ -269,7 +271,7 @@
                 },
                 currentActions: [],
                 filteredRows: [],
-                filterTimer: null,
+                filterTimerId: null,
                 rowWidth: null,
                 ruler: {
                     value: '',
@@ -304,10 +306,10 @@
                 this.$el.querySelector('.slds-virtual-table_body').scrollTop = 0;
 
                 // Debouncing filtration
-                if (this.filterTimer) clearTimeout(this.filterTimer);
-                this.filterTimer = setTimeout(function () {
+                if (this.filterTimerId) clearTimeout(this.filterTimerId);
+                this.filterTimerId = setTimeout(function () {
                     this.filterRows();
-                    this.filterTimer = null;
+                    this.filterTimerId = null;
                 }.bind(this), 200);
             }
         },
@@ -332,6 +334,10 @@
                 .addEventListener('scroll', this.onScrollBody);
         },
 
+        activated() {
+            this.$el.querySelector('.slds-virtual-table_body').scrollTop = this.scrollTop;
+        },
+
         beforeDestroy() {
             this.$el
                 .querySelector('.slds-virtual-table_body')
@@ -347,7 +353,7 @@
                     this.filteredRows = this.rows.filter((row) => {
                         for (let column of this.columns) {
                             if (column.fieldName == null) return false;
-                            const value = row[column.fieldName];
+                            const value = this.getFieldValue(column, row);
 
                             if (String(value).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1) {
                                 return true;
@@ -357,6 +363,14 @@
                         return false;
                     })
                 }
+            },
+
+            getFieldValue(column, row) {
+                if (column.fieldName == null) return null;
+
+                return column.fieldName.split('.').reduce(function (prev, curr) {
+                    return prev ? prev[curr] : null
+                }, row || self);
             },
 
             getLineNumber(index) {
@@ -483,8 +497,14 @@
                 this.actionMenu.opacity = 1;
             },
 
+            onClickButton(column, item) {
+                const button = this.getFieldValue(column, item);
+                if (button.action == null) return;
+                this.$emit(button.action, item);
+            },
+
             onClickCopy(column, item) {
-                const value = item[column.fieldName]
+                const value = this.getFieldValue(column, item);
                 if (value != null) this.$clipboard(value);
             },
 
@@ -505,7 +525,7 @@
 
                 if (aColumn.fullWidth == null) {
                     for (const row of this.rows) {
-                        const value = row[aColumn.fieldName];
+                        const value = this.getFieldValue(aColumn, row);
                         if (value == null) continue;
                         if (value.length > this.ruler.value.length) this.ruler.value = value;
                     }
@@ -527,7 +547,7 @@
             },
 
             onMouseDownAction(action, item) {
-                this.$emit(action, item);
+                this.$emit(action.value, item);
                 this.onCloseActionMenu();
             },
 
@@ -556,10 +576,7 @@
 
                 // Handle horizontal scroll
                 if (event.target.scrollLeft === this.scrollLeft) return;
-                this.scrollLeft = event.target.scrollLeft;
-
-                // TODO: Test throttling to optimize performance
-                this.$refs.root.style.setProperty('--header-left', `${-event.target.scrollLeft}px`);
+                this.$refs.header.scrollLeft = this.scrollLeft = event.target.scrollLeft;
             },
 
             onSort(order, sortedColumn) {
@@ -627,7 +644,6 @@
         --row-height: 1.75rem;
         --row-width: 100%;
         --header-width: 100%;
-        --header-left: 0;
 
         height: 100%;
         width: 100%;
@@ -635,10 +651,21 @@
         overflow: hidden;
         background-color: $table-color-background;
 
+        &_header-container {
+            width: 100%;
+            overflow-x: auto;
+            scrollbar-height: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 10+ */
+
+            &::-webkit-scrollbar {
+                height: 0;
+                background: transparent; /* Chrome/Safari/Webkit */
+            }
+        }
+
         &_header {
             display: flex;
             position: relative;
-            left: var(--header-left);
             height: $header-height;
             width: var(--header-width);
             color: #514f4d;

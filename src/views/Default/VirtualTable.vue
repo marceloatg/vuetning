@@ -96,9 +96,6 @@
                 fieldName: 'button',
                 width: 72,
                 type: 'button',
-                typeAttributes: {
-                    action: 'button',
-                }
             });
 
             this.columns.push({
@@ -116,6 +113,11 @@
                 typeAttributes: {
                     action: 'detail',
                 }
+            });
+
+            this.columns.push({
+                fieldName: 'alpha.beta.gamma.delta',
+                label: 'Deep value',
             });
 
             this.columns.push({
@@ -162,9 +164,13 @@
                 this.rows.push({
                     id: i,
                     isSelected: false,
-                    button: 'button',
+                    button: {
+                        label: 'button',
+                        action: 'button',
+                    },
                     avatar: '\\assets\\images\\group_avatar_200.png',
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
+                    alpha: {beta: {gamma: {delta: `Deep value ${i}`}}},
                     email: `user_${i}@arcthos.com`,
                     triggable: true,
                     phone: `(55) ${i}-${i}`,
