@@ -1,27 +1,47 @@
 <template>
-    <div style="height: 600px; background: red;">
-        <slds-virtual-table
-            :actions="actions"
+    <div style="height: 640px; background: white;">
+
+        <div class="slds-grid slds-grid_align-spread slds-p-around_medium">
+
+            <div class="slds-col">
+                <div class="slds-text-heading_large ">
+                    Total items: {{ totalItems }}
+                </div>
+            </div>
+
+            <div class="slds-col">
+                <slds-input v-model="filter" placeholder="Filter..."/>
+            </div>
+
+        </div>
+
+        <slds-data-table
             :columns="columns"
-            :has-checkbox-column="true"
-            :key-field="keyField"
             :rows="rows"
-            :selected-rows="selectedRows"
-            :initial-sort="initialSort"
+            :actions="actions"
+            has-selection
+            :are-all-rows-selected="areAllRowsSelected"
+            :filter="filter"
+            class="slds-border_top"
             @detail="onAction"
             @select="onSelect"
-            @selectall="onSelectAll"/>
+            @select-all="onSelectAll"/>
+
     </div>
 </template>
 
 <script>
+    import 'numeral/locales/pt-br'
+    import numeral from "numeral";
+
     export default {
         data() {
             return {
+                areAllRowsSelected: false,
+                filter: null,
                 columns: [],
-                keyField: 'id',
                 rows: [],
-                selectedRows: [999, 998, 997, 995],
+                rowCount: 500,
                 actions: [
                     {
                         label: 'Compare Again',
@@ -64,7 +84,14 @@
                 },
             }
         },
+        computed: {
+            totalItems() {
+                return numeral(this.rowCount).format('0,0');
+            }
+        },
         created() {
+            numeral.locale('pt-br');
+
             this.columns.push({
                 fieldName: 'button',
                 width: 72,
@@ -80,17 +107,24 @@
             this.columns.push({
                 fieldName: 'name',
                 label: 'Name',
-                type: 'event-link',
+                type: 'link',
                 sortable: false,
+                hasMenu: true,
                 typeAttributes: {
                     action: 'detail',
                 }
             });
 
             this.columns.push({
+                fieldName: 'alpha.beta.gamma.delta',
+                label: 'Deep value',
+            });
+
+            this.columns.push({
                 fieldName: 'email',
                 label: 'Email',
                 type: 'text',
+                hasMenu: true,
             });
 
             this.columns.push({
@@ -116,24 +150,27 @@
                 type: 'text',
                 sortBy: 'sorterValue',
                 hasCopyButton: false,
+                isMonospaced: true,
             });
 
             this.columns.push({
                 fieldName: 'badge',
                 label: 'Badge',
                 type: 'badge',
-                sortBy: 'badge.label',
+                sortBy: 'sorterValue',
             });
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < this.rowCount; i++) {
                 this.rows.push({
                     id: i,
+                    isSelected: false,
                     button: {
                         label: 'button',
                         action: 'button',
                     },
                     avatar: '\\assets\\images\\group_avatar_200.png',
                     name: `Item number ${i}OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`,
+                    alpha: {beta: {gamma: {delta: `Deep value ${i}`}}},
                     email: `user_${i}@arcthos.com`,
                     triggable: true,
                     phone: `(55) ${i}-${i}`,
@@ -146,26 +183,30 @@
                     actions: ['redo', 'delete', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6'],
                 })
             }
+
+            this.rows[0].isSelected = true;
+            this.rows[7].isSelected = true;
+            this.rows[99].isSelected = true;
         },
         methods: {
             onAction(item) {
                 console.log(item)
             },
-            onSelect(id) {
-                const index = this.selectedRows.indexOf(id);
-                if (index === -1) this.selectedRows.push(id);
-                else this.selectedRows.splice(index, 1);
+            onSelect(row) {
+                row.isSelected = !row.isSelected;
+
+                if (this.rows.every(row => row.isSelected)) {
+                    this.areAllRowsSelected = true;
+                }
             },
             onSelectAll() {
-                if (this.selectedRows.length === 0) {
-                    for (let id of this.rows.map(row => row.id)) this.selectedRows.push(id);
-                }
-                else if (this.selectedRows.length === this.rows.length) {
-                    this.selectedRows.splice(0, this.selectedRows.length);
+                if (this.rows.every(row => row.isSelected)) {
+                    for (let row of this.rows) row.isSelected = false;
+                    this.areAllRowsSelected = false;
                 }
                 else {
-                    this.selectedRows.splice(0, this.selectedRows.length);
-                    for (let id of this.rows.map(row => row.id)) this.selectedRows.push(id);
+                    for (let row of this.rows) row.isSelected = true;
+                    this.areAllRowsSelected = true;
                 }
             },
         },

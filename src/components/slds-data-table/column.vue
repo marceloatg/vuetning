@@ -3,12 +3,13 @@
         <div
             class="column"
             :class="{'is-resizable': resizable,'slds-is-sortable':isSortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
-            :style="{ width: `${initialWidth}px`, left: `${left}px` }">
+            :style="{ width: `${width}px`, left: `${left}px` }">
 
-            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <!-- Label -->
+            <div class="cell slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
 
                 <!-- Label -->
-                <span class="label slds-truncate" :title="label">
+                <span class="slds-truncate" :title="label">
                     {{ label }}
                 </span>
 
@@ -18,6 +19,22 @@
                 </span>
 
             </div>
+
+            <!-- Menu -->
+            <slds-menu
+                v-if="hasMenu"
+                bare
+                x-small
+                :items="options"
+                class="slds-m-right_xx-small"
+                @sort-asc="$emit('sort', 'asc')"
+                @sort-desc="$emit('sort', 'desc')">
+                <template #after>
+                    <div class="slds-p-around_small" style="width: 15rem">
+                        <slds-input label="Filter this column by:"/>
+                    </div>
+                </template>
+            </slds-menu>
 
             <!-- Handle -->
             <span
@@ -34,7 +51,6 @@
 </template>
 
 <script>
-    import Commons from "../slds-data-table/commons";
     import SldsSvg from '../slds-svg/index.vue'
     import Clicker from "./clicker"
 
@@ -44,22 +60,16 @@
             SldsSvg,
         },
         props: {
+            hasMenu: Boolean,
             index: {
                 type: Number,
                 required: true,
             },
-            initialWidth: {
-                type: Number,
-            },
-            left: {
-                type: Number,
-            },
-            label: {
-                type: String,
-            },
+            left: Number,
+            label: String,
             minimumWidth: {
                 type: Number,
-                default: Commons.DEFAULT_MINIMUM_WIDTH,
+                default: 100,
             },
             resizable: {
                 type: Boolean,
@@ -69,12 +79,8 @@
                 type: Boolean,
                 default: true,
             },
-            sortedAscending: {
-                type: Boolean,
-            },
-            sortedDescending: {
-                type: Boolean,
-            },
+            sortedAscending: Boolean,
+            sortedDescending: Boolean,
             type: {
                 type: String,
                 required: true,
@@ -84,17 +90,19 @@
                         'badge',
                         'boolean',
                         'button',
-                        'event-link',
+                        'link',
                         'icon',
                         'text',
                     ].indexOf(value) !== -1
                 },
             },
+            width: Number,
         },
         data() {
             return {
                 startX: null,
                 currentX: null,
+                options: [],
                 touchingResizer: false,
                 resizerTranslation: 0,
             }
@@ -112,10 +120,16 @@
                 }
             }
         },
+        created() {
+            if (this.isSortable) {
+                this.options.push({value: 'sort-asc', label: 'Sort A to Z', prefixIcon: 'utility:arrowup'});
+                this.options.push({value: 'sort-desc', label: 'Sort Z to A', prefixIcon: 'utility:arrowdown'});
+            }
+        },
         methods: {
             onDoubleClick() {
-                if (!this.resizable || (this.type !== 'text' && this.type !== 'event-link')) return;
-                this.$emit('fullwidth');
+                if (!this.resizable || (this.type !== 'text' && this.type !== 'link')) return;
+                this.$emit('expand');
             },
             onResizerMouseDown(event) {
                 this.startX = event.pageX;
@@ -153,10 +167,9 @@
                 else this.$emit('sort', 'asc');
             },
             resize(delta) {
-
                 // Apply column width validations to delta
-                if (this.initialWidth + delta < this.minimumWidth) {
-                    delta = this.minimumWidth - this.initialWidth;
+                if (this.width + delta < this.minimumWidth) {
+                    delta = this.minimumWidth - this.width;
                     if (delta === 0) return;
                 }
 
@@ -165,7 +178,7 @@
                 this.resizerTranslation = 0;
             },
             resizing(delta) {
-                if (this.initialWidth + delta < this.minimumWidth) delta = this.minimumWidth - this.initialWidth;
+                if (this.width + delta < this.minimumWidth) delta = this.minimumWidth - this.width;
                 this.resizerTranslation = delta;
             },
         },
@@ -178,7 +191,7 @@
 
     .column {
         display: flex;
-        height: 2rem;
+        height: 100%;
         width: 100%;
         align-items: center;
         user-select: none;
@@ -187,7 +200,7 @@
             cursor: pointer;
         }
 
-        .label {
+        .cell {
             padding: .25rem .5rem;
         }
 
