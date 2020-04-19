@@ -23,8 +23,8 @@
 
                     <!-- Dynamic headers -->
                     <column
-                        v-for="(column, index) in columns"
-                        :key="column.fieldName"
+                        v-for="(column, index) in columnConfigurations"
+                        :key="column.id"
                         :has-menu="column.hasMenu"
                         :index="index"
                         :label="column.label"
@@ -68,7 +68,7 @@
                         </div>
 
                         <!-- Dynamic cell -->
-                        <template v-for="column in columns">
+                        <template v-for="column in columnConfigurations">
                             <div :key="column.id" class="slds-virtual-table_cell" :style="{width: `${column.width}px`}">
                                 <span class="slds-grid slds-grid_align-spread slds-virtual-table_cell-content">
 
@@ -228,10 +228,10 @@
 
 <script>
     import Column from "./column";
+    import ColumnConfiguration from './column-configuration'
     import {RecycleScroller} from 'vue-virtual-scroller'
     import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
     import {mixin as clickaway} from 'vue-clickaway'
-    import {v4 as uuid} from 'uuid';
     import 'numeral/locales/pt-br'
     import numeral from "numeral";
 
@@ -269,6 +269,7 @@
                     orientation: 'top',
                     opacity: 0,
                 },
+                columnConfigurations: [],
                 currentActions: [],
                 filteredRows: [],
                 filterTimerId: null,
@@ -293,7 +294,7 @@
             },
 
             rowHeight() {
-                const rowHeight = this.columns.some(column => column.type === 'avatar') ? 40 : 28;
+                const rowHeight = this.columnConfigurations.some(column => column.type === 'avatar') ? 40 : 28;
                 const virtualScrollerElement = this.$refs.virtualScroller;
 
                 if (virtualScrollerElement != null) virtualScrollerElement.style.setProperty('--row-height', `${rowHeight}px`);
@@ -351,7 +352,7 @@
                 }
                 else {
                     this.filteredRows = this.rows.filter((row) => {
-                        for (let column of this.columns) {
+                        for (let column of this.columnConfigurations) {
                             if (column.fieldName == null) return false;
                             const value = this.getFieldValue(column, row);
 
@@ -390,28 +391,21 @@
             },
 
             async getTableWidth() {
-                await this.$nextTick();
-                this.tableWidth = this.$refs.container.offsetWidth;
-                this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
+                if (this.$refs.container != null) {
+                    this.tableWidth = this.$refs.container.offsetWidth;
+                    this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
+                }
 
-                this.rowWidth = this.tableWidth - this.scrollbarWidth;
-                this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
+                if (this.$refs.root != null) {
+                    this.rowWidth = this.tableWidth - this.scrollbarWidth;
+                    this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
+                }
             },
 
             initializeColumns() {
                 for (const column of this.columns) {
-                    if (column.type == null) this.$set(column, 'type', 'text');
-                    if (column.hasCopyButton == null) this.$set(column, 'hasCopyButton', true);
-                    if (column.resizable == null) this.$set(column, 'resizable', true);
-                    if (column.hasMenu == null) this.$set(column, 'hasMenu', false);
-                    this.$set(column, 'sortedAscending', false);
-                    this.$set(column, 'sortedDescending', false);
-                    this.$set(column, 'fullWidth', null);
-                    this.$set(column, 'id', uuid());
-
-                    if (['avatar', 'badge', 'boolean', 'button', 'icon'].includes(column.type)) {
-                        column.hasCopyButton = false;
-                    }
+                    const columnConfiguration = new ColumnConfiguration(column);
+                    this.columnConfigurations.push(columnConfiguration);
                 }
             },
 
@@ -421,9 +415,9 @@
                 if (!this.hideLineNumber) columnLeftSum += LINE_COUNTER_WIDTH;
                 if (this.hasSelection) columnLeftSum += LINE_CHECKBOX_WIDTH;
 
-                for (let column of this.columns) {
-                    this.$set(column, 'offsetLeft', columnLeftSum);
-                    this.$set(column, 'left', columnLeftSum);
+                for (let column of this.columnConfigurations) {
+                    column.offsetLeft = columnLeftSum;
+                    column.left = columnLeftSum;
                     columnLeftSum += column.width;
                 }
             },
@@ -436,7 +430,7 @@
                 if (this.hasSelection) knownWidth += LINE_CHECKBOX_WIDTH;
                 if (this.hasActions) knownWidth += LINE_ACTIONS_WIDTH;
 
-                for (let column of this.columns) {
+                for (let column of this.columnConfigurations) {
                     if (column.resizable) {
                         if (column.width == null) unknownWidthColumns++;
                         else knownWidth += column.width;
@@ -444,19 +438,18 @@
                     else {
                         if (column.width == null) {
                             knownWidth += DEFAULT_FIXED_WIDTH;
-                            this.$set(column, 'width', DEFAULT_FIXED_WIDTH);
+                            column.width = DEFAULT_FIXED_WIDTH;
                         }
                         else {
                             knownWidth += column.width;
-                            this.$set(column, 'width', column.width);
                         }
                     }
                 }
 
                 const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns);
 
-                for (let column of this.columns) {
-                    if (column.width == null) this.$set(column, 'width', width);
+                for (let column of this.columnConfigurations) {
+                    if (column.width == null) column.width = width;
                 }
             },
 
@@ -553,7 +546,7 @@
             },
 
             onResizeColumn(index, delta) {
-                this.columns[index].width += delta;
+                this.columnConfigurations[index].width += delta;
 
                 this.tableWidth += delta;
                 this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
@@ -561,9 +554,9 @@
                 this.rowWidth += delta;
                 this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
 
-                for (++index; index < this.columns.length; index++) {
-                    this.columns[index].left += delta;
-                    this.columns[index].offsetLeft += delta;
+                for (++index; index < this.columnConfigurations.length; index++) {
+                    this.columnConfigurations[index].left += delta;
+                    this.columnConfigurations[index].offsetLeft += delta;
                 }
             },
 
@@ -584,7 +577,7 @@
                 this.sortedOrder = order;
                 this.sortedColumnId = sortedColumn.id;
 
-                for (let column of this.columns) {
+                for (let column of this.columnConfigurations) {
                     column.sortedAscending = false;
                     column.sortedDescending = false;
                 }
@@ -603,7 +596,7 @@
             },
 
             sorter(rowA, rowB) {
-                const sortedColumn = this.columns.find(column => column.id === this.sortedColumnId);
+                const sortedColumn = this.columnConfigurations.find(column => column.id === this.sortedColumnId);
                 let a;
                 let b;
 
