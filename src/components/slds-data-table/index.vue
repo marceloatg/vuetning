@@ -324,7 +324,7 @@
             this.$refs.root.style.setProperty('--row-height', `${this.rowHeight}px`);
 
             await this.getScrollbarWidth();
-            this.getTableWidth();
+            await this.getTableWidth();
 
             this.initializeColumnWidths();
             this.initializeColumnOffsets();
@@ -389,7 +389,8 @@
                 this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth;
             },
 
-            getTableWidth() {
+            async getTableWidth() {
+                await this.$nextTick();
                 this.tableWidth = this.$refs.container.offsetWidth;
                 this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
 
