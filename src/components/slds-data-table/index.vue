@@ -160,7 +160,7 @@
                         </template>
 
                         <!-- Actions cell -->
-                        <div v-if="hasActions" class="slds-virtual-table_cell slds-virtual-table_cell-actions">
+                        <div v-if="hasActions && item.actions != null && item.actions.length > 0" class="slds-virtual-table_cell slds-virtual-table_cell-actions">
                             <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
                                 <!-- Button -->
