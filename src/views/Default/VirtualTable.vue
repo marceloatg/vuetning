@@ -41,7 +41,7 @@
                 filter: null,
                 columns: [],
                 rows: [],
-                rowCount: 50000,
+                rowCount: 500,
                 actions: [
                     {
                         label: 'Compare Again',
@@ -186,14 +186,13 @@
 
             this.rows[0].isSelected = true;
             this.rows[7].isSelected = true;
-            this.rows[999].isSelected = true;
+            this.rows[99].isSelected = true;
         },
         methods: {
             onAction(item) {
                 console.log(item)
             },
-            onSelect(id) {
-                const row = this.rows.find(r => r.id === id);
+            onSelect(row) {
                 row.isSelected = !row.isSelected;
 
                 if (this.rows.every(row => row.isSelected)) {

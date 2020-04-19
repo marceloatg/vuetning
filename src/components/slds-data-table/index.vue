@@ -14,7 +14,7 @@
                     <!-- Selection all header -->
                     <div v-if="hasSelection" class="slds-virtual-table_header-select-all" @click="$emit('select-all')">
                         <div class="slds-checkbox">
-                            <input type="checkbox" :checked="areAllRowsSelected">
+                            <input type="checkbox" :checked="allRowsSelected">
                             <label class="slds-checkbox__label">
                                 <span class="slds-checkbox_faux"/>
                             </label>
@@ -50,7 +50,7 @@
                 :item-size="rowHeight"
                 :key-field="keyField">
                 <template v-slot="{ item, index }">
-                    <div class="slds-virtual-table_row" :class="{'is-selected': item.isSelected}">
+                    <div class="slds-virtual-table_row" :class="{'is-selected': hasSelection && item.isSelected}">
 
                         <!-- Line number cell -->
                         <div v-if="!hideLineNumber" class="slds-virtual-table_cell slds-virtual-table_cell-line-number">
@@ -58,7 +58,7 @@
                         </div>
 
                         <!-- Selection cell -->
-                        <div v-if="hasSelection" class="slds-virtual-table_cell slds-virtual-table_cell-selection" @click="onClickSelect(item.id)">
+                        <div v-if="hasSelection" class="slds-virtual-table_cell slds-virtual-table_cell-selection" @click="onClickSelect(item)">
                             <div class="slds-checkbox">
                                 <input type="checkbox" :checked="item.isSelected">
                                 <label class="slds-checkbox__label">
@@ -100,7 +100,7 @@
                                             v-if="getFieldValue(column, item).icon"
                                             class="slds-badge__icon slds-badge__icon_left"
                                             :class="'slds-badge__icon_' + getFieldValue(column, item).color">
-                                            <span class="slds-icon_container slds-current-color">
+                                            <span class="slds-icon_container">
                                                 <slds-svg :icon="getFieldValue(column, item).icon" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
                                             </span>
                                         </span>{{ getFieldValue(column, item).label }}
@@ -253,7 +253,7 @@
 
         props: {
             actions: Array,
-            areAllRowsSelected: Boolean,
+            allRowsSelected: Boolean,
             columns: {type: Array, required: true},
             filter: {type: String, default: null},
             hasSelection: Boolean,
@@ -508,8 +508,8 @@
                 if (value != null) this.$clipboard(value);
             },
 
-            onClickSelect(id) {
-                this.$emit('select', id);
+            onClickSelect(item) {
+                this.$emit('select', item);
             },
 
             onCloseActionMenu() {

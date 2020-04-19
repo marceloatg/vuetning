@@ -31,7 +31,7 @@
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.11",
     "vue-clickaway": "^2.2.2",
-    "vue-virtual-scroller": "^1.0.9",
+    "vue-virtual-scroller": "^1.0.10",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
