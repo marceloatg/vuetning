@@ -41,7 +41,7 @@
                 filter: null,
                 columns: [],
                 rows: [],
-                rowCount: 500000,
+                rowCount: 500,
                 actions: [
                     {
                         label: 'Compare Again',

@@ -2,7 +2,7 @@
     <clicker :class="{unclickable: touchingResizer}" @single-click="onSingleClick" @double-click="onDoubleClick">
         <div
             class="column"
-            :class="{'is-resizable': resizable,'slds-is-sortable':isSortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
+            :class="{'is-resizable': resizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
             :style="{ width: `${width}px`, left: `${left}px` }">
 
             <!-- Label -->
@@ -14,7 +14,7 @@
                 </span>
 
                 <!-- Sort icon -->
-                <span v-if="isSortable" class="slds-icon_container slds-icon-utility-arrowup">
+                <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
                     <slds-svg icon="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
                 </span>
 
@@ -107,21 +107,8 @@
                 resizerTranslation: 0,
             }
         },
-        computed: {
-            isSortable() {
-                switch (this.type) {
-                    case 'avatar':
-                    case 'button':
-                    case 'button-icon':
-                        return false;
-
-                    default:
-                        return this.sortable;
-                }
-            }
-        },
         created() {
-            if (this.isSortable) {
+            if (this.sortable) {
                 this.options.push({value: 'sort-asc', label: 'Sort A to Z', prefixIcon: 'utility:arrowup'});
                 this.options.push({value: 'sort-desc', label: 'Sort Z to A', prefixIcon: 'utility:arrowdown'});
             }
@@ -161,7 +148,7 @@
                 this.resize(delta);
             },
             onSingleClick() {
-                if (!this.isSortable) return;
+                if (!this.sortable) return;
 
                 if (this.sortedAscending) this.$emit('sort', 'desc');
                 else this.$emit('sort', 'asc');
