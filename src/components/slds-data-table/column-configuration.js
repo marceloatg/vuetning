@@ -12,6 +12,7 @@ export default class ColumnConfiguration {
         this.sortable = (column.sortable != null) ? column.sortable : true;
         this.sortBy = (column.sortBy != null) ? column.sortBy : null;
         this.hasMenu = (column.hasMenu != null) ? column.hasMenu : false;
+        this.typeAttributes = (column.typeAttributes != null) ? column.typeAttributes : null;
         this.sortedAscending = false;
         this.sortedDescending = false;
         this.fullWidth = null;
