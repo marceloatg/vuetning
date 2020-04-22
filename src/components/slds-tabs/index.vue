@@ -42,16 +42,18 @@
         </ul>
 
         <!-- Content -->
-        <div
-            v-for="item in items"
-            :id="`tab-default-${item.key}`"
-            :key="item.key"
-            class="slds-tabs_default__content"
-            :class="[(activeItem === item.key) ? 'slds-show' : 'slds-hide']"
-            role="tabpanel">
+        <div v-if="!noContent">
+            <div
+                v-for="item in items"
+                :id="`tab-default-${item.key}`"
+                :key="item.key"
+                class="slds-tabs_default__content"
+                :class="[(activeItem === item.key) ? 'slds-show' : 'slds-hide']"
+                role="tabpanel">
 
-            <slot :name="item.key"/>
+                <slot :name="item.key"/>
 
+            </div>
         </div>
 
     </div>
@@ -67,7 +69,8 @@
             items: {
                 type: Array,
                 required: true,
-            }
+            },
+            noContent: Boolean,
         },
     }
 </script>
