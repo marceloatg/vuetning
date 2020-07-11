@@ -17,33 +17,35 @@
         </button>
 
         <!-- More tabs dropdown -->
-        <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
-            <ul class="slds-dropdown__list" role="menu">
-                <li
-                    v-for="(tab, index) in overflowedTabs"
-                    :key="tab.id"
-                    class="slds-dropdown__item"
-                    @click="onClick(index, tab)">
+        <transition name="dropdown">
+            <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
+                <ul class="slds-dropdown__list" role="menu">
+                    <li
+                        v-for="(tab, index) in overflowedTabs"
+                        :key="tab.id"
+                        class="slds-dropdown__item"
+                        @click="onClick(index, tab)">
 
-                    <a role="menuitem" tabindex="-1">
-                        <span class="slds-truncate" :title="tab.title">
+                        <a role="menuitem" tabindex="-1">
+                            <span class="slds-truncate" :title="tab.title">
 
-                            <span class="slds-indicator-container"/>
+                                <span class="slds-indicator-container"/>
 
-                            <span class="slds-icon_container">
-                                <slds-svg :icon="tab.icon" standard class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                <span class="slds-icon_container">
+                                    <slds-svg :icon="tab.icon" standard class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                </span>
+
+                                <span>
+                                    {{ tab.title }}
+                                </span>
+
                             </span>
+                        </a>
 
-                            <span>
-                                {{ tab.title }}
-                            </span>
-
-                        </span>
-                    </a>
-
-                </li>
-            </ul>
-        </div>
+                    </li>
+                </ul>
+            </div>
+        </transition>
 
     </li>
 </template>
@@ -78,3 +80,16 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+</style>
