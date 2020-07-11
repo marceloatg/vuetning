@@ -11,6 +11,7 @@
             <div class="slds-combobox_container slds-has-selection" :class="size">
                 <div role="combobox" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 
+                    <!-- Input -->
                     <div role="none" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right">
 
                         <slds-icon :icon="selectedOption.icon" small class="slds-combobox__input-entity-icon"/>
@@ -35,7 +36,8 @@
 
                     </div>
 
-                    <div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                    <!-- Options -->
+                    <div class="slds-dropdown slds-dropdown_left slds-dropdown_top slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
                         <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                             <li role="presentation" class="slds-listbox__item">
                                 <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
@@ -47,8 +49,10 @@
                                         </span>
                                     </span>
                                     <span class="slds-media__body">
-                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">Burlington Textiles Corp of America</span>
-                                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">Account • Burlington, NC</span>
+                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">Burlington
+                                            Textiles Corp of America</span>
+                                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">Account
+                                            • Burlington, NC</span>
                                     </span>
                                 </div>
                             </li>
@@ -62,8 +66,10 @@
                                         </span>
                                     </span>
                                     <span class="slds-media__body">
-                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">Dickenson plc</span>
-                                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">Account • Lawrence, KS</span>
+                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">Dickenson
+                                            plc</span>
+                                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">Account
+                                            • Lawrence, KS</span>
                                     </span>
                                 </div>
                             </li>
@@ -138,48 +144,50 @@
                     </div>
 
                     <!-- Options -->
-                    <div
-                        v-if="isDropdownActive"
-                        role="listbox"
-                        class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
-                        :class="[`slds-dropdown_length-${length}`]">
-                        <ul role="presentation" class="slds-listbox slds-listbox_vertical">
+                    <transition name="dropdown">
+                        <div
+                            v-if="isDropdownActive"
+                            role="listbox"
+                            class="slds-dropdown slds-dropdown_left slds-dropdown_top slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                            :class="[`slds-dropdown_length-${length}`]">
+                            <ul role="presentation" class="slds-listbox slds-listbox_vertical">
 
-                            <li
-                                v-if="filter != null && filter.length > 0"
-                                role="presentation"
-                                class="slds-listbox__item slds-theme_shade"
-                                @mousedown.prevent.stop="">
-                                <div role="option" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small">
+                                <li
+                                    v-if="filter != null && filter.length > 0"
+                                    role="presentation"
+                                    class="slds-listbox__item slds-theme_shade"
+                                    @mousedown.prevent.stop="">
+                                    <div role="option" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small">
 
-                                    <!-- Figure -->
-                                    <span class="slds-media__figure slds-listbox__option-icon">
-                                        <slds-icon icon="utility:search" x-small/>
-                                    </span>
-
-                                    <!-- Body -->
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" :title="searchOptionLabel">
-                                            {{ searchOptionLabel }}
+                                        <!-- Figure -->
+                                        <span class="slds-media__figure slds-listbox__option-icon">
+                                            <slds-icon icon="utility:search" x-small/>
                                         </span>
-                                    </span>
 
-                                </div>
-                            </li>
+                                        <!-- Body -->
+                                        <span class="slds-media__body">
+                                            <span class="slds-truncate" :title="searchOptionLabel">
+                                                {{ searchOptionLabel }}
+                                            </span>
+                                        </span>
 
-                            <slds-option
-                                v-for="option in filteredOptions"
-                                :key="option.value"
-                                :disabled="option.disabled"
-                                :filter="filter"
-                                :icon="option.icon"
-                                :label="option.label"
-                                :meta="option.meta"
-                                :value="option.value"
-                                @select="onSelect"/>
+                                    </div>
+                                </li>
 
-                        </ul>
-                    </div>
+                                <slds-option
+                                    v-for="option in filteredOptions"
+                                    :key="option.value"
+                                    :disabled="option.disabled"
+                                    :filter="filter"
+                                    :icon="option.icon"
+                                    :label="option.label"
+                                    :meta="option.meta"
+                                    :value="option.value"
+                                    @select="onSelect"/>
+
+                            </ul>
+                        </div>
+                    </transition>
 
                 </div>
             </div>
@@ -211,7 +219,7 @@
             ClearableInputMixin,
         ],
         inheritAttrs: false,
-        props:{
+        props: {
             error: {
                 type: Boolean,
             },
@@ -275,7 +283,7 @@
                 isDropdownActive: false,
             }
         },
-        computed:{
+        computed: {
             attributes() {
                 return {...this.$attrs}
             },
@@ -360,6 +368,17 @@
 
     .fade-enter, .fade-leave-to {
         opacity: 0;
+    }
+
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
     }
 
     input {

@@ -34,25 +34,27 @@
                 class="slds-button_icon-current-color"
                 @click.stop="toggleDropdown"/>
 
-            <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
-                <ul class="slds-dropdown__list" role="menu">
-                    <li class="slds-dropdown__item" role="presentation">
-                        <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
-                            <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
-                        </a>
-                    </li>
-                    <li class="slds-dropdown__item" role="presentation">
-                        <a role="menuitem" tabindex="-1" @click.prevent="onClickCloseAll">
-                            <span class="slds-truncate" title="Close All">Close All</span>
-                        </a>
-                    </li>
-                    <li class="slds-dropdown__item" role="presentation">
-                        <a role="menuitem" tabindex="-1" @click.prevent="onClickClose">
-                            <span class="slds-truncate" title="Close">Close</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <transition name="dropdown">
+                <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
+                    <ul class="slds-dropdown__list" role="menu">
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
+                                <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="-1" @click.prevent="onClickCloseAll">
+                                <span class="slds-truncate" title="Close All">Close All</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="-1" @click.prevent="onClickClose">
+                                <span class="slds-truncate" title="Close">Close</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </transition>
 
         </div>
 
@@ -123,3 +125,16 @@
         },
     }
 </script>
+
+<style scoped lang="scss">
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+</style>

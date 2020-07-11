@@ -61,46 +61,48 @@
                     </div>
 
                     <!-- Options -->
-                    <div
-                        v-if="isDropdownActive"
-                        role="listbox"
-                        class="slds-dropdown slds-dropdown_fluid"
-                        :class="[`slds-dropdown_length-${length}`]">
-                        <ul role="presentation" class="slds-listbox slds-listbox_vertical">
+                    <transition name="dropdown">
+                        <div
+                            v-if="isDropdownActive"
+                            role="dropdown"
+                            class="slds-dropdown slds-dropdown_left slds-dropdown_top slds-dropdown_fluid"
+                            :class="[`slds-dropdown_length-${length}`]">
+                            <ul role="presentation" class="slds-listbox slds-listbox_vertical">
 
-                            <!-- Options -->
-                            <template v-for="option in filteredOptions">
+                                <!-- Options -->
+                                <template v-for="option in filteredOptions">
 
-                                <slds-picklist-heading
-                                    v-if="option.heading != null"
-                                    :key="option.value"
-                                    :heading="option.heading"/>
+                                    <slds-picklist-heading
+                                        v-if="option.heading != null"
+                                        :key="option.value"
+                                        :heading="option.heading"/>
 
-                                <slds-picklist-option
-                                    v-else
-                                    :key="option.value"
-                                    :disabled="option.disabled"
-                                    :filter="filter"
-                                    :label="option.label"
-                                    :meta="option.meta"
-                                    :value="option.value"
-                                    :is-selected="option.value === value"
-                                    @select="onSelect"/>
+                                    <slds-picklist-option
+                                        v-else
+                                        :key="option.value"
+                                        :disabled="option.disabled"
+                                        :filter="filter"
+                                        :label="option.label"
+                                        :meta="option.meta"
+                                        :value="option.value"
+                                        :is-selected="option.value === value"
+                                        @select="onSelect"/>
 
-                            </template>
+                                </template>
 
-                            <!-- Spinner -->
-                            <li v-if="spinner" role="presentation" class="slds-listbox__item">
-                                <div class="slds-align_absolute-center slds-p-top_medium">
-                                    <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
-                                        <div class="slds-spinner__dot-a"/>
-                                        <div class="slds-spinner__dot-b"/>
+                                <!-- Spinner -->
+                                <li v-if="spinner" role="presentation" class="slds-listbox__item">
+                                    <div class="slds-align_absolute-center slds-p-top_medium">
+                                        <div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+                                            <div class="slds-spinner__dot-a"/>
+                                            <div class="slds-spinner__dot-b"/>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
+                    </transition>
 
                 </div>
             </div>
@@ -271,12 +273,25 @@
 </script>
 
 <style scoped lang="scss">
-    .fade-enter-active, .fade-leave-active {
+    .fade-enter-active,
+    .fade-leave-active {
         transition: opacity 150ms;
     }
 
-    .fade-enter, .fade-leave-to {
+    .fade-enter,
+    .fade-leave-to {
         opacity: 0;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
     }
 
     input {

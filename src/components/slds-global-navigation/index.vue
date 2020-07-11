@@ -152,5 +152,6 @@
 <style scoped lang="scss">
     .slds-context-bar {
         z-index: 99;
+        user-select: none;
     }
 </style>

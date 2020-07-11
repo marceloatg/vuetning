@@ -125,7 +125,6 @@
     }
 </script>
 
-
 <style scoped lang="scss">
     .slds-sub-tabs__item {
         min-width: 12rem;
