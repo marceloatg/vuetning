@@ -179,6 +179,7 @@
                     badge: {
                         label: `Badge-${i}`,
                         color: 'outline-success',
+                        icon: 'utility:add'
                     },
                     actions: ['redo', 'delete', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6'],
                 })

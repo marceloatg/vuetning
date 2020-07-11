@@ -100,7 +100,7 @@
                                             v-if="getFieldValue(column, item).icon"
                                             class="slds-badge__icon slds-badge__icon_left"
                                             :class="'slds-badge__icon_' + getFieldValue(column, item).color">
-                                            <span class="slds-icon_container">
+                                            <span class="slds-icon_container slds-current-color">
                                                 <slds-svg :icon="getFieldValue(column, item).icon" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
                                             </span>
                                         </span>{{ getFieldValue(column, item).label }}
@@ -177,37 +177,39 @@
                                 </button>
 
                                 <!-- Items -->
-                                <div
-                                    v-if="actionMenu.openedRowId === item[keyField]"
-                                    ref="dropdown"
-                                    v-on-clickaway="onCloseActionMenu"
-                                    class="slds-dropdown slds-dropdown_length-5 slds-dropdown_right"
-                                    :class="[`slds-dropdown_${actionMenu.orientation}`]"
-                                    :style="{opacity: actionMenu.opacity}">
+                                <transition name="dropdown">
+                                    <div
+                                        v-if="actionMenu.openedRowId === item[keyField]"
+                                        ref="dropdown"
+                                        v-on-clickaway="onCloseActionMenu"
+                                        class="slds-dropdown slds-dropdown_length-5 slds-dropdown_right"
+                                        :class="[`slds-dropdown_${actionMenu.orientation}`]"
+                                        :style="{opacity: actionMenu.opacity}">
 
-                                    <ul class="slds-dropdown__list" role="menu">
-                                        <li
-                                            v-for="action in currentActions"
-                                            :key="action.value"
-                                            class="slds-dropdown__item"
-                                            role="presentation"
-                                            @mousedown.prevent="onMouseDownAction(action, item)">
+                                        <ul class="slds-dropdown__list" role="menu">
+                                            <li
+                                                v-for="action in currentActions"
+                                                :key="action.value"
+                                                class="slds-dropdown__item"
+                                                role="presentation"
+                                                @mousedown.prevent="onMouseDownAction(action, item)">
 
-                                            <a role="menuitem">
-                                                <span class="slds-truncate" :title="action.label">
-                                                    <slds-icon
-                                                        v-if="action.icon != null"
-                                                        :icon="action.icon"
-                                                        x-small
-                                                        class="slds-m-right_x-small"/>
-                                                    {{ action.label }}
-                                                </span>
-                                            </a>
+                                                <a role="menuitem">
+                                                    <span class="slds-truncate" :title="action.label">
+                                                        <slds-icon
+                                                            v-if="action.icon != null"
+                                                            :icon="action.icon"
+                                                            x-small
+                                                            class="slds-m-right_x-small"/>
+                                                        {{ action.label }}
+                                                    </span>
+                                                </a>
 
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
 
-                                </div>
+                                    </div>
+                                </transition>
 
                             </div>
                         </div>
@@ -832,6 +834,17 @@
         padding: 3px 8px;
     }
 
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
     @each $name, $color in $badge-colors {
         .slds-badge_#{$name},
         .slds-badge__icon_#{$name} {
@@ -846,7 +859,7 @@
             padding: 2px 8px;
 
             svg {
-                fill: $color;
+                fill: $color !important;
             }
         }
     }

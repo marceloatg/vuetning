@@ -16,39 +16,41 @@
             @keyup="keyUp"/>
 
         <!-- Items -->
-        <div
-            v-if="isOpen"
-            ref="dropdown"
-            class="slds-dropdown"
-            :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]"
-            :style="{opacity: dropdownOpacity}">
+        <transition name="dropdown">
+            <div
+                v-if="isOpen"
+                ref="dropdown"
+                class="slds-dropdown"
+                :class="[`slds-dropdown_${position}`, `slds-dropdown_${orientation}`, `slds-dropdown_length-${length}`]"
+                :style="{opacity: dropdownOpacity}">
 
-            <slot name="before"/>
+                <slot name="before"/>
 
-            <ul class="slds-dropdown__list" role="menu">
-                <template v-for="(item, index) in items">
+                <ul class="slds-dropdown__list" role="menu">
+                    <template v-for="(item, index) in items">
 
-                    <slds-menu-heading
-                        v-if="item.heading != null"
-                        :key="index"
-                        :heading="item.heading"/>
+                        <slds-menu-heading
+                            v-if="item.heading != null"
+                            :key="index"
+                            :heading="item.heading"/>
 
-                    <slds-menu-option
-                        v-else
-                        :key="item.value"
-                        :disabled="item.disabled"
-                        :icon="item.icon"
-                        :label="item.label"
-                        :prefix-icon="item.prefixIcon"
-                        :value="item.value"
-                        @click="onClick"/>
+                        <slds-menu-option
+                            v-else
+                            :key="item.value"
+                            :disabled="item.disabled"
+                            :icon="item.icon"
+                            :label="item.label"
+                            :prefix-icon="item.prefixIcon"
+                            :value="item.value"
+                            @click="onClick"/>
 
-                </template>
-            </ul>
+                    </template>
+                </ul>
 
-            <slot name="after"/>
+                <slot name="after"/>
 
-        </div>
+            </div>
+        </transition>
 
     </div>
 </template>
@@ -176,3 +178,16 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+</style>

@@ -1,33 +1,43 @@
 <template>
     <nav role="navigation">
         <ol class="slds-breadcrumb slds-list_horizontal slds-wrap slds-grid_vertical-align-center">
+
             <li v-if="menuItems.length > 0" class="slds-breadcrumb__item">
                 <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+
+                    <!-- Button -->
                     <slds-button-icon
                         icon="utility:threedots"
                         x-small
                         bordered-filled
                         @click="toggleDropdown"/>
-                    <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_left slds-dropdown_actions">
-                        <ul class="slds-dropdown__list" role="menu">
-                            <li
-                                v-for="item in menuItems"
-                                :key="item.id"
-                                class="slds-dropdown__item"
-                                role="presentation">
-                                <a role="menuitem" @click="onClick(item)">
-                                    <span class="slds-truncate" :title="item.label">{{ item.label }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+
+                    <!-- Dropdown -->
+                    <transition name="dropdown">
+                        <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_left slds-dropdown_actions">
+                            <ul class="slds-dropdown__list" role="menu">
+                                <li
+                                    v-for="item in menuItems"
+                                    :key="item.id"
+                                    class="slds-dropdown__item"
+                                    role="presentation">
+                                    <a role="menuitem" @click="onClick(item)">
+                                        <span class="slds-truncate" :title="item.label">{{ item.label }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </transition>
+
                 </div>
             </li>
+
             <li v-for="item in visibleItems" :key="item.id" class="slds-breadcrumb__item">
                 <a class="slds-text-color_weak" @click="onClick(item)">
                     {{ item.label }}
                 </a>
             </li>
+
         </ol>
     </nav>
 </template>
@@ -60,7 +70,8 @@
                     items.push(this.items[this.items.length - 1]);
 
                     return items;
-                } else {
+                }
+                else {
                     return this.items;
                 }
             },
@@ -82,6 +93,7 @@
             },
             onClick(item) {
                 this.$emit('click', item.href);
+                this.away();
             },
             toggleDropdown() {
                 this.isDropdownActive = !this.isDropdownActive;
@@ -94,6 +106,17 @@
     .slds-breadcrumb .slds-list__item:before,
     .slds-breadcrumb__item:before {
         top: -.225rem;
+    }
+
+    .dropdown-enter,
+    .dropdown-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+        transition: transform .3s, opacity .15s !important;
     }
 
     a {
