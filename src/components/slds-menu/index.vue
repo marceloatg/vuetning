@@ -108,7 +108,6 @@
 
                 const dropdown = this.$refs.dropdown;
                 const positioning = this.getDropdownPositioning(dropdown);
-                console.log(positioning)
 
                 // Setting horizontal position of dropdown
                 if (positioning.element.x + positioning.element.width > positioning.parent.width) {
