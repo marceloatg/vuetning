@@ -106,8 +106,9 @@
                 if (!opened) return;
                 await this.$nextTick();
 
-                let dropdown = this.$refs["dropdown"];
+                const dropdown = this.$refs.dropdown;
                 const positioning = this.getDropdownPositioning(dropdown);
+                console.log(positioning)
 
                 // Setting horizontal position of dropdown
                 if (positioning.element.x + positioning.element.width > positioning.parent.width) {
@@ -115,7 +116,7 @@
                 }
 
                 // Setting vertical orientation of dropdown
-                if (positioning.element.y + positioning.element.height > positioning.parent.height) {
+                if (positioning.parent.height !== 0 && (positioning.element.y + positioning.element.height > positioning.parent.height)) {
                     this.orientation = 'bottom';
                 }
 

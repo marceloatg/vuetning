@@ -1,42 +1,36 @@
 <template>
-    <div id="app" :class="{'has-trial-bar': trial.showBar, 'has-alert': alert.show}">
+    <div id="app" ref="viewport" class="slds-viewport">
 
         <!-- Trial bar -->
-        <slds-trial-bar v-if="trial.showBar" :days-left="trial.daysLeft"/>
+        <slds-trial-bar v-if="showTrialBar" :days-left="30"/>
 
         <!-- Alert -->
         <slds-alert
+            v-if="showAlertBar"
             :theme="alert.theme"
             :icon-category="alert.iconCategory"
             :icon-name="alert.iconName"
-            :message="alert.message"
-            :class="[{'slds-hide': !alert.show}]"
-            @close="closeAlert"/>
+            :message="alert.message"/>
 
         <!-- Global header -->
-        <slds-global-header name="Arcthos"/>
+        <slds-global-header name="Blue Bear"/>
 
         <!-- Global navigation -->
-        <slds-global-navigation
-            app-name="Vuetning"
-            :tabs="tabs"
-            :sub-tabs="subTabs"
-            :overflowed-tabs="overflowedTabs"
-            :overflowed-sub-tabs="overflowedSubTabs"
-            @close="onCloseTab"/>
+        <slds-global-navigation app-name="Dashboard" :tabs="[]" :sub-tabs="[]"/>
 
         <!-- Brand band -->
-        <slds-brand-band theme="default"/>
+        <slds-brand-band/>
 
         <!-- Global content -->
         <div class="slds-global-content">
             <slds-view/>
         </div>
+
     </div>
 </template>
 
 <script>
-    import SldsView from './views/Default/VirtualTable'
+    import SldsView from './views/Default/Index'
 
     export default {
         name: 'App',
@@ -60,7 +54,24 @@
                 hasSubTas: null,
                 tabIcon: null,
                 tabTitle: null,
-                tabs: [],
+                tabs: [{
+                    id: '1',
+                    icon: 'utility:add',
+                    title: 'Foo',
+                    isActive: false,
+                    subTabs: [],
+                }, {
+                    id: '2',
+                    icon: 'utility:settings',
+                    title: 'General Settings',
+                    isActive: true,
+                    subTabs: [
+                        {id: 'a', icon: 'utility:settings', title: 'General Settings', isActive: true},
+                        {id: 'b', icon: 'utility:user', title: 'User Settings', isActive: false},
+                    ],
+                }],
+                showAlertBar: false,
+                showTrialBar: false,
                 subTabsByTabId: [],
                 overflowedSubTabsByTabId: [],
                 overflowedTabs: [],
@@ -68,18 +79,13 @@
         },
         computed: {
             subTabs() {
-                if (this.tabs.length == 0) return [];
-
-                let selectedTabSubTabs = this.subTabsByTabId.find(element => {
-                    return element.tabId === this.tabs[this.tabs.length - 1].id
-                });
-
-                if (selectedTabSubTabs === undefined) return [];
-
-                return selectedTabSubTabs.subTabs;
+                if (this.tabs.length === 0) return [];
+                const activeTab = this.tabs.find(tab => tab.isActive)
+                if (activeTab) return activeTab.subTabs;
+                return [];
             },
             overflowedSubTabs() {
-                if (this.tabs.length == 0) return [];
+                if (this.tabs.length === 0) return [];
 
                 let selectedTabSubTabs = this.overflowedSubTabsByTabId.find(element => {
                     return element.tabId === this.tabs[this.tabs.length - 1].id
@@ -160,146 +166,50 @@
 </script>
 
 <style lang="scss">
-    $default_height: 90px;
-    $trial_bar_height: 50px;
-    $alert_height: 35px;
-    $background-color: rgb(176, 196, 223);
-    $global-padding: 12px;
-    $table-view-footer: 48px;
-
     * {
         box-sizing: border-box;
         padding: 0;
         margin: 0;
     }
 
-    html {
-        background-color: $background-color !important;
-    }
+    .slds-viewport {
+        --background-color: rgb(176, 196, 223);
+        --global-padding: 12px;
+        --trial-bar-height: 0px;
+        --alert-height: 0px;
+        --header-height: 40px;
+        --navigation-height: 50px;
 
-    body {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
         overflow: hidden;
+        z-index: 1;
+        background-color: var(--background-color) !important;
     }
 
-    .slds-notify_container,
-    .slds-notification-container {
-        margin-top: $default_height;
+    .slds-notify_container {
+        top: var(--trial-bar-height) - var(--alert-height) - var(--header-height) - var(--navigation-height);
     }
 
     .slds-global-content {
-        position: fixed;
-        height: calc(100% - #{$default_height});
+        position: relative;
+        height: calc(100% - var(--trial-bar-height) - var(--alert-height) - var(--header-height) - var(--navigation-height));
         width: 100%;
-        top: $default_height;
-        left: 0;
-        padding: $global-padding;
         overflow: auto;
 
         main {
-
-            &.absolute,
-            &.table-view {
-                position: fixed;
-                width: calc(100% - (2 * #{$global-padding}));
-                top: calc(#{$default_height} + #{$global-padding});
-                left: $global-padding;
-            }
+            padding: 12px;
 
             &.absolute {
-                height: calc(100% - #{$default_height} - (2 * #{$global-padding}));
-            }
-
-            &.table-view {
-                height: calc(100% - #{$default_height} - #{$global-padding});
-
-                .table-view_body {
-                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$table-view-footer});
-                }
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
             }
         }
     }
 
-    .has-trial-bar {
-
-        .slds-notify_container,
-        .slds-notification-container {
-            margin-top: calc(#{$default_height} + #{$trial_bar_height});
-        }
-
-        .slds-global-content {
-            height: calc(100% - #{$default_height} - #{$trial_bar_height});
-            top: calc(#{$default_height} + #{$trial_bar_height});
-
-            main {
-                &.absolute,
-                &.table-view {
-                    top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height});
-                }
-
-                &.absolute {
-                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height});
-                }
-
-                &.table-view {
-                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height});
-                }
-            }
-        }
-    }
-
-    .has-alert {
-
-        .slds-notify_container,
-        .slds-notification-container {
-            margin-top: calc(#{$default_height} + #{$alert_height});
-        }
-
-        .slds-global-content {
-            height: calc(100% - #{$default_height} - #{$alert_height});
-            top: calc(#{$default_height} + #{$alert_height});
-
-            main {
-                &.absolute,
-                &.table-view {
-                    top: calc(#{$default_height} + #{$global-padding} + #{$alert_height});
-                }
-
-                &.absolute {
-                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$alert_height});
-                }
-
-                &.table-view {
-                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$alert_height});
-                }
-            }
-        }
-    }
-
-    .has-trial-bar.has-alert {
-
-        .slds-notify_container,
-        .slds-notification-container {
-            margin-top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
-        }
-
-        .slds-global-content {
-            height: calc(100% - #{$default_height} - #{$trial_bar_height} - #{$alert_height});
-            top: calc(#{$default_height} + #{$trial_bar_height} + #{$alert_height});
-
-            main {
-                &.absolute,
-                &.table-view {
-                    top: calc(#{$default_height} + #{$global-padding} + #{$trial_bar_height} + #{$alert_height});
-                }
-
-                &.absolute {
-                    height: calc(100% - #{$default_height} - (2 * #{$global-padding}) - #{$trial_bar_height} - #{$alert_height});
-                }
-
-                &.table-view {
-                    height: calc(100% - #{$default_height} - #{$global-padding} - #{$trial_bar_height} - #{$alert_height});
-                }
-            }
-        }
-    }
 </style>

@@ -24,7 +24,10 @@
 
         </a>
 
-        <div class="slds-col_bump-left slds-grid">
+        <!-- Buttons -->
+        <div v-if="!isMain" class="slds-col_bump-left slds-grid">
+
+            <!-- Dropdown -->
             <div class="slds-context-bar__icon-action slds-size_1-of-2  slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open">
                 <slds-button-icon
                     icon="utility:chevrondown"
@@ -56,7 +59,7 @@
             </div>
 
             <!-- Close button -->
-            <div v-if="!isMain" class=" slds-p-left_none slds-size_1-of-2 slds-p-right_none">
+            <div class=" slds-p-left_none slds-size_1-of-2 slds-p-right_none">
                 <slds-button-icon
                     icon="utility:close"
                     x-small
@@ -65,6 +68,7 @@
                     class="slds-button_icon-current-color"
                     @click.prevent="onClickClose"/>
             </div>
+
         </div>
     </li>
 </template>
@@ -76,48 +80,59 @@
         mixins: [
             clickaway
         ],
+
         props: {
             icon: {
                 type: String,
                 required: true,
             },
+
             isActive: {
                 type: Boolean,
                 default: false,
             },
+
             isMain: {
                 type: Boolean,
                 default: false,
             },
+
             title: {
                 type: String,
                 required: true,
             },
         },
+
         data() {
             return {
                 isDropdownActive: false,
             }
         },
+
         methods: {
             away() {
                 this.isDropdownActive = false;
             },
+
             onClickTab() {
                 this.$emit('click');
             },
+
             onClickRefreshTab() {
                 this.$emit('refresh');
                 this.isDropdownActive = false;
             },
+
             onClickSetAsWorkspaceTab() {
                 this.$emit('workspace');
                 this.isDropdownActive = false;
             },
+
             onClickClose() {
                 this.$emit('close');
                 this.isDropdownActive = false;
             },
+
             toggleDropdown() {
                 this.isDropdownActive = !this.isDropdownActive;
             }
@@ -127,8 +142,9 @@
 
 <style scoped lang="scss">
     .slds-sub-tabs__item {
+        cursor: pointer;
         min-width: 12rem;
         width: 12rem;
-        max-width: 15rem;
+        max-width: 12rem;
     }
 </style>
