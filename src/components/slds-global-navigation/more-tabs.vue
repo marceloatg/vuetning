@@ -1,30 +1,36 @@
 <template>
-    <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+    <li
+        class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
-        <!-- More tabs button -->
-        <button class="slds-button slds-context-bar__label-action" :title="`More (${overflowedTabs.length})`" @click="toggleDropdown">
+        <!-- Identification -->
+        <a role="tab" :title="`More (${overflowedTabs.length})`" class="slds-context-bar__label-action" @click="toggleDropdown">
 
+            <!-- Indicator -->
             <span class="slds-indicator-container"/>
 
+            <!-- Text -->
             <span class="slds-truncate">
                 {{ `More (${overflowedTabs.length})` }}
             </span>
 
+        </a>
+
+        <!-- Dropdown menu -->
+        <div class="slds-context-bar__icon-action slds-p-left_none slds-p-right_x-small">
             <svg class="slds-button__icon slds-button__icon_small slds-button__icon_right">
                 <slds-svg icon="utility:chevrondown"/>
             </svg>
-
-        </button>
+        </div>
 
         <!-- More tabs dropdown -->
         <transition name="dropdown">
             <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
                 <ul class="slds-dropdown__list" role="menu">
                     <li
-                        v-for="(tab, index) in overflowedTabs"
+                        v-for="tab in overflowedTabs"
                         :key="tab.id"
                         class="slds-dropdown__item"
-                        @click="onClick(index, tab)">
+                        @click="onClick(tab)">
 
                         <a role="menuitem" tabindex="-1">
                             <span class="slds-truncate" :title="tab.title">
@@ -55,25 +61,30 @@
 
     export default {
         mixins: [clickaway],
+
         props: {
             overflowedTabs: {
                 type: Array,
                 required: true,
             },
         },
+
         data() {
             return {
                 isDropdownActive: false,
             }
         },
+
         methods: {
             away() {
                 this.isDropdownActive = false;
             },
-            onClick(index, tab) {
+
+            onClick(tab) {
                 this.isDropdownActive = false;
-                this.$emit('click', index, tab);
+                this.$emit('click', tab);
             },
+
             toggleDropdown() {
                 this.isDropdownActive = !this.isDropdownActive;
             },
@@ -82,6 +93,11 @@
 </script>
 
 <style scoped lang="scss">
+    .slds-context-bar__item {
+        width: 7.5rem;
+        max-width: 7.5rem;
+    }
+
     .dropdown-enter,
     .dropdown-leave-to {
         opacity: 0 !important;
