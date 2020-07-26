@@ -33,6 +33,7 @@
     $end-color: rgb(176, 196, 223);
 
     .slds-brand-band {
+        height: 0;
 
         &:after {
             background-image: linear-gradient(to bottom, rgba($end-color, 0) 60%, $end-color);

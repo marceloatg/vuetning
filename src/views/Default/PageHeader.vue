@@ -9,6 +9,7 @@
                     <!-- Figure-->
                     <div class="slds-media__figure">
                         <slds-icon
+                            inverse
                             icon="utility:settings"
                             icon-class="slds-page-header__icon"
                             class="slds-icon-standard-custom"
@@ -35,6 +36,40 @@
                 </div>
             </div>
 
+            <!-- Actions -->
+            <div class="slds-page-header__col-actions">
+                <div class="slds-page-header__controls">
+                    <div class="slds-page-header__control">
+                        <ul class="slds-button-group-list">
+
+                            <!-- Share -->
+                            <li>
+                                <slds-button neutral label="Share"/>
+                            </li>
+
+                            <!-- Edit -->
+                            <li>
+                                <slds-button neutral label="Edit"/>
+                            </li>
+
+                            <!-- Remove -->
+                            <li>
+                                <slds-button neutral label="Delete"/>
+                            </li>
+
+                            <!-- More options -->
+                            <li>
+                                <slds-menu
+                                    icon="utility:down"
+                                    :items="moreItems"
+                                    class="slds-p-right_x-small"/>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -58,7 +93,10 @@
                     label: 'Link 2',
                     href: 'breadcrumbs_link_2'
                 },
-            ]
+            ],
+            moreItems: [
+                {label: 'Open in Web IDE', value: 'web-ide'},
+            ],
         }),
     }
 </script>
