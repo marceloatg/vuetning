@@ -63,3 +63,9 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    .slds-notify {
+        height: 2rem;
+    }
+</style>
