@@ -194,7 +194,7 @@
                                                 role="presentation"
                                                 @mousedown.prevent="onMouseDownAction(action, item)">
 
-                                                <a role="menuitem">
+                                                <a role="menuitem" :class="{'slds-is-disabled': action.disabled}">
                                                     <span class="slds-truncate" :title="action.label">
                                                         <slds-icon
                                                             v-if="action.icon != null"
@@ -832,6 +832,12 @@
 
     .slds-badge {
         padding: 3px 8px;
+    }
+
+    .slds-is-disabled {
+        color: #c9c7c5 !important;
+        cursor: not-allowed !important;
+        user-select: none !important;
     }
 
     .dropdown-enter,
