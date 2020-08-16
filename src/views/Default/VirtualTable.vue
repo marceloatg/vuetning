@@ -74,8 +74,9 @@
                         value: 'test5',
                     },
                     {
-                        label: 'Test',
+                        label: 'Disabled',
                         value: 'test6',
+                        disabled: true,
                     },
                 ],
                 initialSort: {
