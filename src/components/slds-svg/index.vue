@@ -1,29 +1,29 @@
 <template>
     <svg :class="offset">
-        <action-sprites v-if="category === 'action'"/>
-        <custom-sprites v-if="category === 'custom'"/>
-        <doctype-sprites v-if="category === 'doctype'"/>
-        <standard-sprites v-if="category === 'standard'"/>
-        <utility-sprites v-if="category === 'utility'"/>
+        <action-sprite v-if="category === 'action'"/>
+        <custom-sprite v-else-if="category === 'custom'"/>
+        <doctype-sprite v-else-if="category === 'doctype'"/>
+        <standard-sprite v-else-if="category === 'standard'"/>
+        <utility-sprite v-else-if="category === 'utility'"/>
         <use :xlink:href="`#${name}`"/>
     </svg>
 </template>
 
 <script>
-    import ActionSprites from './ActionSprites';
-    import CustomSprites from './CustomSprites';
-    import DoctypeSprites from './DoctypeSprites';
-    import StandardSprites from './StandardSprites';
-    import UtilitySprites from './UtilitySprites';
+    import ActionSprite from './action-sprite';
+    import CustomSprite from './custom-sprite';
+    import DoctypeSprite from './doctype-sprite';
+    import StandardSprite from './standard-sprite';
+    import UtilitySprite from './utility-sprite';
 
     export default {
         name: 'SldsSvg',
         components:{
-            ActionSprites,
-            CustomSprites,
-            DoctypeSprites,
-            StandardSprites,
-            UtilitySprites
+            ActionSprite,
+            CustomSprite,
+            DoctypeSprite,
+            StandardSprite,
+            UtilitySprite
         },
         props: {
             icon: {
