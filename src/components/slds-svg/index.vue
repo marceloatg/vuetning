@@ -1,12 +1,30 @@
 <template>
     <svg :class="offset">
-        <use :xlink:href="`${root}/assets/icons/${category}-sprite/svg/symbols.svg#${name}`"/>
+        <action-sprites v-if="category === 'action'"/>
+        <custom-sprites v-if="category === 'custom'"/>
+        <doctype-sprites v-if="category === 'doctype'"/>
+        <standard-sprites v-if="category === 'standard'"/>
+        <utility-sprites v-if="category === 'utility'"/>
+        <use :xlink:href="`#${name}`"/>
     </svg>
 </template>
 
 <script>
+    import ActionSprites from './ActionSprites';
+    import CustomSprites from './CustomSprites';
+    import DoctypeSprites from './DoctypeSprites';
+    import StandardSprites from './StandardSprites';
+    import UtilitySprites from './UtilitySprites';
+
     export default {
         name: 'SldsSvg',
+        components:{
+            ActionSprites,
+            CustomSprites,
+            DoctypeSprites,
+            StandardSprites,
+            UtilitySprites
+        },
         props: {
             icon: {
                 type: String,
