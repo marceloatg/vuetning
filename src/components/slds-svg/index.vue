@@ -37,7 +37,7 @@ export default {
             default: null,
         },
 
-        standard: {
+        standardFormat: {
             type: Boolean,
         },
     },
@@ -52,17 +52,17 @@ export default {
         },
 
         offset() {
-            if (this.category !== 'utility') return '';
-            return (this.standard) ? 'utility-offset' : '';
+            if (this.category === 'standard') return '';
+            return (this.standardFormat) ? 'standard-format-offset' : '';
         },
 
         viewBox() {
-          if (this.category === 'action') return '0 0 52 52';
-          if (this.category === 'custom') return '0 0 100 100';
-          if (this.category === 'doctype') return '0 0 56 64';
-          if (this.category === 'standard') return '0 0 100 100';
-          if (this.category === 'utility') return '0 0 52 52';
-          else throw 'Invalid icon category';
+            if (this.category === 'action') return '0 0 52 52';
+            if (this.category === 'custom') return '0 0 100 100';
+            if (this.category === 'doctype') return '0 0 56 64';
+            if (this.category === 'standard') return '0 0 100 100';
+            if (this.category === 'utility') return '0 0 52 52';
+            else throw 'Invalid icon category';
         },
     },
 
@@ -91,7 +91,7 @@ $rotations: (
     }
 }
 
-.utility-offset {
+.standard-format-offset {
     &.slds-icon_small {
         padding: 4px;
         border-radius: .25rem;

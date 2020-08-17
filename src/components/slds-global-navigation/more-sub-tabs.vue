@@ -38,7 +38,7 @@
                                 <span class="slds-indicator-container"/>
 
                                 <span class="slds-icon_container">
-                                    <slds-svg :icon="subTab.icon" standard class="slds-icon slds-icon_small slds-icon-text-default"/>
+                                    <slds-svg :icon="subTab.icon" standard-format class="slds-icon slds-icon_small slds-icon-text-default"/>
                                 </span>
 
                                 <span>
