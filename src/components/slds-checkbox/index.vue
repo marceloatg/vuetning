@@ -13,10 +13,11 @@
             <div v-if="!readOnly && inline" class="slds-checkbox">
 
                 <input
+                    ref="checkbox"
                     type="checkbox"
-                    :checked="checked"
-                    :value="checked"
-                    :class="{ 'disabled': disabled }">
+                    :disabled="disabled"
+                    :class="{ 'disabled': disabled }"
+                    :checked="inputChecked">
 
                 <label class="slds-checkbox__label">
                     <span class="slds-checkbox_faux"/>
@@ -31,22 +32,23 @@
             <span v-else-if="!readOnly && stacked" class="slds-checkbox slds-checkbox_standalone">
 
                 <input
+                    ref="checkbox"
                     type="checkbox"
-                    :checked="checked"
-                    :value="checked"
-                    :class="{ 'disabled': disabled }">
+                    :disabled="disabled"
+                    :class="{ 'disabled': disabled }"
+                    :checked="inputChecked">
 
                 <span class="slds-checkbox_faux"/>
 
             </span>
 
             <!-- View mode faux checked-->
-            <span v-else-if="readOnly && value" class="slds-icon_container slds-icon-utility-check slds-current-color" title="True">
+            <span v-else-if="readOnly && checked" class="slds-icon_container slds-icon-utility-check slds-current-color" title="True">
                 <slds-svg icon="utility:check" class="slds-icon slds-icon_x-small"/>
             </span>
 
             <!-- View mode faux unchecked-->
-            <span v-else-if="readOnly && !value" class="slds-icon_container slds-icon-utility-steps slds-current-color" title="False">
+            <span v-else-if="readOnly && !checked" class="slds-icon_container slds-icon-utility-steps slds-current-color" title="False">
                 <slds-svg icon="utility:steps" class="slds-icon slds-icon_x-small"/>
             </span>
 
@@ -67,8 +69,12 @@
         components: {
             SldsSvg
         },
+        model: {
+            prop: 'checked',
+            event: 'input'
+        },
         props: {
-            value: {
+            checked: {
                 type: Boolean,
                 default: false,
             },
@@ -105,23 +111,23 @@
         },
         data(){
             return {
-                checked: false,
+                inputChecked: this.checked,
             }
         },
         watch:{
-            value(newValue){
-                this.checked = newValue;
+            checked(newValue){
+                this.inputChecked = newValue;
             }
         },
-        mounted() {
-            this.checked = this.value;
+        beforeMount() {
+            if(!this.inline && !this.stacked) this.inline = true;
         },
         methods: {
             onClick() {
                 if (this.disabled || this.readOnly) return;
-                this.checked = !this.checked;
-                this.$emit('input', this.checked);
-            },
+                this.inputChecked = !this.inputChecked;
+                this.$emit('input', this.inputChecked);
+            }
         },
     }
 </script>
