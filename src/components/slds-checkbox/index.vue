@@ -1,22 +1,22 @@
 <template>
     <div
         class="slds-form-element"
-        :class="[{ 'slds-has-error': hasError }, {'slds-form-element_readonly': readOnly}]">
+        :class="{ 'slds-has-error': hasError , 'slds-form-element_readonly': readOnly}">
 
-        <label v-if="readOnly || variant === 'stacked'" class="slds-form-element__label">
+        <label v-if="readOnly || stacked" class="slds-form-element__label">
             <abbr v-if="required" class="slds-required" title="required">* </abbr>{{ label }}
         </label>
 
         <div class="slds-form-element__control" @click.stop="onClick">
 
             <!-- Inline faux -->
-            <div v-if="!readOnly && variant === 'inline'" class="slds-checkbox">
+            <div v-if="!readOnly && inline" class="slds-checkbox">
 
                 <input
                     type="checkbox"
                     :checked="checked"
                     :value="checked"
-                    v-bind="[disabledAttribute]">
+                    :class="{ 'disabled': disabled }">
 
                 <label class="slds-checkbox__label">
                     <span class="slds-checkbox_faux"/>
@@ -28,25 +28,25 @@
             </div>
 
             <!-- Stacked faux -->
-            <span v-else-if="!readOnly && variant === 'stacked'" class="slds-checkbox slds-checkbox_standalone">
+            <span v-else-if="!readOnly && stacked" class="slds-checkbox slds-checkbox_standalone">
 
                 <input
                     type="checkbox"
                     :checked="checked"
                     :value="checked"
-                    v-bind="[disabledAttribute]">
+                    :class="{ 'disabled': disabled }">
 
                 <span class="slds-checkbox_faux"/>
 
             </span>
 
             <!-- View mode faux checked-->
-            <span v-else-if="readOnly && checked" class="slds-icon_container slds-icon-utility-check slds-current-color" title="True">
+            <span v-else-if="readOnly && value" class="slds-icon_container slds-icon-utility-check slds-current-color" title="True">
                 <slds-svg icon="utility:check" class="slds-icon slds-icon_x-small"/>
             </span>
 
             <!-- View mode faux unchecked-->
-            <span v-else-if="readOnly && !checked" class="slds-icon_container slds-icon-utility-steps slds-current-color" title="False">
+            <span v-else-if="readOnly && !value" class="slds-icon_container slds-icon-utility-steps slds-current-color" title="False">
                 <slds-svg icon="utility:steps" class="slds-icon slds-icon_x-small"/>
             </span>
 
@@ -94,26 +94,19 @@
                 type: Boolean,
                 default: false,
             },
-            variant: {
-                type: String,
-                default: 'stacked',
-                validator(value) {
-                    return [
-                        'inline',
-                        'stacked',
-                    ].indexOf(value) !== -1
-                },
+            inline: {
+                type: Boolean,
+                default: false
             },
+            stacked:{
+                type:Boolean,
+                default: false
+            }
         },
         data(){
             return {
                 checked: false,
             }
-        },
-        computed: {
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
-            },
         },
         watch:{
             value(newValue){
