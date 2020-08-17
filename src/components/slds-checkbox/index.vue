@@ -14,8 +14,8 @@
 
                 <input
                     type="checkbox"
-                    :checked="value"
-                    :value="value"
+                    :checked="checked"
+                    :value="checked"
                     v-bind="[disabledAttribute]">
 
                 <label class="slds-checkbox__label">
@@ -32,8 +32,8 @@
 
                 <input
                     type="checkbox"
-                    :checked="value"
-                    :value="value"
+                    :checked="checked"
+                    :value="checked"
                     v-bind="[disabledAttribute]">
 
                 <span class="slds-checkbox_faux"/>
@@ -68,7 +68,7 @@
             SldsSvg
         },
         props: {
-            checked: {
+            value: {
                 type: Boolean,
                 default: false,
             },
@@ -105,9 +105,9 @@
                 },
             },
         },
-        data() {
+        data(){
             return {
-                value: null,
+                checked: false,
             }
         },
         computed: {
@@ -115,19 +115,19 @@
                 return this.disabled ? {['disabled']: 'disabled'} : {};
             },
         },
-        watch: {
-            checked: function (newValue) {
-                this.value = newValue;
+        watch:{
+            value(newValue){
+                this.checked = newValue;
             }
         },
         mounted() {
-            this.value = this.checked;
+            this.checked = this.value;
         },
         methods: {
             onClick() {
                 if (this.disabled || this.readOnly) return;
-                this.value = !this.value;
-                this.$emit('input', this.value);
+                this.checked = !this.checked;
+                this.$emit('input', this.checked);
             },
         },
     }
