@@ -3,15 +3,16 @@
         class="slds-form-element"
         :class="{ 'slds-has-error': hasError , 'slds-form-element_readonly': readOnly}">
 
-        <label v-if="readOnly || stacked" class="slds-form-element__label">
+        <label v-if="readOnly || isStacked" class="slds-form-element__label">
             <abbr v-if="required" class="slds-required" title="required">* </abbr>{{ label }}
         </label>
 
         <div class="slds-form-element__control" @click.stop="onClick">
 
             <!-- Inline faux -->
-            <div v-if="!readOnly && inline" class="slds-checkbox">
+            <div v-if="!readOnly && isInline" class="slds-checkbox">
 
+                <abbr v-if="required" class="slds-required" title="required">* </abbr>
                 <input
                     ref="checkbox"
                     type="checkbox"
@@ -29,7 +30,7 @@
             </div>
 
             <!-- Stacked faux -->
-            <span v-else-if="!readOnly && stacked" class="slds-checkbox slds-checkbox_standalone">
+            <span v-else-if="!readOnly && isStacked" class="slds-checkbox slds-checkbox_standalone">
 
                 <input
                     ref="checkbox"
@@ -112,6 +113,15 @@
         data(){
             return {
                 inputChecked: this.checked,
+                variant: 'inline',
+            }
+        },
+        computed:{
+            isStacked(){
+                return this.variant === 'stacked'
+            },
+            isInline(){
+                return this.variant === 'inline'
             }
         },
         watch:{
@@ -119,8 +129,8 @@
                 this.inputChecked = newValue;
             }
         },
-        beforeMount() {
-            if(!this.inline && !this.stacked) this.inline = true;
+        beforeMount(){
+            if(this.stacked && !this.inline) this.variant = 'stacked'
         },
         methods: {
             onClick() {
