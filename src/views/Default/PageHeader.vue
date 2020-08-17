@@ -10,10 +10,10 @@
                     <div class="slds-media__figure">
                         <slds-icon
                             inverse
-                            icon="utility:settings"
+                            icon="action:add_contact"
                             icon-class="slds-page-header__icon"
                             class="slds-icon-standard-custom"
-                            standard/>
+                            standard-format/>
                     </div>
 
                     <!-- Body -->

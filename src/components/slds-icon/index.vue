@@ -1,6 +1,6 @@
 <template>
     <span class="slds-icon_container" :class="[background, {'slds-current-color':currentColor}]">
-        <slds-svg :icon="icon" class="slds-icon" :standard="standard" :class="[iconClass, size, variant]"/>
+        <slds-svg :icon="icon" class="slds-icon" :standard-format="standardFormat" :class="[iconClass, size, variant]"/>
     </span>
 </template>
 
@@ -42,7 +42,7 @@
             small: {
                 type: Boolean,
             },
-            standard: {
+            standardFormat: {
                 type: Boolean,
             },
             success: {
