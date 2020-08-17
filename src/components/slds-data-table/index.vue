@@ -312,7 +312,11 @@ export default {
                 this.filterRows();
                 this.filterTimerId = null;
             }.bind(this), 200);
-        }
+        },
+
+        rows() {
+            this.filterRows();
+        },
     },
 
     created() {
