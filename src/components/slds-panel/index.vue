@@ -102,6 +102,7 @@ export default {
         },
         onClose(){
             this.hide();
+            this.$emit('close')
         }
     }
 }
