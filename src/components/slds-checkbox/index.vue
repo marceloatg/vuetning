@@ -1,7 +1,7 @@
 <template>
     <div
         class="slds-form-element"
-        :class="{ 'slds-has-error': hasError , 'slds-form-element_readonly': readOnly}">
+        :class="{ 'slds-has-error': error , 'slds-form-element_readonly': readOnly}">
 
         <label v-if="readOnly || isStacked" class="slds-form-element__label">
             <abbr v-if="required" class="slds-required" title="required">* </abbr>{{ label }}
@@ -53,8 +53,8 @@
 
         </div>
 
-        <div v-if="hasError" class="slds-form-element__help">
-            {{ errorMessage }}
+        <div v-if="error" class="slds-form-element__help">
+            <slot name="error"/>
         </div>
 
     </div>
@@ -90,7 +90,7 @@ export default {
             type: String,
         },
 
-        hasError: {
+        error: {
             type: Boolean,
             default: false,
         },
