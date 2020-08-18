@@ -8,7 +8,7 @@
             <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header Title">
                 {{ title }}
             </h2>
-            <slds-button-icon icon="utility:close" class="slds-panel__close" small @click="onClickCloseButton"/>
+            <slds-button-icon icon="utility:close" class="slds-panel__close" small @click="onClickClose"/>
         </div>
         <div class="slds-panel__body">
             <slot/>        
