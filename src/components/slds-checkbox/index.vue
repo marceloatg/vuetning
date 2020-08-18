@@ -1,22 +1,23 @@
 <template>
     <div
         class="slds-form-element"
-        :class="[{ 'slds-has-error': hasError }, {'slds-form-element_readonly': readOnly}]">
+        :class="{ 'slds-has-error': hasError , 'slds-form-element_readonly': readOnly}">
 
-        <label v-if="readOnly || variant === 'stacked'" class="slds-form-element__label">
+        <label v-if="readOnly || isStacked" class="slds-form-element__label">
             <abbr v-if="required" class="slds-required" title="required">* </abbr>{{ label }}
         </label>
 
         <div class="slds-form-element__control" @click.stop="onClick">
 
             <!-- Inline faux -->
-            <div v-if="!readOnly && variant === 'inline'" class="slds-checkbox">
+            <div v-if="!readOnly && isInline" class="slds-checkbox">
 
+                <abbr v-if="required" class="slds-required" title="required">* </abbr>
                 <input
                     type="checkbox"
-                    :checked="value"
-                    :value="value"
-                    v-bind="[disabledAttribute]">
+                    :disabled="disabled"
+                    :class="{ 'disabled': disabled }"
+                    :checked="inputChecked">
 
                 <label class="slds-checkbox__label">
                     <span class="slds-checkbox_faux"/>
@@ -28,13 +29,13 @@
             </div>
 
             <!-- Stacked faux -->
-            <span v-else-if="!readOnly && variant === 'stacked'" class="slds-checkbox slds-checkbox_standalone">
+            <span v-else-if="!readOnly && isStacked" class="slds-checkbox slds-checkbox_standalone">
 
                 <input
                     type="checkbox"
-                    :checked="value"
-                    :value="value"
-                    v-bind="[disabledAttribute]">
+                    :disabled="disabled"
+                    :class="{ 'disabled': disabled }"
+                    :checked="inputChecked">
 
                 <span class="slds-checkbox_faux"/>
 
@@ -60,75 +61,98 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/index.vue'
+import SldsSvg from '../slds-svg/index.vue'
 
-    export default {
-        name: 'SldsCheckbox',
-        components: {
-            SldsSvg
+export default {
+    name: 'SldsCheckbox',
+
+    components: {
+        SldsSvg
+    },
+
+    model: {
+        prop: 'checked',
+        event: 'input'
+    },
+
+    props: {
+        checked: {
+            type: Boolean,
+            default: false,
         },
-        props: {
-            checked: {
-                type: Boolean,
-                default: false,
-            },
-            disabled: {
-                type: Boolean,
-                default: false,
-            },
-            errorMessage: {
-                type: String,
-            },
-            hasError: {
-                type: Boolean,
-                default: false,
-            },
-            label: {
-                type: String,
-            },
-            readOnly: {
-                type: Boolean,
-                default: false,
-            },
-            required: {
-                type: Boolean,
-                default: false,
-            },
-            variant: {
-                type: String,
-                default: 'stacked',
-                validator(value) {
-                    return [
-                        'inline',
-                        'stacked',
-                    ].indexOf(value) !== -1
-                },
-            },
+
+        disabled: {
+            type: Boolean,
+            default: false,
         },
-        data() {
-            return {
-                value: null,
-            }
+
+        errorMessage: {
+            type: String,
         },
-        computed: {
-            disabledAttribute() {
-                return this.disabled ? {['disabled']: 'disabled'} : {};
-            },
+
+        hasError: {
+            type: Boolean,
+            default: false,
         },
-        watch: {
-            checked: function (newValue) {
-                this.value = newValue;
-            }
+
+        label: {
+            type: String,
         },
-        mounted() {
-            this.value = this.checked;
+
+        readOnly: {
+            type: Boolean,
+            default: false,
         },
-        methods: {
-            onClick() {
-                if (this.disabled || this.readOnly) return;
-                this.value = !this.value;
-                this.$emit('input', this.value);
-            },
+
+        required: {
+            type: Boolean,
+            default: false,
         },
-    }
+
+        inline: {
+            type: Boolean,
+            default: false
+        },
+
+        stacked: {
+            type: Boolean,
+            default: false
+        }
+    },
+
+    data() {
+        return {
+            inputChecked: this.checked,
+            variant: 'inline',
+        }
+    },
+
+    computed: {
+        isStacked() {
+            return this.variant === 'stacked'
+        },
+
+        isInline() {
+            return this.variant === 'inline'
+        }
+    },
+
+    watch: {
+        checked(newValue) {
+            this.inputChecked = newValue;
+        }
+    },
+
+    beforeMount() {
+        if (this.stacked && !this.inline) this.variant = 'stacked'
+    },
+
+    methods: {
+        onClick() {
+            if (this.disabled || this.readOnly) return;
+            this.inputChecked = !this.inputChecked;
+            this.$emit('input', this.inputChecked);
+        }
+    },
+}
 </script>
