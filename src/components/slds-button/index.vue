@@ -6,20 +6,26 @@
         @click="onClick"
         v-on="listeners">
 
-        <!-- Label for right icon -->
-        <span v-if="icon && right" :class="{'slds-hidden': spinner}">
-            {{ label }}
+
+        <span v-if="icon">
+            <span v-if="right && !left" :class="{'slds-hidden': spinner}">
+                {{ label }}
+            </span>
+
+            <!-- Icon -->
+            <slds-svg
+                v-if="icon"
+                :icon="icon"
+                class="slds-button__icon"
+                :class="iconClass"/>
+
+            <!-- Label for left icon -->
+            <span v-if="left && !right" :class="{'slds-hidden': spinner}">
+                {{ label }}
+            </span>
         </span>
 
-        <!-- Icon -->
-        <slds-svg
-            v-if="icon"
-            :icon="icon"
-            class="slds-button__icon"
-            :class="iconClass"/>
-
-        <!-- Label for left icon -->
-        <span v-if="left && !right" :class="{'slds-hidden': spinner}">
+        <span v-else :class="{'slds-hidden': spinner}">
             {{ label }}
         </span>
 
@@ -60,7 +66,6 @@
             },
             left: {
                 type: Boolean,
-                default: true,
             },
             neutral: {
                 type: Boolean,
