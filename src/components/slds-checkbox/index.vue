@@ -14,7 +14,6 @@
 
                 <abbr v-if="required" class="slds-required" title="required">* </abbr>
                 <input
-                    ref="checkbox"
                     type="checkbox"
                     :disabled="disabled"
                     :class="{ 'disabled': disabled }"
@@ -33,7 +32,6 @@
             <span v-else-if="!readOnly && isStacked" class="slds-checkbox slds-checkbox_standalone">
 
                 <input
-                    ref="checkbox"
                     type="checkbox"
                     :disabled="disabled"
                     :class="{ 'disabled': disabled }"
@@ -63,81 +61,98 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/index.vue'
+import SldsSvg from '../slds-svg/index.vue'
 
-    export default {
-        name: 'SldsCheckbox',
-        components: {
-            SldsSvg
+export default {
+    name: 'SldsCheckbox',
+
+    components: {
+        SldsSvg
+    },
+
+    model: {
+        prop: 'checked',
+        event: 'input'
+    },
+
+    props: {
+        checked: {
+            type: Boolean,
+            default: false,
         },
-        model: {
-            prop: 'checked',
-            event: 'input'
+
+        disabled: {
+            type: Boolean,
+            default: false,
         },
-        props: {
-            checked: {
-                type: Boolean,
-                default: false,
-            },
-            disabled: {
-                type: Boolean,
-                default: false,
-            },
-            errorMessage: {
-                type: String,
-            },
-            hasError: {
-                type: Boolean,
-                default: false,
-            },
-            label: {
-                type: String,
-            },
-            readOnly: {
-                type: Boolean,
-                default: false,
-            },
-            required: {
-                type: Boolean,
-                default: false,
-            },
-            inline: {
-                type: Boolean,
-                default: false
-            },
-            stacked:{
-                type:Boolean,
-                default: false
-            }
+
+        errorMessage: {
+            type: String,
         },
-        data(){
-            return {
-                inputChecked: this.checked,
-                variant: 'inline',
-            }
+
+        hasError: {
+            type: Boolean,
+            default: false,
         },
-        computed:{
-            isStacked(){
-                return this.variant === 'stacked'
-            },
-            isInline(){
-                return this.variant === 'inline'
-            }
+
+        label: {
+            type: String,
         },
-        watch:{
-            checked(newValue){
-                this.inputChecked = newValue;
-            }
+
+        readOnly: {
+            type: Boolean,
+            default: false,
         },
-        beforeMount(){
-            if(this.stacked && !this.inline) this.variant = 'stacked'
+
+        required: {
+            type: Boolean,
+            default: false,
         },
-        methods: {
-            onClick() {
-                if (this.disabled || this.readOnly) return;
-                this.inputChecked = !this.inputChecked;
-                this.$emit('input', this.inputChecked);
-            }
+
+        inline: {
+            type: Boolean,
+            default: false
         },
-    }
+
+        stacked: {
+            type: Boolean,
+            default: false
+        }
+    },
+
+    data() {
+        return {
+            inputChecked: this.checked,
+            variant: 'inline',
+        }
+    },
+
+    computed: {
+        isStacked() {
+            return this.variant === 'stacked'
+        },
+
+        isInline() {
+            return this.variant === 'inline'
+        }
+    },
+
+    watch: {
+        checked(newValue) {
+            this.inputChecked = newValue;
+        }
+    },
+
+    beforeMount() {
+        if (this.stacked && !this.inline) this.variant = 'stacked'
+    },
+
+    methods: {
+        onClick() {
+            if (this.disabled || this.readOnly) return;
+            this.inputChecked = !this.inputChecked;
+            this.$emit('input', this.inputChecked);
+        }
+    },
+}
 </script>
