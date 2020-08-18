@@ -4,11 +4,11 @@
             <slot name="header"/>
         </div>
         <div v-else class="slds-panel__header" :class="{'slds-panel__header_align-center' : centerHeader }">
-            <slds-button-icon v-if="backButton" icon="utility:back" class="slds-panel__back" small @click="onClickBackButton"/>
+            <slds-button-icon v-if="backButton" icon="utility:back" class="slds-panel__back" small @click="onClickBack"/>
             <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header Title">
                 {{ title }}
             </h2>
-            <slds-button-icon icon="utility:close" class="slds-panel__close" small @click="onClose"/>
+            <slds-button-icon icon="utility:close" class="slds-panel__close" small @click="onClickCloseButton"/>
         </div>
         <div class="slds-panel__body">
             <slot/>        
@@ -96,11 +96,11 @@ export default {
         hide(){
             this.isOpen = false;
         },
-        onClickBackButton(){
+        onClickBack(){
             this.hide();
             this.$emit('back')
         },
-        onClose(){
+        onClickClose(){
             this.hide();
             this.$emit('close')
         }
