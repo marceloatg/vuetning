@@ -1,7 +1,7 @@
 <template>
     <div class="slds-tooltip__container">
 
-        <slot name="trigger"/>
+        <slot name="trigger" @click="show"/>
 
         <div
             v-if="visible"

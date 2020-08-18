@@ -84,12 +84,12 @@
                 return '';
             },
             containerSize() {
-                if (this.hasDropdown) return '';
-                if (!this.bare && !this.bordered && !this.borderedFilled && !this.borderedInverse) return '';
                 if (this.xxSmall) return 'slds-button_icon-xx-small';
-                if (this.xSmall) return 'slds-button_icon-x-small';
-                if (this.small) return 'slds-button_icon-small';
-                return '';
+                else if (this.xSmall) return 'slds-button_icon-x-small';
+                else if (this.small) return 'slds-button_icon-small';
+                else if (this.hasDropdown) return '';
+                else if (!this.bare && !this.bordered && !this.borderedFilled && !this.borderedInverse) return '';
+                else return '';
             },
             iconSize() {
                 if (this.hasDropdown) return '';
