@@ -14,6 +14,7 @@ export {default as sldsCounter} from './slds-counter'
 export {default as sldsDataTable} from './slds-data-table';
 export {default as sldsDockedComposer} from './slds-docked-composer';
 export {default as sldsDuelingPicklist} from './slds-dueling-picklist';
+export {default as sldsGlobalAction} from './slds-global-action'
 export {default as sldsGlobalHeader} from './slds-global-header'
 export {default as sldsGlobalNavigation} from './slds-global-navigation'
 export {default as sldsIcon} from './slds-icon'
