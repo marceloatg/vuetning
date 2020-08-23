@@ -6,8 +6,15 @@
             <abbr v-if="required" class="slds-required" title="Required">*</abbr> {{ label }}
         </label>
 
+        <!-- Read only -->
+        <div v-if="readonly" class="slds-form-element__control slds-border_bottom">
+            <div class="slds-form-element__static">
+                <p> {{ valueInput }} </p>
+            </div>
+        </div>
+
         <!-- Control -->
-        <div class="slds-form-element__control slds-input-has-icon" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
+        <div v-else class="slds-form-element__control slds-input-has-icon" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
 
             <!-- Pre fixed text -->
             <span v-if="addonPre" class="slds-form-element__addon">
@@ -24,33 +31,29 @@
             <!-- Input -->
             <input
                 ref="input"
-                :value="value"
+                :value="valueInput"
                 v-bind="$attrs"
                 class="slds-input"
-                @input="$emit('input', $event.target.value)"
-                v-on="listeners">
+                v-on="listeners"
+                @input="onInput($event.target.value)">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
 
-                <transition name="fade">
-                    <slds-spinner
-                        v-if="spinner"
-                        variant="brand"
-                        size="x-small"
-                        class="slds-input__spinner"
-                        :style="{right: spinnerRight}"/>
-                </transition>
+                <slds-spinner
+                    v-if="spinner"
+                    variant="brand"
+                    size="x-small"
+                    class="slds-input__spinner"
+                    :style="{right: spinnerRight}"/>
 
-                <transition name="fade">
-                    <slds-button-icon
-                        v-if="value && $attrs.readonly == null"
-                        icon="utility:clear"
-                        class="slds-input__icon slds-input__icon_right"
-                        title="Clear"
-                        tabindex="-1"
-                        @click.prevent="onClear"/>
-                </transition>
+                <slds-button-icon
+                    v-if="valueInput && $attrs.readonly == null"
+                    icon="utility:clear"
+                    class="slds-input__icon slds-input__icon_right"
+                    title="Clear"
+                    tabindex="-1"
+                    @click.prevent="onClickClear"/>
 
             </div>
 
@@ -78,7 +81,6 @@
     import SldsButtonIcon from '../slds-button-icon/index.vue'
     import SldsSpinner from '../slds-spinner/index.vue'
     import SldsSvg from '../slds-svg/index.vue'
-    import ClearableInputMixin from '../../mixins/clearable-input'
 
     export default {
         name: 'SldsInput',
@@ -87,9 +89,6 @@
             SldsSpinner,
             SldsSvg,
         },
-        mixins: [
-            ClearableInputMixin,
-        ],
         inheritAttrs: false,
         props: {
             addonPost: {
@@ -119,6 +118,9 @@
             label: {
                 type: String,
             },
+            readonly: {
+                type: Boolean,
+            },
             required: {
                 type: Boolean,
             },
@@ -130,6 +132,7 @@
         data() {
             return {
                 rightGroupOffset: '0px',
+                valueInput: this.value
             }
         },
         computed: {
@@ -180,13 +183,23 @@
                 }
 
                 this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
-            },
+            }
         },
         mounted() {
             if (this.addonPost == null) return;
             const addonPost = this.$refs.addonPost;
             this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
         },
+        methods:{
+            onInput(value){
+                this.valueInput = value;
+                this.$emit('input', this.valueInput);
+            },
+            onClickClear(){
+                this.valueInput = null;
+                this.$emit('input', this.valueInput);
+            }
+        }
     }
 </script>
 
