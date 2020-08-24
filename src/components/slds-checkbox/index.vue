@@ -1,6 +1,6 @@
 <template>
     <div
-        class="slds-form-element"
+        class="slds-form-element pointer"
         :class="{ 'slds-has-error': error , 'slds-form-element_readonly': readonly}">
 
         <label v-if="readonly || isStacked" class="slds-form-element__label">
@@ -138,3 +138,17 @@ export default {
     },
 }
 </script>
+
+<style>
+.pointer{
+    cursor: pointer;
+}
+
+.pointer .slds-form-element__label{
+    cursor: pointer;
+}
+
+.pointer .slds-form-element__control{
+    cursor: pointer;
+}
+</style>
