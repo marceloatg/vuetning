@@ -9,7 +9,7 @@
         <!-- Read only -->
         <div v-if="readonly" class="slds-form-element__control slds-border_bottom">
             <div class="slds-form-element__static">
-                <p> {{ value }} </p>
+                <p v-html="valueReadMode"/>
             </div>
         </div>
 
@@ -57,19 +57,9 @@
                 delete listeners.input;
                 return listeners
             },
-        },
-        mounted() {
-            this.$refs.input.addEventListener("keyup", this.onKeyUp);
-        },
-        beforeDestroy() {
-            this.$refs.input.removeEventListener("keyup", this.onKeyUp);
-        },
-        methods: {
-            onKeyUp(event) {
-                if (event.key === 'Enter' && this.$refs.input === document.activeElement) {
-                    event.stopPropagation();
-                }
-            },
-        },
+            valueReadMode(){
+                return this.value ? this.value.replace(/\r?\n|\r/g, '</br>') : undefined
+            }
+        }
     }
 </script>
