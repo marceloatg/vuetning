@@ -116,7 +116,6 @@ export default {
         readonly: Boolean,
         required: Boolean,
         spinner: Boolean,
-        stacked: Boolean,
         value: {}
     },
 
