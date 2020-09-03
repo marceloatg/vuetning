@@ -40,7 +40,8 @@
                 v-bind="$attrs"
                 class="slds-input"
                 v-on="listeners"
-                @input="onInput($event.target.value)">
+                @input="onInput($event.target.value)"
+                @keyup="onKeyUp">
 
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
@@ -93,12 +94,15 @@ import SldsSvg from '../slds-svg/index.vue'
 
 export default {
     name: 'SldsInput',
+
     components: {
         SldsButtonIcon,
         SldsSpinner,
         SldsSvg,
     },
+
     inheritAttrs: false,
+
     props: {
         addonPost: String,
         addonPre: String,
@@ -115,21 +119,25 @@ export default {
         stacked: Boolean,
         value: {}
     },
+
     data() {
         return {
             rightGroupOffset: '0px',
             valueInput: this.value
         }
     },
+
     computed: {
         hasFixedText() {
             return (this.addonPre != null || this.addonPost != null);
         },
+
         iconClass() {
             return (this.icon == null)
                 ? 'slds-input-has-icon_right'
                 : 'slds-input-has-icon_left-right';
         },
+
         iconClassVariant() {
             if (this.error || this.iconError) {
                 return {'slds-icon-text-error': true};
@@ -147,16 +155,19 @@ export default {
                 return {'slds-icon-text-default': true};
             }
         },
+
         listeners() {
             const listeners = {...this.$listeners};
             delete listeners.input;
             return listeners
         },
+
         spinnerRight() {
             if (this.value) return '1.5rem';
             return '.2rem';
         },
     },
+
     watch: {
         async addonPost() {
             await this.$nextTick();
@@ -170,24 +181,37 @@ export default {
 
             this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
         },
+
         value(newValue) {
             this.valueInput = newValue
         }
     },
+
     mounted() {
         if (this.addonPost == null) return;
         const addonPost = this.$refs.addonPost;
         this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
     },
+
     methods: {
         onInput(value) {
             this.valueInput = value;
             this.$emit('input', this.valueInput);
         },
+
+        onClear() {
+            this.$refs.input.value = null;
+            this.$emit('input', null);
+        },
+
         onClickClear() {
             this.valueInput = null;
             this.$emit('input', this.valueInput);
-        }
+        },
+
+        onKeyUp(event) {
+            if (event.key === 'Escape') this.onClear();
+        },
     }
 }
 </script>
