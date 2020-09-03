@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SldsView from './views/Checkboxes'
+    import SldsView from './views/Input'
 
     export default {
         name: 'App',

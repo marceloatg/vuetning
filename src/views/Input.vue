@@ -54,7 +54,7 @@
             </p>
             <br>
 
-            <slds-input label="Readonly input" value="My input value" readonly/>
+            <slds-input v-model="input" label="My input value" readonly/>
             <br>
 
             <slds-input v-model="input" label="Required input" required/>
