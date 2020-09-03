@@ -1,5 +1,10 @@
 <template>
-    <div class="slds-form-element" :class="{ 'slds-has-error': error }">
+    <div
+        class="slds-form-element"
+        :class="{
+            'slds-has-error': error,
+            'slds-form-element_readonly slds-form-element_stacked': readonly,
+        }">
 
         <!-- Label -->
         <label v-if="label" class="slds-form-element__label">
@@ -40,20 +45,24 @@
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
 
-                <slds-spinner
-                    v-if="spinner"
-                    variant="brand"
-                    size="x-small"
-                    class="slds-input__spinner"
-                    :style="{right: spinnerRight}"/>
+                <transition name="fade">
+                    <slds-spinner
+                        v-if="spinner"
+                        variant="brand"
+                        size="x-small"
+                        class="slds-input__spinner"
+                        :style="{right: spinnerRight}"/>
+                </transition>
 
-                <slds-button-icon
-                    v-if="valueInput && $attrs.readonly == null"
-                    icon="utility:clear"
-                    class="slds-input__icon slds-input__icon_right"
-                    title="Clear"
-                    tabindex="-1"
-                    @click.prevent="onClickClear"/>
+                <transition name="fade">
+                    <slds-button-icon
+                        v-if="valueInput && $attrs.readonly == null"
+                        icon="utility:clear"
+                        class="slds-input__icon slds-input__icon_right"
+                        title="Clear"
+                        tabindex="-1"
+                        @click.prevent="onClickClear"/>
+                </transition>
 
             </div>
 
@@ -78,156 +87,133 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index.vue'
-    import SldsSpinner from '../slds-spinner/index.vue'
-    import SldsSvg from '../slds-svg/index.vue'
+import SldsButtonIcon from '../slds-button-icon/index.vue'
+import SldsSpinner from '../slds-spinner/index.vue'
+import SldsSvg from '../slds-svg/index.vue'
 
-    export default {
-        name: 'SldsInput',
-        components: {
-            SldsButtonIcon,
-            SldsSpinner,
-            SldsSvg,
+export default {
+    name: 'SldsInput',
+    components: {
+        SldsButtonIcon,
+        SldsSpinner,
+        SldsSvg,
+    },
+    inheritAttrs: false,
+    props: {
+        addonPost: String,
+        addonPre: String,
+        error: Boolean,
+        icon: String,
+        iconError: Boolean,
+        iconLight: Boolean,
+        iconSuccess: Boolean,
+        iconWarning: Boolean,
+        label: String,
+        readonly: Boolean,
+        required: Boolean,
+        spinner: Boolean,
+        stacked: Boolean,
+        value: {}
+    },
+    data() {
+        return {
+            rightGroupOffset: '0px',
+            valueInput: this.value
+        }
+    },
+    computed: {
+        hasFixedText() {
+            return (this.addonPre != null || this.addonPost != null);
         },
-        inheritAttrs: false,
-        props: {
-            addonPost: {
-                type: String,
-            },
-            addonPre: {
-                type: String,
-            },
-            error: {
-                type: Boolean,
-            },
-            icon: {
-                type: String,
-            },
-            iconError: {
-                type: Boolean,
-            },
-            iconLight: {
-                type: Boolean,
-            },
-            iconSuccess: {
-                type: Boolean,
-            },
-            iconWarning: {
-                type: Boolean,
-            },
-            label: {
-                type: String,
-            },
-            readonly: {
-                type: Boolean,
-            },
-            required: {
-                type: Boolean,
-            },
-            spinner: {
-                type: Boolean,
-            },
-            value: {}
+        iconClass() {
+            return (this.icon == null)
+                ? 'slds-input-has-icon_right'
+                : 'slds-input-has-icon_left-right';
         },
-        data() {
-            return {
-                rightGroupOffset: '0px',
-                valueInput: this.value
+        iconClassVariant() {
+            if (this.error || this.iconError) {
+                return {'slds-icon-text-error': true};
+            }
+            else if (this.iconLight) {
+                return {'slds-icon-text-light': true};
+            }
+            else if (this.iconSuccess) {
+                return {'slds-icon-text-success': true};
+            }
+            else if (this.iconWarning) {
+                return {'slds-icon-text-warning': true};
+            }
+            else {
+                return {'slds-icon-text-default': true};
             }
         },
-        computed: {
-            hasFixedText() {
-                return (this.addonPre != null || this.addonPost != null);
-            },
-            iconClass() {
-                return (this.icon == null)
-                    ? 'slds-input-has-icon_right'
-                    : 'slds-input-has-icon_left-right';
-            },
-            iconClassVariant() {
-                if (this.error || this.iconError) {
-                    return {'slds-icon-text-error': true};
-                }
-                else if (this.iconLight) {
-                    return {'slds-icon-text-light': true};
-                }
-                else if (this.iconSuccess) {
-                    return {'slds-icon-text-success': true};
-                }
-                else if (this.iconWarning) {
-                    return {'slds-icon-text-warning': true};
-                }
-                else {
-                    return {'slds-icon-text-default': true};
-                }
-            },
-            listeners() {
-                const listeners = {...this.$listeners};
-                delete listeners.input;
-                return listeners
-            },
-            spinnerRight() {
-                if (this.value) return '1.5rem';
-                return '.2rem';
-            },
+        listeners() {
+            const listeners = {...this.$listeners};
+            delete listeners.input;
+            return listeners
         },
-        watch: {
-            async addonPost() {
-                await this.$nextTick();
-
-                const addonPost = this.$refs.addonPost;
-
-                if (this.addonPost == null || addonPost == null) {
-                    this.rightGroupOffset = '0px';
-                    return;
-                }
-
-                this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
-            },
-            value(newValue){
-                this.valueInput = newValue
-            }
+        spinnerRight() {
+            if (this.value) return '1.5rem';
+            return '.2rem';
         },
-        mounted() {
-            if (this.addonPost == null) return;
+    },
+    watch: {
+        async addonPost() {
+            await this.$nextTick();
+
             const addonPost = this.$refs.addonPost;
+
+            if (this.addonPost == null || addonPost == null) {
+                this.rightGroupOffset = '0px';
+                return;
+            }
+
             this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
         },
-        methods:{
-            onInput(value){
-                this.valueInput = value;
-                this.$emit('input', this.valueInput);
-            },
-            onClickClear(){
-                this.valueInput = null;
-                this.$emit('input', this.valueInput);
-            }
+        value(newValue) {
+            this.valueInput = newValue
+        }
+    },
+    mounted() {
+        if (this.addonPost == null) return;
+        const addonPost = this.$refs.addonPost;
+        this.rightGroupOffset = `${addonPost.offsetWidth + 16}px`;
+    },
+    methods: {
+        onInput(value) {
+            this.valueInput = value;
+            this.$emit('input', this.valueInput);
+        },
+        onClickClear() {
+            this.valueInput = null;
+            this.$emit('input', this.valueInput);
         }
     }
+}
 </script>
 
 <style scoped lang="scss">
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity 150ms;
-    }
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 150ms;
+}
 
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
-    }
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
 
-    .slds-icon-text-error {
-        fill: #c23934 !important;
-    }
+.slds-icon-text-error {
+    fill: #c23934 !important;
+}
 
-    .slds-icon-text-light {
-        fill: #b0adab !important;
-    }
+.slds-icon-text-light {
+    fill: #b0adab !important;
+}
 
-    .slds-icon-text-success {
-        fill: #027e46 !important;
-    }
+.slds-icon-text-success {
+    fill: #027e46 !important;
+}
 
-    .slds-icon-text-warning {
-        fill: #ffb75d !important;
-    }
+.slds-icon-text-warning {
+    fill: #ffb75d !important;
+}
 </style>
