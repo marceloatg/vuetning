@@ -11,15 +11,8 @@
             <abbr v-if="required" class="slds-required" title="Required">*</abbr> {{ label }}
         </label>
 
-        <!-- Read only -->
-        <div v-if="readonly" class="slds-form-element__control slds-border_bottom">
-            <div class="slds-form-element__static">
-                <p> {{ valueInput }} </p>
-            </div>
-        </div>
-
         <!-- Control -->
-        <div v-else class="slds-form-element__control slds-input-has-icon" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
+        <div class="slds-form-element__control slds-input-has-icon" :class="[iconClass, {'slds-input-has-fixed-addon': hasFixedText}]">
 
             <!-- Pre fixed text -->
             <span v-if="addonPre" class="slds-form-element__addon">
@@ -39,6 +32,7 @@
                 :value="valueInput"
                 v-bind="$attrs"
                 class="slds-input"
+                :readonly="readonly"
                 v-on="listeners"
                 @input="onInput($event.target.value)"
                 @keyup="onKeyUp">
@@ -46,6 +40,7 @@
             <!-- Right group -->
             <div class="slds-input__icon-group slds-input__icon-group_right" :style="{right: rightGroupOffset}">
 
+                <!-- Spinner -->
                 <transition name="fade">
                     <slds-spinner
                         v-if="spinner"
@@ -55,9 +50,10 @@
                         :style="{right: spinnerRight}"/>
                 </transition>
 
+                <!-- Clear button -->
                 <transition name="fade">
                     <slds-button-icon
-                        v-if="valueInput && $attrs.readonly == null"
+                        v-if="valueInput && !readonly"
                         icon="utility:clear"
                         class="slds-input__icon slds-input__icon_right"
                         title="Clear"
@@ -209,6 +205,7 @@ export default {
         },
 
         onKeyUp(event) {
+            if (this.readonly) return;
             if (event.key === 'Escape') this.onClear();
         },
     }
