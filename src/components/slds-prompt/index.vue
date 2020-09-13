@@ -17,7 +17,7 @@
 
                 <!-- Footer -->
                 <footer class="slds-modal__footer slds-theme_default">
-                    <slds-button neutral :label="buttonLabel"/>
+                    <slds-button neutral :label="buttonLabel" @click="onSubmit"/>
                 </footer>
 
             </div>
