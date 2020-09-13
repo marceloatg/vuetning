@@ -43,98 +43,90 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index.vue'
+import SldsButtonIcon from '../slds-button-icon/index.vue'
 
-    export default {
-        name: 'SldsModal',
-        components: {
-            SldsButtonIcon,
+export default {
+    name: 'SldsModal',
+
+    components: {
+        SldsButtonIcon,
+    },
+
+    props: {
+        contentClass: {
+            type: String,
+            default: 'slds-p-around_medium',
         },
-        props: {
-            contentClass: {
-                type: String,
-                default: 'slds-p-around_medium',
-            },
-            fixedHeight: {
-                type: Boolean,
-            },
-            footerClass: {
-                type: String,
-            },
-            headerClass: {
-                type: String,
-            },
-            initialOverflow: {
-                type: Boolean,
-            },
-            large: {
-                type: Boolean,
-            },
-            maxHeight: {
-                type: Boolean,
-            },
-            medium: {
-                type: Boolean,
-            },
-            small: {
-                type: Boolean,
-            },
+        fixedHeight: Boolean,
+        footerClass: String,
+        headerClass: String,
+        initialOverflow: Boolean,
+        large: Boolean,
+        maxHeight: Boolean,
+        medium: Boolean,
+        small: Boolean,
+    },
+
+    computed: {
+        contentClasses() {
+            return {
+                'slds-grow': this.maxHeight,
+                'slds-modal_fixed-height': this.fixedHeight,
+                'slds-overflow_initial': this.initialOverflow
+            };
         },
-        computed: {
-            contentClasses() {
-                return {
-                    'slds-grow': this.maxHeight,
-                    'slds-modal_fixed-height': this.fixedHeight,
-                    'slds-overflow_initial': this.initialOverflow
-                };
-            },
-            size() {
-                if (this.small) return 'slds-modal_small';
-                if (this.medium) return 'slds-modal_medium';
-                if (this.large) return 'slds-modal_large';
-                return '';
-            },
+
+        size() {
+            if (this.small) return 'slds-modal_small';
+            if (this.medium) return 'slds-modal_medium';
+            if (this.large) return 'slds-modal_large';
+            return '';
         },
-        created() {
-            document.body.addEventListener("keyup", this.onKeyUp);
+    },
+
+    created() {
+        document.body.addEventListener("keyup", this.onKeyUp);
+    },
+
+    beforeDestroy() {
+        document.body.removeEventListener("keyup", this.onKeyUp);
+    },
+
+    methods: {
+        onClose() {
+            this.$emit('close');
         },
-        beforeDestroy() {
-            document.body.removeEventListener("keyup", this.onKeyUp);
+
+        onKeyUp(event) {
+            if (event.key === 'Escape') this.onClose();
         },
-        methods: {
-            onClose() {
-                this.$emit('close');
-            },
-            onKeyUp(event) {
-                if (event.key === 'Escape') this.onClose();
-            },
-        },
-    }
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    .slds-modal {
-        .slds-modal__content.slds-overflow_initial {
-            overflow: initial;
-        }
+.slds-modal {
+    .slds-modal__content.slds-overflow_initial {
+        overflow: initial;
+    }
 
+    .slds-modal__content.slds-modal_fixed-height {
+        height: 500px;
+    }
+
+    @media (max-height: 700px) {
         .slds-modal__content.slds-modal_fixed-height {
-            height: 500px;
-        }
-
-        @media (max-height: 700px) {
-            .slds-modal__content.slds-modal_fixed-height {
-                height: 400px;
-            }
-        }
-
-        .slds-modal__footer .slds-popover__container {
-            text-align: left;
-
-            & + .slds-popover__container,
-            & + .slds-button {
-                margin-left: 0.5rem;
-            }
+            height: 400px;
         }
     }
+
+    .slds-modal__footer .slds-popover__container {
+        text-align: left;
+
+        & + .slds-popover__container,
+        & + .slds-button {
+            margin-left: 0.5rem;
+        }
+    }
+}
 </style>
