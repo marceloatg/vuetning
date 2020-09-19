@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @keyup.esc="onClose" @keyup.enter="onSubmit">
 
         <!-- Modal -->
         <section tabindex="0" class="slds-modal slds-fade-in-open slds-modal_prompt">
@@ -69,22 +69,9 @@ export default {
         },
     },
 
-    created() {
-        document.body.addEventListener("keyup", this.onKeyUp);
-    },
-
-    beforeDestroy() {
-        document.body.removeEventListener("keyup", this.onKeyUp);
-    },
-
     methods: {
         onClose() {
             this.$emit('close');
-        },
-
-        onKeyUp(event) {
-            if (event.key === 'Escape') this.onClose();
-            else if (event.key === 'Enter') this.onSubmit();
         },
 
         onSubmit() {
