@@ -1,5 +1,5 @@
 <template>
-    <div @keyup.esc="onClose" @keyup.enter="onSubmit">
+    <div ref="root" tabindex="0" @keyup.esc="onClose" @keyup.enter="onSubmit">
 
         <!-- Modal -->
         <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="size">
@@ -82,6 +82,10 @@ export default {
             if (this.large) return 'slds-modal_large';
             return '';
         },
+    },
+
+    mounted() {
+        this.$refs.root.focus();
     },
 
     methods: {

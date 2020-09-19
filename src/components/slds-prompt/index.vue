@@ -1,5 +1,5 @@
 <template>
-    <div @keyup.esc="onClose" @keyup.enter="onSubmit">
+    <div ref="root" tabindex="0" @keyup.esc="onClose" @keyup.enter="onSubmit">
 
         <!-- Modal -->
         <section tabindex="0" class="slds-modal slds-fade-in-open slds-modal_prompt">
@@ -67,6 +67,10 @@ export default {
             if (this.warningTheme) return 'slds-theme_warning';
             return 'slds-theme_default';
         },
+    },
+
+    mounted() {
+        this.$refs.root.focus();
     },
 
     methods: {
