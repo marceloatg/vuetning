@@ -206,7 +206,10 @@ export default {
 
         onKeyUp(event) {
             if (this.readonly) return;
-            if (event.key === 'Escape') this.onClear();
+            if (event.key === 'Escape') {
+                event.stopPropagation();
+                this.onClear();
+            }
         },
     }
 }
