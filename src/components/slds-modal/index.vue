@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="root" tabindex="0" @keyup.esc="onClose" @keyup.enter="onSubmit">
 
         <!-- Modal -->
         <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="size">
@@ -84,12 +84,8 @@ export default {
         },
     },
 
-    created() {
-        document.body.addEventListener("keyup", this.onKeyUp);
-    },
-
-    beforeDestroy() {
-        document.body.removeEventListener("keyup", this.onKeyUp);
+    mounted() {
+        this.$refs.root.focus();
     },
 
     methods: {
@@ -97,8 +93,8 @@ export default {
             this.$emit('close');
         },
 
-        onKeyUp(event) {
-            if (event.key === 'Escape') this.onClose();
+        onSubmit() {
+            this.$emit('submit');
         },
     },
 }
