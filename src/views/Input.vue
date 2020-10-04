@@ -28,20 +28,9 @@
 
         <!-- Body -->
         <div class="slds-card__body slds-card__body_inner">
-            <!--
-        <slds-picklist
-            v-model="selection"
-            label="My awesome picklist"
-            :options="options"
-            size="medium"
-            :length="7"
-            :required="true"/>
-        <br>
-        <p>
-            Value selected is: {{ selection }}
-        </p>
-        <br>
-        -->
+
+            <slds-button neutral label="Open Modal" @click="$emit('modal')"/>
+
             <slds-input
                 v-model="input"
                 label="My input"
