@@ -3,7 +3,8 @@
         class="slds-form-element"
         :class="{
             'slds-has-error': error,
-            'slds-form-element_readonly slds-form-element_stacked': readonly,
+            'slds-form-element_stacked': readonly,
+            'slds-form-element_readonly': readonly && !borderless,
         }">
 
         <!-- Label -->
@@ -103,6 +104,7 @@ export default {
     props: {
         addonPost: String,
         addonPre: String,
+        borderless: Boolean,
         disabled: Boolean,
         error: Boolean,
         icon: String,
