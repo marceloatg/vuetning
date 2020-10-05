@@ -3,7 +3,8 @@
         class="slds-form-element"
         :class="{
             'slds-has-error': error,
-            'slds-form-element_readonly slds-form-element_stacked': readonly,
+            'slds-form-element_stacked': readonly,
+            'slds-form-element_readonly': readonly && !borderless,
         }">
 
         <!-- Label -->
@@ -33,6 +34,7 @@
                 v-bind="$attrs"
                 class="slds-input"
                 :readonly="readonly"
+                :disabled="disabled"
                 v-on="listeners"
                 @input="onInput($event.target.value)"
                 @keyup="onKeyUp">
@@ -53,7 +55,7 @@
                 <!-- Clear button -->
                 <transition name="fade">
                     <slds-button-icon
-                        v-if="valueInput && !readonly"
+                        v-if="valueInput && !readonly && !disabled"
                         icon="utility:clear"
                         class="slds-input__icon slds-input__icon_right"
                         title="Clear"
@@ -102,6 +104,8 @@ export default {
     props: {
         addonPost: String,
         addonPre: String,
+        borderless: Boolean,
+        disabled: Boolean,
         error: Boolean,
         icon: String,
         iconError: Boolean,
