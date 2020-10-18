@@ -1,18 +1,25 @@
 <template>
-    <section class="slds-docked-composer slds-grid slds-grid_vertical" :class="`slds-is-${state}`">
+    <section
+        v-on-clickaway="onBlur"
+        role="dialog"
+        class="slds-docked-composer slds-grid slds-grid_vertical"
+        :class="[{'slds-has-focus': hasFocus}, `${isOpen ? 'slds-is-open' : 'slds-is-closed'}`]"
+        @click="onFocus">
 
         <!-- Header -->
-        <header class="slds-docked-composer__header slds-grid slds-shrink-none">
+        <header class="slds-docked-composer__header slds-col slds-grid slds-shrink-none">
 
-            <!-- Heading -->
+            <!-- Title -->
             <div class="slds-media slds-media_center slds-no-space">
 
-                <!-- Figure -->
-                <slds-icon :icon="iconName" x-small class="slds-media__figure slds-m-right_x-small"/>
+                <!-- Icon -->
+                <div class="slds-media__figure slds-m-right_x-small">
+                    <slds-icon x-small :icon="icon"/>
+                </div>
 
-                <!-- Text -->
+                <!-- Heading -->
                 <div class="slds-media__body">
-                    <h2 class="slds-truncate" title="Header">
+                    <h2 class="slds-truncate" :title="heading">
                         {{ heading }}
                     </h2>
                 </div>
@@ -22,29 +29,28 @@
             <!-- Actions -->
             <div class="slds-col_bump-left slds-shrink-none">
 
+                <!-- Minimize button -->
                 <slds-button-icon
-                    v-if="hasMinimizeButton && state === 'close'"
-                    ref="erectButton"
-                    icon="utility:erect_window"
-                    title="Erect window"
-                    @click="onErect"/>
-
-                <slds-button-icon
-                    v-if="hasMinimizeButton && state === 'open'"
-                    ref="minimizeButton"
+                    v-if="isOpen"
                     icon="utility:minimize_window"
                     title="Minimize window"
                     @click="onMinimize"/>
 
+                <!-- Erect button -->
                 <slds-button-icon
-                    v-if="hasExpandButton"
-                    ref="expandButton"
+                    v-else
+                    icon="utility:erect_window"
+                    title="Erect window"
+                    @click="onErect"/>
+
+                <!-- Expand button -->
+                <slds-button-icon
                     icon="utility:expand_alt"
                     title="Expand Composer"
                     @click="onExpand"/>
 
+                <!-- Close button -->
                 <slds-button-icon
-                    ref="closeButton"
                     icon="utility:close"
                     title="Close"
                     @click="onClose"/>
@@ -54,12 +60,12 @@
         </header>
 
         <!-- Body -->
-        <div class="slds-docked-composer__body">
+        <div class="slds-docked-composer__body slds-col slds-p-around_medium" @scroll="onFocus">
             <slot name="body"/>
         </div>
 
         <!-- Footer -->
-        <footer v-if="$slots.footer" class="slds-docked-composer__footer slds-shrink-none">
+        <footer v-if="$slots.footer" class="slds-docked-composer__footer slds-col slds-shrink-none">
             <slot name="footer"/>
         </footer>
 
@@ -67,59 +73,58 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/index.vue'
-    import SldsIcon from '../slds-icon/index.vue'
+import {mixin as clickAwayMixin} from 'vue-clickaway'
+import SldsButtonIcon from '../slds-button-icon/index.vue'
+import SldsIcon from '../slds-icon/index.vue'
 
-    export default {
-        name: 'SldsDockedComposer',
-        components: {
-            SldsButtonIcon,
-            SldsIcon,
+export default {
+    name: 'SldsDockedComposer',
+
+    components: {
+        SldsButtonIcon,
+        SldsIcon,
+    },
+
+    mixins: [clickAwayMixin],
+
+    props: {
+        heading: String,
+        icon: String,
+    },
+
+    data() {
+        return {
+            hasFocus: false,
+            isOpen: true,
+        }
+    },
+
+    methods: {
+        onBlur() {
+            this.hasFocus = false;
         },
-        props: {
-            hasExpandButton: {
-                type: Boolean,
-                default: true,
-            },
-            hasMinimizeButton: {
-                type: Boolean,
-                default: true,
-            },
-            heading: {
-                type: String,
-                required: true,
-            },
-            iconName: {
-                type: String,
-                required: true,
-            },
+
+        onClose() {
+            this.$emit('close');
         },
-        data() {
-            return {
-                state: 'open',
-            }
+
+        onErect() {
+            this.isOpen = true;
+            this.$emit('erect');
         },
-        methods: {
-            onClose() {
-                this.$emit('close');
-            },
-            onErect() {
-                this.state = 'open';
-                this.$emit('erect');
-            },
-            onExpand() {
-                this.$emit('expand');
-            },
-            onMinimize() {
-                this.state = 'close';
-                this.$emit('minimize');
-            },
+
+        onExpand() {
+            this.$emit('expand');
         },
-    }
+
+        onFocus() {
+            this.hasFocus = true;
+        },
+
+        onMinimize() {
+            this.isOpen = false;
+            this.$emit('minimize');
+        },
+    },
+}
 </script>
-
-<style scoped lang="scss">
-    header {
-        height: 42px;
-    }
-</style>
