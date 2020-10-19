@@ -7,7 +7,7 @@
         @click="onFocus">
 
         <!-- Header -->
-        <header class="slds-docked-composer__header slds-col slds-grid slds-shrink-none">
+        <header class="slds-docked-composer__header slds-col slds-grid slds-grow-none">
 
             <!-- Title -->
             <div class="slds-media slds-media_center slds-no-space">
@@ -65,7 +65,7 @@
         </div>
 
         <!-- Footer -->
-        <footer v-if="$slots.footer" class="slds-docked-composer__footer slds-col slds-shrink-none">
+        <footer v-if="$slots.footer" class="slds-docked-composer__footer slds-col slds-grow-none">
             <slot name="footer"/>
         </footer>
 
