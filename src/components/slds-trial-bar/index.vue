@@ -55,12 +55,12 @@
                         </li>
                         <li class="slds-has-divider_top-space" role="separator"/>
                         <li class="slds-dropdown__item" role="presentation">
-                            <a role="menuitem" tabindex""-1">
-                            <span class="slds-truncate" title="Import Contacts and Accounts">
-                                <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload"/>
-                                </svg>
-                                Import Contacts and Accounts</span>
+                            <a role="menuitem">
+                                <span class="slds-truncate" title="Import Contacts and Accounts">
+                                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload"/>
+                                    </svg>
+                                    Import Contacts and Accounts</span>
                             </a>
                         </li>
                     </ul>
