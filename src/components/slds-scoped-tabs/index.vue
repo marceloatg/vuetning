@@ -17,7 +17,6 @@
                     :id="`tab-scoped-${item.key}__item`"
                     :aria-selected="activeItem === item.key"
                     class="slds-tabs_scoped__link"
-                    href="javascript:void(0);"
                     role="tab"
                     tabindex="0">
                     {{ item.label }}
