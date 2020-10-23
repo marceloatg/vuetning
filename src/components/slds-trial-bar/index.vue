@@ -18,7 +18,7 @@
                 <div class="slds-dropdown slds-dropdown_inverse slds-dropdown_left">
                     <ul class="slds-dropdown__list" role="menu">
                         <li class="slds-dropdown__item slds-is-selected" role="presentation">
-                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                            <a role="menuitem" tabindex="0">
                                 <span class="slds-truncate" title="Completed: Conquer Your Cases">
                                     <svg class="slds-icon slds-icon_selected slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
                                         <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"/>
@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li class="slds-dropdown__item" role="presentation">
-                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                            <a role="menuitem" tabindex="-1">
                                 <span class="slds-truncate" title="Automate For Speed">
                                     <svg class="slds-icon slds-icon_selected slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
                                         <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"/>
@@ -36,7 +36,7 @@
                             </a>
                         </li>
                         <li class="slds-dropdown__item" role="presentation">
-                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                            <a role="menuitem" tabindex="-1">
                                 <span class="slds-truncate" title="Share Your Knowledge">
                                     <svg class="slds-icon slds-icon_selected slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
                                         <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"/>
@@ -45,7 +45,7 @@
                             </a>
                         </li>
                         <li class="slds-dropdown__item" role="presentation">
-                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                            <a role="menuitem" tabindex="-1">
                                 <span class="slds-truncate" title="Finish it up in a Flash">
                                     <svg class="slds-icon slds-icon_selected slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
                                         <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"/>
@@ -55,12 +55,12 @@
                         </li>
                         <li class="slds-has-divider_top-space" role="separator"/>
                         <li class="slds-dropdown__item" role="presentation">
-                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                                <span class="slds-truncate" title="Import Contacts and Accounts">
-                                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
-                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload"/>
-                                    </svg>
-                                    Import Contacts and Accounts</span>
+                            <a role="menuitem" tabindex""-1">
+                            <span class="slds-truncate" title="Import Contacts and Accounts">
+                                <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload"/>
+                                </svg>
+                                Import Contacts and Accounts</span>
                             </a>
                         </li>
                     </ul>
@@ -84,25 +84,25 @@
 </template>
 
 <script>
-    import SldsButton from '../slds-button/index.vue'
+import SldsButton from '../slds-button/index.vue'
 
-    export default {
-        name: 'SldsTrialBar',
-        components: {
-            SldsButton,
-        },
-        props: {
-            daysLeft: {
-                type: Number,
-                required: true
-            }
-        },
-        methods: {
-            onClickSubscribe() {
-                this.$emit('subscribe')
-            }
+export default {
+    name: 'SldsTrialBar',
+    components: {
+        SldsButton,
+    },
+    props: {
+        daysLeft: {
+            type: Number,
+            required: true
+        }
+    },
+    methods: {
+        onClickSubscribe() {
+            this.$emit('subscribe')
         }
     }
+}
 </script>
 
 <style scoped lang="scss">

@@ -16,7 +16,6 @@
                 <a
                     :id="`tab-default-${item.key}__item`"
                     class="slds-tabs_default__link"
-                    href="javascript:void(0);"
                     role="tab"
                     tabindex="0">
 

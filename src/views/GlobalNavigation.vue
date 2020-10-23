@@ -25,7 +25,7 @@
                     </span>
                 </div>
                 <div class="slds-context-bar__item slds-context-bar__object-switcher slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action">
+                    <a class="slds-context-bar__label-action">
                         <span class="slds-truncate" title="Object">Object</span>
                     </a>
                     <div class="slds-context-bar__icon-action">
@@ -39,7 +39,7 @@
                     <div class="slds-dropdown slds-dropdown_right">
                         <ul class="slds-dropdown__list" role="menu">
                             <li class="slds-dropdown__item" role="presentation">
-                                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <a role="menuitem" tabindex="-1">
                                     <span class="slds-truncate" title="[object Object],Accounts">
                                         <svg class="slds-icon slds-icon_small slds-icon-standard-account slds-m-right_small" aria-hidden="true">
                                             <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"/>
@@ -48,7 +48,7 @@
                                 </a>
                             </li>
                             <li class="slds-dropdown__item" role="presentation">
-                                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <a role="menuitem" tabindex="-1">
                                     <span class="slds-truncate" title="[object Object],Cases">
                                         <svg class="slds-icon slds-icon_small slds-icon-standard-case slds-m-right_small" aria-hidden="true">
                                             <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#case"/>
@@ -57,7 +57,7 @@
                                 </a>
                             </li>
                             <li class="slds-dropdown__item" role="presentation">
-                                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <a role="menuitem" tabindex="-1">
                                     <span class="slds-truncate" title="[object Object],Insights">
                                         <svg class="slds-icon slds-icon_small slds-icon-standard-work-order slds-m-right_small" aria-hidden="true">
                                             <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#work_order"/>
@@ -90,7 +90,7 @@
 
                         <a
                             id="context-tab-id-1"
-                            href="javascript:void(0);"
+
                             class="slds-context-bar__label-action"
                             role="tab"
                             title="Home"
@@ -121,14 +121,14 @@
                             <div class="slds-dropdown slds-dropdown_right">
                                 <ul class="slds-dropdown__list" role="menu">
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>r</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Open in a new window">Open in a new
                                                 window</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
@@ -136,14 +136,14 @@
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Pin Tab">Pin Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>p</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Close Tab">Close Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>w</span>
@@ -168,7 +168,7 @@
                     <li class="slds-context-bar__item slds-context-bar__item_tab" role="presentation">
                         <a
                             id="context-tab-id-2"
-                            href="javascript:void(0);"
+
                             class="slds-context-bar__label-action"
                             role="tab"
                             title="Tab Item 1"
@@ -198,14 +198,14 @@
                             <div class="slds-dropdown slds-dropdown_right">
                                 <ul class="slds-dropdown__list" role="menu">
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>r</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Open in a new window">Open in a new
                                                 window</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
@@ -213,14 +213,14 @@
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Pin Tab">Pin Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>p</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Close Tab">Close Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>w</span>
@@ -243,7 +243,7 @@
                     <li class="slds-context-bar__item slds-context-bar__item_tab" role="presentation">
                         <a
                             id="context-tab-id-3"
-                            href="javascript:void(0);"
+
                             class="slds-context-bar__label-action"
                             role="tab"
                             title="Tab Item 2"
@@ -273,14 +273,14 @@
                             <div class="slds-dropdown slds-dropdown_right">
                                 <ul class="slds-dropdown__list" role="menu">
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Refresh Tab">Refresh Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>r</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Open in a new window">Open in a new
                                                 window</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
@@ -288,14 +288,14 @@
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Pin Tab">Pin Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>p</span>
                                         </a>
                                     </li>
                                     <li class="slds-dropdown__item" role="presentation">
-                                        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                        <a role="menuitem" tabindex="-1">
                                             <span class="slds-truncate" title="Close Tab">Close Tab</span>
                                             <span class="slds-text-body_small slds-text-color_weak slds-p-left_large">
                                                 <span class="slds-assistive-text">:</span>w</span>
@@ -333,7 +333,7 @@
                             aria-controls="subtab-tabpanel-01"
                             aria-selected="true"
                             class="slds-tabs_default__link slds-p-horizontal_xx-small"
-                            href="javascript:void(0);"
+
                             role="tab"
                             tabindex="0"
                             title="00071938">
@@ -362,7 +362,7 @@
                             aria-controls="subtab-tabpanel-02"
                             aria-selected="false"
                             class="slds-tabs_default__link slds-p-horizontal_xx-small"
-                            href="javascript:void(0);"
+
                             role="tab"
                             tabindex="-1"
                             title="Chat - Customer">
