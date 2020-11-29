@@ -22,7 +22,7 @@
     "src/*"
   ],
   "dependencies": {
-    "core-js": "^3.7.0",
+    "core-js": "^3.8.0",
     "duration": "^0.2.2",
     "humanize-duration": "^3.24.0",
     "lodash": "^4.17.20",
@@ -35,7 +35,7 @@
     "vue-virtual-scroller": "^1.0.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.8",
+    "@babel/core": "^7.12.9",
     "@vue/cli-plugin-babel": "^4.5.9",
     "@vue/cli-plugin-eslint": "^4.5.9",
     "@vue/cli-plugin-unit-jest": "^4.5.9",
@@ -44,7 +44,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^8.2.1",
+    "babel-loader": "^8.2.2",
     "babel-preset-vue": "^2.0.2",
     "eslint": "^7.14.0",
     "eslint-plugin-vue": "^6.2.2",
