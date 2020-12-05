@@ -2,7 +2,7 @@
     <article class="slds-card">
 
         <!-- Header -->
-        <div class="slds-card__header slds-grid">
+        <div v-if="hasHeader" class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
 
                 <!-- Figure -->
@@ -71,6 +71,15 @@ export default {
             return {
                 'slds-card__body_inner': !this.noInnerPadding
             }
+        },
+
+        hasHeader() {
+            return (
+                this.icon ||
+                this.title ||
+                this.$slots.title ||
+                this.$slots.actions
+            )
         }
     }
 }
