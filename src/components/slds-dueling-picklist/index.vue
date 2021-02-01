@@ -138,6 +138,7 @@
         },
         watch: {
             options() {
+                // eslint-disable-next-line vue/no-mutating-props
                 if (this.options == null) this.options = [];
                 this.initializeOptions();
             },
