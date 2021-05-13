@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsIllustration from './illustration.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsIllustration.name, sldsIllustration)
 }

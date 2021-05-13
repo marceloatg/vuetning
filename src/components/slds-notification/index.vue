@@ -36,8 +36,8 @@
 </template>
 
 <script>
-    import SldsIcon from '../slds-icon/index.vue'
-    import SldsButtonIcon from '../slds-button-icon/index.vue'
+    import SldsIcon from '../slds-icon/icon'
+    import SldsButtonIcon from '../slds-button-icon/button-icon'
 
     export default {
         name: 'SldsNotification',

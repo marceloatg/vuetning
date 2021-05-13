@@ -85,7 +85,7 @@
 </template>
 
 <script>
-    import SldsButtonIcon from "../slds-button-icon/index.vue";
+    import SldsButtonIcon from "../slds-button-icon/button-icon";
     import DuelingPicklistOption from "./option";
 
     export default {
@@ -138,6 +138,7 @@
         },
         watch: {
             options() {
+                // eslint-disable-next-line vue/no-mutating-props
                 if (this.options == null) this.options = [];
                 this.initializeOptions();
             },

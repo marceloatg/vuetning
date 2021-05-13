@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import SldsIcon from '../slds-icon/index.vue'
+    import SldsIcon from '../slds-icon/icon'
 
     export default {
         name: 'SldsAvatar',

@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import SldsButton from '../slds-button/index.vue'
+import SldsButton from '../slds-button/button'
 
 export default {
     name: 'SldsTrialBar',

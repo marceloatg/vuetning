@@ -38,7 +38,7 @@
 
             <!-- Handle -->
             <span
-                v-if="resizable"
+                v-if="isResizable"
                 class="handle"
                 :style="{transform: `translateX(${resizerTranslation}px)`}"
                 @mousedown.prevent.stop="onResizerMouseDown"
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/index.vue'
+    import SldsSvg from '../slds-svg/svg'
     import Clicker from "./clicker"
 
     export default {
@@ -71,7 +71,7 @@
                 type: Number,
                 default: 100,
             },
-            resizable: {
+            isResizable: {
                 type: Boolean,
                 default: true,
             },
@@ -115,7 +115,7 @@
         },
         methods: {
             onDoubleClick() {
-                if (!this.resizable || (this.type !== 'text' && this.type !== 'link')) return;
+                if (!this.isResizable || (this.type !== 'text' && this.type !== 'link')) return;
                 this.$emit('expand');
             },
             onResizerMouseDown(event) {

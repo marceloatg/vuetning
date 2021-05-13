@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsMediaObject from './media-object.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsMediaObject.name, sldsMediaObject)
 }

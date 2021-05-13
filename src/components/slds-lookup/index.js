@@ -1,5 +1,7 @@
-import sldsComponent from './index.vue'
+import sldsLookup from './lookup'
+import sldsLookupOption from './lookup-option'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsLookup.name, sldsLookup)
+    Vue.component(sldsLookupOption.name, sldsLookupOption)
 }

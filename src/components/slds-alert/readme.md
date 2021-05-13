@@ -1,3 +1,0 @@
-# Alert ![avaliability](https://img.shields.io/badge/avaliability-alpha-red.svg)  ![testing](https://img.shields.io/badge/testing-untested-red.svg) ![documentation](https://img.shields.io/badge/documentation-undocumented-red.svg)
-
-Use the offline alert to let the user know that they are not connected to the internet.

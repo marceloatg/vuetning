@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsPanel from './panel.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsPanel.name, sldsPanel)
 }
