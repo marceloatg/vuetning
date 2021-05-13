@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/index.vue';
+    import SldsSvg from '../slds-svg/svg';
 
     export default {
         name: 'SldsPill',

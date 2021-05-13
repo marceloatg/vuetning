@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsModal from './modal.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsModal.name, sldsModal)
 }

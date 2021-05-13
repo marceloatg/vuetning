@@ -1,4 +1,4 @@
-import sldsComponent from './index.vue'
+import sldsComponent from './progress-bar.vue'
 
 export default Vue => {
     Vue.component(sldsComponent.name, sldsComponent)

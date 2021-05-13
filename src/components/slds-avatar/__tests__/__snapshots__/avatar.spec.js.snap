@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SldsAvatar Image should correct alternative text when changed 1`] = `
+<span
+  class="slds-avatar slds-avatar_medium"
+>
+  <!-- Image -->
+  
+  <!-- Fallback icon -->
+  <span
+    alternative-text="alternative text"
+    class="slds-icon_container"
+  >
+    <slds-svg
+      aria-hidden="true"
+      class="slds-icon slds-icon_medium"
+      icon="standard:user"
+      standard-format="false"
+    />
+    <!--v-if-->
+  </span>
+  
+</span>
+`;
+
+exports[`SldsAvatar Image should correct alternative text when changed 2`] = `
+<span
+  class="slds-avatar slds-avatar_medium"
+>
+  <!-- Image -->
+  
+  <!-- Fallback icon -->
+  <span
+    alternative-text="new alternative text"
+    class="slds-icon_container slds-icon-standard-user"
+  >
+    <slds-svg
+      aria-hidden="true"
+      class="slds-icon slds-icon_medium"
+      icon="standard:user"
+      standard-format="false"
+    />
+    <!--v-if-->
+  </span>
+  
+</span>
+`;
+
+exports[`SldsAvatar Image should correct image src when changed 1`] = `
+<span
+  class="slds-avatar slds-avatar_medium"
+>
+  <!-- Image -->
+  <img
+    src="https://s3-sa-east-1.amazonaws.com/bluebear.app/logo.svg"
+  />
+</span>
+`;
+
+exports[`SldsAvatar Image should correct image src when changed 2`] = `
+<span
+  class="slds-avatar slds-avatar_medium"
+>
+  <!-- Image -->
+  <img
+    src="https://s3-sa-east-1.amazonaws.com/bluebear.app/logo-name.png"
+  />
+</span>
+`;
+
+exports[`SldsAvatar Image should render alternative text when set 1`] = `
+<span
+  class="slds-avatar slds-avatar_medium"
+>
+  <!-- Image -->
+  <img
+    alt="alternative text"
+    src="https://s3-sa-east-1.amazonaws.com/bluebear.app/logo.svg"
+  />
+</span>
+`;

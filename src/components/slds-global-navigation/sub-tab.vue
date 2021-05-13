@@ -7,7 +7,7 @@
         @click.middle="onClickClose">
 
         <!-- Identification -->
-        <a role="tab" class="slds-tabs_default__link slds-p-horizontal_xx-small" :title="title">
+        <a role="tab" class="slds-tabs_default__link slds-p-horizontal_xx-small" :title="label">
 
             <!-- Indicator -->
             <span class="slds-indicator-container"/>
@@ -19,7 +19,7 @@
 
             <!-- Text -->
             <span class="slds-truncate">
-                {{ title }}
+                {{ label }}
             </span>
 
         </a>
@@ -37,7 +37,7 @@
                     class="slds-button_icon-current-color"
                     @click="toggleDropdown"/>
 
-                <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
+                <div v-if="isDropdownActive" v-click-outside="away" class="slds-dropdown slds-dropdown_right">
                     <ul class="slds-dropdown__list" role="menu">
                         <li class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
@@ -74,77 +74,77 @@
 </template>
 
 <script>
-    import {mixin as clickaway} from 'vue-clickaway'
+import ClickOutside from '@/directives/click-outside/index'
 
-    export default {
-        mixins: [
-            clickaway
-        ],
+export default {
+    directives: {
+        ClickOutside
+    },
 
-        props: {
-            icon: {
-                type: String,
-                required: true,
-            },
-
-            isActive: {
-                type: Boolean,
-                default: false,
-            },
-
-            isMain: {
-                type: Boolean,
-                default: false,
-            },
-
-            title: {
-                type: String,
-                required: true,
-            },
+    props: {
+        icon: {
+            type: String,
+            required: true,
         },
 
-        data() {
-            return {
-                isDropdownActive: false,
-            }
+        isActive: {
+            type: Boolean,
+            default: false,
         },
 
-        methods: {
-            away() {
-                this.isDropdownActive = false;
-            },
-
-            onClickTab() {
-                this.$emit('click');
-            },
-
-            onClickRefreshTab() {
-                this.$emit('refresh');
-                this.isDropdownActive = false;
-            },
-
-            onClickSetAsWorkspaceTab() {
-                this.$emit('workspace');
-                this.isDropdownActive = false;
-            },
-
-            onClickClose() {
-                this.$emit('close');
-                this.isDropdownActive = false;
-            },
-
-            toggleDropdown() {
-                this.isDropdownActive = !this.isDropdownActive;
-            }
+        isMain: {
+            type: Boolean,
+            default: false,
         },
-    }
+
+        label: {
+            type: String,
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            isDropdownActive: false,
+        }
+    },
+
+    methods: {
+        away() {
+            this.isDropdownActive = false;
+        },
+
+        onClickTab() {
+            this.$emit('click');
+        },
+
+        onClickRefreshTab() {
+            this.$emit('refresh');
+            this.isDropdownActive = false;
+        },
+
+        onClickSetAsWorkspaceTab() {
+            this.$emit('workspace');
+            this.isDropdownActive = false;
+        },
+
+        onClickClose() {
+            this.$emit('close');
+            this.isDropdownActive = false;
+        },
+
+        toggleDropdown() {
+            this.isDropdownActive = !this.isDropdownActive;
+        }
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    .slds-sub-tabs__item {
-        cursor: pointer;
-        min-width: 12rem;
-        width: 12rem;
-        max-width: 12rem;
-    }
+.slds-sub-tabs__item {
+    cursor: pointer;
+    min-width: 12rem;
+    width: 12rem;
+    max-width: 12rem;
+}
 </style>

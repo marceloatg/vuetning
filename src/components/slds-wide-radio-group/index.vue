@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import {v4 as uuid} from 'uuid';
+    import {v4 as Id} from 'uuid';
 
     export default {
         name: 'SldsWideRadioGroup',
@@ -83,7 +83,7 @@
         },
         data() {
             return {
-                id: uuid(),
+                id: Id(),
             }
         },
         created() {

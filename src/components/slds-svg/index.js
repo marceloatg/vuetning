@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsSvg from './svg.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSvg.name, sldsSvg)
 }

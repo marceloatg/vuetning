@@ -1,5 +1,7 @@
-import sldsComponent from './index.vue'
+import sldsSpinner from './spinner'
+import sldsSpinnerContainer from './spinner-container'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSpinner.name, sldsSpinner)
+    Vue.component(sldsSpinnerContainer.name, sldsSpinnerContainer)
 }
