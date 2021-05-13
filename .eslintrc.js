@@ -10,7 +10,7 @@ module.exports = {
         'eslint:recommended'
     ],
     rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'no-console': ['warn', { 'allow': ['warn', 'error'] }],
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'require-atomic-updates': 'warn',
         "vue/attribute-hyphenation": ["error", "always"],

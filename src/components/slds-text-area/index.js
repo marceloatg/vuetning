@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsTextArea from './text-area.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTextArea.name, sldsTextArea)
 }
