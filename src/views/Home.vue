@@ -29,7 +29,7 @@ export default {
 
     methods: {
         onclick() {
-            console.log('Clicked!')
+            alert('Clicked!')
         }
     }
 }

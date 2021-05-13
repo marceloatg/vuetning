@@ -170,12 +170,10 @@ export default {
 
     methods: {
         onBlur() {
-            console.log('onBlur')
             DomUtils.removeClass(this.$refs.richTextEditor, 'slds-has-focus')
         },
 
         onFocus() {
-            console.log('onFocus')
             DomUtils.addClass(this.$refs.richTextEditor, 'slds-has-focus')
         },
 

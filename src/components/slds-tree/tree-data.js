@@ -196,9 +196,7 @@ export class TreeData {
                 }
             }
         }
-console.log(current)
-console.log(treeItems)
-console.log(nextNode)
+
         return this.indices[nextNode]
     }
 
@@ -215,9 +213,7 @@ console.log(nextNode)
                 }
             }
         }
-        console.log(current)
-        console.log(treeItems)
-console.log(prevNode)
+
         return this.indices[prevNode]
     }
 

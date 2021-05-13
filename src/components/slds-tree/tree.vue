@@ -74,7 +74,6 @@ export default {
         },
 
         selectedItem(item) {
-            console.log('watch selectedItem', item)
             this.currentFocusedItem = this.treedata.updateCurrentFocusedItemIndex(item.index)
         }
     },
@@ -117,11 +116,11 @@ export default {
         },
 
         onKeydownLeft(event, key) {
-            console.log(event, key)
+            alert(event, key)
         },
 
         onKeydownRight(event, key) {
-            console.log(event, key)
+            alert(event, key)
         },
 
         // eslint-disable-next-line no-unused-vars
@@ -147,7 +146,6 @@ export default {
             if (item == null) return
 
             const index = this.treedata.findIndex(item.key)
-            console.log(index)
             this.currentFocusedItem = this.treedata.updateCurrentFocusedItemIndex(index)
             if (shouldSelect) this.$emit('select', item.treeNode)
         },
