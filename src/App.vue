@@ -5,7 +5,7 @@
 
         <slds-global-navigation app-name="Vuetning" :tabs="[]"/>
 
-        <div class="v-global-content slds-col slds-grid">
+        <div class="v-global-content slds-grid">
 
             <div class="slds-col slds-grow-none">
                 <app-navigation/>

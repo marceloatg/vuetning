@@ -1,7 +1,20 @@
 <template>
-    <div>
-        Components
-    </div>
+    <slds-vertical-navigation
+        has-quickfind
+        :selected-item="selectedItem"
+        class="app-navigation slds-border_right"
+    >
+        <slds-vertical-navigation-section>
+            <slds-vertical-navigation-item
+                v-for="item of items"
+                :key="item.name"
+                :name="item.name"
+                :label="item.label"
+                :icon="item.icon"
+                @click="onClick"
+            />
+        </slds-vertical-navigation-section>
+    </slds-vertical-navigation>
 </template>
 
 <script>
@@ -11,110 +24,6 @@ export default {
     data() {
         return {
             items: [
-                {
-                    label: 'CTO',
-                    name: 'CTO',
-                    expanded: false,
-                    items: [
-                        {
-                            label: 'Director',
-                            name: 'CTO-DIR',
-                            expanded: false,
-                            items: [
-                                {
-                                    label: 'Manager 1',
-                                    name: 'CTO-MGR-1',
-                                    expanded: false,
-                                    items: [
-                                        {
-                                            label: 'Assistant Manager 1',
-                                            name: 'CTO-ASM-1',
-                                            expanded: false,
-                                            items: [
-                                                {
-                                                    label: 'Supervisor 1',
-                                                    name: 'CTO-MGR-1-ASM-1-SUP-1',
-                                                    expanded: false,
-                                                    items: [
-                                                        {
-                                                            label: 'Staff 1',
-                                                            name:
-                                                                'CTO-MGR-1-ASM-1-SUP-1-STA-1',
-                                                        },
-                                                        {
-                                                            label: 'Staff 2',
-                                                            name:
-                                                                'CTO-MGR-1-ASM-1-SUP-1-STA-2',
-                                                        },
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            label: 'Assistant Manager 2',
-                                            name: 'CTO-ASM-2',
-                                            expanded: false,
-                                            items: [
-                                                {
-                                                    label: 'Supervisor 1',
-                                                    name: 'CTO-MGR-1-ASM-2-SUP-1',
-                                                    expanded: false,
-                                                    items: [
-                                                        {
-                                                            label: 'Staff 1',
-                                                            name:
-                                                                'CTO-MGR-1-ASM-2-SUP-1-STA-1',
-                                                        },
-                                                        {
-                                                            label: 'Staff 2',
-                                                            name:
-                                                                'CTO-MGR-1-ASM-2-SUP-1-STA-2',
-                                                        },
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                    ],
-                                },
-                                {
-                                    label: 'Manager 2',
-                                    name: 'CTO-MGR-2',
-                                    expanded: false,
-                                    items: [],
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    label: 'CFO',
-                    name: 'CFO',
-                    expanded: true,
-                    items: [
-                        {
-                            label: 'Director',
-                            name: 'CFO-DIR',
-                            expanded: false,
-                            items: [
-                                {
-                                    label: 'Manager 1',
-                                    name: 'CFO-MGR-1',
-                                    expanded: false,
-                                    items: [
-                                        {
-                                            label: 'Assistant Manager 1',
-                                            name: 'CFO-ASM-1',
-                                        },
-                                    ],
-                                },
-                                {
-                                    label: 'Manager 2',
-                                    name: 'CFO-MGR-2',
-                                },
-                            ],
-                        },
-                    ],
-                },
                 {
                     label: 'Accordion',
                     name: 'Accordion',
@@ -461,27 +370,17 @@ export default {
     },
 
     methods: {
-        onClick() {
-            this.items.push({
-                label: 'Foo',
-                name: 'Foo',
-                items: []
-            })
-        },
-
-        async onSelect(item) {
+        async onClick(item) {
             this.selectedItem = item
-            await this.$router.push(item.name)
-        }
+            await this.$router.push(item)
+        },
     }
 }
 </script>
 
 <style scoped lang="scss">
 .app-navigation {
-    height: 100%;
-    width: 245px;
-    background: #fafaf9;
-    overflow-y: auto;
+    width: 260px;
+    background: white;
 }
 </style>
