@@ -7,7 +7,9 @@
         </div>
 
         <!-- Sections/Items -->
-        <slot/>
+        <div class="slds-scrollable_y">
+            <slot/>
+        </div>
 
     </nav>
 </template>
@@ -34,8 +36,22 @@ export default {
             return {
                 'slds-nav-vertical_shade': this.shaded,
                 'slds-nav-vertical_compact': this.compact,
+                'slds-nav-vertical_has-quickfind': this.hasQuickfind,
             }
         }
     },
 }
 </script>
+
+<style scoped lang="scss">
+.slds-nav-vertical {
+    height: 100%;
+}
+
+.slds-nav-vertical_has-quickfind {
+    .slds-scrollable_y {
+        max-height: calc(100% - 3.5rem);
+    }
+}
+
+</style>

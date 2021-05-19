@@ -2,7 +2,7 @@
     <div class="slds-nav-vertical__section">
 
         <!-- Title -->
-        <h2 class="slds-nav-vertical__title">
+        <h2 v-if="title" class="slds-nav-vertical__title">
             {{ title }}
         </h2>
 
