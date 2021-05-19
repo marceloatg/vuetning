@@ -42,8 +42,7 @@
             </li>
 
             <!-- Items -->
-            <slot v-if="$slots.default"/>
-            <template v-else>
+            <slot>
                 <slds-breadcrumb
                     v-for="item in $data.$_items"
                     :key="item.id"
@@ -53,7 +52,7 @@
                     :neutral="neutral"
                     @click=onClickBreadcrumb
                 />
-            </template>
+            </slot>
 
         </ol>
     </nav>
@@ -99,7 +98,7 @@ export default {
         hasOverflow() {
             return (
                 this.$slots['dropdown-list'] ||
-                (this.items && (this.items.length >= this.maxItems))
+                (this.items && (this.items.length > this.maxItems))
             )
         },
 
