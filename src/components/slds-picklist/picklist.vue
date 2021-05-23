@@ -42,7 +42,7 @@
                         class="slds-input slds-combobox__input slds-combobox__input-value"
                         autocomplete="off"
                         v-bind="$attrs"
-                        :value="$data.$_value"
+                        :value="selectedLabel"
                         :disabled="disabled"
                         :placeholder="placeholder"
                         readonly
@@ -176,7 +176,13 @@ export default {
             const listeners = {...this.$listeners}
             delete listeners.input
             return listeners
-        }
+        },
+
+        selectedLabel() {
+            return this.$data.$_value && this.$data.$_value.length
+                ? this.$data.$_options.find(option => option.value === this.$data.$_value).label
+                : null;
+        },
     },
 
     watch: {
