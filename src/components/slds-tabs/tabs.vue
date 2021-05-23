@@ -3,12 +3,7 @@
 
         <!-- Tabs -->
         <ul class="slds-tabs_default__nav" role="tablist">
-
-            <!-- Slot tabs -->
-            <slot v-if="$slots.tabs" name="tabs"/>
-
-            <!-- Custom tabs -->
-            <template v-else>
+            <slot name="tabs">
 
                 <!--  Automatically generated tabs -->
                 <slds-tab
@@ -24,18 +19,13 @@
 
                 <!-- Overflow -->
                 <!-- TODO: Implement overflow -->
-            </template>
 
+            </slot>
         </ul>
 
         <!-- Content -->
         <template v-if="!noContent">
-
-            <!-- Slot content -->
-            <slot v-if="$slots.content" name="content"/>
-
-            <!-- Automatically generated content -->
-            <template v-else>
+            <slot name="content">
                 <slds-tab-content
                     v-for="tab in $data.$_tabs"
                     :id="tab.key"
@@ -44,8 +34,7 @@
                 >
                     <slot :name="tab.name"/>
                 </slds-tab-content>
-            </template>
-
+            </slot>
         </template>
 
     </div>
@@ -59,7 +48,12 @@ import {kebabCase} from "@/utils/string-utils";
 
 export default {
     name: 'SldsTabs',
-    components: {SldsTab, SldsTabContent},
+
+    components: {
+        SldsTab,
+        SldsTabContent
+    },
+
     props: {
         activeTab: String,
         tabs: {type: Array, required: true},
@@ -70,7 +64,7 @@ export default {
 
     data() {
         return {
-            $_activeTab: this.activeItem,
+            $_activeTab: null,
             $_tabs: []
         }
     },
@@ -109,19 +103,30 @@ export default {
         },
 
         parseActiveTab(activeTab = null) {
-            if (activeTab == null) activeTab = this.activeTab || this.$data.$_tabs[0].name
+            if (activeTab == null) {
+                if (this.activeTab && this.$data.$_tabs.find(tab => tab.name === this.activeTab)) {
+                    activeTab = this.activeTab
+                }
+                else if (this.$data.$_activeTab && this.$data.$_tabs.find(tab => tab.name === this.$data.$_activeTab)) {
+                    activeTab = this.$data.$_activeTab
+                }
+                else {
+                    activeTab = this.$data.$_tabs[0].name
+                }
+            }
+
             this.$data.$_activeTab = kebabCase(activeTab)
         },
 
         parseTabs() {
-            this.$data.$_tabs = this.$data.$_tabs.splice(0, this.$data.$_tabs.length)
-            if (this.tabs == null) return
+            this.$data.$_tabs.splice(0, this.$data.$_tabs.length)
+            if (this.tabs == null || this.tabs.length === 0) return
 
             for (const tab of this.tabs) {
-                if (typeof tab === "string") {
+                if (typeof tab === 'string') {
                     this.$data.$_tabs.push(new Tab(tab))
                 }
-                else if (typeof tab === "object") {
+                else if (typeof tab === 'object') {
                     const newTab = new Tab(tab.label, tab.name)
                     newTab.icon = tab.icon
                     newTab.error = tab.error || false

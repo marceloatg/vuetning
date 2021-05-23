@@ -1,4 +1,3 @@
-import {v4 as Id} from 'uuid'
 import {kebabCase} from '@/utils/string-utils'
 
 export default class {
@@ -9,9 +8,9 @@ export default class {
     error
 
     constructor(label, name = null) {
-        this.key = Id()
         this.label = label
         this.name = name || kebabCase(label)
+        this.key = btoa(name)
 
         if (label == null) console.warn('[slds-dropdown-option] option.label must be a valid string.')
     }
