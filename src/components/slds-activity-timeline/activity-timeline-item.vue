@@ -1,10 +1,6 @@
 <template>
-    <!--
-      https://admin.salesforce.com/blog/2017/tailor-activity-timeline-lightning-experience-users
-      https://help.salesforce.com/articleView?id=lex_pro_tips_activity_timeline.htm&type=5
-      -->
     <li>
-        <div class="slds-timeline__item_expandable slds-timeline__item_task">
+        <div class="slds-timeline__item_expandable" :class="itemClass">
 
             <!-- Assistive text -->
             <span v-if="assistiveText" class="slds-assistive-text">
@@ -16,7 +12,9 @@
 
                 <template #figure>
 
+                    <!-- Switch -->
                     <slds-button-icon
+                        v-if="expandable"
                         icon="utility:switch"
                         icon-class="slds-timeline__details-action-icon"
                         :title="`Toggle details for ${subject}`"
@@ -24,27 +22,25 @@
                         aria-controls="task-item-base"
                     />
 
+                    <!-- Switch placeholder -->
+                    <div v-else class="switch-placeholder slds-button_icon"/>
+
+                    <!--  Icon -->
                     <slds-icon
                         :icon="icon"
                         small
                         class="slds-timeline__icon"
+                        :class="iconClass"
                     />
 
                 </template>
 
                 <template #default>
 
+                    <!-- Subject -->
                     <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
 
                         <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                            <div class="slds-checkbox">
-                                <input id="checkbox-unique-id-51" type="checkbox" name="options" value="checkbox-unique-id-51">
-                                <label class="slds-checkbox__label" for="checkbox-unique-id-51">
-                                    <span class="slds-checkbox_faux"/>
-                                    <span class="slds-form-element__label slds-assistive-text">Mark Review proposals
-                                        for EBC deck with larger team and have marketing review this complete</span>
-                                </label>
-                            </div>
 
                             <h3 class="slds-truncate" :title="subject">
                                 <a href="javascript:void(0);">
@@ -52,6 +48,7 @@
                                 </a>
                             </h3>
 
+                            <!-- Subject icons -->
                             <div class="slds-no-flex">
                                 <slot name="subject-icons">
                                     <slds-icon
@@ -66,16 +63,15 @@
 
                         </div>
 
+                        <!-- Actions -->
                         <div class="slds-timeline__actions slds-timeline__actions_inline">
+
                             <p class="slds-timeline__date">
-                                9:00am | 3/20/17
+                                {{ date }}
                             </p>
-                            <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More Options for this item">
-                                <svg class="slds-button__icon" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"/>
-                                </svg>
-                                <span class="slds-assistive-text">More Options for this item</span>
-                            </button>
+
+                            <slot name="subject-action"/>
+
                         </div>
 
                     </div>
@@ -85,7 +81,13 @@
                         <slot name="activity"/>
                     </p>
 
-                    <article id="task-item-base" class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small" aria-hidden="true">
+                    <!-- Expandable section -->
+                    <article
+                        v-if="expandable"
+                        class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small"
+                        aria-hidden="true"
+                    >
+
                         <ul class="slds-list_horizontal slds-wrap">
                             <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
                                 <span class="slds-text-title slds-p-bottom_x-small">Name</span>
@@ -100,11 +102,13 @@
                                 </span>
                             </li>
                         </ul>
+
                         <div>
                             <span class="slds-text-title">Description</span>
                             <p class="slds-p-top_x-small">Need to finalize proposals and brand details before the
                                 meeting</p>
                         </div>
+
                     </article>
 
                 </template>
@@ -131,6 +135,8 @@ export default {
 
     props: {
         assistiveText: String,
+        date: String,
+        expandable: Boolean,
         icon: {
             type: String,
             required: true
@@ -139,7 +145,8 @@ export default {
             type: String,
             required: true
         },
-        subjectIcons: [String, Array]
+        subjectIcons: [String, Array],
+        type: String,
     },
 
     computed: {
@@ -151,7 +158,38 @@ export default {
             if (typeof this.subjectIcons === "string") icons.push(this.subjectIcons)
 
             return icons
-        }
+        },
+
+        iconClass() {
+            switch (this.type) {
+                case 'call':
+                    return 'slds-icon-standard-log-a-call';
+
+                case 'email':
+                    return 'slds-icon-standard-email';
+
+                case 'event':
+                    return 'slds-icon-standard-event';
+
+                case 'task':
+                    return 'slds-icon-standard-task';
+
+                default:
+                    return 'slds-icon-standard-generic-loading'
+            }
+        },
+
+        itemClass() {
+            return `slds-timeline__item_${this.type}`
+        },
     }
 }
 </script>
+
+<style scoped lang="scss">
+.switch-placeholder {
+    padding: .5rem;
+    position: relative;
+    display: inline-flex;
+}
+</style>
