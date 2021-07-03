@@ -51,7 +51,7 @@
                             v-on="listeners"
                             @click="onClick"
                             @input="onInput"
-                            @keyup.esc="onClear"
+                            @keyup.esc.stop="onClear"
                         >
 
                         <!-- Right group -->
@@ -449,8 +449,7 @@ export default {
             if (value) this.$data.$_focusedOption = value
             else if (this.$data.$_value) this.$data.$_focusedOption = this.$data.$_value
             else this.$data.$_focusedOption = this.filteredOptions
-                    .find(option => !option.disabled)
-                    .value
+                    .find(option => !option.disabled)?.value
         }
     }
 }
