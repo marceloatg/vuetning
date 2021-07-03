@@ -38,7 +38,7 @@
                 <template #default>
 
                     <!-- Subject -->
-                    <div class="slds-grid slds-grid_align-spread" :class="subjectClass">
+                    <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
 
                         <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
 
@@ -187,13 +187,6 @@ export default {
 
         itemClass() {
             return `slds-timeline__item_${this.type}`
-        },
-
-        subjectClass() {
-            return {
-                'slds-timeline__trigger': this.expandable,
-                'slds-p-around_xx-small': !this.expandable
-            }
         },
     }
 }
