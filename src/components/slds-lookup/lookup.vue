@@ -107,7 +107,7 @@
                             :class="{'slds-combobox__input-value': $data.$_value}"
                             :autocomplete="$data.$_value ? 'on' : 'off'"
                             v-bind="$attrs"
-                            :value="$data.$_value"
+                            :value="selectedOptionLabel"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             v-on="listeners"
@@ -321,6 +321,13 @@ export default {
 
             const selectedOption = this.$data.$_options.find(option => option.value === this.$data.$_value)
             return selectedOption ? selectedOption.icon : null
+        },
+
+        selectedOptionLabel() {
+            if (this.$data.$_value == null) return null
+
+            const selectedOption = this.$data.$_options.find(option => option.value === this.$data.$_value)
+            return selectedOption ? selectedOption.label : null
         },
 
         spinnerRight() {
