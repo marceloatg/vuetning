@@ -39,55 +39,55 @@ export default {
         return {
             objectOptions: [
                 {
-                    name: 'Accounts',
+                    value: '6a978413-76b9-44c7-9ca4-bde3178382aa',
                     label: 'Accounts',
                     meta: 'Represents business',
                     icon: 'standard:account',
                     disabled: false
                 },
                 {
-                    name: 'Contacts',
+                    value: '0f913c2c-56aa-48e9-8771-6739e62c39a0',
                     label: 'Contacts',
                     meta: 'Represents people',
                     icon: 'standard:contact',
                     disabled: false
                 },
                 {
-                    name: 'Leads',
+                    value: '46f3c0b6-0cee-4d69-bfb2-96884078f32a',
                     label: 'Leads',
                     meta: 'Represents potential accounts',
                     icon: 'standard:lead',
                     disabled: false
                 },
                 {
-                    name: 'Groups',
+                    value: 'f6f8b9e3-e809-4937-ad97-fa2777728040',
                     label: 'Groups',
                     meta: 'Represents groups of users',
                     disabled: false
                 },
                 {
-                    name: 'Files',
+                    value: 'd91a24a5-aa7e-4b43-be0f-6f8897e9210b',
                     label: 'Files',
                     meta: 'Represents files',
                     icon: 'standard:file',
                     disabled: true
                 },
                 {
-                    name: 'Reports',
+                    value: 'baf6a685-dcfe-43bf-99be-4108189798b3',
                     label: 'Reports',
                     meta: 'Represents custom reports',
                     icon: 'standard:report',
                     disabled: false
                 },
                 {
-                    name: 'Products',
+                    value: 'ba21361f-6020-4c0e-a3aa-6b7897484588',
                     label: 'Products',
                     meta: 'Represents goods to sell',
                     icon: 'standard:product',
                     disabled: false
                 },
                 {
-                    name: 'Users',
+                    value: '48d5d099-0a31-4f33-9548-6f821c20a045',
                     label: 'Users',
                     meta: 'Represents internal users',
                     icon: 'standard:user',
