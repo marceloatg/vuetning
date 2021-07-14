@@ -24,7 +24,7 @@
 
         <!-- More tabs dropdown -->
         <transition name="dropdown">
-            <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
+            <div v-if="isDropdownActive" v-click-outside="away" class="slds-dropdown slds-dropdown_right">
                 <ul class="slds-dropdown__list" role="menu">
                     <li
                         v-for="subTab in overflowedSubTabs"
@@ -33,7 +33,7 @@
                         @click="onClick(subTab)">
 
                         <a role="menuitem" tabindex="-1">
-                            <span class="slds-truncate" :title="subTab.title">
+                            <span class="slds-truncate" :title="subTab.label">
 
                                 <span class="slds-indicator-container"/>
 
@@ -42,7 +42,7 @@
                                 </span>
 
                                 <span>
-                                    {{ subTab.title }}
+                                    {{ subTab.label }}
                                 </span>
 
                             </span>
@@ -57,55 +57,58 @@
 </template>
 
 <script>
-    import {mixin as clickaway} from 'vue-clickaway'
+import ClickOutside from '@/directives/click-outside/index'
 
-    export default {
-        mixins: [clickaway],
-        props: {
-            overflowedSubTabs: {
-                type: Array,
-                required: true,
-            },
+export default {
+    directives: {
+        ClickOutside
+    },
+
+    props: {
+        overflowedSubTabs: {
+            type: Array,
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            isDropdownActive: false,
+        }
+    },
+
+    methods: {
+        away() {
+            this.isDropdownActive = false;
         },
 
-        data() {
-            return {
-                isDropdownActive: false,
-            }
+        onClick(subTab) {
+            this.isDropdownActive = false;
+            this.$emit('click', subTab);
         },
 
-        methods: {
-            away() {
-                this.isDropdownActive = false;
-            },
-
-            onClick(subTab) {
-                this.isDropdownActive = false;
-                this.$emit('click', subTab);
-            },
-
-            toggleDropdown() {
-                this.isDropdownActive = !this.isDropdownActive;
-            },
+        toggleDropdown() {
+            this.isDropdownActive = !this.isDropdownActive;
         },
-    }
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    .slds-sub-tabs__item {
-        width: 7.5rem;
-        max-width: 7.5rem;
-        background: white;
-    }
+.slds-sub-tabs__item {
+    width: 7.5rem;
+    max-width: 7.5rem;
+    background: white;
+}
 
-    .dropdown-enter,
-    .dropdown-leave-to {
-        opacity: 0 !important;
-        transform: translateY(5%) !important;
-    }
+.dropdown-enter,
+.dropdown-leave-to {
+    opacity: 0 !important;
+    transform: translateY(5%) !important;
+}
 
-    .dropdown-enter-active,
-    .dropdown-leave-active {
-        transition: transform .3s, opacity .15s !important;
-    }
+.dropdown-enter-active,
+.dropdown-leave-active {
+    transition: transform .3s, opacity .15s !important;
+}
 </style>

@@ -1,5 +1,7 @@
-import sldsComponent from './index.vue'
+import SldsCheckboxButtonGroup from './checkbox-button-group'
+import SldsCheckboxButtonOption from './checkbox-button-option'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(SldsCheckboxButtonGroup.name, SldsCheckboxButtonGroup)
+    Vue.component(SldsCheckboxButtonOption.name, SldsCheckboxButtonOption)
 }

@@ -1,209 +1,88 @@
 <template>
-    <div id="app" ref="viewport" class="slds-viewport">
+    <div class="v-viewport">
 
-        <!-- Trial bar -->
-        <slds-trial-bar v-if="showTrialBar" :days-left="30"/>
+        <slds-global-header/>
 
-        <!-- Alert -->
-        <slds-alert
-            v-if="showAlertBar"
-            :theme="alert.theme"
-            :icon-category="alert.iconCategory"
-            :icon-name="alert.iconName"
-            :message="alert.message"/>
+        <slds-global-navigation app-name="Vuetning" :tabs="[]"/>
 
-        <slds-modal v-if="modal" @close="modal = false">
+        <div class="v-global-content slds-grid">
 
-            <template #header>
-                <h2 class="slds-text-heading_medium slds-hyphenate">
-                    Vuetning
-                </h2>
-            </template>
+            <div class="slds-col slds-grow-none">
+                <app-navigation/>
+            </div>
 
-            <template #content>
-                Lorem ipsum dolor sit amet.
-                <slds-input v-model="input" label="Foo"/>
-            </template>
+            <div class="slds-col ">
 
-            <template #footer>
+                <slds-brand-band
+                    start-color="rgb(49,135,96)"
+                    end-color="rgb(150,217,187)"
+                />
 
-                <!-- Cancel button -->
-                <slds-button label="Cancel" neutral @click="modal = false"/>
+                <div class="slds-grid slds-gutters_direct slds-p-around_small" style="height: 100%">
 
-                <!-- Save button -->
-                <slds-button label="Delete" brand/>
+                    <div class="slds-col slds-scrollable_y">
+                        <router-view/>
+                    </div>
 
-            </template>
+                    <div class="slds-col slds-grow-none" style="min-width: 266px;">
 
-        </slds-modal>
+                        <div class="v-add">
+                            <img src="https://via.placeholder.com/240x118/FFFFFF.png?text=Add" alt="add">
+                        </div>
 
-        <!-- Global header -->
-        <slds-global-header name="Blue Bear"/>
+                        <slds-card title="Contents" class="slds-m-top_medium">
+                            <p>
+                                Lorem ipsum
+                            </p>
+                            <p>
+                                Lorem ipsum
+                            </p>
+                            <p>
+                                Lorem ipsum
+                            </p>
+                            <p>
+                                Lorem ipsum
+                            </p>
+                            <p>
+                                Lorem ipsum
+                            </p>
+                        </slds-card>
 
-        <!-- Global navigation -->
-        <slds-global-navigation app-name="Dashboard" :tabs="[]" :sub-tabs="[]"/>
+                    </div>
 
-        <!-- Brand band -->
-        <slds-brand-band/>
+                </div>
 
-        <!-- Global content -->
-        <div class="slds-global-content">
-            <slds-view @modal="modal = true"/>
+            </div>
+
         </div>
 
     </div>
 </template>
 
 <script>
-import SldsView from './views/Input'
+import AppNavigation from './AppNavigation'
 
 export default {
     name: 'App',
+
     components: {
-        SldsView,
-    },
-    data() {
-        return {
-            modal: false,
-            input: null,
-            trial: {
-                showBar: false,
-            },
-            alert: {
-                show: false,
-                theme: 'offline',
-                iconCategory: "utility",
-                iconName: "offline",
-                message: 'Oops, it looks like you\'re offline. Check your internet connection and try again.'
-            },
-            showDockedComposer: true,
-            isOverflowed: null,
-            hasSubTas: null,
-            tabIcon: null,
-            tabTitle: null,
-            tabs: [{
-                id: '1',
-                icon: 'utility:add',
-                title: 'Foo',
-                isActive: false,
-                subTabs: [],
-            }, {
-                id: '2',
-                icon: 'utility:settings',
-                title: 'General Settings',
-                isActive: true,
-                subTabs: [
-                    {id: 'a', icon: 'utility:settings', title: 'General Settings', isActive: true},
-                    {id: 'b', icon: 'utility:user', title: 'User Settings', isActive: false},
-                ],
-            }],
-            showAlertBar: false,
-            showTrialBar: false,
-            subTabsByTabId: [],
-            overflowedSubTabsByTabId: [],
-            overflowedTabs: [],
-        }
-    },
-    computed: {
-        subTabs() {
-            if (this.tabs.length === 0) return [];
-            const activeTab = this.tabs.find(tab => tab.isActive)
-            if (activeTab) return activeTab.subTabs;
-            return [];
-        },
-        overflowedSubTabs() {
-            if (this.tabs.length === 0) return [];
-
-            let selectedTabSubTabs = this.overflowedSubTabsByTabId.find(element => {
-                return element.tabId === this.tabs[this.tabs.length - 1].id
-            });
-
-            if (selectedTabSubTabs === undefined) return [];
-
-            return selectedTabSubTabs.overflowedSubTabs;
-        },
-    },
-    methods: {
-        addTab() {
-            for (const tab of this.tabs) tab.isActive = false;
-
-            let subTabs = [];
-            if (this.hasSubTas) {
-                subTabs.push({
-                    id: Date.now(),
-                    title: this.tabTitle,
-                    icon: this.tabIcon,
-                    isActive: true,
-                    isMain: true,
-                });
-            }
-
-            if (this.isOverflowed && !this.hasSubTas) {
-                this.overflowedTabs.push({
-                    id: Date.now(),
-                    title: this.tabTitle,
-                    icon: this.tabIcon,
-                    isActive: true,
-                })
-            }
-            else {
-                let tab = {
-                    id: Date.now(),
-                    title: this.tabTitle,
-                    icon: this.tabIcon,
-                    isActive: true,
-                };
-
-                this.tabs.push(tab);
-
-                if (this.hasSubTas && !this.isOverflowed) {
-                    this.subTabsByTabId.push({
-                        tabId: tab.id,
-                        subTabs: subTabs
-                    });
-                }
-                else if (this.hasSubTas && this.isOverflowed) {
-                    this.subTabsByTabId.push({
-                        tabId: tab.id,
-                        subTabs: subTabs
-                    });
-                    this.overflowedSubTabsByTabId.push({
-                        tabId: tab.id,
-                        overflowedSubTabs: subTabs
-                    });
-                }
-
-            }
-
-        },
-        clearTabs() {
-            this.tabs.splice(0, this.tabs.length);
-        },
-        onCloseTab(index) {
-            this.tabs.splice(index, 1);
-        },
-        closeAlert() {
-            this.alert.show = false;
-        },
-        closeDockedComposer() {
-            this.showDockedComposer = false;
-        },
+        AppNavigation
     },
 }
 </script>
 
 <style lang="scss">
+
+$header-height: 40px;
+$navigation-height: 50px;
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-.slds-viewport {
-    --background-color: rgb(176, 196, 223);
-    --global-padding: 12px;
-    --trial-bar-height: 0px;
-    --alert-height: 0px;
+.v-viewport {
     --header-height: 40px;
     --navigation-height: 50px;
 
@@ -214,29 +93,51 @@ export default {
     bottom: 0;
     overflow: hidden;
     z-index: 1;
-    background-color: var(--background-color) !important;
+    background-color: rgb(150, 217, 187);
 }
 
-.slds-notify_container {
-    top: var(--trial-bar-height) - var(--alert-height) - var(--header-height) - var(--navigation-height);
-}
-
-.slds-global-content {
+.v-global-content {
     position: relative;
-    height: calc(100% - var(--trial-bar-height) - var(--alert-height) - var(--header-height) - var(--navigation-height));
+    height: calc(100% - #{$header-height} - #{$navigation-height});
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
+}
 
-    main {
-        padding: 12px;
+.v-add {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
+    border: 1px solid #dddbda;
+    border-radius: .25rem;
 
-        &.absolute {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
+    img {
+        border-radius: .25rem;
+    }
+}
+
+.slds-context-bar {
+    border-bottom-color: rgba(0, 135, 124, 1);
+
+    &__item {
+        &:not(.slds-no-hover):hover {
+            background-color: rgba(0, 135, 124, .1);
+        }
+
+        &.slds-is-active {
+            background-color: rgba(0, 135, 124, .1);
+
+            &:before {
+                background: rgba(0, 135, 124, 1);
+            }
         }
     }
 }
 
+@keyframes bkAnim {
+    50% {
+        background-color: #fff
+    }
+    100% {
+        background-color: rgba(0, 135, 124, .1);
+    }
+}
 </style>

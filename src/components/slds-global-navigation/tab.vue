@@ -7,7 +7,7 @@
         @click.middle="onClickClose">
 
         <!-- Identification -->
-        <a role="tab" :title="title" class="slds-context-bar__label-action">
+        <a role="tab" :title="label" class="slds-context-bar__label-action">
 
             <!-- Indicator -->
             <span class="slds-indicator-container"/>
@@ -19,7 +19,7 @@
 
             <!-- Text -->
             <span class="slds-truncate">
-                {{ title }}
+                {{ label }}
             </span>
 
         </a>
@@ -35,7 +35,7 @@
                 @click.stop="toggleDropdown"/>
 
             <transition name="dropdown">
-                <div v-if="isDropdownActive" v-on-clickaway="away" class="slds-dropdown slds-dropdown_right">
+                <div v-if="isDropdownActive" v-click-outside="away" class="slds-dropdown slds-dropdown_right">
                     <ul class="slds-dropdown__list" role="menu">
                         <li class="slds-dropdown__item" role="presentation">
                             <a role="menuitem" tabindex="-1" @click.prevent="onClickRefreshTab">
@@ -73,68 +73,68 @@
 </template>
 
 <script>
-    import {mixin as clickaway} from 'vue-clickaway'
+import ClickOutside from '@/directives/click-outside/index'
 
-    export default {
-        mixins: [
-            clickaway
-        ],
-        props: {
-            hasSubTabs: {
-                type: Boolean,
-                default: false,
-            },
-            icon: {
-                type: String,
-                required: true,
-            },
-            isActive: {
-                type: Boolean,
-                default: false,
-            },
-            title: {
-                type: String,
-                required: true,
-            },
+export default {
+    directives: {
+        ClickOutside
+    },
+    props: {
+        hasSubTabs: {
+            type: Boolean,
+            default: false,
         },
-        data() {
-            return {
-                isDropdownActive: false,
-            }
+        icon: {
+            type: String,
+            required: true,
         },
-        methods: {
-            away() {
-                this.isDropdownActive = false;
-            },
-            onClickTab() {
-                this.$emit('click');
-            },
-            onClickRefreshTab() {
-                this.$emit('refresh');
-                this.isDropdownActive = false;
-            },
-            onClickCloseAll() {
-                this.$emit('closeAll');
-            },
-            onClickClose() {
-                this.$emit('close');
-            },
-            toggleDropdown() {
-                this.isDropdownActive = !this.isDropdownActive;
-            }
+        isActive: {
+            type: Boolean,
+            default: false,
         },
-    }
+        label: {
+            type: String,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            isDropdownActive: false,
+        }
+    },
+    methods: {
+        away() {
+            this.isDropdownActive = false;
+        },
+        onClickTab() {
+            this.$emit('click');
+        },
+        onClickRefreshTab() {
+            this.$emit('refresh');
+            this.isDropdownActive = false;
+        },
+        onClickCloseAll() {
+            this.$emit('closeAll');
+        },
+        onClickClose() {
+            this.$emit('close');
+        },
+        toggleDropdown() {
+            this.isDropdownActive = !this.isDropdownActive;
+        }
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    .dropdown-enter,
-    .dropdown-leave-to {
-        opacity: 0 !important;
-        transform: translateY(5%) !important;
-    }
+.dropdown-enter,
+.dropdown-leave-to {
+    opacity: 0 !important;
+    transform: translateY(5%) !important;
+}
 
-    .dropdown-enter-active,
-    .dropdown-leave-active {
-        transition: transform .3s, opacity .15s !important;
-    }
+.dropdown-enter-active,
+.dropdown-leave-active {
+    transition: transform .3s, opacity .15s !important;
+}
 </style>

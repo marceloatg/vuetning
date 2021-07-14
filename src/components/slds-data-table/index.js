@@ -1,7 +1,5 @@
-import sldsComponent from './index.vue'
-import Clipboard from 'v-clipboard'
+import sldsDataTable from './data-table.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent);
-    Vue.use(Clipboard)
+    Vue.component(sldsDataTable.name, sldsDataTable)
 }

@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsCounter from './counter.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsCounter.name, sldsCounter)
 }
