@@ -6,21 +6,20 @@
 <template>
     <div
         v-observe-visibility="handleVisibilityChange"
-        class="vue-recycle-scroller direction-vertical"
+        class="virtual-scroller"
         :class="{ ready, 'page-mode': pageMode }"
         @scroll.passive="handleScroll"
     >
-
         <div
             ref="wrapper"
             :style="{ minHeight: totalSize + 'px' }"
-            class="vue-recycle-scroller__item-wrapper"
+            class="virtual-scroller__item-wrapper"
         >
             <div
                 v-for="view of pool"
                 :key="view.nr.id"
                 :style="ready ? { transform: `translateY(${view.position}px)` } : null"
-                class="vue-recycle-scroller__item-view"
+                class="virtual-scroller__item-view"
                 @mouseenter="$event.target.classList.add('hover')"
                 @mouseleave="$event.target.classList.remove('hover')"
             >
@@ -31,16 +30,10 @@
                 />
             </div>
         </div>
-
-        <resize-observer
-            @notify="handleResize"
-        />
-
     </div>
 </template>
 
 <script>
-import {ResizeObserver} from 'vue-resize'
 import {ObserveVisibility} from 'vue-observe-visibility'
 import ScrollParent from 'scrollparent'
 import {supportsPassive} from './utils'
@@ -50,10 +43,6 @@ const ITEMS_LIMIT = 1000
 
 export default {
     name: 'SldsVirtualScroller',
-
-    components: {
-        ResizeObserver,
-    },
 
     directives: {
         ObserveVisibility,
@@ -177,7 +166,7 @@ export default {
         this.$_endIndex = 0
         this.$_views = new Map()
         this.$_unusedViews = new Map()
-        this.$_scrollDirty = false
+        this.$_scrollAnimationRequest = null
         this.$_lastUpdateScrollPosition = 0
 
         // In SSR mode, we also prerender the same number of item for the first render
@@ -229,12 +218,10 @@ export default {
         unuseView(view, fake = false) {
             const unusedViews = this.$_unusedViews
             const type = view.nr.type
-            let unusedPool = unusedViews.get(type)
 
-            if (!unusedPool) {
-                unusedPool = []
-                unusedViews.set(type, unusedPool)
-            }
+            if (!unusedViews.get(type)) unusedViews.set(type, [])
+
+            const unusedPool = unusedViews.get(type)
             unusedPool.push(view)
 
             if (!fake) {
@@ -252,22 +239,21 @@ export default {
         handleScroll(event) {
             if (event && event.target.scrollLeft !== this.scrollLeft) {
                 this.scrollLeft = event.target.scrollLeft;
+                return;
             }
-            else if (!this.$_scrollDirty) {
-                this.$_scrollDirty = true
 
-                requestAnimationFrame(() => {
-                    this.$_scrollDirty = false
-                    const {continuous} = this.updateVisibleItems(false, true)
+            cancelAnimationFrame(this.$_scrollAnimationRequest)
+            this.$_scrollAnimationRequest = requestAnimationFrame(() => {
+                this.$_scrollAnimationRequest = false
+                const {continuous} = this.updateVisibleItems(false, true)
 
-                    // It seems sometimes chrome doesn't fire scroll event :/
-                    // When non continous scrolling is ending, we force a refresh
-                    if (!continuous) {
-                        clearTimeout(this.$_refreshTimout)
-                        this.$_refreshTimout = setTimeout(this.handleScroll, 100)
-                    }
-                })
-            }
+                // It seems sometimes chrome doesn't fire scroll event :/
+                // When non continuous scrolling is ending, we force a refresh
+                if (!continuous) {
+                    clearTimeout(this.$_refreshTimout)
+                    this.$_refreshTimout = setTimeout(this.handleScroll, 100)
+                }
+            })
         },
 
         handleVisibilityChange(isVisible, entry) {
@@ -617,34 +603,38 @@ export default {
 }
 </script>
 
-<style>
-.vue-recycle-scroller {
+<style scoped lang="scss">
+.virtual-scroller {
     position: relative;
+
+    &:not(.page-mode) {
+        overflow-y: auto;
+    }
+
+    &.ready {
+        .virtual-scroller__item-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            will-change: transform;
+            width: 100%;
+        }
+
+        .virtual-scroller__item-wrapper {
+            overflow-x: auto;
+            position: static;
+        }
+    }
+
+    .virtual-scroller__item-wrapper {
+        width: 100%;
+    }
 }
 
-.vue-recycle-scroller.direction-vertical:not(.page-mode) {
-    overflow-y: auto;
-}
-
-.vue-recycle-scroller__item-wrapper {
+.virtual-scroller__item-wrapper {
     flex: 1;
     box-sizing: border-box;
     overflow: hidden;
     position: relative;
-}
-
-.vue-recycle-scroller.ready .vue-recycle-scroller__item-view {
-    position: absolute;
-    top: 0;
-    left: 0;
-    will-change: transform;
-}
-
-.vue-recycle-scroller.direction-vertical .vue-recycle-scroller__item-wrapper {
-    width: 100%;
-}
-
-.vue-recycle-scroller.ready.direction-vertical .vue-recycle-scroller__item-view {
-    width: 100%;
 }
 </style>

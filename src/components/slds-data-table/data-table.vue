@@ -390,7 +390,7 @@ export default {
         },
 
         async getScrollbarWidth() {
-            const scroller = this.$el.querySelector('.vue-recycle-scroller');
+            const scroller = this.$el.querySelector('.virtual-scroller');
             if (scroller == null) return;
 
             await this.$nextTick();
@@ -481,7 +481,7 @@ export default {
             await this.$nextTick();
 
             // Adjusting z-index
-            const items = this.$el.querySelectorAll('.vue-recycle-scroller__item-view');
+            const items = this.$el.querySelectorAll('.virtual-scroller__item-view');
             for (const item of items) {
                 item.style.zIndex = item.querySelector(`[data-index="${index}"]`)
                     ? "1000"
@@ -492,7 +492,7 @@ export default {
             const dropdown = this.$refs.dropdown;
             let parent = dropdown.offsetParent;
 
-            while (!parent.classList.contains('vue-recycle-scroller')) {
+            while (!parent.classList.contains('virtual-scroller')) {
                 parent = parent.offsetParent;
             }
 
@@ -807,13 +807,6 @@ $table-color-hover: #f3f2f2;
 
     &_actions {
         width: 3rem;
-    }
-}
-
-.vue-recycle-scroller.ready.direction-vertical {
-    .vue-recycle-scroller__item-wrapper {
-        overflow-x: auto;
-        position: static;
     }
 }
 
