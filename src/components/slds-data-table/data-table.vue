@@ -511,7 +511,7 @@ export default {
 
         onClickCopy(column, item) {
             const value = this.getFieldValue(column, item);
-            if (value != null) this.$clipboard(value);
+            if (value && value.length) this.$clipboard(value);
         },
 
         onClickSelect(item) {
