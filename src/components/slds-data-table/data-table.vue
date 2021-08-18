@@ -5,7 +5,7 @@
         <div ref="container" class="slds-virtual-table_container">
 
             <!-- Header -->
-            <div class="slds-virtual-table_header">
+            <div ref="header" class="slds-virtual-table_header">
 
                 <!-- Line number header-->
                 <div v-if="!hideLineNumber" class="slds-virtual-table_header-line-number"/>
@@ -43,7 +43,7 @@
             </div>
 
             <!-- Body -->
-            <recycle-scroller
+            <slds-virtual-scroller
                 class="slds-virtual-table_body"
                 :items="filteredRows"
                 :item-size="rowHeight"
@@ -222,7 +222,7 @@
 
                     </div>
                 </template>
-            </recycle-scroller>
+            </slds-virtual-scroller>
 
         </div>
 
@@ -237,8 +237,7 @@
 <script>
 import Column from "./column";
 import ColumnConfiguration from './column-configuration'
-import {RecycleScroller} from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import SldsVirtualScroller from '../slds-virtual-scroller/virtual-scroller'
 import ClickOutside from '@/directives/click-outside/index'
 import 'numeral/locales/pt-br'
 import numeral from "numeral";
@@ -254,7 +253,7 @@ export default {
 
     components: {
         Column,
-        RecycleScroller,
+        SldsVirtualScroller,
     },
 
     directives: {
@@ -304,11 +303,9 @@ export default {
         },
 
         rowHeight() {
-            const rowHeight = this.columnConfigurations.some(column => column.type === 'avatar') ? 40 : 28;
-            const virtualScrollerElement = this.$refs.virtualScroller;
-
-            if (virtualScrollerElement != null) virtualScrollerElement.style.setProperty('--row-height', `${rowHeight}px`);
-            return rowHeight;
+            return this.columnConfigurations.some(column => column.type === 'avatar')
+                ? 40
+                : 28;
         },
     },
 
@@ -393,7 +390,7 @@ export default {
         },
 
         async getScrollbarWidth() {
-            const scroller = this.$el.querySelector('.vue-recycle-scroller');
+            const scroller = this.$el.querySelector('.virtual-scroller');
             if (scroller == null) return;
 
             await this.$nextTick();
@@ -407,7 +404,7 @@ export default {
         async getTableWidth() {
             if (this.$refs.container != null) {
                 this.tableWidth = this.$refs.container.offsetWidth;
-                this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
+                this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`);
             }
 
             if (this.$refs.root != null) {
@@ -484,7 +481,7 @@ export default {
             await this.$nextTick();
 
             // Adjusting z-index
-            const items = this.$el.querySelectorAll('.vue-recycle-scroller__item-view');
+            const items = this.$el.querySelectorAll('.virtual-scroller__item-view');
             for (const item of items) {
                 item.style.zIndex = item.querySelector(`[data-index="${index}"]`)
                     ? "1000"
@@ -495,7 +492,7 @@ export default {
             const dropdown = this.$refs.dropdown;
             let parent = dropdown.offsetParent;
 
-            while (!parent.classList.contains('vue-recycle-scroller')) {
+            while (!parent.classList.contains('virtual-scroller')) {
                 parent = parent.offsetParent;
             }
 
@@ -514,7 +511,7 @@ export default {
 
         onClickCopy(column, item) {
             const value = this.getFieldValue(column, item);
-            if (value != null) this.$clipboard(value);
+            if (value && value.length) this.$clipboard(value);
         },
 
         onClickSelect(item) {
@@ -564,7 +561,7 @@ export default {
             this.columnConfigurations[index].width += delta;
 
             this.tableWidth += delta;
-            this.$refs.root.style.setProperty('--header-width', `${this.tableWidth}px`);
+            this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`);
 
             this.rowWidth += delta;
             this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
@@ -586,7 +583,7 @@ export default {
             // Handle horizontal scroll
             if (event.target.scrollLeft === this.scrollLeft) return;
             this.scrollLeft = event.target.scrollLeft;
-            this.$refs.root.style.setProperty('--header-offset', `-${event.target.scrollLeft}px`);
+            this.$refs.header.style.setProperty('--header-offset', `-${event.target.scrollLeft}px`);
         },
 
         onSort(order, sortedColumn) {
@@ -653,8 +650,6 @@ $table-color-hover: #f3f2f2;
 .slds-virtual-table {
     --row-height: 1.75rem;
     --row-width: 100%;
-    --header-width: 100%;
-    --header-offset: 0px;
 
     height: 100%;
     width: 100%;
@@ -663,6 +658,9 @@ $table-color-hover: #f3f2f2;
     background-color: $table-color-background;
 
     &_header {
+        --header-offset: 0px;
+        --header-width: 100%;
+
         display: flex;
         position: relative;
         height: $header-height;
@@ -809,13 +807,6 @@ $table-color-hover: #f3f2f2;
 
     &_actions {
         width: 3rem;
-    }
-}
-
-.vue-recycle-scroller.ready.direction-vertical {
-    .vue-recycle-scroller__item-wrapper {
-        overflow-x: auto;
-        position: static;
     }
 }
 
