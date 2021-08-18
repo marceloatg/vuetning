@@ -642,7 +642,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 $header-height: 2rem;
 $table-color-background: #fafaf9;
 $table-color-hover: #f3f2f2;
