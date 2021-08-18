@@ -95,7 +95,6 @@
 </template>
 
 <script>
-/* eslint-disable vue/no-mutating-props */
 import SldsSubTab from './sub-tab'
 import SldsTab from './tab'
 import SldsMoreTabs from './more-tabs'
