@@ -1,7 +1,7 @@
 <template>
     <slds-form-element
         :label="label"
-        :error="error"
+        :error="error && !$data.$_isOpen"
         :required="required"
         :read-only="readonly"
     >
@@ -14,7 +14,7 @@
         <!-- Container -->
         <div
             v-else
-            v-click-outside="hideDropdown"
+            v-click-outside="onClickOutside"
             class="slds-combobox_container"
             :class="containerClass"
         >
@@ -49,7 +49,7 @@
                             v-on="listeners"
                             @click="onClick"
                             @input="onInput"
-                            @keyup.esc="onClear"
+                            @keyup.esc.stop="onClear"
                         >
 
                         <!-- Clear button -->
@@ -76,7 +76,7 @@
                             role="textbox"
                             class="slds-input slds-combobox__input"
                             v-bind="$attrs"
-                            :value="$data.$_value"
+                            :value="selectedOptionLabel"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             v-on="listeners"
@@ -215,7 +215,14 @@ export default {
             const listeners = {...this.$listeners}
             delete listeners.input
             return listeners
-        }
+        },
+
+        selectedOptionLabel() {
+            if (this.$data.$_value == null) return null
+
+            const selectedOption = this.$data.$_options.find(option => option.value === this.$data.$_value)
+            return selectedOption ? selectedOption.label : null
+        },
     },
 
     watch: {
@@ -261,8 +268,14 @@ export default {
             this.selectOption(value)
         },
 
+        onClickOutside() {
+            this.clearFilter()
+            this.hideDropdown()
+        },
+
         onInput(event) {
             this.$data.$_filter = event.target.value
+            this.$emit('search', event.target.value)
         },
 
         onKeyDown() {
@@ -300,7 +313,7 @@ export default {
         },
 
         parseOptions() {
-            this.$data.$_options = this.$data.$_options.splice(0, this.$data.$_options.length)
+            this.$data.$_options.splice(0, this.$data.$_options.length)
             if (this.options == null) return
 
             for (const option of this.options) {
@@ -332,8 +345,7 @@ export default {
             if (value) this.$data.$_focusedOption = value
             else if (this.$data.$_value) this.$data.$_focusedOption = this.$data.$_value
             else this.$data.$_focusedOption = this.filteredOptions
-                    .find(option => !option.disabled && !option.heading)
-                    .value
+                    .find(option => !option.disabled && !option.heading)?.value
         }
     }
 }
