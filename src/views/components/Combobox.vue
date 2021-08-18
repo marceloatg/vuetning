@@ -164,7 +164,7 @@
 
 <script>
 export default {
-    name: "Combobox",
+    value: "Combobox",
 
     data() {
         return {
@@ -173,35 +173,35 @@ export default {
                     heading: 'Group One'
                 },
                 {
-                    name: 'Accounts',
+                    value: 'Accounts',
                     label: 'Accounts',
                     meta: 'Represents business',
                     icon: 'standard:account',
                     disabled: false
                 },
                 {
-                    name: 'Contacts',
+                    value: 'Contacts',
                     label: 'Contacts',
                     meta: 'Represents people',
                     icon: 'standard:contact',
                     disabled: false
                 },
                 {
-                    name: 'Leads',
+                    value: 'Leads',
                     label: 'Leads',
                     meta: 'Represents potential accounts',
                     icon: 'standard:lead',
                     disabled: false
                 },
                 {
-                    name: 'Groups',
+                    value: 'Groups',
                     label: 'Groups',
                     meta: 'Represents groups of users',
                     icon: 'standard:groups',
                     disabled: false
                 },
                 {
-                    name: 'Users',
+                    value: 'Users',
                     label: 'Users',
                     meta: 'Represents internal users',
                     icon: 'standard:user',
@@ -211,21 +211,21 @@ export default {
                     heading: 'Group Two'
                 },
                 {
-                    name: 'Files',
+                    value: 'Files',
                     label: 'Files',
                     meta: 'Represents files',
                     icon: 'standard:file',
                     disabled: true
                 },
                 {
-                    name: 'Reports',
+                    value: 'Reports',
                     label: 'Reports',
                     meta: 'Represents custom reports',
                     icon: 'standard:report',
                     disabled: false
                 },
                 {
-                    name: 'Products',
+                    value: 'Products',
                     label: 'Products',
                     meta: 'Represents goods to sell',
                     icon: 'standard:product',
@@ -233,14 +233,14 @@ export default {
                 },
             ],
             objectOptions: [
-                {name: 'Accounts', label: 'Accounts', meta: 'Represents business', disabled: false},
-                {name: 'Contacts', label: 'Contacts', meta: 'Represents people', disabled: false},
-                {name: 'Leads', label: 'Leads', meta: 'Represents potential accounts', disabled: false},
-                {name: 'Groups', label: 'Groups', meta: 'Represents groups of users', disabled: false},
-                {name: 'Files', label: 'Files', meta: 'Represents files', disabled: true},
-                {name: 'Reports', label: 'Reports', meta: 'Represents custom reports', disabled: false},
-                {name: 'Products', label: 'Products', meta: 'Represents goods to sell', disabled: false},
-                {name: 'Users', label: 'Users', meta: 'Represents internal users', disabled: false},
+                {value: '6a978413-76b9-44c7-9ca4-bde3178382aa', label: 'Accounts', meta: 'Represents business', disabled: false},
+                {value: '0f913c2c-56aa-48e9-8771-6739e62c39a0', label: 'Contacts', meta: 'Represents people', disabled: false},
+                {value: '46f3c0b6-0cee-4d69-bfb2-96884078f32a', label: 'Leads', meta: 'Represents potential accounts', disabled: false},
+                {value: 'f6f8b9e3-e809-4937-ad97-fa2777728040', label: 'Groups', meta: 'Represents groups of users', disabled: false},
+                {value: 'd91a24a5-aa7e-4b43-be0f-6f8897e9210b', label: 'Files', meta: 'Represents files', disabled: true},
+                {value: 'baf6a685-dcfe-43bf-99be-4108189798b3', label: 'Reports', meta: 'Represents custom reports', disabled: false},
+                {value: 'ba21361f-6020-4c0e-a3aa-6b7897484588', label: 'Products', meta: 'Represents goods to sell', disabled: false},
+                {value: '48d5d099-0a31-4f33-9548-6f821c20a045', label: 'Users', meta: 'Represents internal users', disabled: false},
             ],
             stringOptions: ['Accounts', 'Contacts', 'Leads', 'Groups', 'Files', 'Reports', 'Products', 'Users'],
             value: null,
