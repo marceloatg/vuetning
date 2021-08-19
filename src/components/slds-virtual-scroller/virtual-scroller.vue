@@ -103,6 +103,7 @@ export default {
     data() {
         return {
             hoverKey: null,
+            itemCount: null,
             pool: [],
             ready: false,
             scrollLeft: 0,
@@ -144,8 +145,19 @@ export default {
     },
 
     watch: {
-        items() {
+        async items(items) {
             this.updateVisibleItems(true)
+
+            await this.$nextTick()
+
+            if (items.length !== this.itemCount) {
+                this.itemCount = items.length
+                ScrollParent(this.$el).scrollTop = 0
+
+                await this.$nextTick()
+
+                this.updateVisibleItems(true)
+            }
         },
 
         pageMode() {
