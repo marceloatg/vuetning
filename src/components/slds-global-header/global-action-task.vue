@@ -21,7 +21,6 @@ export default {
         icon: {
             type: String,
             default: 'utility:add',
-            required: true,
         }
     },
 }

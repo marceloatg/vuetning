@@ -59,7 +59,6 @@ export default {
         icon: {
             type: String,
             default: 'utility:favorite',
-            required: true,
         }
     },
 }

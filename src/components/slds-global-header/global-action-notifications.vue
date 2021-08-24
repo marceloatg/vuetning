@@ -44,7 +44,6 @@ export default {
         icon: {
             type: String,
             default: 'utility:notification',
-            required: true,
         }
     },
 }

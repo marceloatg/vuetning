@@ -3,6 +3,7 @@
         <slds-global-action
             :icon="icon"
             assistive-text="Setup"
+            @click="onClick"
         />
     </li>
 </template>
@@ -21,8 +22,13 @@ export default {
         icon: {
             type: String,
             default: 'utility:setup',
-            required: true,
         }
+    },
+
+    methods: {
+        onClick() {
+            this.$emit('click')
+        },
     },
 }
 </script>
