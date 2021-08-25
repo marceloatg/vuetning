@@ -1,5 +1,10 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" :viewBox="viewBox" :class="svgClass">
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        :viewBox="viewBox"
+        :class="svgClass"
+        v-bind="dataProperty"
+    >
         <action-sprite v-if="category === 'action'" :id="name"/>
         <custom-sprite v-else-if="category === 'custom'" :id="name"/>
         <doctype-sprite v-else-if="category === 'doctype'" :id="name"/>
@@ -44,6 +49,10 @@ export default {
     },
 
     computed: {
+        dataProperty() {
+            return {[`data-slds-svg-${this.icon.replace(':', '-')}`]: ''}
+        },
+
         svgClass() {
             if (this.category === 'standard') return ''
             return (this.standardFormat) ? 'standard-format-offset' : ''

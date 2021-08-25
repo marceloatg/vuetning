@@ -1,7 +1,7 @@
 <template>
     <li class="slds-global-actions__item">
         <slds-global-action
-            icon="utility:add"
+            :icon="icon"
             assistive-text="Global Actions"
         />
     </li>
@@ -15,6 +15,13 @@ export default {
 
     components: {
         SldsGlobalAction
-    }
+    },
+
+    props: {
+        icon: {
+            type: String,
+            default: 'utility:add',
+        }
+    },
 }
 </script>

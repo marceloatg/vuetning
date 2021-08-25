@@ -10,8 +10,6 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --no-fix",
     "bundle": "vue-cli-service build --target lib --name vuetning src/index.js",
-    "docs:build": "vuepress build docs",
-    "docs:dev": "vuepress dev docs",
     "lint:fix": "vue-cli-service lint",
     "lint:teamcity": "vue-cli-service lint --no-fix --format ./node_modules/eslint-teamcity/index.js"
   },
@@ -22,7 +20,7 @@
     "src/*"
   ],
   "dependencies": {
-    "core-js": "^3.16.2",
+    "core-js": "^3.16.3",
     "duration": "^0.2.2",
     "highlight.js": "^10.6.0",
     "humanize-duration": "^3.27.0",
@@ -54,11 +52,10 @@
     "eslint-plugin-vue": "^6.2.2",
     "eslint-teamcity": "^4.0.0",
     "jest-teamcity-reporter": "^0.9.0",
-    "sass": "^1.38.0",
+    "sass": "^1.38.1",
     "sass-loader": "^10.2.0",
     "viewcode": "0.0.27",
-    "vue-template-compiler": "^2.6.14",
-    "vuepress": "^1.8.2"
+    "vue-template-compiler": "^2.6.14"
   },
   "bugs": {
     "url": "https://github.com/marceloatg/vuetning/issues"

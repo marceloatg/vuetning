@@ -9,9 +9,15 @@
                     <slot v-if="$slots.logo" name="logo"/>
 
                     <div v-else class="slds-global-header__logo">
+
+                        <div v-if="title" class="slds-global-header__title">
+                            <span>{{ title }}</span>
+                        </div>
+
                         <span class="slds-assistive-text">
                             {{ logoAssistiveText }}
                         </span>
+
                     </div>
 
                 </template>
@@ -264,6 +270,7 @@ export default {
         logoAssistiveText: String,
         noLogo: Boolean,
         noSearch: Boolean,
+        title: String,
     }
 }
 </script>
@@ -273,7 +280,7 @@ export default {
     position: static;
 
     .slds-global-header {
-        .slds-global-header__name {
+        .slds-global-header__title {
             padding-left: 3rem;
             font-size: 22px;
             line-height: 2.5rem;

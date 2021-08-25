@@ -9,7 +9,7 @@
             >
                 <!-- SVG -->
                 <slds-svg
-                    icon="utility:notification"
+                    :icon="icon"
                     class="slds-button__icon slds-global-header__icon"
                 />
 
@@ -38,6 +38,13 @@ export default {
 
     components: {
         SldsSvg
-    }
+    },
+
+    props: {
+        icon: {
+            type: String,
+            default: 'utility:notification',
+        }
+    },
 }
 </script>

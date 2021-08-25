@@ -3,7 +3,7 @@
 
         <input
             type="checkbox"
-            :checked="$data.$_value"
+            :checked="value"
             :disabled="disabled"
             :class="inputClass"
         >
@@ -29,23 +29,11 @@ export default {
         value: Boolean
     },
 
-    data() {
-        return {
-            $_value: false
-        }
-    },
-
     computed: {
         inputClass() {
             return {
                 'disabled': this.disabled
             }
-        }
-    },
-
-    watch: {
-        value(value) {
-            this.$data.$_value = value
         }
     },
 
