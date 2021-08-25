@@ -1,5 +1,6 @@
 <template>
     <li
+        data-slds-tab
         class="slds-context-bar__item slds-context-bar__item_tab"
         :class="[{'slds-is-active': isActive}, {'slds-has-sub-tabs': hasSubTabs}]"
         role="presentation"
@@ -10,15 +11,15 @@
         <a role="tab" :title="label" class="slds-context-bar__label-action">
 
             <!-- Indicator -->
-            <span class="slds-indicator-container"/>
+            <span data-slds-tab-indicator class="slds-indicator-container"/>
 
             <!-- Icon -->
-            <span class="slds-icon_container">
+            <span data-slds-tab-icon class="slds-icon_container">
                 <slds-svg :icon="icon" standard-format class="slds-icon slds-icon_small slds-icon-text-default"/>
             </span>
 
             <!-- Text -->
-            <span class="slds-truncate">
+            <span data-slds-tab-label class="slds-truncate">
                 {{ label }}
             </span>
 
