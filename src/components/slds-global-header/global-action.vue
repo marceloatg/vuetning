@@ -5,6 +5,7 @@
                 class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__setup slds-global-actions__item-action"
                 aria-haspopup="true"
                 :title="assistiveText"
+                @click="onClick"
             >
 
                 <!-- SVG -->
@@ -36,6 +37,12 @@ export default {
     props: {
         assistiveText: String,
         icon: {type: String, required: true}
-    }
+    },
+
+    methods: {
+        onClick() {
+            this.$emit('click')
+        },
+    },
 }
 </script>

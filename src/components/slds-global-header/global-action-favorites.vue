@@ -11,7 +11,7 @@
                 >
                     <!-- SVG -->
                     <slds-svg
-                        icon="utility:favorite"
+                        :icon="icon"
                         class="slds-button__icon"
                     />
 
@@ -53,6 +53,13 @@ export default {
 
     components: {
         SldsSvg
-    }
+    },
+
+    props: {
+        icon: {
+            type: String,
+            default: 'utility:favorite',
+        }
+    },
 }
 </script>
