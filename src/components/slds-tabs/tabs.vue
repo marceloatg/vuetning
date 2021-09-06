@@ -44,7 +44,6 @@
 import SldsTabContent from "@/components/slds-tabs/tab-content";
 import Tab from './tab-class'
 import SldsTab from "@/components/slds-tabs/tab";
-import {kebabCase} from "@/utils/string-utils";
 
 export default {
     name: 'SldsTabs',
@@ -115,7 +114,7 @@ export default {
                 }
             }
 
-            this.$data.$_activeTab = kebabCase(activeTab)
+            this.$data.$_activeTab = activeTab
         },
 
         parseTabs() {
