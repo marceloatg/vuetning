@@ -131,6 +131,17 @@
                                         <img alt="avatar" :src="getFieldValue(column, item)">
                                     </span>
 
+                                    <!-- Icon -->
+                                    <span v-else-if="column.type === 'icon'">
+                                        <slds-icon
+                                            small
+                                            inverse
+                                            standard-format
+                                            :icon="getFieldValue(column, item).name"
+                                            :icon-class="getFieldValue(column, item).class"
+                                        />
+                                    </span>
+
                                     <!-- Button -->
                                     <button
                                         v-else-if="column.type === 'button' && getFieldValue(column, item) != null"
