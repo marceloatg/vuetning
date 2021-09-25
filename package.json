@@ -17,7 +17,11 @@
   "unpkg": "dist/vuetning.umd.min.js",
   "files": [
     "dist/*.js",
-    "src/*"
+    "src/components/*",
+    "src/directives/*",
+    "src/mixins/*",
+    "src/utils/*",
+    "src/index.js"
   ],
   "dependencies": {
     "core-js": "^3.18.0",
