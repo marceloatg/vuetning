@@ -140,96 +140,96 @@ export default {
 
     computed: {
         activeSubTab() {
-            if (this.subTabs == null || this.subTabs.length === 0) return null;
-            return this.subTabs.find(subTab => subTab.isActive);
+            if (this.subTabs == null || this.subTabs.length === 0) return null
+            return this.subTabs.find(subTab => subTab.isActive)
         },
 
         activeTab() {
-            return this.tabs.find(tab => tab.isActive);
+            return this.tabs.find(tab => tab.isActive)
         },
 
         hasSubTabs() {
-            return ((this.subTabs != null) && (this.subTabs.length > 1));
+            return ((this.subTabs != null) && (this.subTabs.length > 1))
         },
 
         hasOverflowedSubTabs() {
-            if (this.subTabs == null || this.subTabs.length === 0) return false;
-            return (this.subTabs.length > this.maxVisibleSubTabs);
+            if (this.subTabs == null || this.subTabs.length === 0) return false
+            return (this.subTabs.length > this.maxVisibleSubTabs)
         },
 
         hasOverflowedTabs() {
-            if (this.tabs == null || this.tabs.length === 0) return false;
-            return (this.tabs.length > this.maxVisibleTabs);
+            if (this.tabs == null || this.tabs.length === 0) return false
+            return (this.tabs.length > this.maxVisibleTabs)
         },
 
         maxVisibleSubTabs() {
-            const tabWidth = 192;
-            return Math.floor(this.navContainerWidth / tabWidth);
+            const tabWidth = 192
+            return Math.floor(this.navContainerWidth / tabWidth)
         },
 
         maxVisibleTabs() {
-            const tabWidth = 192;
-            return Math.floor(this.tabsContainerWidth / tabWidth);
+            const tabWidth = 192
+            return Math.floor(this.tabsContainerWidth / tabWidth)
         },
 
         overflowedSubTabs() {
-            if (this.subTabsCacheKey < 0) throw 'Invalid cache key';
-            if (this.subTabs == null || this.subTabs.length <= this.maxVisibleSubTabs) return [];
-            return this.subTabs.slice(this.maxVisibleSubTabs - 1);
+            if (this.subTabsCacheKey < 0) throw 'Invalid cache key'
+            if (this.subTabs == null || this.subTabs.length <= this.maxVisibleSubTabs) return []
+            return this.subTabs.slice(this.maxVisibleSubTabs - 1)
         },
 
         overflowedTabs() {
-            if (this.tabsCacheKey < 0) throw 'Invalid cache key';
-            if (this.tabs == null || this.tabs.length <= this.maxVisibleTabs) return [];
-            return this.tabs.slice(this.maxVisibleTabs - 1);
+            if (this.tabsCacheKey < 0) throw 'Invalid cache key'
+            if (this.tabs == null || this.tabs.length <= this.maxVisibleTabs) return []
+            return this.tabs.slice(this.maxVisibleTabs - 1)
         },
 
         visibleSubTabs() {
-            if (this.subTabsCacheKey < 0) throw 'Invalid cache key';
-            if (this.subTabs == null || this.subTabs.length === 0) return [];
-            if (this.subTabs.length <= this.maxVisibleSubTabs) return this.subTabs.slice(0, this.maxVisibleSubTabs);
-            return this.subTabs.slice(0, this.maxVisibleSubTabs - 1);
+            if (this.subTabsCacheKey < 0) throw 'Invalid cache key'
+            if (this.subTabs == null || this.subTabs.length === 0) return []
+            if (this.subTabs.length <= this.maxVisibleSubTabs) return this.subTabs.slice(0, this.maxVisibleSubTabs)
+            return this.subTabs.slice(0, this.maxVisibleSubTabs - 1)
         },
 
         visibleTabs() {
-            if (this.tabsCacheKey < 0) throw 'Invalid cache key';
-            if (this.tabs == null || this.tabs.length === 0) return [];
-            if (this.tabs.length <= this.maxVisibleTabs) return this.tabs.slice(0, this.maxVisibleTabs);
-            return this.tabs.slice(0, this.maxVisibleTabs - 1);
+            if (this.tabsCacheKey < 0) throw 'Invalid cache key'
+            if (this.tabs == null || this.tabs.length === 0) return []
+            if (this.tabs.length <= this.maxVisibleTabs) return this.tabs.slice(0, this.maxVisibleTabs)
+            return this.tabs.slice(0, this.maxVisibleTabs - 1)
         },
     },
 
     watch: {
         activeSubTab() {
-            const index = this.subTabs.indexOf(this.activeSubTab);
-            if (index < this.maxVisibleSubTabs - 1) return;
+            const index = this.subTabs.indexOf(this.activeSubTab)
+            if (index < this.maxVisibleSubTabs - 1) return
 
-            let temp = this.subTabs[index];
-            this.subTabs[index] = this.subTabs[this.maxVisibleSubTabs - 2];
-            this.subTabs[this.maxVisibleSubTabs - 2] = temp;
+            let temp = this.subTabs[index]
+            this.subTabs[index] = this.subTabs[this.maxVisibleSubTabs - 2]
+            this.subTabs[this.maxVisibleSubTabs - 2] = temp
 
             // Force computed to recalculate tab indexes
-            this.subTabsCacheKey = (this.subTabsCacheKey === 0) ? 1 : 0;
+            this.subTabsCacheKey = (this.subTabsCacheKey === 0) ? 1 : 0
         },
 
         activeTab() {
-            const index = this.tabs.indexOf(this.activeTab);
-            if (index < this.maxVisibleTabs - 1) return;
+            const index = this.tabs.indexOf(this.activeTab)
+            if (index < this.maxVisibleTabs - 1) return
 
-            let temp = this.tabs[index];
-            this.tabs[index] = this.tabs[this.maxVisibleTabs - 2];
-            this.tabs[this.maxVisibleTabs - 2] = temp;
+            let temp = this.tabs[index]
+            this.tabs[index] = this.tabs[this.maxVisibleTabs - 2]
+            this.tabs[this.maxVisibleTabs - 2] = temp
 
             // Force computed to recalculate tab indexes
-            this.tabsCacheKey = (this.tabsCacheKey === 0) ? 1 : 0;
+            this.tabsCacheKey = (this.tabsCacheKey === 0) ? 1 : 0
         },
     },
 
     mounted() {
-        window.addEventListener('resize', lodash.debounce(this.onWindowResize, 250));
-        this.onWindowResize();
+        window.addEventListener('resize', lodash.debounce(this.onWindowResize, 250))
+        this.onWindowResize()
 
-        this.isMounted = true;
+        this.isMounted = true
     },
 
     methods: {
@@ -238,24 +238,24 @@ export default {
         },
 
         onClickTab(tab) {
-            this.$emit('click-tab', tab);
+            this.$emit('click-tab', tab)
         },
 
         onCloseTab(tab) {
-            this.$emit('close-tab', tab);
+            this.$emit('close-tab', tab)
         },
 
         onClickSubTab(subTab) {
-            this.$emit('click-sub-tab', subTab);
+            this.$emit('click-sub-tab', subTab)
         },
 
         onCloseSubTab(subTab) {
-            this.$emit('close-sub-tab', subTab);
+            this.$emit('close-sub-tab', subTab)
         },
 
         onWindowResize() {
-            this.navContainerWidth = this.$refs.nav.offsetWidth;
-            this.tabsContainerWidth = this.$refs.tabs.offsetWidth;
+            this.navContainerWidth = this.$refs.nav.offsetWidth
+            this.tabsContainerWidth = this.$refs.tabs.offsetWidth
         },
     },
 }

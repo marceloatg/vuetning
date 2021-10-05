@@ -6,7 +6,7 @@
 import SldsDropdownDivider from '@/components/slds-options/dropdown-divider'
 
 export default {
-    name: "SldsMenuDivider",
+    name: 'SldsMenuDivider',
 
     components: {
         SldsDropdownDivider

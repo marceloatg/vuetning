@@ -69,7 +69,7 @@
 
 <script>
 export default {
-    name: "SldsTrialBar"
+    name: 'SldsTrialBar'
 }
 </script>
 

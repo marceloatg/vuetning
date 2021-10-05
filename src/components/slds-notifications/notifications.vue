@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: "SldsNotifications"
+    name: 'SldsNotifications'
 }
 </script>
 

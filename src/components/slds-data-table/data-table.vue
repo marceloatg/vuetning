@@ -246,18 +246,18 @@
 </template>
 
 <script>
-import Column from "./column";
+import Column from './column'
 import ColumnConfiguration from './column-configuration'
 import SldsVirtualScroller from '../slds-virtual-scroller/virtual-scroller'
 import ClickOutside from '@/directives/click-outside/index'
 import 'numeral/locales/pt-br'
-import numeral from "numeral";
+import numeral from 'numeral'
 
-const DEFAULT_FIXED_WIDTH = 48;
-const DEFAULT_MINIMUM_WIDTH = 100;
-const LINE_ACTIONS_WIDTH = 48;
-const LINE_COUNTER_WIDTH = 60;
-const LINE_CHECKBOX_WIDTH = 32;
+const DEFAULT_FIXED_WIDTH = 48
+const DEFAULT_MINIMUM_WIDTH = 100
+const LINE_ACTIONS_WIDTH = 48
+const LINE_COUNTER_WIDTH = 60
+const LINE_CHECKBOX_WIDTH = 32
 
 export default {
     name: 'SldsDataTable',
@@ -309,344 +309,344 @@ export default {
 
     computed: {
         hasActions() {
-            if (this.actions == null) return false;
-            return (this.actions.length > 0);
+            if (this.actions == null) return false
+            return (this.actions.length > 0)
         },
 
         rowHeight() {
             return this.columnConfigurations.some(column => column.type === 'avatar')
                 ? 40
-                : 28;
+                : 28
         },
     },
 
     watch: {
         filter() {
-            this.$el.querySelector('.slds-virtual-table_body').scrollTop = 0;
+            this.$el.querySelector('.slds-virtual-table_body').scrollTop = 0
 
             // Debouncing filtration
-            if (this.filterTimerId) clearTimeout(this.filterTimerId);
+            if (this.filterTimerId) clearTimeout(this.filterTimerId)
             this.filterTimerId = setTimeout(function () {
-                this.filterRows();
-                this.filterTimerId = null;
-            }.bind(this), 200);
+                this.filterRows()
+                this.filterTimerId = null
+            }.bind(this), 200)
         },
 
         rows() {
-            this.filterRows();
+            this.filterRows()
         },
     },
 
     created() {
-        numeral.locale('pt-br');
-        this.initializeColumns();
-        this.filterRows();
+        numeral.locale('pt-br')
+        this.initializeColumns()
+        this.filterRows()
     },
 
     async mounted() {
-        this.$refs.root.style.setProperty('--row-height', `${this.rowHeight}px`);
+        this.$refs.root.style.setProperty('--row-height', `${this.rowHeight}px`)
 
-        await this.getScrollbarWidth();
-        await this.getTableWidth();
+        await this.getScrollbarWidth()
+        this.getTableWidth()
 
-        this.initializeColumnWidths();
-        this.initializeColumnOffsets();
+        this.initializeColumnWidths()
+        this.initializeColumnOffsets()
 
         this.$el
             .querySelector('.slds-virtual-table_body')
-            .addEventListener('scroll', this.onScrollBody);
+            .addEventListener('scroll', this.onScrollBody)
     },
 
     activated() {
-        this.$el.querySelector('.slds-virtual-table_body').scrollTop = this.scrollTop;
+        this.$el.querySelector('.slds-virtual-table_body').scrollTop = this.scrollTop
     },
 
     beforeDestroy() {
         this.$el
             .querySelector('.slds-virtual-table_body')
-            .removeEventListener('scroll', this.onScrollBody);
+            .removeEventListener('scroll', this.onScrollBody)
     },
 
     methods: {
         filterRows() {
             if (this.filter == null || this.filter.length === 0) {
-                this.filteredRows = this.rows;
+                this.filteredRows = this.rows
             }
             else {
                 this.filteredRows = this.rows.filter((row) => {
                     for (let column of this.columnConfigurations) {
-                        if (column.fieldName == null) return false;
-                        const value = this.getFieldValue(column, row);
+                        if (column.fieldName == null) return false
+                        const value = this.getFieldValue(column, row)
 
                         if (String(value).toLowerCase().indexOf(this.filter.toLowerCase()) !== -1) {
-                            return true;
+                            return true
                         }
                     }
 
-                    return false;
+                    return false
                 })
             }
         },
 
         getFieldValue(column, row) {
-            if (column.fieldName == null) return null;
+            if (column.fieldName == null) return null
 
             return column.fieldName.split('.').reduce(function (prev, curr) {
                 return prev ? prev[curr] : null
-            }, row || self);
+            }, row || self)
         },
 
         getLineNumber(index) {
-            return numeral(index + 1).format('0,0');
+            return numeral(index + 1).format('0,0')
         },
 
         async getScrollbarWidth() {
-            const scroller = this.$el.querySelector('.virtual-scroller');
-            if (scroller == null) return;
+            const scroller = this.$el.querySelector('.virtual-scroller')
+            if (scroller == null) return
 
-            await this.$nextTick();
+            await this.$nextTick()
 
-            const noVerticalOverflow = scroller.scrollHeight <= scroller.clientHeight;
-            if (noVerticalOverflow) return;
+            const noVerticalOverflow = scroller.scrollHeight <= scroller.clientHeight
+            if (noVerticalOverflow) return
 
-            this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth;
+            this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth
         },
 
-        async getTableWidth() {
+        getTableWidth() {
             if (this.$refs.container != null) {
-                this.tableWidth = this.$refs.container.offsetWidth;
-                this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`);
+                this.tableWidth = this.$refs.container.offsetWidth
+                this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`)
             }
 
             if (this.$refs.root != null) {
-                this.rowWidth = this.tableWidth - this.scrollbarWidth;
-                this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
+                this.rowWidth = this.tableWidth - this.scrollbarWidth
+                this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`)
             }
         },
 
         initializeColumns() {
             for (const column of this.columns) {
-                const columnConfiguration = new ColumnConfiguration(column);
-                this.columnConfigurations.push(columnConfiguration);
+                const columnConfiguration = new ColumnConfiguration(column)
+                this.columnConfigurations.push(columnConfiguration)
             }
         },
 
         initializeColumnOffsets() {
-            let columnLeftSum = 0;
+            let columnLeftSum = 0
 
-            if (!this.hideLineNumber) columnLeftSum += LINE_COUNTER_WIDTH;
-            if (this.hasSelection) columnLeftSum += LINE_CHECKBOX_WIDTH;
+            if (!this.hideLineNumber) columnLeftSum += LINE_COUNTER_WIDTH
+            if (this.hasSelection) columnLeftSum += LINE_CHECKBOX_WIDTH
 
             for (let column of this.columnConfigurations) {
-                column.offsetLeft = columnLeftSum;
-                column.left = columnLeftSum;
-                columnLeftSum += column.width;
+                column.offsetLeft = columnLeftSum
+                column.left = columnLeftSum
+                columnLeftSum += column.width
             }
         },
 
         initializeColumnWidths() {
-            let knownWidth = 0;
-            let unknownWidthColumns = 0;
+            let knownWidth = 0
+            let unknownWidthColumns = 0
 
-            if (!this.hideLineNumber) knownWidth += LINE_COUNTER_WIDTH;
-            if (this.hasSelection) knownWidth += LINE_CHECKBOX_WIDTH;
-            if (this.hasActions) knownWidth += LINE_ACTIONS_WIDTH;
+            if (!this.hideLineNumber) knownWidth += LINE_COUNTER_WIDTH
+            if (this.hasSelection) knownWidth += LINE_CHECKBOX_WIDTH
+            if (this.hasActions) knownWidth += LINE_ACTIONS_WIDTH
 
             for (let column of this.columnConfigurations) {
                 if (column.isResizable) {
-                    if (column.width == null) unknownWidthColumns++;
-                    else knownWidth += column.width;
+                    if (column.width == null) unknownWidthColumns++
+                    else knownWidth += column.width
                 }
                 else {
                     if (column.width == null) {
-                        knownWidth += DEFAULT_FIXED_WIDTH;
-                        column.width = DEFAULT_FIXED_WIDTH;
+                        knownWidth += DEFAULT_FIXED_WIDTH
+                        column.width = DEFAULT_FIXED_WIDTH
                     }
                     else {
-                        knownWidth += column.width;
+                        knownWidth += column.width
                     }
                 }
             }
 
-            const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns);
+            const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns)
 
             for (let column of this.columnConfigurations) {
-                if (column.width == null) column.width = width;
+                if (column.width == null) column.width = width
             }
         },
 
         onClickAction(column, item) {
-            if (column.typeAttributes == null) return;
-            if (column.typeAttributes.action == null) return;
+            if (column.typeAttributes == null) return
+            if (column.typeAttributes.action == null) return
 
-            this.$emit(column.typeAttributes.action, item);
+            this.$emit(column.typeAttributes.action, item)
         },
 
         async onClickActionMenu(item, index) {
-            this.onCloseActionMenu();
-            this.actionMenu.openedRowId = item[this.keyField];
+            this.onCloseActionMenu()
+            this.actionMenu.openedRowId = item[this.keyField]
             for (let actionValue of item.actions) {
-                this.currentActions.push(this.actions.find(action => action.value === actionValue));
+                this.currentActions.push(this.actions.find(action => action.value === actionValue))
             }
 
-            await this.$nextTick();
+            await this.$nextTick()
 
             // Adjusting z-index
-            const items = this.$el.querySelectorAll('.virtual-scroller__item-view');
+            const items = this.$el.querySelectorAll('.virtual-scroller__item-view')
             for (const item of items) {
                 item.style.zIndex = item.querySelector(`[data-index="${index}"]`)
-                    ? "1000"
-                    : "0";
+                    ? '1000'
+                    : '0'
             }
 
             // Setting vertical orientation of dropdown
-            const dropdown = this.$refs.dropdown;
-            let parent = dropdown.offsetParent;
+            const dropdown = this.$refs.dropdown
+            let parent = dropdown.offsetParent
 
             while (!parent.classList.contains('virtual-scroller')) {
-                parent = parent.offsetParent;
+                parent = parent.offsetParent
             }
 
             if (dropdown.getBoundingClientRect().bottom > parent.getBoundingClientRect().bottom) {
-                this.actionMenu.orientation = 'bottom';
+                this.actionMenu.orientation = 'bottom'
             }
 
-            this.actionMenu.opacity = 1;
+            this.actionMenu.opacity = 1
         },
 
         onClickButton(column, item) {
-            const button = this.getFieldValue(column, item);
-            if (button.action == null) return;
-            this.$emit(button.action, item);
+            const button = this.getFieldValue(column, item)
+            if (button.action == null) return
+            this.$emit(button.action, item)
         },
 
         onClickCopy(column, item) {
-            const value = this.getFieldValue(column, item);
-            if (value && value.length) this.$clipboard(value);
+            const value = this.getFieldValue(column, item)
+            if (value && value.length) this.$clipboard(value)
         },
 
         onClickSelect(item) {
-            this.$emit('select', item);
+            this.$emit('select', item)
         },
 
         onCloseActionMenu() {
-            this.actionMenu.openedRowId = null;
-            this.actionMenu.opacity = 0;
-            this.actionMenu.orientation = 'top';
-            this.currentActions.splice(0, this.currentActions.length);
+            this.actionMenu.openedRowId = null
+            this.actionMenu.opacity = 0
+            this.actionMenu.orientation = 'top'
+            this.currentActions.splice(0, this.currentActions.length)
         },
 
         async onExpandColumn(index, column) {
-            if (column.width === column.fullWidth) return;
-            let aColumn = column; // Enforce atomicity
+            if (column.width === column.fullWidth) return
+            let aColumn = column // Enforce atomicity
 
             if (aColumn.fullWidth == null) {
                 for (const row of this.rows) {
-                    const value = this.getFieldValue(aColumn, row);
-                    if (value == null) continue;
-                    if (value.length > this.ruler.value.length) this.ruler.value = value;
+                    const value = this.getFieldValue(aColumn, row)
+                    if (value == null) continue
+                    if (value.length > this.ruler.value.length) this.ruler.value = value
                 }
 
-                this.ruler.active = true;
-                await this.$nextTick();
+                this.ruler.active = true
+                await this.$nextTick()
 
-                const ruler = this.$refs.ruler;
-                aColumn.fullWidth = (ruler.clientWidth + 24);
-                if (aColumn.hasCopyButton) aColumn.fullWidth += 24;
-                if (aColumn.fullWidth < DEFAULT_MINIMUM_WIDTH) aColumn.fullWidth = DEFAULT_MINIMUM_WIDTH;
+                const ruler = this.$refs.ruler
+                aColumn.fullWidth = (ruler.clientWidth + 24)
+                if (aColumn.hasCopyButton) aColumn.fullWidth += 24
+                if (aColumn.fullWidth < DEFAULT_MINIMUM_WIDTH) aColumn.fullWidth = DEFAULT_MINIMUM_WIDTH
 
-                this.ruler.value = '';
-                this.ruler.active = false;
+                this.ruler.value = ''
+                this.ruler.active = false
             }
 
-            const delta = aColumn.fullWidth - aColumn.width;
-            this.onResizeColumn(index, delta);
+            const delta = aColumn.fullWidth - aColumn.width
+            this.onResizeColumn(index, delta)
         },
 
         onMouseDownAction(action, item) {
-            this.$emit(action.value, item);
-            this.onCloseActionMenu();
+            this.$emit(action.value, item)
+            this.onCloseActionMenu()
         },
 
         onResizeColumn(index, delta) {
-            this.columnConfigurations[index].width += delta;
+            this.columnConfigurations[index].width += delta
 
-            this.tableWidth += delta;
-            this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`);
+            this.tableWidth += delta
+            this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`)
 
-            this.rowWidth += delta;
-            this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`);
+            this.rowWidth += delta
+            this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`)
 
             for (++index; index < this.columnConfigurations.length; index++) {
-                this.columnConfigurations[index].left += delta;
-                this.columnConfigurations[index].offsetLeft += delta;
+                this.columnConfigurations[index].left += delta
+                this.columnConfigurations[index].offsetLeft += delta
             }
         },
 
         onScrollBody(event) {
             // Handle vertical scroll
             if (this.scrollTop !== event.target.scrollTop) {
-                this.scrollTop = event.target.scrollTop;
-                if (this.actionMenu.openedRowId !== null) this.onCloseActionMenu();
-                return;
+                this.scrollTop = event.target.scrollTop
+                if (this.actionMenu.openedRowId !== null) this.onCloseActionMenu()
+                return
             }
 
             // Handle horizontal scroll
-            if (event.target.scrollLeft === this.scrollLeft) return;
-            this.scrollLeft = event.target.scrollLeft;
-            this.$refs.header.style.setProperty('--header-offset', `-${event.target.scrollLeft}px`);
+            if (event.target.scrollLeft === this.scrollLeft) return
+            this.scrollLeft = event.target.scrollLeft
+            this.$refs.header.style.setProperty('--header-offset', `-${event.target.scrollLeft}px`)
         },
 
         onSort(order, sortedColumn) {
-            this.sortedOrder = order;
-            this.sortedColumnId = sortedColumn.id;
+            this.sortedOrder = order
+            this.sortedColumnId = sortedColumn.id
 
             for (let column of this.columnConfigurations) {
-                column.sortedAscending = false;
-                column.sortedDescending = false;
+                column.sortedAscending = false
+                column.sortedDescending = false
             }
 
             if (order === 'asc') {
-                sortedColumn.sortedAscending = true;
-                sortedColumn.sortedDescending = false;
+                sortedColumn.sortedAscending = true
+                sortedColumn.sortedDescending = false
             }
             else {
-                sortedColumn.sortedAscending = false;
-                sortedColumn.sortedDescending = true;
+                sortedColumn.sortedAscending = false
+                sortedColumn.sortedDescending = true
             }
 
-            this.rows.sort(this.sorter);
-            this.filterRows();
+            this.rows.sort(this.sorter)
+            this.filterRows()
         },
 
         sorter(rowA, rowB) {
-            const sortedColumn = this.columnConfigurations.find(column => column.id === this.sortedColumnId);
-            let a;
-            let b;
+            const sortedColumn = this.columnConfigurations.find(column => column.id === this.sortedColumnId)
+            let a
+            let b
 
             if (sortedColumn.sortBy != null) {
-                a = rowA[sortedColumn.sortBy];
-                b = rowB[sortedColumn.sortBy];
+                a = rowA[sortedColumn.sortBy]
+                b = rowB[sortedColumn.sortBy]
             }
             else {
-                a = rowA[sortedColumn.fieldName];
-                b = rowB[sortedColumn.fieldName];
+                a = rowA[sortedColumn.fieldName]
+                b = rowB[sortedColumn.fieldName]
             }
 
-            if (typeof a === 'string') a = a.toLowerCase();
-            if (typeof b === 'string') b = b.toLowerCase();
-            const bothStringValues = ((typeof a === 'string') && (typeof b === 'string'));
+            if (typeof a === 'string') a = a.toLowerCase()
+            if (typeof b === 'string') b = b.toLowerCase()
+            const bothStringValues = ((typeof a === 'string') && (typeof b === 'string'))
 
-            if (a === b) return 0;
-            else if (a === null) return 1;
-            else if (b === null) return -1;
+            if (a === b) return 0
+            else if (a === null) return 1
+            else if (b === null) return -1
             else if (this.sortedOrder === 'asc') {
-                if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1;
-                return (a < b) ? -1 : 1;
+                if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1
+                return (a < b) ? -1 : 1
             }
             else {
-                if (bothStringValues) return (a.localeCompare(b) < 0) ? 1 : -1;
-                return (a < b) ? 1 : -1;
+                if (bothStringValues) return (a.localeCompare(b) < 0) ? 1 : -1
+                return (a < b) ? 1 : -1
             }
         },
     },

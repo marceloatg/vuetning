@@ -105,23 +105,23 @@ export default {
     },
     methods: {
         away() {
-            this.isDropdownActive = false;
+            this.isDropdownActive = false
         },
         onClickTab() {
-            this.$emit('click');
+            this.$emit('click')
         },
         onClickRefreshTab() {
-            this.$emit('refresh');
-            this.isDropdownActive = false;
+            this.$emit('refresh')
+            this.isDropdownActive = false
         },
         onClickCloseAll() {
-            this.$emit('closeAll');
+            this.$emit('closeAll')
         },
         onClickClose() {
-            this.$emit('close');
+            this.$emit('close')
         },
         toggleDropdown() {
-            this.isDropdownActive = !this.isDropdownActive;
+            this.isDropdownActive = !this.isDropdownActive
         }
     },
 }

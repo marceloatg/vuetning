@@ -162,12 +162,12 @@
 <script>
 import SldsIcon from '@/components/slds-icon/icon'
 import ClickOutside from '@/directives/click-outside/index'
-import HasDropdownMixin from "@/mixins/has-dropdown-mixin";
-import SldsPageHeaderDropdown from "@/components/slds-page-header/page-header-dropdown";
-import DropdownOption from "@/components/slds-options/dropdown-option-class";
+import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
+import SldsPageHeaderDropdown from '@/components/slds-page-header/page-header-dropdown'
+import DropdownOption from '@/components/slds-options/dropdown-option-class'
 
 export default {
-    name: "SldsPageHeader",
+    name: 'SldsPageHeader',
 
     directives: {
         ClickOutside
@@ -210,7 +210,7 @@ export default {
     },
 
     methods: {
-        async onClickDropdown() {
+        onClickDropdown() {
             if (this.$data.$_isOpen) return
             this.setFocusedOption()
             this.showDropdown()
@@ -232,15 +232,15 @@ export default {
             if (this.listViewOptions == null) return
 
             for (const option of this.listViewOptions) {
-                if (typeof option === "string") {
+                if (typeof option === 'string') {
                     this.$data.$_options.push(new DropdownOption(null, option))
                 }
-                else if (typeof option === "object") {
+                else if (typeof option === 'object') {
                     const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
                     this.$data.$_options.push(dropdownOption)
                 }
                 else {
-                    throw`[slds-page-header] options must be of type string or a valid page header option object.`
+                    throw'[slds-page-header] options must be of type string or a valid page header option object.'
                 }
             }
         },

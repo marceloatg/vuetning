@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name: "SldsAccordion"
+    name: 'SldsAccordion'
 }
 </script>
 

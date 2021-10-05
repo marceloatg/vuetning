@@ -59,22 +59,22 @@
         },
         computed: {
             backgroundColor() {
-                if (this.fallbackIcon == null) return;
+                if (this.fallbackIcon == null) return
 
-                const category = this.fallbackIcon.split(':')[0];
-                const name = this.fallbackIcon.split(':')[1];
-                return `slds-icon-${category}-${name}`;
+                const category = this.fallbackIcon.split(':')[0]
+                const name = this.fallbackIcon.split(':')[1]
+                return `slds-icon-${category}-${name}`
             },
             size() {
-                if (this.xSmall) return 'slds-avatar_x-small';
-                if (this.small) return 'slds-avatar_small';
-                if (this.medium) return 'slds-avatar_medium';
-                if (this.large) return 'slds-avatar_large';
-                return 'slds-avatar_medium';
+                if (this.xSmall) return 'slds-avatar_x-small'
+                if (this.small) return 'slds-avatar_small'
+                if (this.medium) return 'slds-avatar_medium'
+                if (this.large) return 'slds-avatar_large'
+                return 'slds-avatar_medium'
             },
             variant() {
-                if (this.circle) return 'slds-avatar_circle';
-                return null;
+                if (this.circle) return 'slds-avatar_circle'
+                return null
             },
         },
     }

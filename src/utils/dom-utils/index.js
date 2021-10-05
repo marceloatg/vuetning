@@ -10,7 +10,7 @@ export default class DomHandler {
         else element.className = element.className.replace(
             new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'),
             ' '
-        );
+        )
     }
 
     static hasClass(element, className) {
@@ -19,6 +19,6 @@ export default class DomHandler {
             else return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className)
         }
 
-        return false;
+        return false
     }
 }

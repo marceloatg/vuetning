@@ -52,8 +52,8 @@ export default {
 
     methods: {
         onClick() {
-            this.$emit('click');
-            if (this.$slots.default) this.$data.$_isOpen = !this.$data.$_isOpen;
+            this.$emit('click')
+            if (this.$slots.default) this.$data.$_isOpen = !this.$data.$_isOpen
         }
     },
 }

@@ -89,10 +89,10 @@
 import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsSpinner from '@/components/slds-spinner/spinner'
-import SldsSvg from "@/components/slds-svg/svg"
+import SldsSvg from '@/components/slds-svg/svg'
 
 export default {
-    name: "SldsInput",
+    name: 'SldsInput',
 
     components: {
         SldsButtonIcon,
@@ -159,8 +159,8 @@ export default {
         },
 
         spinnerRight() {
-            if (this.$data.$_value) return '1.5rem';
-            return '.2rem';
+            if (this.$data.$_value) return '1.5rem'
+            return '.2rem'
         },
 
         transitionName() {
@@ -171,16 +171,16 @@ export default {
 
     watch: {
         async addonPost() {
-            await this.$nextTick();
+            await this.$nextTick()
 
-            const addonPost = this.$refs.addonPost;
+            const addonPost = this.$refs.addonPost
 
             if (this.addonPost == null || addonPost == null) {
-                this.$data.$_rightGroupStyle.right = '0px';
-                return;
+                this.$data.$_rightGroupStyle.right = '0px'
+                return
             }
 
-            this.$data.$_rightGroupStyle.right = `${addonPost.offsetWidth + 16}px`;
+            this.$data.$_rightGroupStyle.right = `${addonPost.offsetWidth + 16}px`
         },
 
         value(value) {
@@ -189,9 +189,9 @@ export default {
     },
 
     mounted() {
-        if (this.addonPost == null) return;
-        const addonPost = this.$refs.addonPost;
-        this.$data.$_rightGroupStyle.style = `${addonPost.offsetWidth + 16}px`;
+        if (this.addonPost == null) return
+        const addonPost = this.$refs.addonPost
+        this.$data.$_rightGroupStyle.style = `${addonPost.offsetWidth + 16}px`
     },
 
     methods: {
@@ -205,7 +205,7 @@ export default {
         },
 
         onClickClear() {
-            this.$data.$_value = null;
+            this.$data.$_value = null
             this.$emit('input', this.$data.$_value)
         },
 

@@ -71,7 +71,7 @@
 
 <script>
 export default {
-    name: "Breadcrumb",
+    name: 'Breadcrumb',
 
     data() {
         return {

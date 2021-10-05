@@ -123,7 +123,7 @@
 import SldsButtonIcon from '../slds-button-icon/button-icon.vue'
 
 export default {
-    name: "SldsTreeItem",
+    name: 'SldsTreeItem',
 
     components: {
         SldsButtonIcon
@@ -162,8 +162,8 @@ export default {
 
     computed: {
         buttonLabel() {
-            if (this.nodeRef && this.nodeRef.expanded) return 'Collapse Tree Branch';
-            return 'Expand Tree Branch';
+            if (this.nodeRef && this.nodeRef.expanded) return 'Collapse Tree Branch'
+            return 'Expand Tree Branch'
         },
 
         children() {

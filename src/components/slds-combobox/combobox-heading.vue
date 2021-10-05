@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import SldsDropdownHeading from "@/components/slds-options/dropdown-heading";
+import SldsDropdownHeading from '@/components/slds-options/dropdown-heading'
 
 export default {
-    name: "SldsComboboxHeading",
+    name: 'SldsComboboxHeading',
 
     components: {
         SldsDropdownHeading

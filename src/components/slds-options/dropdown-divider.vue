@@ -4,6 +4,6 @@
 
 <script>
 export default {
-    name: "SldDropdownDivider"
+    name: 'SldDropdownDivider'
 }
 </script>

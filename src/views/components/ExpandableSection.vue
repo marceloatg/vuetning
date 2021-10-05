@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    name: "ExpandableSection",
+    name: 'ExpandableSection',
 
     data() {
         return {

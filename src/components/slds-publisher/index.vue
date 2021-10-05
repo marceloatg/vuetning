@@ -47,28 +47,28 @@
         },
         computed: {
             listeners() {
-                const listeners = {...this.$listeners};
-                delete listeners.input;
+                const listeners = {...this.$listeners}
+                delete listeners.input
                 return listeners
             },
         },
         mounted() {
-            this.$refs.input.addEventListener("keyup", this.onKeyUp);
+            this.$refs.input.addEventListener('keyup', this.onKeyUp)
         },
         beforeDestroy() {
-            this.$refs.input.removeEventListener("keyup", this.onKeyUp);
+            this.$refs.input.removeEventListener('keyup', this.onKeyUp)
         },
         methods: {
             onClickShare() {
-                if (this.isActive) this.$emit('post');
-                else this.isActive = true;
+                if (this.isActive) this.$emit('post')
+                else this.isActive = true
             },
             onFocus() {
-                if (!this.isActive) this.isActive = true;
+                if (!this.isActive) this.isActive = true
             },
             onKeyUp(event) {
                 if (event.key === 'Enter' && this.$refs.input === document.activeElement) {
-                    event.stopPropagation();
+                    event.stopPropagation()
                 }
             },
         },

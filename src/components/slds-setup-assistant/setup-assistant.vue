@@ -114,7 +114,7 @@
 
 <script>
 export default {
-    name: "SldsSetupAssistant"
+    name: 'SldsSetupAssistant'
 }
 </script>
 

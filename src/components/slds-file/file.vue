@@ -28,7 +28,7 @@
 
 <script>
 export default {
-    name: "SldsFile"
+    name: 'SldsFile'
 }
 </script>
 

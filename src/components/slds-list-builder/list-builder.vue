@@ -492,7 +492,7 @@
 
 <script>
 export default {
-    name: "SldsListBuilder"
+    name: 'SldsListBuilder'
 }
 </script>
 

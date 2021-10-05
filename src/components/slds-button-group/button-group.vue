@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    name: "SldsButtonGroup"
+    name: 'SldsButtonGroup'
 }
 </script>

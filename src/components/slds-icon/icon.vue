@@ -22,7 +22,7 @@
 import {computeBackgroundClass, getCategory, isValidName} from '../../utils/icon-utils/index'
 
 export default {
-    name: "SldsIcon",
+    name: 'SldsIcon',
 
     props: {
         assistiveText: String,

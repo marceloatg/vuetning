@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: "SldsOverflowedBreadcrumb",
+    name: 'SldsOverflowedBreadcrumb',
 
     props: {
         href: String,

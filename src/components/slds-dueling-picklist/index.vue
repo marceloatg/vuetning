@@ -85,11 +85,11 @@
 </template>
 
 <script>
-    import SldsButtonIcon from "../slds-button-icon/button-icon";
-    import DuelingPicklistOption from "./option";
+    import SldsButtonIcon from '../slds-button-icon/button-icon'
+    import DuelingPicklistOption from './option'
 
     export default {
-        name: "SldsDuelingPicklist",
+        name: 'SldsDuelingPicklist',
         components: {DuelingPicklistOption, SldsButtonIcon},
         props: {
             disabled: {
@@ -138,195 +138,195 @@
         },
         watch: {
             options() {
-                if (this.options == null) this.options = [];
-                this.initializeOptions();
+                if (this.options == null) this.options = []
+                this.initializeOptions()
             },
             value(newValues) {
-                if (JSON.stringify(newValues) === JSON.stringify(this.values)) return;
-                this.initializeOptions();
+                if (JSON.stringify(newValues) === JSON.stringify(this.values)) return
+                this.initializeOptions()
             },
         },
         created() {
-            this.initializeOptions();
+            this.initializeOptions()
         },
         methods: {
             calculateValues() {
-                this.values = this.selectedOptions.map(option => option.value);
+                this.values = this.selectedOptions.map(option => option.value)
             },
             initializeOptions() {
-                this.selectedOptions.splice(0, this.selectedOptions.length);
-                this.sourceOptions.splice(0, this.sourceOptions.length);
+                this.selectedOptions.splice(0, this.selectedOptions.length)
+                this.sourceOptions.splice(0, this.sourceOptions.length)
 
                 if (this.options)
-                    this.sourceOptions = [...this.options];
+                    this.sourceOptions = [...this.options]
 
                 for (let value of this.value) {
-                    let selectedOption = this.sourceOptions.find(option => option.value === value);
-                    let index = this.sourceOptions.indexOf(selectedOption);
+                    let selectedOption = this.sourceOptions.find(option => option.value === value)
+                    let index = this.sourceOptions.indexOf(selectedOption)
 
-                    this.sourceOptions.splice(index, 1);
-                    this.selectedOptions.push(selectedOption);
+                    this.sourceOptions.splice(index, 1)
+                    this.selectedOptions.push(selectedOption)
                 }
 
-                this.calculateValues();
+                this.calculateValues()
             },
             onClick(list, selectedValue, index) {
-                if (this.disabled) return;
+                if (this.disabled) return
 
                 if (this.selectedList === list && this.selectedValues.length === 1 && this.selectedValues[0] === selectedValue) {
-                    this.selectedList = null;
-                    this.selectedValues.splice(0, 1);
+                    this.selectedList = null
+                    this.selectedValues.splice(0, 1)
                 }
                 else {
-                    this.selectedList = list;
-                    this.selectedValues.splice(0, this.selectedValues.length);
-                    this.selectedValues.push(selectedValue);
+                    this.selectedList = list
+                    this.selectedValues.splice(0, this.selectedValues.length)
+                    this.selectedValues.push(selectedValue)
                 }
 
-                this.lastIndex = index;
-                this.lastList = list;
+                this.lastIndex = index
+                this.lastList = list
             },
             onCtrlClick(list, selectedValue, index) {
-                if (this.disabled) return;
+                if (this.disabled) return
 
                 if (this.lastList !== list) {
-                    this.onClick(list, selectedValue, index);
-                    return;
+                    this.onClick(list, selectedValue, index)
+                    return
                 }
 
                 if (this.selectedList !== list) {
-                    this.selectedValues.splice(0, this.selectedValues.length);
-                    this.selectedList = list;
+                    this.selectedValues.splice(0, this.selectedValues.length)
+                    this.selectedList = list
                 }
 
-                const listIndex = this.selectedValues.indexOf(selectedValue);
-                if (listIndex === -1) this.selectedValues.push(selectedValue);
-                else this.selectedValues.splice(listIndex, 1);
+                const listIndex = this.selectedValues.indexOf(selectedValue)
+                if (listIndex === -1) this.selectedValues.push(selectedValue)
+                else this.selectedValues.splice(listIndex, 1)
 
-                this.lastIndex = index;
-                this.lastList = list;
+                this.lastIndex = index
+                this.lastList = list
             },
             onShiftClick(list, selectedValue, index) {
-                if (this.disabled) return;
+                if (this.disabled) return
 
                 if (this.lastList !== list) {
-                    this.onClick(list, selectedValue, index);
-                    return;
+                    this.onClick(list, selectedValue, index)
+                    return
                 }
 
                 if (this.selectedList !== list) {
-                    this.selectedValues.splice(0, this.selectedValues.length);
-                    this.selectedList = list;
+                    this.selectedValues.splice(0, this.selectedValues.length)
+                    this.selectedList = list
                 }
 
-                let selectedValues = [];
-                const start = (this.lastIndex < index) ? this.lastIndex : index;
-                const end = (this.lastIndex > index) ? this.lastIndex + 1 : index + 1;
+                let selectedValues = []
+                const start = (this.lastIndex < index) ? this.lastIndex : index
+                const end = (this.lastIndex > index) ? this.lastIndex + 1 : index + 1
 
                 for (let i = start; i < end; i++) {
-                    if (list === 'source') selectedValues.push(this.sourceOptions[i].value);
+                    if (list === 'source') selectedValues.push(this.sourceOptions[i].value)
                     else selectedValues.push(this.selectedOptions[i].value)
                 }
 
                 for (let selectedValue of selectedValues) {
-                    const listIndex = this.selectedValues.indexOf(selectedValue);
-                    if (listIndex === -1) this.selectedValues.push(selectedValue);
+                    const listIndex = this.selectedValues.indexOf(selectedValue)
+                    if (listIndex === -1) this.selectedValues.push(selectedValue)
                 }
 
-                this.lastIndex = index;
-                this.lastList = list;
+                this.lastIndex = index
+                this.lastList = list
             },
             onclickSelect() {
-                if (this.selectedValues.length === 0) return;
-                if (this.selectedList !== 'source') return;
+                if (this.selectedValues.length === 0) return
+                if (this.selectedList !== 'source') return
 
                 if (this.max) {
-                    const newLength = this.values.length + this.selectedValues.length;
-                    if (newLength > this.max) return;
+                    const newLength = this.values.length + this.selectedValues.length
+                    if (newLength > this.max) return
                 }
 
                 for (let selectedValue of this.selectedValues) {
-                    let selectedOption = this.sourceOptions.find(option => option.value === selectedValue);
-                    let index = this.sourceOptions.indexOf(selectedOption);
+                    let selectedOption = this.sourceOptions.find(option => option.value === selectedValue)
+                    let index = this.sourceOptions.indexOf(selectedOption)
 
-                    this.sourceOptions.splice(index, 1);
-                    this.selectedOptions.push(selectedOption);
+                    this.sourceOptions.splice(index, 1)
+                    this.selectedOptions.push(selectedOption)
                 }
 
-                this.selectedValues.splice(0, this.selectedValues.length);
-                this.selectedList = null;
+                this.selectedValues.splice(0, this.selectedValues.length)
+                this.selectedList = null
 
-                this.calculateValues();
-                this.$emit('input', this.values);
+                this.calculateValues()
+                this.$emit('input', this.values)
             },
             onclickDeselect() {
-                if (this.selectedValues.length === 0) return;
-                if (this.selectedList !== 'selected') return;
+                if (this.selectedValues.length === 0) return
+                if (this.selectedList !== 'selected') return
 
                 if (this.min) {
-                    const newLength = this.values.length - this.selectedValues.length;
-                    if (newLength < this.min) return;
+                    const newLength = this.values.length - this.selectedValues.length
+                    if (newLength < this.min) return
                 }
 
                 for (let selectedValue of this.selectedValues) {
-                    let selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
-                    let index = this.selectedOptions.indexOf(selectedOption);
+                    let selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                    let index = this.selectedOptions.indexOf(selectedOption)
 
-                    this.selectedOptions.splice(index, 1);
-                    this.sourceOptions.push(selectedOption);
+                    this.selectedOptions.splice(index, 1)
+                    this.sourceOptions.push(selectedOption)
                 }
 
-                this.selectedValues.splice(0, this.selectedValues.length);
-                this.selectedList = null;
+                this.selectedValues.splice(0, this.selectedValues.length)
+                this.selectedList = null
 
-                this.calculateValues();
-                this.$emit('input', this.values);
+                this.calculateValues()
+                this.$emit('input', this.values)
             },
             onClickUp() {
-                if (this.selectedValues.length === 0) return;
-                if (this.selectedList === 'source') return;
+                if (this.selectedValues.length === 0) return
+                if (this.selectedList === 'source') return
 
-                let selectedOptionsByIndex = new Map();
+                let selectedOptionsByIndex = new Map()
 
                 for (let selectedValue of this.selectedValues) {
-                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
-                    const index = this.selectedOptions.indexOf(selectedOption);
-                    selectedOptionsByIndex.set(index, selectedOption);
+                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                    const index = this.selectedOptions.indexOf(selectedOption)
+                    selectedOptionsByIndex.set(index, selectedOption)
                 }
 
-                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort());
+                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort())
 
                 for (let [index, option] of selectedOptionsByIndex.entries()) {
-                    if (index === 0) continue;
-                    this.selectedOptions.splice(index, 1);
-                    this.selectedOptions.splice(index - 1, 0, option);
+                    if (index === 0) continue
+                    this.selectedOptions.splice(index, 1)
+                    this.selectedOptions.splice(index - 1, 0, option)
                 }
 
-                this.calculateValues();
-                this.$emit('input', this.values);
+                this.calculateValues()
+                this.$emit('input', this.values)
             },
             onClickDown() {
-                if (this.selectedValues.length === 0) return;
-                if (this.selectedList === 'source') return;
+                if (this.selectedValues.length === 0) return
+                if (this.selectedList === 'source') return
 
-                let selectedOptionsByIndex = new Map();
+                let selectedOptionsByIndex = new Map()
 
                 for (let selectedValue of this.selectedValues) {
-                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue);
-                    const index = this.selectedOptions.indexOf(selectedOption);
-                    selectedOptionsByIndex.set(index, selectedOption);
+                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                    const index = this.selectedOptions.indexOf(selectedOption)
+                    selectedOptionsByIndex.set(index, selectedOption)
                 }
 
-                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse());
+                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse())
 
                 for (let [index, option] of selectedOptionsByIndex.entries()) {
-                    if (index === (this.selectedOptions.length - 1)) continue;
-                    this.selectedOptions.splice(index, 1);
-                    this.selectedOptions.splice(index + 1, 0, option);
+                    if (index === (this.selectedOptions.length - 1)) continue
+                    this.selectedOptions.splice(index, 1)
+                    this.selectedOptions.splice(index + 1, 0, option)
                 }
 
-                this.calculateValues();
-                this.$emit('input', this.values);
+                this.calculateValues()
+                this.$emit('input', this.values)
             },
         },
     }

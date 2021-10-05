@@ -389,7 +389,7 @@
 
 <script>
 export default {
-    name: "SldsDatetimePicker"
+    name: 'SldsDatetimePicker'
 }
 </script>
 

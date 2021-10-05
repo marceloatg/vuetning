@@ -99,11 +99,11 @@ import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsIcon from '@/components/slds-icon/icon'
 import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
 import ClickOutside from '@/directives/click-outside/index'
-import DropdownOption from "@/components/slds-options/dropdown-option-class";
-import SldsPicklistDropdown from "@/components/slds-picklist/picklist-dropdown";
+import DropdownOption from '@/components/slds-options/dropdown-option-class'
+import SldsPicklistDropdown from '@/components/slds-picklist/picklist-dropdown'
 
 export default {
-    name: "SldsPicklist",
+    name: 'SldsPicklist',
 
     components: {
         SldsFormElement,
@@ -181,7 +181,7 @@ export default {
         selectedLabel() {
             return this.$data.$_value && this.$data.$_value.length
                 ? this.$data.$_options.find(option => option.value === this.$data.$_value).label
-                : null;
+                : null
         },
     },
 
@@ -255,10 +255,10 @@ export default {
             if (this.options == null) return
 
             for (const option of this.options) {
-                if (typeof option === "string") {
+                if (typeof option === 'string') {
                     this.$data.$_options.push(new DropdownOption(null, option))
                 }
-                else if (typeof option === "object") {
+                else if (typeof option === 'object') {
                     const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
                     dropdownOption.meta = option.meta
                     dropdownOption.disabled = option.disabled
@@ -266,7 +266,7 @@ export default {
                     this.$data.$_options.push(dropdownOption)
                 }
                 else {
-                    throw`[slds-picklist] options must be of type string or a valid picklist option object.`
+                    throw'[slds-picklist] options must be of type string or a valid picklist option object.'
                 }
             }
         },

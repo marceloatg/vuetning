@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "Tree",
+    name: 'Tree',
 }
 </script>

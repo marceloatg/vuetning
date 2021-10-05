@@ -131,7 +131,7 @@ import SldsIcon from '@/components/slds-icon/icon'
 import SldsMediaObject from '@/components/slds-media-object/media-object'
 
 export default {
-    name: "SldsActivityTimelineItem",
+    name: 'SldsActivityTimelineItem',
 
     components: {
         SldsButtonIcon,
@@ -161,7 +161,7 @@ export default {
 
             if (this.subjectIcons == null) return icons
             if (Array.isArray(this.subjectIcons)) return this.subjectIcons
-            if (typeof this.subjectIcons === "string") icons.push(this.subjectIcons)
+            if (typeof this.subjectIcons === 'string') icons.push(this.subjectIcons)
 
             return icons
         },
@@ -169,16 +169,16 @@ export default {
         iconClass() {
             switch (this.type) {
                 case 'call':
-                    return 'slds-icon-standard-log-a-call';
+                    return 'slds-icon-standard-log-a-call'
 
                 case 'email':
-                    return 'slds-icon-standard-email';
+                    return 'slds-icon-standard-email'
 
                 case 'event':
-                    return 'slds-icon-standard-event';
+                    return 'slds-icon-standard-event'
 
                 case 'task':
-                    return 'slds-icon-standard-task';
+                    return 'slds-icon-standard-task'
 
                 default:
                     return 'slds-icon-standard-generic-loading'

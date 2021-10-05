@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "Path",
+    name: 'Path',
 }
 </script>

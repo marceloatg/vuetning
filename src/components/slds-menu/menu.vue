@@ -102,10 +102,10 @@ import SldsMenuItem from './menu-item'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 import ClickOutside from '@/directives/click-outside/index'
 import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import DropdownOption from "@/components/slds-options/dropdown-option-class";
+import DropdownOption from '@/components/slds-options/dropdown-option-class'
 
 export default {
-    name: "SldsMenu",
+    name: 'SldsMenu',
 
     components: {
         SldsButtonIcon,
@@ -269,10 +269,10 @@ export default {
             if (this.items == null) return
 
             for (const item of this.items) {
-                if (typeof item === "string") {
+                if (typeof item === 'string') {
                     this.$data.$_options.push(new DropdownOption(null, item))
                 }
-                else if (typeof item === "object") {
+                else if (typeof item === 'object') {
                     const dropdownOption = new DropdownOption(item.heading, item.label, item.value, item.divider)
                     dropdownOption.leftIcon = item.leftIcon
                     dropdownOption.rightIcon = item.rightIcon
@@ -282,7 +282,7 @@ export default {
                     this.$data.$_options.push(dropdownOption)
                 }
                 else {
-                    throw`[slds-menu] items must be of type string or a valid menu item object.`
+                    throw'[slds-menu] items must be of type string or a valid menu item object.'
                 }
             }
         },

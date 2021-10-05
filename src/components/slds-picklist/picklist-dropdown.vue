@@ -55,7 +55,7 @@
 
 <script>
 import SldsPicklistOption from './picklist-option'
-import SldsPicklistHeading from "./picklist-heading";
+import SldsPicklistHeading from './picklist-heading'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 
 export default {

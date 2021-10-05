@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "Pill",
+    name: 'Pill',
 }
 </script>

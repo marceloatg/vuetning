@@ -15,7 +15,7 @@
 import SldsDropdownOption from '@/components/slds-options/dropdown-option'
 
 export default {
-    name: "SldsLookupOption",
+    name: 'SldsLookupOption',
 
     components: {
         SldsDropdownOption

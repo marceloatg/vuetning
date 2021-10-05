@@ -145,8 +145,8 @@ export class TreeData {
             const hasCycle = seen.has(currentNode)
             const hasLabel = level === 0 ? true : !!currentNode.label
 
-            if (hasCycle) console.warn(`Data passed to lightning:tree has circular reference. Skipping the node`)
-            if (!hasLabel) console.warn(`The node passed to lightning:tree has empty label. Skipping the node`)
+            if (hasCycle) console.warn('Data passed to lightning:tree has circular reference. Skipping the node')
+            if (!hasLabel) console.warn('The node passed to lightning:tree has empty label. Skipping the node')
 
             return !hasCycle && hasLabel
         }
@@ -167,7 +167,7 @@ export class TreeData {
 
     updateExpanded(key) {
         const node = this._indices[key]
-        if (node == null) return;
+        if (node == null) return
 
         let parentKey = node.parent
         let parentNode = this._indices[parentKey]
@@ -226,7 +226,7 @@ export class TreeData {
         const treeItems = this.treeItemsInTraversalOrder
 
         for (let i = treeItems.length - 1; i >= 0; i--) {
-            if (!this.isVisible(treeItems[i])) continue;
+            if (!this.isVisible(treeItems[i])) continue
             lastNode = treeItems[i]
             break
         }

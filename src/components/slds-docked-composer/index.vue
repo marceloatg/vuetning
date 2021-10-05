@@ -101,29 +101,29 @@ export default {
 
     methods: {
         onBlur() {
-            this.hasFocus = false;
+            this.hasFocus = false
         },
 
         onClose() {
-            this.$emit('close');
+            this.$emit('close')
         },
 
         onErect() {
-            this.isOpen = true;
-            this.$emit('erect');
+            this.isOpen = true
+            this.$emit('erect')
         },
 
         onExpand() {
-            this.$emit('expand');
+            this.$emit('expand')
         },
 
         onFocus() {
-            this.hasFocus = true;
+            this.hasFocus = true
         },
 
         onMinimize() {
-            this.isOpen = false;
-            this.$emit('minimize');
+            this.isOpen = false
+            this.$emit('minimize')
         },
     },
 }

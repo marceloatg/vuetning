@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    name: "SldsPublisher"
+    name: 'SldsPublisher'
 }
 </script>
 

@@ -22,14 +22,14 @@ export function getTreeNode(node, level, parentKey, childNum) {
             !node.items ||
             (Array.isArray(node.items) && node.items.length === 0),
         get isExpanded() {
-            return this.isLeaf ? true : node.expanded || false;
+            return this.isLeaf ? true : node.expanded || false
         },
         focusedChild: null,
         get strexpanded() {
             return (this.isLeaf
                     ? true
                     : this.nodeRef.expanded || false
-            ).toString() || '';
+            ).toString() || ''
         }
     }
 }

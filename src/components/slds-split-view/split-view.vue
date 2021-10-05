@@ -156,7 +156,7 @@
 
 <script>
 export default {
-    name: "SldsSplitView"
+    name: 'SldsSplitView'
 }
 </script>
 

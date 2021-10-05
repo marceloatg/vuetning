@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/svg';
+    import SldsSvg from '../slds-svg/svg'
 
     export default {
         name: 'SldsPill',
@@ -56,10 +56,10 @@
         },
         methods: {
             onClick() {
-                if (this.clickable) this.$emit('click', this.name);
+                if (this.clickable) this.$emit('click', this.name)
             },
             onRemove() {
-                this.$emit('remove', this.name);
+                this.$emit('remove', this.name)
             }
         },
     }

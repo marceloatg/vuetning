@@ -73,13 +73,13 @@
 </template>
 
 <script>
-import Quill from "quill"
-import SldsRichTextToolbar from "@/components/slds-rich-text-editor/rich-text-toolbar";
+import Quill from 'quill'
+import SldsRichTextToolbar from '@/components/slds-rich-text-editor/rich-text-toolbar'
 import SldsLabel from '@/components/slds-label/label'
 import DomUtils from '@/utils/dom-utils'
 
 export default {
-    name: "SldsRichTextEditor",
+    name: 'SldsRichTextEditor',
 
     components: {
         SldsLabel,

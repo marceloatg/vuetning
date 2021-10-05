@@ -55,35 +55,35 @@ export default {
 
     computed: {
         backgroundColorClass() {
-            if (this.fallbackIcon == null) return;
+            if (this.fallbackIcon == null) return
 
-            const category = this.fallbackIcon.split(':')[0];
-            const name = this.fallbackIcon.split(':')[1];
-            return `slds-icon-${category}-${name}`;
+            const category = this.fallbackIcon.split(':')[0]
+            const name = this.fallbackIcon.split(':')[1]
+            return `slds-icon-${category}-${name}`
         },
 
         inverseClass() {
-            if (this.inverse) return 'slds-avatar__initials_inverse';
-            return null;
+            if (this.inverse) return 'slds-avatar__initials_inverse'
+            return null
         },
 
         sizeClass() {
-            if (this.xSmall) return 'slds-avatar_x-small';
-            if (this.small) return 'slds-avatar_small';
-            if (this.medium) return 'slds-avatar_medium';
-            if (this.large) return 'slds-avatar_large';
-            return 'slds-avatar_medium';
+            if (this.xSmall) return 'slds-avatar_x-small'
+            if (this.small) return 'slds-avatar_small'
+            if (this.medium) return 'slds-avatar_medium'
+            if (this.large) return 'slds-avatar_large'
+            return 'slds-avatar_medium'
         },
 
         variantClass() {
-            if (this.circle) return 'slds-avatar_circle';
-            return null;
+            if (this.circle) return 'slds-avatar_circle'
+            return null
         },
     },
 
     methods: {
         onImageError(event) {
-            const message = `<slds-avatar> Image with src="${event.target.src}" failed to load.`;
+            const message = `<slds-avatar> Image with src="${event.target.src}" failed to load.`
             console.warn(message)
         },
     },

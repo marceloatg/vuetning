@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "DatetimePicker",
+    name: 'DatetimePicker',
 }
 </script>

@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: "BrandBand",
+    name: 'BrandBand',
 }
 </script>

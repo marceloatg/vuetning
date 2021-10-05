@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    name: "SldsFileSelector"
+    name: 'SldsFileSelector'
 }
 </script>
 

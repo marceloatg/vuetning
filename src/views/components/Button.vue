@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    name: "Button",
+    name: 'Button',
 
     methods: {
         onclick() {

@@ -16,7 +16,7 @@
 import SldsDropdownOption from '@/components/slds-options/dropdown-option'
 
 export default {
-    name: "SldsMenuItem",
+    name: 'SldsMenuItem',
 
     components: {
         SldsDropdownOption

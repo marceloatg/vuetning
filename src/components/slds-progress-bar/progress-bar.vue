@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: "SldsProgressBar"
+    name: 'SldsProgressBar'
 }
 </script>
 

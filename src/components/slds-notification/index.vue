@@ -62,10 +62,10 @@
         },
         methods: {
             onClick() {
-                this.$emit('click');
+                this.$emit('click')
             },
             onClose() {
-                this.$emit('close');
+                this.$emit('close')
             },
         },
     }

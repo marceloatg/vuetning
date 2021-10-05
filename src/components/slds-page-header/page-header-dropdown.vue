@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import SldsPageHeaderHeading from "./page-header-heading"
+import SldsPageHeaderHeading from './page-header-heading'
 import SldsPageHeaderOption from './page-header-option'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 

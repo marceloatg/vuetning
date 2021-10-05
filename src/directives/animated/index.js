@@ -1,4 +1,4 @@
-import DomHandler from '../../utils/dom-utils/index';
+import DomHandler from '../../utils/dom-utils/index'
 
 function create(el) {
     DomHandler.addClass(el, 'slds-has-animation')
@@ -7,7 +7,7 @@ function create(el) {
 const Animated = {
     bind(el, binding, vnode) {
         if (vnode.context.$vuetning && vnode.context.$vuetning.hasAnimations) {
-            create(el);
+            create(el)
         }
     },
 }

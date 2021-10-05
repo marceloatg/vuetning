@@ -38,7 +38,7 @@
     import SldsIcon from '../slds-icon/icon'
 
     export default {
-        name: "Option",
+        name: 'Option',
         components: {SldsIcon},
         props: {
             disabled: {
@@ -64,15 +64,15 @@
         },
         methods: {
             onClick() {
-                if (this.disabled) return;
+                if (this.disabled) return
                 this.$emit('click')
             },
             onCtrlClick() {
-                if (this.disabled) return;
+                if (this.disabled) return
                 this.$emit('ctrl-click')
             },
             onShiftClick() {
-                if (this.disabled) return;
+                if (this.disabled) return
                 this.$emit('shift-click')
             },
         },

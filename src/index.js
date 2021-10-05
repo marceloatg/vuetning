@@ -10,7 +10,7 @@ const Vuetning = {
             Vue.use(sldsComponent)
         })
     }
-};
+}
 
 if (typeof window !== 'undefined' && window.Vue) window.Vue.use(Vuetning)
 

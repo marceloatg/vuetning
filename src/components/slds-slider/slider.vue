@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: "SldsSlider"
+    name: 'SldsSlider'
 }
 </script>
 
