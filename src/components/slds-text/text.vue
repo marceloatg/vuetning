@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "SldsText",
+    name: 'SldsText',
 
     props: {
         alignCenter: Boolean,

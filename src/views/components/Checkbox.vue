@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    name: "Checkbox",
+    name: 'Checkbox',
 
     data() {
         return {

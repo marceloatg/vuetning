@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "SldsSpinnerContainer",
+    name: 'SldsSpinnerContainer',
 
     props: {
         fixed: Boolean

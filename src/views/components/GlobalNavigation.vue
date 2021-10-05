@@ -23,6 +23,6 @@
 
 <script>
 export default {
-    name: "GlobalNavigation",
+    name: 'GlobalNavigation',
 }
 </script>

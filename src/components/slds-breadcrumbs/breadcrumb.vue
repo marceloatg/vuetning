@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: "SldsBreadcrumb",
+    name: 'SldsBreadcrumb',
 
     props: {
         href: String,

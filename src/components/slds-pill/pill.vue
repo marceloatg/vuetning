@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: "SldsPill"
+    name: 'SldsPill'
 }
 </script>
 

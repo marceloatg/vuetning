@@ -97,7 +97,7 @@
 
 <script>
 export default {
-    name: "SldsCarousel"
+    name: 'SldsCarousel'
 }
 </script>
 

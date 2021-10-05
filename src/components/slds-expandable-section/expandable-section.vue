@@ -70,36 +70,36 @@ export default {
     },
 
     async mounted() {
-        this.isOpen = !this.closedOnStart;
-        await this.$nextTick();
-        this.initialized = true;
+        this.isOpen = !this.closedOnStart
+        await this.$nextTick()
+        this.initialized = true
     },
 
     methods: {
         collapse(element) {
-            if (!this.initialized) return;
+            if (!this.initialized) return
 
-            element.style.overflow = '';
-            element.style.height = 0;
-            element.style.opacity = 0;
+            element.style.overflow = ''
+            element.style.height = 0
+            element.style.opacity = 0
         },
 
         expand(element) {
-            if (!this.initialized) return;
+            if (!this.initialized) return
 
-            element.style.overflow = '';
-            element.style.height = element.scrollHeight + "px";
-            element.scrollHeight;
-            element.style.opacity = 1;
+            element.style.overflow = ''
+            element.style.height = element.scrollHeight + 'px'
+            element.scrollHeight
+            element.style.opacity = 1
         },
 
         resetHeight(element) {
-            element.style.height = null;
-            element.style.overflow = 'initial';
+            element.style.height = null
+            element.style.overflow = 'initial'
         },
 
         toggle() {
-            this.isOpen = !this.isOpen;
+            this.isOpen = !this.isOpen
         }
     }
 }

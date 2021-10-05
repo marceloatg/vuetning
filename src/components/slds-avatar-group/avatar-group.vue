@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: "SldsAvatarGroup"
+    name: 'SldsAvatarGroup'
 }
 </script>
 

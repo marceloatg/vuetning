@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "Tile",
+    name: 'Tile',
 }
 </script>

@@ -47,7 +47,7 @@
 
 <script>
     export default {
-        name: "SldsScopedTabs",
+        name: 'SldsScopedTabs',
         props: {
             activeItem: {
                 required: true,

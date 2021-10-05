@@ -33,7 +33,7 @@
 
 <script>
 export default {
-    name: "Lookup",
+    name: 'Lookup',
 
     data() {
         return {

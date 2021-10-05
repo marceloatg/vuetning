@@ -79,7 +79,7 @@
 
 <script>
 export default {
-    name: "SldsVerticalTabs"
+    name: 'SldsVerticalTabs'
 }
 </script>
 

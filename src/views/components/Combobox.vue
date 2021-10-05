@@ -164,7 +164,7 @@
 
 <script>
 export default {
-    value: "Combobox",
+    value: 'Combobox',
 
     data() {
         return {

@@ -79,16 +79,16 @@ export default {
 
     methods: {
         away() {
-            this.isDropdownActive = false;
+            this.isDropdownActive = false
         },
 
         onClick(subTab) {
-            this.isDropdownActive = false;
-            this.$emit('click', subTab);
+            this.isDropdownActive = false
+            this.$emit('click', subTab)
         },
 
         toggleDropdown() {
-            this.isDropdownActive = !this.isDropdownActive;
+            this.isDropdownActive = !this.isDropdownActive
         },
     },
 }

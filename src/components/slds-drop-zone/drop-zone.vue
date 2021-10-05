@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "SldsDropZone"
+    name: 'SldsDropZone'
 }
 </script>
 

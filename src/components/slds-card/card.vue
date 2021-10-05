@@ -48,7 +48,7 @@
 import SldsIcon from '../slds-icon/icon.vue'
 
 export default {
-    name: "SldsCard",
+    name: 'SldsCard',
 
     components: {
         SldsIcon

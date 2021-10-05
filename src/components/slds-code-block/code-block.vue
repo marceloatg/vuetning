@@ -34,7 +34,7 @@ import SldsLabel from '@/components/slds-label/label'
 import hljs from 'highlight.js'
 
 export default {
-    name: "SldsCodeBlock",
+    name: 'SldsCodeBlock',
 
     components: {
         SldsButtonIcon,
@@ -56,7 +56,7 @@ export default {
                     return isValid
                 }
 
-                return true;
+                return true
             }
         },
         plainText: Boolean,
@@ -87,19 +87,19 @@ export default {
 
     methods: {
         onClickCopy() {
-            const el = document.createElement('textarea');
-            el.value = this.code;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
+            const el = document.createElement('textarea')
+            el.value = this.code
+            document.body.appendChild(el)
+            el.select()
+            document.execCommand('copy')
+            document.body.removeChild(el)
 
             this.icon = 'utility:check'
             if (this.timer) return
 
             this.timer = setTimeout(function () {
                 this.resetIcon()
-            }.bind(this), 1500);
+            }.bind(this), 1500)
         },
 
         resetIcon() {

@@ -41,7 +41,7 @@ import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsIcon from '@/components/slds-icon/icon'
 
 export default {
-    name: "SldsAlert",
+    name: 'SldsAlert',
 
     components: {
         SldsButtonIcon,

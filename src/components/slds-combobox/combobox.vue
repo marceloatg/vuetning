@@ -137,11 +137,11 @@ import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsIcon from '@/components/slds-icon/icon'
 import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
 import ClickOutside from '@/directives/click-outside/index'
-import DropdownOption from "@/components/slds-options/dropdown-option-class"
-import SldsComboboxDropdown from "@/components/slds-combobox/combobox-dropdown";
+import DropdownOption from '@/components/slds-options/dropdown-option-class'
+import SldsComboboxDropdown from '@/components/slds-combobox/combobox-dropdown'
 
 export default {
-    name: "SldsCombobox",
+    name: 'SldsCombobox',
 
     components: {
         SldsButtonIcon,
@@ -317,10 +317,10 @@ export default {
             if (this.options == null) return
 
             for (const option of this.options) {
-                if (typeof option === "string") {
+                if (typeof option === 'string') {
                     this.$data.$_options.push(new DropdownOption(null, option))
                 }
-                else if (typeof option === "object") {
+                else if (typeof option === 'object') {
                     const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
                     dropdownOption.meta = option.meta
                     dropdownOption.icon = option.icon
@@ -329,7 +329,7 @@ export default {
                     this.$data.$_options.push(dropdownOption)
                 }
                 else {
-                    throw`[slds-combobox] options must be of type string or a valid combobox option object.`
+                    throw'[slds-combobox] options must be of type string or a valid combobox option object.'
                 }
             }
         },

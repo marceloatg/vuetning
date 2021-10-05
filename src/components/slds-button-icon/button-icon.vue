@@ -97,8 +97,8 @@ export default {
         },
 
         listeners() {
-            const listeners = {...this.$listeners};
-            delete listeners.click;
+            const listeners = {...this.$listeners}
+            delete listeners.click
             return listeners
         },
 
@@ -112,15 +112,15 @@ export default {
 
     methods: {
         onClick(event) {
-            this.$emit('click', event);
+            this.$emit('click', event)
         },
 
         onBlur(event) {
-            this.$emit('blur', event);
+            this.$emit('blur', event)
         },
 
         onKeyUp(event) {
-            this.$emit('keyup', event);
+            this.$emit('keyup', event)
         },
     },
 }

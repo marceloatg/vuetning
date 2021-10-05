@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    name: "SldsRadioGroup"
+    name: 'SldsRadioGroup'
 }
 </script>
 

@@ -84,7 +84,7 @@
 
 <script>
 import SldsComboboxOption from './combobox-option'
-import SldsComboboxHeading from "./combobox-heading";
+import SldsComboboxHeading from './combobox-heading'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 
 export default {

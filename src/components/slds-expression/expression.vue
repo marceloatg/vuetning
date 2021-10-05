@@ -285,7 +285,7 @@
 
 <script>
 export default {
-    name: "SldsExpression"
+    name: 'SldsExpression'
 }
 </script>
 

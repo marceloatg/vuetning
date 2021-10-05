@@ -287,7 +287,7 @@
 
 <script>
 export default {
-    name: "SldsAppLauncher"
+    name: 'SldsAppLauncher'
 }
 </script>
 

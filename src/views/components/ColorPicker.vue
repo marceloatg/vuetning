@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "ColorPicker",
+    name: 'ColorPicker',
 }
 </script>

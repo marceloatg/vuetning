@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "ProgressBar",
+    name: 'ProgressBar',
 }
 </script>

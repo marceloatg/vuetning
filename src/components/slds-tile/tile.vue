@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: "SldsTitle"
+    name: 'SldsTitle'
 }
 </script>
 

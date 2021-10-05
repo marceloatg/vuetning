@@ -1,5 +1,5 @@
 const validNameRegex = /^([a-zA-Z]+):([a-zA-Z]\w*)$/
-const underscoreRegex = /_/g;
+const underscoreRegex = /_/g
 
 // Icon name validation
 export const isValidName = (iconName) => validNameRegex.test(iconName)
@@ -16,9 +16,9 @@ export {getCategory, getName}
 
 // Background class
 export const computeBackgroundClass = (iconName) => {
-    if (!isValidName(iconName)) return '';
+    if (!isValidName(iconName)) return ''
 
-    const category = getCategory(iconName);
-    const name = getName(iconName).replace(underscoreRegex, '-');
-    return `slds-icon-${category}-${name}`;
-};
+    const category = getCategory(iconName)
+    const name = getName(iconName).replace(underscoreRegex, '-')
+    return `slds-icon-${category}-${name}`
+}

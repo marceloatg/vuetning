@@ -172,7 +172,7 @@
 
 <script>
 export default {
-    name: "SldsMap"
+    name: 'SldsMap'
 }
 </script>
 

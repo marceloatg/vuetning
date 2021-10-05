@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    name: "CheckboxGroup",
+    name: 'CheckboxGroup',
 
     data() {
         return {

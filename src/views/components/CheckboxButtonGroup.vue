@@ -60,7 +60,7 @@
 
 <script>
 export default {
-    name: "CheckboxButtonGroup",
+    name: 'CheckboxButtonGroup',
 
     data() {
         return {

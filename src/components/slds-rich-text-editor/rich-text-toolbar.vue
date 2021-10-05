@@ -251,10 +251,10 @@
 </template>
 
 <script>
-import Animated from "@/directives/animated"
+import Animated from '@/directives/animated'
 
 export default {
-    name: "SldsRichTextToolbar",
+    name: 'SldsRichTextToolbar',
 
     directives: {
         animated: Animated

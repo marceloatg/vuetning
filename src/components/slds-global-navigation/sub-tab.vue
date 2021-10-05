@@ -111,30 +111,30 @@ export default {
 
     methods: {
         away() {
-            this.isDropdownActive = false;
+            this.isDropdownActive = false
         },
 
         onClickTab() {
-            this.$emit('click');
+            this.$emit('click')
         },
 
         onClickRefreshTab() {
-            this.$emit('refresh');
-            this.isDropdownActive = false;
+            this.$emit('refresh')
+            this.isDropdownActive = false
         },
 
         onClickSetAsWorkspaceTab() {
-            this.$emit('workspace');
-            this.isDropdownActive = false;
+            this.$emit('workspace')
+            this.isDropdownActive = false
         },
 
         onClickClose() {
-            this.$emit('close');
-            this.isDropdownActive = false;
+            this.$emit('close')
+            this.isDropdownActive = false
         },
 
         toggleDropdown() {
-            this.isDropdownActive = !this.isDropdownActive;
+            this.isDropdownActive = !this.isDropdownActive
         }
     },
 }

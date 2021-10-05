@@ -13,7 +13,7 @@
 import SldsDropdownOption from '@/components/slds-options/dropdown-option'
 
 export default {
-    name: "SldsPageHeaderOption",
+    name: 'SldsPageHeaderOption',
 
     components: {
         SldsDropdownOption

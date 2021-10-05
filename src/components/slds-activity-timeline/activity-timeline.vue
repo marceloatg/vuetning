@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    name: "SldsActivityTimeline",
+    name: 'SldsActivityTimeline',
 }
 </script>

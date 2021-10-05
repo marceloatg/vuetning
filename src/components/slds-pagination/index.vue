@@ -48,39 +48,39 @@
         },
         computed: {
             endPage() {
-                return Math.min(this.startPage + this.range - 1, this.totalPages);
+                return Math.min(this.startPage + this.range - 1, this.totalPages)
             },
             isInFirstPage() {
-                return this.currentPage === 1;
+                return this.currentPage === 1
             },
             isInLastPage() {
-                return this.currentPage === this.totalPages;
+                return this.currentPage === this.totalPages
             },
             pages() {
-                const pages = [];
-                for (let i = this.startPage; i <= this.endPage; i += 1) pages.push(i);
-                return pages;
+                const pages = []
+                for (let i = this.startPage; i <= this.endPage; i += 1) pages.push(i)
+                return pages
             },
             startPage() {
-                if (this.currentPage === 1) return 1;
-                if (this.currentPage === this.totalPages) return this.totalPages - this.range + 1;
-                return this.currentPage - 1;
+                if (this.currentPage === 1) return 1
+                if (this.currentPage === this.totalPages) return this.totalPages - this.range + 1
+                return this.currentPage - 1
             },
         },
         methods: {
             onClickPreviousPage() {
-                this.$emit('pagechanged', this.currentPage - 1);
+                this.$emit('pagechanged', this.currentPage - 1)
             },
             onClickPage(page) {
-                if (page === this.currentPage) return;
-                this.$emit('pagechanged', page);
+                if (page === this.currentPage) return
+                this.$emit('pagechanged', page)
             },
             onClickNextPage() {
-                this.$emit('pagechanged', this.currentPage + 1);
+                this.$emit('pagechanged', this.currentPage + 1)
             },
             buttonVariant(page) {
-                if (page === this.currentPage) return 'slds-button_brand';
-                return 'slds-button_neutral';
+                if (page === this.currentPage) return 'slds-button_brand'
+                return 'slds-button_neutral'
             },
         }
     }

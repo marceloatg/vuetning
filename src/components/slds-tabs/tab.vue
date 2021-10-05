@@ -46,7 +46,7 @@
 import SldsIcon from '@/components/slds-icon/icon'
 
 export default {
-    name: "SldsTab",
+    name: 'SldsTab',
 
     components: {
         SldsIcon

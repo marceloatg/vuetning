@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import {v4 as Id} from 'uuid';
+    import {v4 as Id} from 'uuid'
 
     export default {
         name: 'SldsWideRadioGroup',
@@ -89,7 +89,7 @@
         created() {
             for (let option of this.options) {
                 if (option == null || option.value == null)
-                    throw 'Missing value for option.';
+                    throw 'Missing value for option.'
             }
         },
         methods: {

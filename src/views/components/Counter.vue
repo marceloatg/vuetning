@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: "Counter",
+    name: 'Counter',
 
     data() {
         return {

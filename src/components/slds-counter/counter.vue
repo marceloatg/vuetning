@@ -61,7 +61,7 @@ import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsFormElement from '@/components/slds-form-element/form-element'
 
 export default {
-    name: "SldsCounter",
+    name: 'SldsCounter',
 
     components: {
         SldsButtonIcon,
@@ -90,8 +90,8 @@ export default {
 
     computed: {
         attributes() {
-            const attributes = {...this.$attrs};
-            delete attributes.type;
+            const attributes = {...this.$attrs}
+            delete attributes.type
             return attributes
         },
 
@@ -118,7 +118,7 @@ export default {
         },
 
         value(value) {
-            this.$data.$_value = value;
+            this.$data.$_value = value
             this.formatValue()
         }
     },
@@ -143,8 +143,8 @@ export default {
             const min = (typeof this.min !== 'number' && this.min == null) ? null : Number(this.min)
             const value = Number(this.value) - Number(this.step)
 
-            if ((min != null) && (value < min)) return;
-            this.$emit('input', value);
+            if ((min != null) && (value < min)) return
+            this.$emit('input', value)
         },
 
         onClickIncrement() {
@@ -152,7 +152,7 @@ export default {
             const value = Number(this.value) + Number(this.step)
 
             if ((max != null) && (value > max)) return
-            this.$emit('input', value);
+            this.$emit('input', value)
         },
 
         onInput(event) {
@@ -163,5 +163,13 @@ export default {
 </script>
 
 <style scoped>
+.slds-input__button_decrement {
+    top: 12.5%;
+    transform: none;
+}
 
+.slds-input__button_increment {
+    top: 12.5%;
+    transform: none;
+}
 </style>

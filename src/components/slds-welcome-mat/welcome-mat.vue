@@ -213,7 +213,7 @@
 
 <script>
 export default {
-    name: "SldsWelcomeMat"
+    name: 'SldsWelcomeMat'
 }
 </script>
 

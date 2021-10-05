@@ -76,7 +76,7 @@
 
 <script>
 export default {
-    name: "SldsDockedUtilityBar"
+    name: 'SldsDockedUtilityBar'
 }
 </script>
 

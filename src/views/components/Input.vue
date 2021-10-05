@@ -29,7 +29,7 @@
 
 <script>
 export default {
-    name: "Input",
+    name: 'Input',
 
     data() {
         return {

@@ -231,10 +231,10 @@ import SldsLookupOption from './lookup-option'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 import ClickOutside from '@/directives/click-outside/index'
 import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import DropdownOption from "@/components/slds-options/dropdown-option-class"
+import DropdownOption from '@/components/slds-options/dropdown-option-class'
 
 export default {
-    name: "SldsLookup",
+    name: 'SldsLookup',
 
     components: {
         SldsButtonIcon,
@@ -331,8 +331,8 @@ export default {
         },
 
         spinnerRight() {
-            if (this.$data.$_filter) return '1.5rem';
-            return '.2rem';
+            if (this.$data.$_filter) return '1.5rem'
+            return '.2rem'
         }
     },
 
@@ -427,10 +427,10 @@ export default {
             if (this.options == null) return
 
             for (const option of this.options) {
-                if (typeof option === "string") {
+                if (typeof option === 'string') {
                     this.$data.$_options.push(new DropdownOption(null, option))
                 }
-                else if (typeof option === "object") {
+                else if (typeof option === 'object') {
                     const dropdownOption = new DropdownOption(null, option.label, option.value)
                     dropdownOption.meta = option.meta
                     dropdownOption.icon = option.icon
@@ -439,7 +439,7 @@ export default {
                     this.$data.$_options.push(dropdownOption)
                 }
                 else {
-                    throw`[slds-lookup] options must be of type string or a valid lookup option object.`
+                    throw'[slds-lookup] options must be of type string or a valid lookup option object.'
                 }
             }
         },

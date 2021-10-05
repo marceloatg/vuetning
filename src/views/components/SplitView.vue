@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "SplitView",
+    name: 'SplitView',
 }
 </script>

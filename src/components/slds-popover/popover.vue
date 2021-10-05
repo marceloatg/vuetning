@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: "SldsPopover"
+    name: 'SldsPopover'
 }
 </script>
 

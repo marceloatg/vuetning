@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: "SldsMediaObject",
+    name: 'SldsMediaObject',
 
     props: {
         bodyClass: {},

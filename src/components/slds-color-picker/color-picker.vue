@@ -333,7 +333,7 @@
 
 <script>
 export default {
-    name: "SldsColorPicker"
+    name: 'SldsColorPicker'
 }
 </script>
 

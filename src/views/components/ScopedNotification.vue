@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: "ScopedNotification",
+    name: 'ScopedNotification',
 }
 </script>
