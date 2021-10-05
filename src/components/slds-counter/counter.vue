@@ -18,8 +18,14 @@
             @click="onClickDecrement"
         />
 
+        <!-- View mode -->
+        <div v-if="readonly" class="slds-form-element__static">
+            {{ this.$data.$_value }}
+        </div>
+
         <!-- Input -->
         <input
+            v-else
             :type="readonly ? 'text' : 'number'"
             class="slds-input"
             v-bind="attributes"
