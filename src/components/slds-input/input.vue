@@ -90,9 +90,6 @@ import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsSpinner from '@/components/slds-spinner/spinner'
 import SldsSvg from '@/components/slds-svg/svg'
-import numeral from 'numeral'
-import 'numeral/locales/pt-br'
-import 'numeral/locales/es-es'
 
 export default {
     name: 'SldsInput',
@@ -189,7 +186,7 @@ export default {
         },
 
         value(value) {
-            this.formatValue(value)
+            this.$data.$_value = value
         }
     },
 
@@ -200,18 +197,6 @@ export default {
     },
 
     methods: {
-        formatValue(value) {
-            if (this.readonly) {
-                if (this.locale.toLowerCase() === 'pt-br' || this.locale.toLowerCase() === 'br') numeral.locale('pt-br')
-                else if (this.locale.toLowerCase() === 'es-es' || this.locale.toLowerCase() === 'es') numeral.locale('es-es')
-
-                this.$data.$_value = this.format ? numeral(value).format(this.format) : numeral(value).value()
-            }
-            else {
-                this.$data.$_value = value
-            }
-        },
-
         onInput(event) {
             this.$emit('input', event.target.value)
         },
