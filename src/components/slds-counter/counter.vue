@@ -149,8 +149,8 @@ export default {
             if (this.value !== value) this.$emit('input', value)
 
             if (this.readonly) {
-                if (this.locale.toLowerCase() === 'pt-br' || this.locale.toLowerCase() === 'br') numeral.locale('pt-br')
-                else if (this.locale.toLowerCase() === 'es-es' || this.locale.toLowerCase() === 'es') numeral.locale('es-es')
+                if (this.locale?.toLowerCase() === 'pt-br' || this.locale?.toLowerCase() === 'br') numeral.locale('pt-br')
+                else if (this.locale?.toLowerCase() === 'es-es' || this.locale?.toLowerCase() === 'es') numeral.locale('es-es')
 
                 this.$data.$_value = this.format ? numeral(value).format(this.format) : numeral(value).value()
             }
@@ -178,7 +178,7 @@ export default {
         onInput(event) {
             this.$emit('input', event.target.value)
         },
-    }
+    },
 }
 </script>
 
