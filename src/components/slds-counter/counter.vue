@@ -20,7 +20,7 @@
 
         <!-- Input -->
         <input
-            type="number"
+            :type="readonly ? 'text' : 'number'"
             class="slds-input"
             v-bind="attributes"
             :value="$data.$_value"
@@ -59,6 +59,9 @@
 <script>
 import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsFormElement from '@/components/slds-form-element/form-element'
+import numeral from 'numeral'
+import 'numeral/locales/pt-br'
+import 'numeral/locales/es-es'
 
 export default {
     name: 'SldsCounter',
@@ -73,7 +76,9 @@ export default {
     props: {
         disabled: Boolean,
         error: Boolean,
+        format: String,
         label: String,
+        locale: String,
         max: [Number, String],
         min: [Number, String],
         readonly: Boolean,
@@ -117,8 +122,7 @@ export default {
             this.formatValue()
         },
 
-        value(value) {
-            this.$data.$_value = value
+        value() {
             this.formatValue()
         }
     },
@@ -137,6 +141,14 @@ export default {
             else if ((max != null) && (value >= max)) value = max
 
             if (this.value !== value) this.$emit('input', value)
+
+            if (this.readonly) {
+                if (this.locale) numeral.locale(this.locale)
+                this.$data.$_value = this.format ? numeral(value).format(this.format) : numeral(value).value()
+            }
+            else {
+                this.$data.$_value = value
+            }
         },
 
         onClickDecrement() {

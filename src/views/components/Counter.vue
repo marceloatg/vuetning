@@ -22,6 +22,33 @@
             />
         </slds-card>
 
+        <slds-card class="slds-m-top_medium">
+            <slds-counter
+                v-model="bigValue"
+                label="Read only"
+                readonly
+            />
+        </slds-card>
+
+        <slds-card class="slds-m-top_medium">
+            <slds-counter
+                v-model="bigValue"
+                label="Read only (custom format)"
+                format="'0,0.00'"
+                readonly
+            />
+        </slds-card>
+
+        <slds-card class="slds-m-top_medium">
+            <slds-counter
+                v-model="bigValue"
+                label="Read only (pt-BR)"
+                locale="pt-BR"
+                format="'0,0.00'"
+                readonly
+            />
+        </slds-card>
+
     </main>
 </template>
 
@@ -32,6 +59,7 @@ export default {
     data() {
         return {
             value: 0,
+            bigValue: 1234657890.123
         }
     }
 }
