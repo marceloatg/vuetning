@@ -109,7 +109,6 @@ export default {
         borderless: Boolean,
         disabled: Boolean,
         error: Boolean,
-        format: String,
         icon: String,
         iconError: Boolean,
         iconLight: Boolean,
@@ -117,7 +116,6 @@ export default {
         iconWarning: Boolean,
         label: String,
         loading: Boolean,
-        locale: String,
         readonly: Boolean,
         required: Boolean,
         value: {}

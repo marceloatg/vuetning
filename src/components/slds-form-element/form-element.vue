@@ -36,6 +36,7 @@ export default {
 
     props: {
         borderless: Boolean,
+        compound: Boolean,
         dir: String,
         controlClass: {},
         error: Boolean,
@@ -50,6 +51,7 @@ export default {
                 'slds-has-error': this.error,
                 'slds-form-element_stacked': this.readOnly,
                 'slds-form-element_readonly': this.readOnly && !this.borderless,
+                'slds-form-element_compound': this.compound,
             }
         }
     }
