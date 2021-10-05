@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    name: "Menu",
+    name: 'Menu',
 
     data() {
         return {

@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: "DataTable",
+    name: 'DataTable',
 
     data() {
         return {
@@ -62,7 +62,7 @@ export default {
     },
 
     created() {
-        this.generateRows();
+        this.generateRows()
     },
 
     methods: {
@@ -83,7 +83,7 @@ export default {
         },
 
         getRandomInt(max) {
-            return Math.floor(Math.random() * max);
+            return Math.floor(Math.random() * max)
         },
     }
 }

@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "Accordion",
+    name: 'Accordion',
 }
 </script>

@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "File",
+    name: 'File',
 }
 </script>

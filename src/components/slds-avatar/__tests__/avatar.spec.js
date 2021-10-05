@@ -35,7 +35,7 @@ describe('SldsAvatar', () => {
             expect(wrapper.element).toMatchSnapshot()
         })
 
-        it('should render alternative text when set', async () => {
+        it('should render alternative text when set', () => {
             const wrapper = mount(SldsAvatar, {
                 propsData: {src, alternativeText}
             })

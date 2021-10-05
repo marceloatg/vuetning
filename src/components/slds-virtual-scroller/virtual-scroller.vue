@@ -250,8 +250,8 @@ export default {
 
         handleScroll(event) {
             if (event && event.target.scrollLeft !== this.scrollLeft) {
-                this.scrollLeft = event.target.scrollLeft;
-                return;
+                this.scrollLeft = event.target.scrollLeft
+                return
             }
 
             cancelAnimationFrame(this.$_scrollAnimationRequest)
@@ -269,7 +269,7 @@ export default {
         },
 
         handleVisibilityChange(isVisible, entry) {
-            if (!this.ready) return;
+            if (!this.ready) return
 
             if (isVisible || entry.boundingClientRect.width !== 0 || entry.boundingClientRect.height !== 0) {
                 this.$emit('visible')

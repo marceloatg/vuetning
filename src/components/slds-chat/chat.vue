@@ -162,7 +162,7 @@
 
 <script>
 export default {
-    name: "SldsChat"
+    name: 'SldsChat'
 }
 </script>
 

@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: "SldsProgressRing"
+    name: 'SldsProgressRing'
 }
 </script>
 

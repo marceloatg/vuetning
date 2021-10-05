@@ -177,7 +177,7 @@
 
 <script>
 export default {
-    name: "SldsTimePicker"
+    name: 'SldsTimePicker'
 }
 </script>
 

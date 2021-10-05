@@ -52,7 +52,7 @@
 
 <script>
 import SldsSvg from '../slds-svg/svg'
-import Clicker from "./clicker"
+import Clicker from './clicker'
 
 export default {
     components: {
@@ -109,64 +109,64 @@ export default {
     },
     created() {
         if (this.sortable) {
-            this.options.push({value: 'sort-asc', label: 'Sort A to Z', prefixIcon: 'utility:arrowup'});
-            this.options.push({value: 'sort-desc', label: 'Sort Z to A', prefixIcon: 'utility:arrowdown'});
+            this.options.push({value: 'sort-asc', label: 'Sort A to Z', prefixIcon: 'utility:arrowup'})
+            this.options.push({value: 'sort-desc', label: 'Sort Z to A', prefixIcon: 'utility:arrowdown'})
         }
     },
     methods: {
         onDoubleClick() {
-            if (!this.isResizable || (this.type !== 'text' && this.type !== 'link')) return;
-            this.$emit('expand');
+            if (!this.isResizable || (this.type !== 'text' && this.type !== 'link')) return
+            this.$emit('expand')
         },
         onResizerMouseDown(event) {
-            this.startX = event.pageX;
-            this.currentX = this.startX;
-            this.touchingResizer = true;
+            this.startX = event.pageX
+            this.currentX = this.startX
+            this.touchingResizer = true
 
-            document.body.addEventListener("mousemove", this.onResizerMove);
-            document.body.addEventListener("mouseup", this.onResizerMoveEnd);
-            document.body.addEventListener("mouseleave", this.onResizerMoveEnd);
+            document.body.addEventListener('mousemove', this.onResizerMove)
+            document.body.addEventListener('mouseup', this.onResizerMoveEnd)
+            document.body.addEventListener('mouseleave', this.onResizerMoveEnd)
         },
         onResizerMove(event) {
-            if (!this.touchingResizer) return;
-            if (this.currentX === event.pageX) return;
+            if (!this.touchingResizer) return
+            if (this.currentX === event.pageX) return
 
-            this.currentX = event.pageX;
-            const delta = this.currentX - this.startX;
+            this.currentX = event.pageX
+            const delta = this.currentX - this.startX
 
-            this.resizing(delta);
+            this.resizing(delta)
         },
         onResizerMoveEnd() {
-            if (!this.touchingResizer) return;
+            if (!this.touchingResizer) return
 
-            this.touchingResizer = false;
-            document.body.removeEventListener("mousemove", this.onResizerMove);
-            document.body.removeEventListener("mouseup", this.onResizerMoveEnd);
-            document.body.removeEventListener("mouseleave", this.onResizerMoveEnd);
+            this.touchingResizer = false
+            document.body.removeEventListener('mousemove', this.onResizerMove)
+            document.body.removeEventListener('mouseup', this.onResizerMoveEnd)
+            document.body.removeEventListener('mouseleave', this.onResizerMoveEnd)
 
-            const delta = this.currentX - this.startX;
-            this.resize(delta);
+            const delta = this.currentX - this.startX
+            this.resize(delta)
         },
         onSingleClick() {
-            if (!this.sortable) return;
+            if (!this.sortable) return
 
-            if (this.sortedAscending) this.$emit('sort', 'desc');
-            else this.$emit('sort', 'asc');
+            if (this.sortedAscending) this.$emit('sort', 'desc')
+            else this.$emit('sort', 'asc')
         },
         resize(delta) {
             // Apply column width validations to delta
             if (this.width + delta < this.minimumWidth) {
-                delta = this.minimumWidth - this.width;
-                if (delta === 0) return;
+                delta = this.minimumWidth - this.width
+                if (delta === 0) return
             }
 
             // Emit resize event with delta
-            this.$emit('resize', this.index, delta);
-            this.resizerTranslation = 0;
+            this.$emit('resize', this.index, delta)
+            this.resizerTranslation = 0
         },
         resizing(delta) {
-            if (this.width + delta < this.minimumWidth) delta = this.minimumWidth - this.width;
-            this.resizerTranslation = delta;
+            if (this.width + delta < this.minimumWidth) delta = this.minimumWidth - this.width
+            this.resizerTranslation = delta
         },
     },
 }

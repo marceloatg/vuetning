@@ -198,7 +198,7 @@
 
 <script>
 export default {
-    name: "SldsFeed"
+    name: 'SldsFeed'
 }
 </script>
 

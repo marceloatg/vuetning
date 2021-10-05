@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    name: "SldsSpinner",
+    name: 'SldsSpinner',
 
     props: {
         assistiveText: String,

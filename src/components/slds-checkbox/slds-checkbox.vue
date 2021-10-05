@@ -49,7 +49,7 @@ import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsIcon from '@/components/slds-icon/icon'
 
 export default {
-    name: "SldsCheckbox",
+    name: 'SldsCheckbox',
 
     components: {
         SldsCheckboxOption,
@@ -81,9 +81,9 @@ export default {
 
     methods: {
         onClick() {
-            if (this.disabled || this.readonly) return;
-            this.$data.$_value = !this.$data.$_value;
-            this.$emit('input', this.$data.$_value);
+            if (this.disabled || this.readonly) return
+            this.$data.$_value = !this.$data.$_value
+            this.$emit('input', this.$data.$_value)
         }
     }
 }

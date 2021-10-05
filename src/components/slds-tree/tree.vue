@@ -31,7 +31,7 @@ import TreeItem from './tree-item'
 import {TreeData} from './tree-data'
 
 export default {
-    name: "SldsTree",
+    name: 'SldsTree',
 
     components: {
         TreeItem
@@ -91,13 +91,13 @@ export default {
         },
 
         expandBranch(node) {
-            if (node.isLeaf || node.isDisabled) return;
+            if (node.isLeaf || node.isDisabled) return
 
             node.nodeRef.expanded = true
         },
 
         normalizeData(items) {
-            if (items == null || items.length === 0) return;
+            if (items == null || items.length === 0) return
 
             this.treedata = new TreeData()
             this.normalizedItems = items.map(item => this.treedata.cloneItems(item))
@@ -106,7 +106,7 @@ export default {
             this.childNodes = treeRoot ? treeRoot.children : []
             //this.selectedItem = treeRoot.selectedItem
             this.key = this.childNodes.length > 0 ? treeRoot.key : null
-            if (this.key) this.syncCurrentFocused();
+            if (this.key) this.syncCurrentFocused()
         },
 
         // eslint-disable-next-line no-unused-vars
@@ -151,7 +151,7 @@ export default {
         },
 
         syncCurrentFocused() {
-            if (this.selectedItem) this.currentFocusedItem = this.selectedItem;
+            if (this.selectedItem) this.currentFocusedItem = this.selectedItem
             else this.currentFocusedItem = this.defaultFocused
 
             this.updateCurrentFocusedChild()
@@ -162,7 +162,7 @@ export default {
                 this.focusedChild = this.treedata.getChildNum(this.currentFocusedItem.key)
             }
             else {
-                this.focusedChild = this.currentFocusedItem.key;
+                this.focusedChild = this.currentFocusedItem.key
                 this.treedata.updateCurrentFocusedChild(this.currentFocusedItem.key)
             }
         }

@@ -59,14 +59,14 @@
 </template>
 
 <script>
-import SldsBreadcrumb from "./breadcrumb";
-import SldsOverflowedBreadcrumb from "./overflowed-breadcrumb";
+import SldsBreadcrumb from './breadcrumb'
+import SldsOverflowedBreadcrumb from './overflowed-breadcrumb'
 import ClickOutside from '@/directives/click-outside/index'
 import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
 import Item from './item'
 
 export default {
-    name: "SldsBreadcrumbs",
+    name: 'SldsBreadcrumbs',
 
     components: {
         SldsBreadcrumb,
@@ -134,11 +134,11 @@ export default {
             if (this.items == null) return
 
             for (const item of this.items) {
-                let breadcrumbItem;
+                let breadcrumbItem
 
-                if (typeof item === "string") breadcrumbItem = new Item(item)
-                else if (typeof item === "object") breadcrumbItem = new Item(item.label, item.name, item.href)
-                else throw`[slds-breadcrumbs] items must be of type string or a valid breadcrumb object.`
+                if (typeof item === 'string') breadcrumbItem = new Item(item)
+                else if (typeof item === 'object') breadcrumbItem = new Item(item.label, item.name, item.href)
+                else throw'[slds-breadcrumbs] items must be of type string or a valid breadcrumb object.'
 
                 if (!this.hasOverflow || (this.hasOverflow && this.isOverflowNotPopulated)) this.$data.$_items.push(breadcrumbItem)
                 else this.$data.$_overflowedItems.push(breadcrumbItem)

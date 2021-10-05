@@ -25,6 +25,6 @@
 <script>
 
 export default {
-    name: "SldsCheckboxGroup"
+    name: 'SldsCheckboxGroup'
 }
 </script>

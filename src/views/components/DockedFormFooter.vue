@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "DockedFormFooter",
+    name: 'DockedFormFooter',
 }
 </script>

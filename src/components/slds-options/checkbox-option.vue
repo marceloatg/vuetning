@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    name: "CheckboxOption",
+    name: 'CheckboxOption',
 
     props: {
         disabled: Boolean,

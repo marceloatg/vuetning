@@ -37,7 +37,7 @@
 
 <script>
 export default {
-    name: "SldsDynamicMenu"
+    name: 'SldsDynamicMenu'
 }
 </script>
 

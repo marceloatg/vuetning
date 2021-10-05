@@ -59,7 +59,7 @@
 import SldsFormElement from '@/components/slds-form-element/form-element'
 
 export default {
-    name: "SldsCheckboxToggle",
+    name: 'SldsCheckboxToggle',
 
     components: {
         SldsFormElement,
@@ -88,8 +88,8 @@ export default {
 
     computed: {
         listeners() {
-            const listeners = {...this.$listeners};
-            delete listeners.input;
+            const listeners = {...this.$listeners}
+            delete listeners.input
             return listeners
         },
     },
@@ -102,9 +102,9 @@ export default {
 
     methods: {
         onInput() {
-            if (this.disabled) return;
-            this.$data.$_value = !this.$data.$_value;
-            this.$emit('input', this.$data.$_value);
+            if (this.disabled) return
+            this.$data.$_value = !this.$data.$_value
+            this.$emit('input', this.$data.$_value)
         }
     }
 }

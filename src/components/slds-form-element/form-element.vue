@@ -28,7 +28,7 @@
 import SldsLabel from '@/components/slds-label/label'
 
 export default {
-    name: "SldsFormElement",
+    name: 'SldsFormElement',
 
     components: {
         SldsLabel

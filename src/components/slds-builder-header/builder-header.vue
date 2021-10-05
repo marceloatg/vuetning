@@ -93,7 +93,7 @@
 
 <script>
 export default {
-    name: "SldsBuilderHeader"
+    name: 'SldsBuilderHeader'
 }
 </script>
 

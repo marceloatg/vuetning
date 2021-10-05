@@ -56,7 +56,7 @@ import SldsFormElement from '@/components/slds-form-element/form-element'
 import SldsIcon from '../slds-icon/icon'
 
 export default {
-    name: "SldsCheckboxButton",
+    name: 'SldsCheckboxButton',
 
     components: {
         SldsFormElement,
@@ -93,8 +93,8 @@ export default {
         },
 
         listeners() {
-            const listeners = {...this.$listeners};
-            delete listeners.input;
+            const listeners = {...this.$listeners}
+            delete listeners.input
             return listeners
         },
     },
@@ -107,9 +107,9 @@ export default {
 
     methods: {
         onClick() {
-            if (this.disabled) return;
-            this.$data.$_value = !this.$data.$_value;
-            this.$emit('input', this.$data.$_value);
+            if (this.disabled) return
+            this.$data.$_value = !this.$data.$_value
+            this.$emit('input', this.$data.$_value)
         }
     }
 }

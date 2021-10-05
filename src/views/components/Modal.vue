@@ -49,6 +49,6 @@
 
 <script>
 export default {
-    name: "Modal",
+    name: 'Modal',
 }
 </script>

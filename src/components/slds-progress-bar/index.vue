@@ -67,15 +67,15 @@
         },
         computed: {
             color() {
-                if (this.error) return 'slds-progress-bar__value_error';
-                if (this.success) return 'slds-progress-bar__value_success';
+                if (this.error) return 'slds-progress-bar__value_error'
+                if (this.success) return 'slds-progress-bar__value_success'
                 return null
             },
             thickness() {
-                if (this.xSmall) return 'slds-progress-bar_x-small';
-                if (this.small) return 'slds-progress-bar_small';
-                if (this.medium) return 'slds-progress-bar_medium';
-                if (this.large) return 'slds-progress-bar_large';
+                if (this.xSmall) return 'slds-progress-bar_x-small'
+                if (this.small) return 'slds-progress-bar_small'
+                if (this.medium) return 'slds-progress-bar_medium'
+                if (this.large) return 'slds-progress-bar_large'
                 return null
             },
         },

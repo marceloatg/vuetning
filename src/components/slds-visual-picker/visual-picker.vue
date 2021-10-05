@@ -58,7 +58,7 @@
 
 <script>
 export default {
-    name: "SldsVisualPicker"
+    name: 'SldsVisualPicker'
 }
 </script>
 

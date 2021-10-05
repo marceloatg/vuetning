@@ -46,7 +46,7 @@ import SldsButtonIcon from '../slds-button-icon/button-icon'
 import SldsIcon from '../slds-icon/icon'
 
 export default {
-    name: "SldsToast",
+    name: 'SldsToast',
 
     components: {
         SldsButtonIcon,
@@ -63,23 +63,23 @@ export default {
 
     computed: {
         iconClass() {
-            if (this.error) return 'slds-icon-utility-error';
-            if (this.success) return 'slds-icon-utility-success';
-            if (this.warning) return 'slds-icon-utility-warning';
-            return 'slds-icon-utility-info';
+            if (this.error) return 'slds-icon-utility-error'
+            if (this.success) return 'slds-icon-utility-success'
+            if (this.warning) return 'slds-icon-utility-warning'
+            return 'slds-icon-utility-info'
         },
 
         toastClass() {
-            if (this.error) return 'slds-theme_error';
-            if (this.success) return 'slds-theme_success';
-            if (this.warning) return 'slds-theme_warning';
-            return 'slds-theme_info';
+            if (this.error) return 'slds-theme_error'
+            if (this.success) return 'slds-theme_success'
+            if (this.warning) return 'slds-theme_warning'
+            return 'slds-theme_info'
         },
     },
 
     methods: {
         onClickClose() {
-            this.$emit('close');
+            this.$emit('close')
         },
     },
 }

@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "RadioButtonGroup",
+    name: 'RadioButtonGroup',
 }
 </script>

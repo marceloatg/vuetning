@@ -103,7 +103,7 @@
 
 <script>
 export default {
-    name: "SldsPath"
+    name: 'SldsPath'
 }
 </script>
 

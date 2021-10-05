@@ -36,10 +36,10 @@
 <script>
 import SldsCheckboxButtonOption from './checkbox-button-option'
 import SldsFormElement from '@/components/slds-form-element/form-element'
-import Option from "./option";
+import Option from './option'
 
 export default {
-    name: "SldsCheckboxButtonGroup",
+    name: 'SldsCheckboxButtonGroup',
 
     components: {
         SldsCheckboxButtonOption,
@@ -66,7 +66,7 @@ export default {
         options: {
             deep: true,
             handler() {
-                this.parseOptions();
+                this.parseOptions()
             }
         },
 
@@ -86,10 +86,10 @@ export default {
             if (this.options == null) return
 
             for (const option of this.options) {
-                if (typeof option === "string") {
+                if (typeof option === 'string') {
                     this.$data.$_options.push(new Option(option, this.disabled))
                 }
-                else if (typeof option === "object") {
+                else if (typeof option === 'object') {
                     this.$data.$_options.push(new Option(
                         option.label,
                         option.disabled || this.disabled,
@@ -97,19 +97,19 @@ export default {
                     ))
                 }
                 else {
-                    throw`[slds-checkbox-button-group] options must be of type string or a valid checkbox button option object.`
+                    throw'[slds-checkbox-button-group] options must be of type string or a valid checkbox button option object.'
                 }
             }
         },
 
         onClick(name) {
-            if (this.disabled) return;
+            if (this.disabled) return
 
             const index = this.$data.$_value.indexOf(name)
             if (index === -1) this.$data.$_value.push(name)
             else this.$data.$_value.splice(index, 1)
 
-            this.$emit('input', this.$data.$_value);
+            this.$emit('input', this.$data.$_value)
         }
     }
 }

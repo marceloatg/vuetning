@@ -52,7 +52,7 @@
 
 <script>
 export default {
-    name: "SldsScopedTabs"
+    name: 'SldsScopedTabs'
 }
 </script>
 

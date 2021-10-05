@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: "SldsSummaryDetail"
+    name: 'SldsSummaryDetail'
 }
 </script>
 

@@ -98,7 +98,7 @@
 
 <script>
 export default {
-    name: "SldsDuelingPicklist"
+    name: 'SldsDuelingPicklist'
 }
 </script>
 

@@ -30,7 +30,7 @@ import SldsIcon from '../slds-icon/icon'
 import IconPositionMixin from '@/mixins/icon-position-mixin'
 
 export default {
-    name: "SldsBadge",
+    name: 'SldsBadge',
 
     components: {
         SldsIcon

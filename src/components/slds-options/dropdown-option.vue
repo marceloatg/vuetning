@@ -82,10 +82,10 @@
 import SldsIcon from '@/components/slds-icon/icon'
 import SldsMediaObject from '@/components/slds-media-object/media-object'
 import SldsSvg from '@/components/slds-svg/svg'
-import {computeBackgroundClass} from "@/utils/icon-utils";
+import {computeBackgroundClass} from '@/utils/icon-utils'
 
 export default {
-    name: "SldsDropdownOption",
+    name: 'SldsDropdownOption',
 
     components: {
         SldsIcon,

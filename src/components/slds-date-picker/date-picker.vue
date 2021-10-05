@@ -203,7 +203,7 @@
 
 <script>
 export default {
-    name: "SldsDatePicker"
+    name: 'SldsDatePicker'
 }
 </script>
 

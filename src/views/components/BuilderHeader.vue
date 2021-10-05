@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: "BuilderHeader",
+    name: 'BuilderHeader',
 }
 </script>

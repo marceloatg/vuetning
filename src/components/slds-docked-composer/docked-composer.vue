@@ -54,7 +54,7 @@
 
 <script>
 export default {
-    name: "SldsDockedComposer"
+    name: 'SldsDockedComposer'
 }
 </script>
 

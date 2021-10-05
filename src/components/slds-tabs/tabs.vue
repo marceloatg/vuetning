@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import SldsTabContent from "@/components/slds-tabs/tab-content";
+import SldsTabContent from '@/components/slds-tabs/tab-content'
 import Tab from './tab-class'
-import SldsTab from "@/components/slds-tabs/tab";
+import SldsTab from '@/components/slds-tabs/tab'
 
 export default {
     name: 'SldsTabs',
@@ -133,7 +133,7 @@ export default {
                     this.$data.$_tabs.push(newTab)
                 }
                 else {
-                    throw`[slds-tabs] tabs must be of type string or a valid tab object.`
+                    throw'[slds-tabs] tabs must be of type string or a valid tab object.'
                 }
             }
         }

@@ -20,7 +20,7 @@
 
         <!-- Input -->
         <input
-            type="number"
+            :type="readonly ? 'text' : 'number'"
             class="slds-input"
             v-bind="attributes"
             :value="$data.$_value"
@@ -59,9 +59,12 @@
 <script>
 import SldsButtonIcon from '@/components/slds-button-icon/button-icon'
 import SldsFormElement from '@/components/slds-form-element/form-element'
+import numeral from 'numeral'
+import 'numeral/locales/pt-br'
+import 'numeral/locales/es-es'
 
 export default {
-    name: "SldsCounter",
+    name: 'SldsCounter',
 
     components: {
         SldsButtonIcon,
@@ -73,7 +76,9 @@ export default {
     props: {
         disabled: Boolean,
         error: Boolean,
+        format: String,
         label: String,
+        locale: String,
         max: [Number, String],
         min: [Number, String],
         readonly: Boolean,
@@ -90,8 +95,8 @@ export default {
 
     computed: {
         attributes() {
-            const attributes = {...this.$attrs};
-            delete attributes.type;
+            const attributes = {...this.$attrs}
+            delete attributes.type
             return attributes
         },
 
@@ -117,8 +122,7 @@ export default {
             this.formatValue()
         },
 
-        value(value) {
-            this.$data.$_value = value;
+        value() {
             this.formatValue()
         }
     },
@@ -137,14 +141,22 @@ export default {
             else if ((max != null) && (value >= max)) value = max
 
             if (this.value !== value) this.$emit('input', value)
+
+            if (this.readonly) {
+                if (this.locale) numeral.locale(this.locale)
+                this.$data.$_value = this.format ? numeral(value).format(this.format) : numeral(value).value()
+            }
+            else {
+                this.$data.$_value = value
+            }
         },
 
         onClickDecrement() {
             const min = (typeof this.min !== 'number' && this.min == null) ? null : Number(this.min)
             const value = Number(this.value) - Number(this.step)
 
-            if ((min != null) && (value < min)) return;
-            this.$emit('input', value);
+            if ((min != null) && (value < min)) return
+            this.$emit('input', value)
         },
 
         onClickIncrement() {
@@ -152,7 +164,7 @@ export default {
             const value = Number(this.value) + Number(this.step)
 
             if ((max != null) && (value > max)) return
-            this.$emit('input', value);
+            this.$emit('input', value)
         },
 
         onInput(event) {
@@ -163,5 +175,13 @@ export default {
 </script>
 
 <style scoped>
+.slds-input__button_decrement {
+    top: 12.5%;
+    transform: none;
+}
 
+.slds-input__button_increment {
+    top: 12.5%;
+    transform: none;
+}
 </style>

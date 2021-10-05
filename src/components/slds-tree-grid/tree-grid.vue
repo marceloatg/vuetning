@@ -428,7 +428,7 @@
 
 <script>
 export default {
-    name: "SldsTreeGrid"
+    name: 'SldsTreeGrid'
 }
 </script>
 

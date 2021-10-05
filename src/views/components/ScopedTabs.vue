@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: "ScopedTabs",
+    name: 'ScopedTabs',
 }
 </script>

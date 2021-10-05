@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "SldsWideRadioGroup"
+    name: 'SldsWideRadioGroup'
 }
 </script>
 

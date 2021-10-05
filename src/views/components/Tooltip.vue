@@ -49,6 +49,6 @@
 
 <script>
 export default {
-    name: "Tooltip",
+    name: 'Tooltip',
 }
 </script>

@@ -43,7 +43,7 @@
 
 <script>
 export default {
-    name: "Picklist",
+    name: 'Picklist',
 
     data() {
         return {
