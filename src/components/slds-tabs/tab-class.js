@@ -1,5 +1,3 @@
-import {kebabCase} from '@/utils/string-utils'
-
 export default class {
     key
     label
@@ -9,8 +7,8 @@ export default class {
 
     constructor(label, name = null) {
         this.label = label
-        this.name = name || kebabCase(label)
-        this.key = btoa(name)
+        this.name = name || label
+        this.key = btoa(this.name)
 
         if (label == null) console.warn('[slds-dropdown-option] option.label must be a valid string.')
     }
