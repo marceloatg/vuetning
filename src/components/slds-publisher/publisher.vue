@@ -1,40 +1,92 @@
 <template>
-    <div class="slds-publisher">
-        <label for="comment-text-input2" class="slds-publisher__toggle-visibility slds-m-bottom_small">
-            <span class="slds-assistive-text">Write a comment</span>To: My followers</label>
-        <textarea id="comment-text-input2" class="slds-publisher__input slds-textarea slds-text-longform" placeholder="Write a comment…"/>
+    <div class="slds-publisher" :class="{'slds-is-active':isActive}">
+
+        <!-- Label -->
+        <label v-if="label" class="slds-publisher__toggle-visibility slds-m-bottom_small">
+            {{ label }}
+        </label>
+
+        <!-- Input -->
+        <textarea
+            ref="input"
+            :value="value"
+            v-bind="$attrs"
+            class="slds-publisher__input slds-textarea slds-text-longform"
+            @focus="onFocus"
+            @input="$emit('input', $event.target.value)"
+            v-on="listeners"
+        />
+
         <div class="slds-publisher__actions slds-grid slds-grid_align-spread">
-            <ul class="slds-grid slds-publisher__toggle-visibility">
-                <li>
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Add User">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#adduser"/>
-                        </svg>
-                        <span class="slds-assistive-text">Add User</span>
-                    </button>
-                </li>
-                <li>
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Attach a file">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#attach"/>
-                        </svg>
-                        <span class="slds-assistive-text">Attach a file</span>
-                    </button>
-                </li>
-            </ul>
-            <button class="slds-button slds-button_brand">
-                Share
-            </button>
+
+            <div class="slds-grid slds-publisher__toggle-visibility">
+                <slot name="actions"/>
+            </div>
+
+            <!-- Button -->
+            <slds-button
+                brand
+                :label="buttonLabel"
+                :spinner="loading"
+                @click="onClickShare"
+            />
+
         </div>
+
     </div>
 </template>
 
 <script>
 export default {
-    name: 'SldsPublisher'
+    name: 'SldsPublisher',
+
+    inheritAttrs: false,
+
+    props: {
+        buttonLabel: {type: String, default: 'Share'},
+        label: String,
+        loading: Boolean,
+        richText: Boolean,
+        value: {}
+    },
+
+    data() {
+        return {
+            isActive: false,
+        }
+    },
+
+    computed: {
+        listeners() {
+            const listeners = {...this.$listeners}
+            delete listeners.input
+            return listeners
+        },
+    },
+
+    mounted() {
+        this.$refs.input.addEventListener('keyup', this.onKeyUp)
+    },
+
+    beforeDestroy() {
+        this.$refs.input.removeEventListener('keyup', this.onKeyUp)
+    },
+
+    methods: {
+        onClickShare() {
+            if (this.isActive) this.$emit('post')
+            else this.isActive = true
+        },
+
+        onFocus() {
+            if (!this.isActive) this.isActive = true
+        },
+
+        onKeyUp(event) {
+            if (event.key === 'Enter' && this.$refs.input === document.activeElement) {
+                event.stopPropagation()
+            }
+        },
+    },
 }
 </script>
-
-<style scoped>
-
-</style>
