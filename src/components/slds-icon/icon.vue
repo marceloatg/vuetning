@@ -27,7 +27,7 @@ export default {
     props: {
         assistiveText: String,
         brand: Boolean,
-        currentColor: Boolean,
+        currentColor: [Boolean, String],
         error: Boolean,
         icon: {type: String, required: true},
         iconClass: [Array, String],

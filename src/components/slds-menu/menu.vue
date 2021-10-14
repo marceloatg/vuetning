@@ -289,7 +289,7 @@ export default {
 
         selectItem(value) {
             this.hideDropdown()
-            this.$emit('click', value)
+            this.$emit(value)
             this.clearFocusedOption()
         },
 
@@ -302,3 +302,7 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+@import '../../directives/animated/animations';
+</style>
