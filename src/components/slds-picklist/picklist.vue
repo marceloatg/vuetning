@@ -1,7 +1,7 @@
 <template>
     <slds-form-element
         :label="label"
-        :error="error"
+        :error="error && !$data.$_isOpen"
         :required="required"
         :read-only="readonly"
     >
