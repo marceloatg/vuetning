@@ -6,6 +6,7 @@
         :error="error"
         :borderless="borderless"
         :control-class="controlClass"
+        v-bind="dataAttributes"
     >
         <!-- Pre fixed text -->
         <span v-if="addonPre" class="slds-form-element__addon">
@@ -29,7 +30,7 @@
         <input
             v-else
             ref="input"
-            v-bind="$attrs"
+            v-bind="attributes"
             :value="$data.$_value"
             :readonly="readonly"
             :disabled="disabled"
@@ -116,6 +117,8 @@ export default {
         iconWarning: Boolean,
         label: String,
         loading: Boolean,
+        maxlength: [Number, String],
+        placeholder: String,
         readonly: Boolean,
         required: Boolean,
         value: {}
@@ -129,6 +132,22 @@ export default {
     },
 
     computed: {
+        attributes() {
+            const attributes = {
+                ...this.$attrs,
+                maxlength: this.maxlength,
+                placeholder: this.placeholder,
+            }
+
+            for (const attributesKey in attributes) {
+                if (attributesKey.startsWith('data-')) {
+                    delete attributes[attributesKey]
+                }
+            }
+
+            return attributes
+        },
+
         controlClass() {
             const classNames = ['slds-input-has-icon']
 
@@ -138,6 +157,18 @@ export default {
             if (this.addonPre || this.addonPost) classNames.push('slds-input-has-fixed-addon')
 
             return classNames
+        },
+
+        dataAttributes() {
+            const attributes = {...this.$attrs}
+
+            for (const attributesKey in attributes) {
+                if (!attributesKey.startsWith('data-')) {
+                    delete attributes[attributesKey]
+                }
+            }
+
+            return attributes
         },
 
         iconClass() {
