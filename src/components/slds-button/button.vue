@@ -4,6 +4,7 @@
         :type="type"
         class="slds-button"
         :class="buttonClass"
+        :disabled="disabled"
         v-on="listeners"
         @click="onClick"
     >
@@ -60,6 +61,7 @@ export default {
     props: {
         brand: Boolean,
         destructive: Boolean,
+        disabled: Boolean,
         icon: String,
         inverse: Boolean,
         label: String,
