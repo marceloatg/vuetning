@@ -7,10 +7,10 @@
 
             <!-- Title -->
             <div class="slds-page-header__col-title">
-                <div class="slds-media">
+                <slds-media-object>
 
                     <!-- Figure -->
-                    <div v-if="icon" class="slds-media__figure">
+                    <template v-if="hasIcon" #figure>
                         <slds-icon
                             :icon="icon"
                             inverse
@@ -18,12 +18,12 @@
                             :assistive-text="assistiveText"
                             :icon-class="[iconClass,'slds-page-header__icon']"
                         />
-                    </div>
+                    </template>
 
                     <!-- Base body -->
-                    <div v-if="base" class="slds-media__body">
+                    <template v-if="hasBaseBody" #default>
 
-                        <!-- Name title -->
+                        <!-- Title -->
                         <div class="slds-page-header__name">
                             <div class="slds-page-header__name-title">
                                 <h1>
@@ -34,67 +34,67 @@
                             </div>
                         </div>
 
-                        <!-- Supporting details -->
-                        <p v-if="details" class="slds-page-header__name-meta">
-                            {{ details }}
+                        <!-- Meta text -->
+                        <p class="slds-page-header__name-meta">
+                            {{ meta }}
                         </p>
 
-                    </div>
+                    </template>
 
                     <!-- Dropdown body -->
-                    <div v-else class="slds-media__body">
+                    <template v-else #default>
                         <div class="slds-page-header__name">
-
-                            <!-- Name title -->
                             <div class="slds-page-header__name-title">
                                 <h1>
 
-                                    <!-- Breadcrumb/Details -->
-                                    <slot name="breadcrumb">
-                                        <span>
-                                            {{ details }}
-                                        </span>
+                                    <!-- Breadcrumbs/Name -->
+                                    <slot name="breadcrumbs">
+                                        <div>
+                                            {{ name }}
+                                        </div>
                                     </slot>
 
                                     <!-- Dropdown title -->
-                                    <span v-if="$slots.dropdown" class="slds-p-right-x-small">
-                                        <div
-                                            v-click-outside="hideDropdown"
-                                            class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                                    <span
+                                        v-if="hasDropdown"
+                                        v-click-outside="hideDropdown"
+                                        class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                                    >
+
+                                        <!-- Trigger -->
+                                        <span
+                                            class="slds-page-header__title slds-button slds-button_reset slds-type-focus slds-truncate"
+                                            @click="onClickDropdown"
                                         >
 
-                                            <!-- Trigger -->
-                                            <div
-                                                class="slds-page-header__title slds-button slds-button_reset slds-type-focus slds-truncate"
-                                                @click="onClickDropdown"
+                                            {{ title }}
+
+                                            <slds-icon
+                                                icon="utility:down"
+                                                current
+                                                x-small
+                                                class="slds-m-left_x-small"
+                                            />
+
+                                        </span>
+
+                                        <!-- Dropdown -->
+                                        <transition v-bind="dropdownTransitionProperties">
+                                            <slds-page-header-dropdown
+                                                v-if="$data.$_isOpen"
+                                                :value="selectedListView"
+                                                :options="filteredOptions"
+                                                :focused-option="$data.$_focusedOption"
+                                                :is-loading="loading"
+                                                @click="onClickOption"
+                                                @mouseover="onMouseOverOption"
                                             >
-                                                {{ title }}
-                                                <slds-icon
-                                                    icon="utility:down"
-                                                    current
-                                                    x-small
-                                                    class="slds-m-left_x-small"
-                                                />
-                                            </div>
+                                                <template v-if="$slots.options">
+                                                    <slot name="options"/>
+                                                </template>
+                                            </slds-page-header-dropdown>
+                                        </transition>
 
-                                            <!-- Dropdown -->
-                                            <transition v-bind="dropdownTransitionProperties">
-                                                <slds-page-header-dropdown
-                                                    v-if="$data.$_isOpen"
-                                                    :value="selectedListView"
-                                                    :options="filteredOptions"
-                                                    :focused-option="$data.$_focusedOption"
-                                                    :is-loading="loading"
-                                                    @click="onClickOption"
-                                                    @mouseover="onMouseOverOption"
-                                                >
-                                                    <template v-if="$slots.options">
-                                                        <slot name="options"/>
-                                                    </template>
-                                                </slds-page-header-dropdown>
-                                            </transition>
-
-                                        </div>
                                     </span>
 
                                     <!-- Title -->
@@ -104,11 +104,10 @@
 
                                 </h1>
                             </div>
-
                         </div>
-                    </div>
+                    </template>
 
-                </div>
+                </slds-media-object>
             </div>
 
             <!-- Actions -->
@@ -121,17 +120,13 @@
         </div>
 
         <!-- Lower row -->
-        <div v-if="objectHome" class="slds-page-header__row">
+        <div v-if="objectHome || relatedList" class="slds-page-header__row">
 
             <!-- Meta -->
             <div class="slds-page-header__col-meta">
-
-                <slot v-if="$slots.meta" name="meta"/>
-
-                <p v-else class="slds-page-header__meta-text">
-                    {{ meta || '' }}
+                <p class="slds-page-header__meta-text">
+                    {{ meta }}
                 </p>
-
             </div>
 
             <!-- Controls -->
@@ -184,16 +179,28 @@ export default {
 
     props: {
         assistiveText: String,
-        base: Boolean,
         details: String,
+        hasDropdown: Boolean,
         icon: String,
         iconClass: String,
         listViewOptions: Array,
         meta: String,
+        name: String,
         objectHome: Boolean,
         recordHome: Boolean,
+        relatedList: Boolean,
         selectedListView: String,
         title: {type: String, required: true}
+    },
+
+    computed: {
+        hasBaseBody() {
+            return !this.objectHome && !this.recordHome && !this.relatedList
+        },
+
+        hasIcon() {
+            return !this.relatedList && !!this.icon
+        },
     },
 
     watch: {
@@ -257,6 +264,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../../directives/animated/animations';
 
 .control-placeholder {
     height: 2rem;
