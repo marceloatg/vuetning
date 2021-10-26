@@ -90,11 +90,11 @@ export default {
             },
             strings: ['Menu Item One', 'Menu Item Two', 'Menu Item Three', 'Account', 'Child Account'],
             objects: [
-                {key: '0015600000Tf3flAAC', label: 'Menu Item One', name: 'overflow-1'},
-                {key: '0015600000Tf3flAAD', label: 'Menu Item Two', name: 'overflow-2'},
-                {key: '0015600000Tf3flAAE', label: 'Menu Item Three', name: 'overflow-3'},
-                {key: '0015600000Tf3flAAB', label: 'Account', name: 'parent'},
-                {key: '0015600000TOWtnAAH', label: 'Child Account', name: 'child'},
+                {label: 'Menu Item One', name: 'overflow-1'},
+                {label: 'Menu Item Two', name: 'overflow-2'},
+                {label: 'Menu Item Three', name: 'overflow-3'},
+                {label: 'Account', name: 'parent'},
+                {label: 'Child Account', name: 'child'},
             ]
         }
     },

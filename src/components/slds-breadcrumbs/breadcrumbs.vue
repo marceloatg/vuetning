@@ -147,3 +147,7 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+@import '../../directives/animated/animations';
+</style>
