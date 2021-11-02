@@ -273,11 +273,7 @@ export default {
         },
 
         itemsLimitError() {
-            setTimeout(() => {
-                console.log('It seems the scroller element isn\'t scrolling, so it tries to render all the items at once.', 'Scroller:', this.$el)
-                console.log('Make sure the scroller has a fixed height (or width) and \'overflow-y\' (or \'overflow-x\') set to \'auto\' so it can scroll correctly and only render the items visible in the scroll viewport.')
-            })
-            throw new Error('Rendered items limit reached')
+            throw new Error('Rendered items limit reached. Rendering all items at once.')
         },
 
         removeListeners() {
@@ -504,8 +500,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .virtual-scroller {
     position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     &:not(.page-mode) {
         overflow-y: auto;
@@ -537,4 +538,5 @@ export default {
     overflow: hidden;
     position: relative;
 }
+
 </style>

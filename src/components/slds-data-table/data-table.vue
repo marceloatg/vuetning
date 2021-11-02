@@ -258,6 +258,7 @@ const DEFAULT_MINIMUM_WIDTH = 100
 const LINE_ACTIONS_WIDTH = 48
 const LINE_COUNTER_WIDTH = 60
 const LINE_CHECKBOX_WIDTH = 32
+const ROUNDING_ERROR = 1
 
 export default {
     name: 'SldsDataTable',
@@ -345,6 +346,7 @@ export default {
 
     async mounted() {
         this.$refs.root.style.setProperty('--row-height', `${this.rowHeight}px`)
+        await this.$nextTick()
 
         await this.getScrollbarWidth()
         this.getTableWidth()
@@ -419,7 +421,7 @@ export default {
             }
 
             if (this.$refs.root != null) {
-                this.rowWidth = this.tableWidth - this.scrollbarWidth
+                this.rowWidth = this.tableWidth - this.scrollbarWidth - ROUNDING_ERROR
                 this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`)
             }
         },
@@ -693,7 +695,6 @@ $table-color-hover: #f3f2f2;
 
     &_body {
         height: calc(100% - #{$header-height});
-        overflow-x: auto;
         border-top: 1px solid #dddbda;
     }
 
