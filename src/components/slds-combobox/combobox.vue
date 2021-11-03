@@ -4,6 +4,7 @@
         :error="error && !$data.$_isOpen"
         :required="required"
         :read-only="readonly"
+        v-bind="dataAttributes"
     >
 
         <!-- View mode -->
@@ -43,7 +44,7 @@
                             type="text"
                             role="textbox"
                             class="slds-input slds-combobox__input slds-combobox__input-value"
-                            v-bind="$attrs"
+                            v-bind="attributes"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             v-on="listeners"
@@ -75,7 +76,7 @@
                             type="text"
                             role="textbox"
                             class="slds-input slds-combobox__input"
-                            v-bind="$attrs"
+                            v-bind="attributes"
                             :value="selectedOptionLabel"
                             :disabled="disabled"
                             :placeholder="placeholder"
@@ -191,6 +192,22 @@ export default {
     },
 
     computed: {
+        attributes() {
+            const attributes = {
+                ...this.$attrs,
+                maxlength: this.maxlength,
+                placeholder: this.placeholder,
+            }
+
+            for (const attributesKey in attributes) {
+                if (attributesKey.startsWith('data-')) {
+                    delete attributes[attributesKey]
+                }
+            }
+
+            return attributes
+        },
+
         buttonTransitionName() {
             const isAnimated = (this.$vuetning && this.$vuetning.hasAnimations)
             return isAnimated ? 'fade' : ''
@@ -205,6 +222,18 @@ export default {
             if (this.xLarge) return 'slds-size_x-large'
             if (this.xxLarge) return 'slds-size_xx-large'
             return null
+        },
+
+        dataAttributes() {
+            const attributes = {...this.$attrs}
+
+            for (const attributesKey in attributes) {
+                if (!attributesKey.startsWith('data-')) {
+                    delete attributes[attributesKey]
+                }
+            }
+
+            return attributes
         },
 
         dropdownClass() {
