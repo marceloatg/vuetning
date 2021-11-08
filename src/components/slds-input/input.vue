@@ -121,6 +121,7 @@ export default {
         placeholder: String,
         readonly: Boolean,
         required: Boolean,
+        type: {type: String, default: 'text'},
         value: {}
     },
 
@@ -137,6 +138,7 @@ export default {
                 ...this.$attrs,
                 maxlength: this.maxlength,
                 placeholder: this.placeholder,
+                type: this.type,
             }
 
             for (const attributesKey in attributes) {
