@@ -74,8 +74,8 @@
 
 <script>
 import {mixin as clickAwayMixin} from 'vue-clickaway'
-import SldsButtonIcon from '../slds-button-icon/button-icon'
-import SldsIcon from '../slds-icon/icon'
+import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
+import SldsIcon from '../slds-icon/slds-icon'
 
 export default {
     name: 'SldsDockedComposer',

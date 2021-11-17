@@ -1,5 +1,5 @@
-import sldsComponent from './file-selector.vue'
+import sldsFileSelector from './slds-file-selector.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsFileSelector.name, sldsFileSelector)
 }

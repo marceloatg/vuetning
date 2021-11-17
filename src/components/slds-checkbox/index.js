@@ -1,5 +1,5 @@
-import sldsComponent from './slds-checkbox.vue'
+import sldsCheckbox from './slds-checkbox.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsCheckbox.name, sldsCheckbox)
 }

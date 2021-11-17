@@ -1,5 +1,5 @@
-import sldsComponent from './app-launcher.vue'
+import sldsAppLauncher from './slds-app-launcher.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsAppLauncher.name, sldsAppLauncher)
 }

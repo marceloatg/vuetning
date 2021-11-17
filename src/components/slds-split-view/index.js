@@ -1,5 +1,5 @@
-import sldsComponent from './split-view.vue'
+import sldsSplitView from './slds-split-view.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSplitView.name, sldsSplitView)
 }

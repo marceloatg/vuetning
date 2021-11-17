@@ -1,5 +1,5 @@
-import sldsComponent from './summary-detail.vue'
+import sldsSummaryDetail from './slds-summary-detail.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSummaryDetail.name, sldsSummaryDetail)
 }

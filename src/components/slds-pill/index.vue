@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SldsSvg from '../slds-svg/svg'
+    import SldsSvg from '../slds-svg/slds-svg'
 
     export default {
         name: 'SldsPill',

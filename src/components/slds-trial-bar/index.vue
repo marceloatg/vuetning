@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import SldsButton from '../slds-button/button'
+import SldsButton from '../slds-button/slds-button'
 
 export default {
     name: 'SldsTrialBar',

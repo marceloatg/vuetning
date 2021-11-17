@@ -1,4 +1,4 @@
-import sldsIllustration from './illustration.vue'
+import sldsIllustration from './slds-illustration.vue'
 
 export default Vue => {
     Vue.component(sldsIllustration.name, sldsIllustration)

@@ -1,5 +1,5 @@
-import sldsComponent from './expression.vue'
+import sldsExpression from './slds-expression.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsExpression.name, sldsExpression)
 }

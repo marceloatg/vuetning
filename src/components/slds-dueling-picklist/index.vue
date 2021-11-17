@@ -85,7 +85,7 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/button-icon'
+    import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
     import DuelingPicklistOption from './option'
 
     export default {

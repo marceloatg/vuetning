@@ -1,5 +1,5 @@
-import sldsComponent from './formatted-date-time.vue'
+import sldsFormattedDateTime from './slds-formatted-date-time.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsFormattedDateTime.name, sldsFormattedDateTime)
 }

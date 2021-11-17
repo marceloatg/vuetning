@@ -1,5 +1,5 @@
-import sldsComponent from './dynamic-icon.vue'
+import sldsDynamicIcon from './slds-dynamic-icon.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDynamicIcon.name, sldsDynamicIcon)
 }

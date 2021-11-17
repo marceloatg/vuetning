@@ -1,5 +1,5 @@
-import sldsComponent from './tree.vue'
+import sldsTree from './slds-tree.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTree.name, sldsTree)
 }

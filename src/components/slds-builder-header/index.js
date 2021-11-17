@@ -1,5 +1,5 @@
-import sldsComponent from './builder-header.vue'
+import sldsBuilderHeader from './slds-builder-header.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsBuilderHeader.name, sldsBuilderHeader)
 }

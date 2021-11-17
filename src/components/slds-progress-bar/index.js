@@ -1,5 +1,5 @@
-import sldsComponent from './progress-bar.vue'
+import sldsProgressBar from './slds-progress-bar.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsProgressBar.name, sldsProgressBar)
 }

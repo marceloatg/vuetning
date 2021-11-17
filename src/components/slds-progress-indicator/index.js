@@ -1,5 +1,5 @@
-import sldsComponent from './progress-indicator.vue'
+import sldsProgressIndicator from './slds-progress-indicator.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsProgressIndicator.name, sldsProgressIndicator)
 }

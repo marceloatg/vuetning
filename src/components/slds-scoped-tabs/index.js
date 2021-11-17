@@ -1,6 +1,6 @@
-import sldsScopedTabs from './scoped-tabs'
-import sldsScopedTab from './scoped-tab'
-import sldsScopedTabContent from './scoped-tab-content'
+import sldsScopedTabs from './slds-scoped-tabs'
+import sldsScopedTab from './slds-scoped-tab'
+import sldsScopedTabContent from './slds-scoped-tab-content'
 
 
 export default Vue => {

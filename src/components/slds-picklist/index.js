@@ -1,6 +1,6 @@
-import sldsPicklist from './picklist.vue'
-import sldsPicklistOption from './picklist-option'
-import sldsPicklistHeading from './picklist-heading'
+import sldsPicklist from './slds-picklist.vue'
+import sldsPicklistOption from './slds-picklist-option'
+import sldsPicklistHeading from './slds-picklist-heading'
 
 export default Vue => {
     Vue.component(sldsPicklist.name, sldsPicklist)

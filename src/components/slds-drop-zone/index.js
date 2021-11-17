@@ -1,5 +1,5 @@
-import sldsComponent from './index'
+import sldsDropZone from './index'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDropZone.name, sldsDropZone)
 }

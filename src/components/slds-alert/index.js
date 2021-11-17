@@ -1,5 +1,5 @@
-import sldsComponent from './alert.vue'
+import sldsAlert from './slds-alert.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsAlert.name, sldsAlert)
 }

@@ -1,6 +1,6 @@
-import sldsVerticalNavigation from './vertical-navigation'
-import sldsVerticalNavigationSection from './vertical-navigation-section'
-import sldsVerticalNavigationItem from './vertical-navigation-item'
+import sldsVerticalNavigation from './slds-vertical-navigation'
+import sldsVerticalNavigationSection from './slds-vertical-navigation-section'
+import sldsVerticalNavigationItem from './slds-vertical-navigation-item'
 
 export default Vue => {
     Vue.component(sldsVerticalNavigation.name, sldsVerticalNavigation)

@@ -1,5 +1,5 @@
-import sldsComponent from './avatar.vue'
+import sldsAvatar from './slds-avatar.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsAvatar.name, sldsAvatar)
 }

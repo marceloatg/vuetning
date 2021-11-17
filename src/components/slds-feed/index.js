@@ -1,5 +1,5 @@
-import sldsComponent from './feed.vue'
+import sldsFeed from './slds-feed.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsFeed.name, sldsFeed)
 }

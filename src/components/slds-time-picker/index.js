@@ -1,5 +1,5 @@
-import sldsComponent from './time-picker.vue'
+import sldsTimePicker from './slds-time-picker.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTimePicker.name, sldsTimePicker)
 }

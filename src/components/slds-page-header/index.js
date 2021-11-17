@@ -1,5 +1,5 @@
-import sldsPageHeader from './page-header.vue'
-import sldsPageHeaderDetail from './page-header-detail.vue'
+import sldsPageHeader from './slds-page-header.vue'
+import sldsPageHeaderDetail from './slds-page-header-detail.vue'
 
 export default Vue => {
     Vue.component(sldsPageHeader.name, sldsPageHeader)
