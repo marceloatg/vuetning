@@ -1,5 +1,5 @@
-import sldsComponent from './global-navigation.vue'
+import sldsGlobalNavigation from './slds-global-navigation.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsGlobalNavigation.name, sldsGlobalNavigation)
 }

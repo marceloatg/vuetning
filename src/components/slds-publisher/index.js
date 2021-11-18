@@ -1,5 +1,5 @@
-import sldsComponent from './publisher.vue'
+import sldsPublisher from './slds-publisher.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsPublisher.name, sldsPublisher)
 }

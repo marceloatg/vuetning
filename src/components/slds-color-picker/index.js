@@ -1,5 +1,5 @@
-import sldsComponent from './color-picker.vue'
+import sldsColorPicker from './slds-color-picker.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsColorPicker.name, sldsColorPicker)
 }

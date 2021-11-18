@@ -1,5 +1,5 @@
-import sldsComponent from './map.vue'
+import sldsMap from './slds-map.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsMap.name, sldsMap)
 }

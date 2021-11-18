@@ -1,5 +1,5 @@
-import sldsComponent from './docked-composer.vue'
+import sldsDockedComposer from './slds-docked-composer.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDockedComposer.name, sldsDockedComposer)
 }

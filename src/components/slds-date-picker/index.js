@@ -1,5 +1,5 @@
-import sldsComponent from './date-picker'
+import sldsDatePicker from './slds-date-picker'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDatePicker.name, sldsDatePicker)
 }

@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import SldsFormElement from '@/components/slds-form-element/form-element'
-import SldsIcon from '../slds-icon/icon'
+import SldsFormElement from '@/components/slds-form-element/slds-form-element'
+import SldsIcon from '../slds-icon/slds-icon'
 
 export default {
     name: 'SldsCheckboxButton',

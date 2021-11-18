@@ -1,5 +1,5 @@
-import sldsComponent from './wide-radio-group.vue'
+import sldsWideRadioButton from './slds-wide-radio-group.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsWideRadioButton.name, sldsWideRadioButton)
 }

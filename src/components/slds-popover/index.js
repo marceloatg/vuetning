@@ -1,5 +1,5 @@
-import sldsComponent from './popover.vue'
+import sldsPopover from './slds-popover.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsPopover.name, sldsPopover)
 }

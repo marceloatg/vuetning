@@ -1,5 +1,5 @@
-import sldsComponent from './list-builder.vue'
+import sldsListBuilder from './slds-list-builder.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsListBuilder.name, sldsListBuilder)
 }

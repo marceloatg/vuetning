@@ -1,5 +1,5 @@
-import sldsComponent from './button-icon.vue'
+import sldsButtonIcon from './slds-button-icon.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsButtonIcon.name, sldsButtonIcon)
 }

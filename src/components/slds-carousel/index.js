@@ -1,5 +1,5 @@
-import sldsComponent from './carousel.vue'
+import sldsCarousel from './slds-carousel.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsCarousel.name, sldsCarousel)
 }

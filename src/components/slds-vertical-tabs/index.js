@@ -1,5 +1,5 @@
-import sldsComponent from './vertical-tabs.vue'
+import sldsVerticalTabs from './slds-vertical-tabs.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsVerticalTabs.name, sldsVerticalTabs)
 }

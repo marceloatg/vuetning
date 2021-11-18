@@ -1,5 +1,5 @@
-import sldsComponent from './docked-form-footer.vue'
+import sldsDockedFormFooter from './slds-docked-form-footer.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDockedFormFooter.name, sldsDockedFormFooter)
 }

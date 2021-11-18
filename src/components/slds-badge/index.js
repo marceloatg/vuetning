@@ -1,5 +1,5 @@
-import sldsComponent from './badge.vue'
+import sldsBadge from './slds-badge.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsBadge.name, sldsBadge)
 }

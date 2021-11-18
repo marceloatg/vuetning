@@ -1,5 +1,5 @@
-import sldsComponent from './trial-bar.vue'
+import sldsTrialBar from './slds-trial-bar.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTrialBar.name, sldsTrialBar)
 }

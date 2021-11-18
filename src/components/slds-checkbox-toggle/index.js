@@ -1,5 +1,5 @@
-import sldsComponent from './checkbox-toggle.vue'
+import sldsCheckboxToggle from './slds-checkbox-toggle.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsCheckboxToggle.name, sldsCheckboxToggle)
 }

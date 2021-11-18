@@ -1,5 +1,5 @@
-import sldsComponent from './index.vue'
+import sldsPagination from './slds-pagination.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsPagination.name, sldsPagination)
 }

@@ -1,5 +1,5 @@
-import sldsComponent from './expandable-section.vue'
+import sldsExpandableSection from './slds-expandable-section.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsExpandableSection.name, sldsExpandableSection)
 }

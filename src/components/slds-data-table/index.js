@@ -1,4 +1,4 @@
-import sldsDataTable from './data-table.vue'
+import sldsDataTable from './slds-data-table.vue'
 import Clipboard from 'v-clipboard'
 
 export default Vue => {

@@ -1,5 +1,5 @@
-import sldsComponent from './radio-group.vue'
+import sldsRadioGroup from './slds-radio-group.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsRadioGroup.name, sldsRadioGroup)
 }

@@ -1,5 +1,5 @@
-import sldsComponent from './input.vue'
+import sldsInput from './slds-input.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsInput.name, sldsInput)
 }

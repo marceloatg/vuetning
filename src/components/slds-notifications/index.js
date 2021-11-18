@@ -1,5 +1,7 @@
-import sldsComponent from './notifications.vue'
+import sldsNotification from './slds-notification.vue'
+import sldsNotifications from './slds-notifications.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsNotification.name, sldsNotification)
+    Vue.component(sldsNotifications.name, sldsNotifications)
 }

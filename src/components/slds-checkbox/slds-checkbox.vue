@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import SldsCheckboxOption from '@/components/slds-options/checkbox-option'
-import SldsFormElement from '@/components/slds-form-element/form-element'
-import SldsIcon from '@/components/slds-icon/icon'
+import SldsCheckboxOption from '@/components/slds-options/slds-checkbox-option'
+import SldsFormElement from '@/components/slds-form-element/slds-form-element'
+import SldsIcon from '@/components/slds-icon/slds-icon'
 
 export default {
     name: 'SldsCheckbox',

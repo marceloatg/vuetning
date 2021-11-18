@@ -1,5 +1,5 @@
-import sldsComponent from './slider.vue'
+import sldsSlider from './slds-slider.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSlider.name, sldsSlider)
 }
