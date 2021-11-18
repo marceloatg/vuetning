@@ -1,6 +1,6 @@
-# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
+# List Builder ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Trial bar components are used to provide an interactive and educational prospect experience for setup.
+The List Builder is a quick, visual and efficient ‘shopping cart’ approach to adding multiple items to a parent object.
 
 ## Props
 
@@ -30,4 +30,4 @@ Trial bar components are used to provide an interactive and educational prospect
 ```
 
 ## Salesforce documentation
-[SLDS documentation](https://www.lightningdesignsystem.com/components/trial-bar/)
+[SLDS documentation](https://www.lightningdesignsystem.com/components/list-builder/)

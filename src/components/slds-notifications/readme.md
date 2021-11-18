@@ -1,47 +1,32 @@
-# Notification ![avaliability](https://img.shields.io/badge/avaliability-available-green.svg)  ![testing](https://img.shields.io/badge/testing-tested-green.svg) ![documentation](https://img.shields.io/badge/documentation-documented-green.svg)
+# Notifications ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Notifications serve as a feedback and confirmation mechanism that comes into the page at the top right.
+Notifications serve as a feedback & confirmation mechanism that comes in at the top right.
 
 ## Props
 
-| Name      | Type   | Required | Default | Description |
-| --------- | ------ | -------- | ------- | ----------- |
-| iconClass | String | false    |         | Class applied to the inner icon component. |
-| iconName  | String | true     |         | The Lightning Design System name of the icon.<br>Names are written in the format 'standard:event' where 'standard' is the category, and 'event' is the specific icon to be displayed.<br>Only standard icons should be used in this component. |
-| message   | String | false    |         | Message text, displayed as a paragraph. |
-| subject   | String | false    |         | Subject text, displayed as a header. |
+| Name      | Type    | Required | Default | Description |
+| -------- | -------- | -------- | ------- | ----------- |
+| propName | PropType | false    |         | Prop description. |
+
+## Slots
+
+| Name    | Optional | Description |
+| ------- | -------- | ----------- |
+| default | true     | Slot description |
+
 
 ## Events
 
-| Name           | Arguments | Description |
-| -------------- | --------- | ----------- |
-| click          |           | Fired when the close button is clicked.|
-| close          |           | Fired when the notification is clicked.|
+| Name       | Arguments    | Description                            |
+| ---------- | ------------ | -------------------------------------- |
+| event-name | argumentName | Fired when foo. |
 
 ## Examples
 
 ```vue
-<!-- Single notification -->
-<slds-notification 
-    icon-name="standard:event" 
-    message="Notification message"
-    subject="Notification subject"
-    @click="onClick()"
-    @close="onClose()"/>
-
-<!-- Multiple notifications -->
-<div class="slds-notification-container">
-    <slds-notification
-        v-for="(notification, index) in notifications"
-        :icon-class="notification.iconClass"
-        :icon-name="notification.iconName"
-        :key="notification.name"
-        :message="notification.message"
-        :name="notification.name"
-        :subject="notification.subject"
-        @click="onClick(index)"
-        @close="onClose(index)"/>
-</div>
+<slds-my-component>
+    Lorem ipsum dolor sit amet.
+</slds-my-component>
 ```
 
 ## Salesforce documentation

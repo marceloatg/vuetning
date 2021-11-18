@@ -1,6 +1,6 @@
-# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
+# Builder Header ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Trial bar components are used to provide an interactive and educational prospect experience for setup.
+Every builder needs a builder header, which contains basic navigation elements. It also shows the builder type and content name.
 
 ## Props
 
@@ -30,4 +30,4 @@ Trial bar components are used to provide an interactive and educational prospect
 ```
 
 ## Salesforce documentation
-[SLDS documentation](https://www.lightningdesignsystem.com/components/trial-bar/)
+[SLDS documentation](https://www.lightningdesignsystem.com/components/builder-header/)

@@ -1,6 +1,6 @@
-# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
+# Rich Text Editor ![avaliability](https://img.shields.io/badge/avaliability-alpha-yellow.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Trial bar components are used to provide an interactive and educational prospect experience for setup.
+The Rich Text Editor is a textarea with added capabilities for use in various publishers.
 
 ## Props
 
@@ -30,4 +30,4 @@ Trial bar components are used to provide an interactive and educational prospect
 ```
 
 ## Salesforce documentation
-[SLDS documentation](https://www.lightningdesignsystem.com/components/trial-bar/)
+[SLDS documentation](https://www.lightningdesignsystem.com/components/rich-text-editor/)

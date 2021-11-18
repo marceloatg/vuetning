@@ -1,6 +1,7 @@
-# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
+# Avatar Group ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Trial bar components are used to provide an interactive and educational prospect experience for setup.
+An avatar group is an element that communicates to the user that there is more than 1 person associated to an item.
+Person 2 namePerson 2 name
 
 ## Props
 
@@ -30,4 +31,4 @@ Trial bar components are used to provide an interactive and educational prospect
 ```
 
 ## Salesforce documentation
-[SLDS documentation](https://www.lightningdesignsystem.com/components/trial-bar/)
+[SLDS documentation](https://www.lightningdesignsystem.com/components/avatar-group/)

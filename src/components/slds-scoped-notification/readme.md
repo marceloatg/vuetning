@@ -1,6 +1,6 @@
-# Trial Bar ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
+# Scoped Notification ![avaliability](https://img.shields.io/badge/avaliability-mock-red.svg)  ![testing](https://img.shields.io/badge/coverage-0%25-red.svg) ![documentation](https://img.shields.io/badge/documentation-draft-red.svg)
 
-Trial bar components are used to provide an interactive and educational prospect experience for setup.
+Scoped notifications serve advisory information for the user that is not important enough to justify an alert. It is often presented as a status bar scoped to the container. They are not dismissible.
 
 ## Props
 
@@ -30,4 +30,4 @@ Trial bar components are used to provide an interactive and educational prospect
 ```
 
 ## Salesforce documentation
-[SLDS documentation](https://www.lightningdesignsystem.com/components/trial-bar/)
+[SLDS documentation](https://www.lightningdesignsystem.com/components/scoped-notifications/)
