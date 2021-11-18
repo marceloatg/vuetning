@@ -1,5 +1,5 @@
-import sldsComponent from './tree-grid.vue'
+import sldsTreeGrid from './slds-grid.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTreeGrid.name, sldsTreeGrid)
 }

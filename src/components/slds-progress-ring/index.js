@@ -1,5 +1,5 @@
-import sldsComponent from './progress-ring.vue'
+import sldsProgressRing from './slds-progress-ring.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsProgressRing.name, sldsProgressRing)
 }

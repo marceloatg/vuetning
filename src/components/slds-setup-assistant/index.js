@@ -1,5 +1,5 @@
-import sldsComponent from './setup-assistant.vue'
+import sldsSetupAssistant from './slds-setup-assistant.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsSetupAssistant.name, sldsSetupAssistant)
 }

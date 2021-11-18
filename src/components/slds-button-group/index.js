@@ -1,5 +1,5 @@
-import sldsComponent from './button-group.vue'
+import sldsButtonGroup from './slds-button-group.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsButtonGroup.name, sldsButtonGroup)
 }

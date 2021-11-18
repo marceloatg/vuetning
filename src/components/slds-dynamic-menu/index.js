@@ -1,5 +1,5 @@
-import sldsComponent from './dynamic-menu.vue'
+import sldsDynamicMenu from './slds-dynamic-menu.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDynamicMenu.name, sldsDynamicMenu)
 }

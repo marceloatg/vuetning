@@ -1,6 +1,6 @@
-import sldsCombobox from './combobox'
-import sldsComboboxOption from './combobox-option'
-import sldsComboboxHeading from './combobox-heading'
+import sldsCombobox from './slds-combobox'
+import sldsComboboxOption from './slds-combobox-option'
+import sldsComboboxHeading from './slds-combobox-heading'
 
 export default Vue => {
     Vue.component(sldsCombobox.name, sldsCombobox)

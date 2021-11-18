@@ -1,5 +1,5 @@
-import sldsComponent from './virtual-scroller'
+import sldsVirtualScroller from './slds-virtual-scroller'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsVirtualScroller.name, sldsVirtualScroller)
 }

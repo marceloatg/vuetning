@@ -1,5 +1,5 @@
-import sldsComponent from './tooltip.vue'
+import sldsTooltip from './slds-tooltip.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTooltip.name, sldsTooltip)
 }

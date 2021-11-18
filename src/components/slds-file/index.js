@@ -1,5 +1,5 @@
-import sldsComponent from './file.vue'
+import sldsFile from './slds-file.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsFile.name, sldsFile)
 }

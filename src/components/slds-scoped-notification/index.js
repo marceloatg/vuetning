@@ -1,5 +1,5 @@
-import sldsComponent from './scoped-notification.vue'
+import sldsScopedNotification from './slds-scoped-notification.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsScopedNotification.name, sldsScopedNotification)
 }

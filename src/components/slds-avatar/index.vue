@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import SldsIcon from '../slds-icon/icon'
+    import SldsIcon from '../slds-icon/slds-icon'
 
     export default {
         name: 'SldsAvatar',

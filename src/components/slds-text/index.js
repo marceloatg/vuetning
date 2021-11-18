@@ -1,5 +1,5 @@
-import sldsComponent from './text.vue'
+import sldsText from './slds-text.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsText.name, sldsText)
 }

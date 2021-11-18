@@ -1,5 +1,5 @@
-import sldsComponent from './tile.vue'
+import sldsTile from './slds-tile.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsTile.name, sldsTile)
 }

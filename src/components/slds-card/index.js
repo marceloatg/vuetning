@@ -1,5 +1,5 @@
-import sldsComponent from './card.vue'
+import sldsCard from './slds-card.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsCard.name, sldsCard)
 }

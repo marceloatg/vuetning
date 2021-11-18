@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import SldsAvatar from '../avatar.vue'
+import SldsAvatar from '../slds-avatar.vue'
 
 describe('SldsAvatar', () => {
     const src = 'https://s3-sa-east-1.amazonaws.com/bluebear.app/logo.svg'

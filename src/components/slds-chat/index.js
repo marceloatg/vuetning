@@ -1,5 +1,5 @@
-import sldsComponent from './chat.vue'
+import sldsChat from './slds-chat.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsChat.name, sldsChat)
 }

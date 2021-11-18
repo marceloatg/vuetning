@@ -1,5 +1,5 @@
-import sldsComponent from './pill.vue'
+import sldsPill from './slds-pill.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsPill.name, sldsPill)
 }

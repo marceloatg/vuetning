@@ -1,5 +1,5 @@
-import sldsComponent from './icon.vue'
+import sldsIcon from './slds-icon.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsIcon.name, sldsIcon)
 }

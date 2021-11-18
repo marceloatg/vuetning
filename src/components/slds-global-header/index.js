@@ -1,11 +1,11 @@
-import sldsGlobalHeader from './global-header'
-import sldsGlobalAction from './global-action'
-import sldsGlobalActionAvatar from './global-action-avatar'
-import sldsGlobalActionFavorites from './global-action-favorites'
-import sldsGlobalActionHelp from './global-action-help'
-import sldsGlobalActionNotifications from './global-action-notifications'
-import sldsGlobalActionSetup from './global-action-setup'
-import sldsGlobalActionTask from './global-action-task'
+import sldsGlobalHeader from './slds-global-header'
+import sldsGlobalAction from './slds-global-action'
+import sldsGlobalActionAvatar from './slds-global-action-avatar'
+import sldsGlobalActionFavorites from './slds-global-action-favorites'
+import sldsGlobalActionHelp from './slds-global-action-help'
+import sldsGlobalActionNotifications from './slds-global-action-notifications'
+import sldsGlobalActionSetup from './slds-global-action-setup'
+import sldsGlobalActionTask from './slds-global-action-task'
 
 export default Vue => {
     Vue.component(sldsGlobalHeader.name, sldsGlobalHeader)

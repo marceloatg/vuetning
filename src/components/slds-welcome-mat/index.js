@@ -1,5 +1,5 @@
-import sldsComponent from './welcome-mat.vue'
+import sldWelcomeMat from './slds-welcome-mat.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldWelcomeMat.name, sldWelcomeMat)
 }

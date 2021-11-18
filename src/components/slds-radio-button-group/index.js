@@ -1,5 +1,5 @@
-import sldsComponent from './radio-button-group.vue'
+import sldsRadioButtonGroup from './slds-radio-button-group.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsRadioButtonGroup.name, sldsRadioButtonGroup)
 }

@@ -1,5 +1,5 @@
-import sldsComponent from './dueling-picklist.vue'
+import sldsDuelingPicklist from './slds-dueling-picklist.vue'
 
 export default Vue => {
-    Vue.component(sldsComponent.name, sldsComponent)
+    Vue.component(sldsDuelingPicklist.name, sldsDuelingPicklist)
 }

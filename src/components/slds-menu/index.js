@@ -1,7 +1,7 @@
-import sldsMenu from './menu'
-import sldsMenuItem from './menu-item'
-import sldsMenuHeading from './menu-heading'
-import sldsMenuDivider from './menu-divider'
+import sldsMenu from './slds-menu'
+import sldsMenuItem from './slds-menu-item'
+import sldsMenuHeading from './slds-menu-heading'
+import sldsMenuDivider from './slds-menu-divider'
 
 export default Vue => {
     Vue.component(sldsMenu.name, sldsMenu)

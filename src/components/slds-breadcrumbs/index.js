@@ -1,6 +1,6 @@
-import sldsBreadcrumbs from './breadcrumbs.vue'
-import sldsBreadcrumb from './breadcrumb.vue'
-import sldsOverflowedBreadcrumb from './overflowed-breadcrumb'
+import sldsBreadcrumbs from './slds-breadcrumbs.vue'
+import sldsBreadcrumb from './slds-breadcrumb.vue'
+import sldsOverflowedBreadcrumb from './slds-overflowed-breadcrumb'
 
 export default Vue => {
     Vue.component(sldsBreadcrumbs.name, sldsBreadcrumbs)

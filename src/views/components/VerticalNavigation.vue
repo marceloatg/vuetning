@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import SldsVerticalNavigationSection from '@/components/slds-vertical-navigation/vertical-navigation-section'
-import SldsVerticalNavigationItem from '@/components/slds-vertical-navigation/vertical-navigation-item'
+import SldsVerticalNavigationSection from '@/components/slds-vertical-navigation/slds-vertical-navigation-section'
+import SldsVerticalNavigationItem from '@/components/slds-vertical-navigation/slds-vertical-navigation-item'
 
 export default {
     name: 'VerticalNavigation',
