@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import ActionSprite from './slds-svgaction-sprite'
-import CustomSprite from './slds-svgcustom-sprite'
-import DoctypeSprite from './slds-svgdoctype-sprite'
-import StandardSprite from './slds-svgstandard-sprite'
-import UtilitySprite from './slds-svgutility-sprite'
+import ActionSprite from './slds-svg-action-sprite'
+import CustomSprite from './slds-svg-custom-sprite'
+import DoctypeSprite from './slds-svg-doctype-sprite'
+import StandardSprite from './slds-svg-standard-sprite.vue'
+import UtilitySprite from './slds-svg-utility-sprite.vue'
 import {getCategory, getName, isValidName} from '../../utils/icon-utils/index'
 
 const defaultCategory = 'standard'
