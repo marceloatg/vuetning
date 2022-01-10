@@ -16,7 +16,7 @@
             <slds-code-block
                 label="My Code Snippet"
                 :code="code"
-                language="javascript"
+                theme-button
                 copy-button
             />
         </slds-card>
