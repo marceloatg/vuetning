@@ -487,7 +487,7 @@ export default {
         async onClickActionMenu(item, index) {
             this.onCloseActionMenu()
             this.actionMenu.openedRowId = item[this.keyField]
-            this.currentActions = this.actions.filter(action => item.actions.includes(action))
+            this.currentActions = this.actions.filter(action => item.actions.includes(action.value))
 
             await this.$nextTick()
 
