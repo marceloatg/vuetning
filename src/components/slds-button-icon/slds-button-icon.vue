@@ -1,9 +1,10 @@
 <template>
     <button
         v-animated
-        :type="type"
         class="slds-button slds-button_icon"
         :class="[variantClass, containerClass]"
+        :title="title"
+        :type="type"
         @click="onClick"
         @blur="onBlur"
         @keyup="onKeyUp"
@@ -61,6 +62,7 @@ export default {
         inverse: Boolean,
         large: Boolean,
         small: Boolean,
+        title: String,
         type: {type: String, default: 'button'},
         xSmall: Boolean,
         xxSmall: Boolean
