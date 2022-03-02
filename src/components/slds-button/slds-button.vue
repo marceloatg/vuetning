@@ -4,6 +4,7 @@
         class="slds-button"
         :class="buttonClass"
         :disabled="disabled"
+        :title="title"
         :type="type"
         v-on="listeners"
         @click="onClick"
@@ -76,6 +77,7 @@ export default {
         success: Boolean,
         stretch: Boolean,
         textDestructive: Boolean,
+        title: String,
         type: {type: String, default: 'button'},
     },
 
