@@ -60,7 +60,7 @@
             />
         </slds-card>
 
-        <slds-card class="slds-m-top_medium" title="Multiple sections open">
+        <slds-card class="slds-m-top_medium" title="Allow multiple sections open">
             <slds-accordion
                 :active-section-name="activeSectionNames"
                 allow-multiple-sections-open
