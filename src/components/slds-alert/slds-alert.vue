@@ -74,10 +74,9 @@ export default {
             if (this.texture) classNames += ' slds-theme_alert-texture'
 
             // Alert theme
-            if (this.info) classNames += ' slds-theme_info'
-            if (this.warning) classNames += ' slds-theme_warning'
             if (this.error) classNames += ' slds-theme_error'
-            if (this.offline) classNames += ' slds-theme_offline'
+            else if (this.offline) classNames += ' slds-theme_offline'
+            else if (this.warning) classNames += ' slds-theme_warning'
             else classNames += ' slds-theme_info'
 
             return classNames
