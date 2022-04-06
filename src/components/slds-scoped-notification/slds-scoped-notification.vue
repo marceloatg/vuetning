@@ -1,26 +1,67 @@
 <template>
-    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light" role="status">
+    <div
+        class="slds-scoped-notification slds-media slds-media_center"
+        :class="scopedNotificationClass"
+        role="status"
+    >
+
         <div class="slds-media__figure">
-            <span class="slds-icon_container slds-icon-utility-info" title="information">
-                <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
-                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#info"/>
-                </svg>
-                <span class="slds-assistive-text">information</span>
-            </span>
+            <slds-icon :icon="iconName" :inverse="inverse" small/>
         </div>
+
         <div class="slds-media__body">
-            <p>It looks as if duplicates exist for this lead.
-                <a href="javascript:void(0);">
-                    View Duplicates.
-                </a>
-            </p>
+            <slot/>
         </div>
+
     </div>
 </template>
 
 <script>
+import SldsIcon from '@/components/slds-icon/slds-icon'
+
 export default {
-    name: 'SldsScopedNotification'
+    name: 'SldsScopedNotification',
+
+    components: {
+        SldsIcon
+    },
+
+    props: {
+        error: Boolean,
+        icon: String,
+        info: Boolean,
+        success: Boolean,
+        warning: Boolean
+    },
+
+    computed: {
+        iconName() {
+            let iconName = ''
+
+            if (this.error) iconName += 'utility:error'
+            else if (this.success) iconName += 'utility:success'
+            else if (this.warning) iconName += 'utility:warning'
+            else iconName += this.icon || 'utility:info'
+
+            return iconName
+        },
+
+        inverse() {
+            return (this.error || this.info || this.success)
+        },
+
+        scopedNotificationClass() {
+            let classNames = ''
+
+            if (this.error) classNames += ' slds-theme_error'
+            else if (this.info) classNames += ' slds-theme_info'
+            else if (this.success) classNames += ' slds-theme_success'
+            else if (this.warning) classNames += ' slds-theme_warning'
+            else classNames += ' slds-scoped-notification_light'
+
+            return classNames
+        }
+    }
 }
 </script>
 
