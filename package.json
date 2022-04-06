@@ -24,12 +24,12 @@
     "src/index.js"
   ],
   "dependencies": {
-    "core-js": "^3.20.2",
+    "core-js": "^3.21.1",
     "duration": "^0.2.2",
     "highlight.js": "^10.6.0",
     "humanize-duration": "^3.27.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "numeral": "^2.0.6",
     "quill": "^1.3.7",
     "scrollparent": "^2.0.1",
@@ -57,7 +57,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "eslint-teamcity": "^4.0.0",
     "jest-teamcity-reporter": "^0.9.0",
-    "sass": "^1.47.0",
+    "sass": "^1.49.11",
     "sass-loader": "^10.2.0",
     "viewcode": "0.0.27",
     "vue-template-compiler": "^2.6.14"
