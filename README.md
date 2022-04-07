@@ -10,7 +10,7 @@
 ## Components
 
 | Name                                                                | Avaliability                                          | Coverage                                       | Documentation                                   |
-| ------------------------------------------------------------------- |-------------------------------------------------------| ---------------------------------------------- | ----------------------------------------------- |
+|---------------------------------------------------------------------|-------------------------------------------------------| ---------------------------------------------- | ----------------------------------------------- |
 | [Accordion](/src/components/slds-accordion)                         | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Activity Timeline](/src/components/slds-activity-timeline)         | ![](https://img.shields.io/badge/alpha-yellow.svg)    | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Alert](/src/components/slds-alert)                                 | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
@@ -63,6 +63,7 @@
 | [Media Object](/src/components/slds-media-object)                   | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Menu](/src/components/slds-menu)                                   | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Modal](/src/components/slds-modal)                                 | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
+| [Multi Picklist](/src/components/slds-multi-picklist)               | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Notifications](/src/components/slds-notifications)                 | ![](https://img.shields.io/badge/mock-red.svg)        | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Page Header](/src/components/slds-page-header)                     | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |
 | [Pagination](/src/components/slds-pagination)                       | ![](https://img.shields.io/badge/available-green.svg) | ![](https://img.shields.io/badge/0%25-red.svg) | ![](https://img.shields.io/badge/draft-red.svg) |

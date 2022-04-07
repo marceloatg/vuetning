@@ -52,6 +52,7 @@ import Lookup from '../views/components/Lookup'
 import Map from '../views/components/Map'
 import Menu from '../views/components/Menu'
 import Modal from '../views/components/Modal'
+import MultiPicklist from '../views/components/MultiPicklist'
 import Notifications from '../views/components/Notifications'
 import PageHeader from '../views/components/PageHeader'
 import Panel from '../views/components/Panel'
@@ -345,6 +346,11 @@ const routes = [
     path: '/Modal',
     name: 'Modal',
     component: Modal
+  },
+  {
+    path: '/MultiPicklist',
+    name: 'MultiPicklist',
+    component: MultiPicklist
   },
   {
     path: '/Notifications',

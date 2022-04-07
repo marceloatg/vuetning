@@ -225,6 +225,10 @@ export default {
                     name: 'Modal',
                 },
                 {
+                    label: 'Multi Picklist',
+                    name: 'MultiPicklist',
+                },
+                {
                     label: 'Notifications',
                     name: 'Notifications',
                 },
