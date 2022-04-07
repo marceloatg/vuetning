@@ -36,18 +36,18 @@
 
 <!--suppress JSValidateTypes -->
 <script>
-import SldsSvg from '@/components/slds-svg'
-import SldsIcon from '@/components/slds-icon'
-import SldsAvatar from '@/components/slds-avatar'
+import SldsSvg from '@/components/slds-svg/slds-svg'
+import SldsIcon from '@/components/slds-icon/slds-icon'
+import SldsAvatar from '@/components/slds-avatar/slds-avatar'
 
 export default {
     name: 'SldsPill',
 
-    components: [
+    components: {
         SldsSvg,
         SldsIcon,
         SldsAvatar,
-    ],
+    },
 
     props: {
         /**
