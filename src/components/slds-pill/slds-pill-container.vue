@@ -1,6 +1,6 @@
 <template>
-    <div>
-        sadsahdsa
+    <div class="slds-pill_container">
+        <slot/>
     </div>
 </template>
 
@@ -9,7 +9,3 @@ export default {
     name: 'SldsPillContainer'
 }
 </script>
-
-<style scoped>
-
-</style>

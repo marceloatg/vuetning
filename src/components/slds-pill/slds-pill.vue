@@ -16,13 +16,14 @@
             <slds-avatar circle :src="src"/>
         </span>
 
-        <a class="slds-pill__action" :title="title">
+        <a class="slds-pill__action" :class="pillActionClass" :title="title">
             <span class="slds-pill__label">
                 {{ label }}
             </span>
         </a>
 
         <button
+            v-if="!nonRemovable"
             class="slds-button slds-button_icon slds-button_icon slds-pill__remove"
             title="Remove"
             @click.stop="onClickRemove"
@@ -50,12 +51,6 @@ export default {
 
     props: {
         /**
-         * @description Specifies whether the element uses the bare pill variant.
-         * @type {boolean}
-         */
-        bare: Boolean,
-
-        /**
          * @description If present, the pill is shown with a red border and an error icon on the left of the label.
          * @type {boolean}
          */
@@ -81,10 +76,10 @@ export default {
         label: {Type: String, required: true},
 
         /**
-         * @description The name for the pill, used to identify the pill in a callback.
-         * @type {string}
+         * @description If present, the does not show the remove button.
+         * @type {boolean}
          */
-        name: {Type: String, required: true},
+        nonRemovable: Boolean,
 
         /**
          * @description The URL for the image.
@@ -99,21 +94,39 @@ export default {
         title: String,
     },
 
+    computed: {
+        pillActionClass() {
+            return {
+                'slds-text-link_reset': !this.link,
+                'non-removable': this.nonRemovable,
+            }
+        }
+    },
+
     methods: {
         /**
          * @description Fires a remove event when the remove button is clicked.
          */
         onClickRemove() {
-            this.$emit('remove', this.name)
+            this.$emit('remove')
         },
 
         /**
          * @description Fires a click event when the pill link is clicked.
          */
         onClickPill() {
-            this.$emit('click', this.name)
+            if (this.link) this.$emit('click')
         }
     },
 }
 </script>
 
+<style scoped lang="scss">
+.non-removable {
+    padding-right: .125rem
+}
+
+.slds-text-link_reset {
+    cursor: default !important;
+}
+</style>
