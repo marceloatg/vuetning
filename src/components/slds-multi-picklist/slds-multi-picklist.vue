@@ -60,7 +60,7 @@
                 </div>
 
                 <!-- Pill container -->
-                <div v-if="!$data.$_isOpen" class="slds-pill_container">
+                <div class="slds-pill_container">
                     <slds-pill
                         v-for="value in $data.$_value"
                         :key="value"
@@ -75,6 +75,7 @@
                     <slds-multi-picklist-dropdown
                         v-if="$data.$_isOpen"
                         :value="$data.$_value"
+                        class="pill-container-offset"
                         :class="dropdownClass"
                         :options="filteredOptions"
                         :focused-option="$data.$_focusedOption"
@@ -145,6 +146,7 @@ export default {
                 return [5, 7, 10].indexOf(value) !== -1
             },
         },
+        loading: Boolean,
         medium: Boolean,
         options: Array,
         placeholder: String,
@@ -335,5 +337,9 @@ input {
     border-color: #c9c9c9;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.pill-container-offset {
+    margin-top: -1.875rem;
 }
 </style>
