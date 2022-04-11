@@ -106,7 +106,7 @@
                         :focused-option="$data.$_focusedOption"
                         :filter="$data.$_filter"
                         :is-empty="isEmpty"
-                        :is-loading="loading"
+                        :loading="loading"
                         @click="onClickOption"
                         @mouseover="onMouseOverOption"
                     >

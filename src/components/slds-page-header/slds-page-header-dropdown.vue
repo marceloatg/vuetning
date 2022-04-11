@@ -34,7 +34,7 @@
             </template>
 
             <!-- Spinner -->
-            <li v-if="isLoading" role="presentation" class="slds-listbox__item">
+            <li v-if="loading" role="presentation" class="slds-listbox__item">
                 <div class="slds-align_absolute-center slds-p-top_medium">
                     <slds-spinner brand x-small inline/>
                 </div>
@@ -60,7 +60,7 @@ export default {
 
     props: {
         focusedOption: String,
-        isLoading: Boolean,
+        loading: Boolean,
         options: Array,
         value: String
     },
