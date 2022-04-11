@@ -85,7 +85,7 @@
                                                 :value="selectedListView"
                                                 :options="filteredOptions"
                                                 :focused-option="$data.$_focusedOption"
-                                                :is-loading="loading"
+                                                :loading="loading"
                                                 @click="onClickOption"
                                                 @mouseover="onMouseOverOption"
                                             >
