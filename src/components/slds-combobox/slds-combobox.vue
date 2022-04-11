@@ -172,6 +172,7 @@ export default {
                 return [5, 7, 10].indexOf(value) !== -1
             },
         },
+        loading: Boolean,
         medium: Boolean,
         options: Array,
         placeholder: String,
