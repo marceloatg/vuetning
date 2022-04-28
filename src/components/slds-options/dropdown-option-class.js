@@ -14,6 +14,7 @@ export default class {
     disabled
     divider
     level
+    nonRemovable
 
     constructor(heading, label, value = null, divider = false) {
         this.key = Id()

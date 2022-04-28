@@ -65,6 +65,7 @@
                         v-for="value in $data.$_value"
                         :key="value"
                         :label="getOption(value).label"
+                        :non-removable="getOption(value).nonRemovable"
                         :title="getOption(value).label"
                         @remove="onRemove(value)"
                     />
@@ -287,6 +288,7 @@ export default {
                     const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
                     dropdownOption.meta = option.meta
                     dropdownOption.disabled = option.disabled
+                    dropdownOption.nonRemovable = option.nonRemovable
 
                     this.$data.$_options.push(dropdownOption)
                 }
@@ -305,8 +307,12 @@ export default {
                 this.$emit('input', this.$data.$_value)
             }
             else {
-                this.$data.$_value.splice(index, 1)
-                this.$emit('input', this.$data.$_value)
+                const selectedOption = this.$data.$_options.find(option => option.value === value)
+
+                if (!selectedOption.nonRemovable) {
+                    this.$data.$_value.splice(index, 1)
+                    this.$emit('input', this.$data.$_value)
+                }
             }
 
             this.clearFocusedOption()
