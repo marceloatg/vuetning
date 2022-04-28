@@ -37,7 +37,7 @@ export default {
     data() {
         return {
             objectOptions: [
-                {value: '7a8478ba-aa60-4385-a963-075db1fb2d7f', label: 'Accounts', meta: 'Represents business', disabled: false},
+                {value: '7a8478ba-aa60-4385-a963-075db1fb2d7f', label: 'Accounts', meta: 'Represents business', disabled: false, nonRemovable: true},
                 {value: 'fb457804-8af7-4f30-bca9-c830dc0ebb7c', label: 'Contacts', meta: 'Represents people', disabled: false},
                 {value: '8c5a8e0e-31f0-433a-b6f6-c0da8e612668', label: 'Leads', meta: 'Represents potential accounts', disabled: false},
                 {value: '46938efc-7767-460a-958f-8b66eb545c26', label: 'Groups', meta: 'Represents groups of users', disabled: false},
