@@ -88,6 +88,7 @@ import VerticalNavigation from '../views/components/VerticalNavigation'
 import VerticalTabs from '../views/components/VerticalTabs'
 import VisualPicker from '../views/components/VisualPicker'
 import WelcomeMat from '../views/components/WelcomeMat'
+import WideRadioGroup from '@/views/components/WideRadioGroup'
 
 Vue.use(VueRouter)
 
@@ -526,6 +527,11 @@ const routes = [
     path: '/WelcomeMat',
     name: 'WelcomeMat',
     component: WelcomeMat
+  },
+  {
+    path: '/WideRadioGroup',
+    name: 'WideRadioGroup',
+    component: WideRadioGroup
   },
 ]
 
