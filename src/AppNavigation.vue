@@ -368,6 +368,10 @@ export default {
                     label: 'Welcome Mat',
                     name: 'WelcomeMat',
                 },
+                {
+                    label: 'Wide Radio Group',
+                    name: 'WideRadioGroup',
+                },
             ],
             selectedItem: null
         }
