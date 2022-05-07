@@ -277,7 +277,7 @@ export default {
         },
 
         parseOptions() {
-            this.$data.$_options = this.$data.$_options.splice(0, this.$data.$_options.length)
+            this.$data.$_options.splice(0, this.$data.$_options.length)
             if (this.options == null) return
 
             for (const option of this.options) {
