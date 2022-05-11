@@ -65,13 +65,13 @@ export default {
     data() {
         return {
             arrayOptions: [
-                {name: 'Mon', label: 'Mon', disabled: false},
-                {name: 'Tue', label: 'Tue', disabled: false},
-                {name: 'Wed', label: 'Wed', disabled: false},
-                {name: 'Thu', label: 'Thu', disabled: false},
-                {name: 'Fri', label: 'Fri', disabled: false},
-                {name: 'Sat', label: 'Sat', disabled: true},
-                {name: 'Sun', label: 'Sun', disabled: true},
+                {value: 'Mon', label: 'Mon', disabled: false},
+                {value: 'Tue', label: 'Tue', disabled: false},
+                {value: 'Wed', label: 'Wed', disabled: false},
+                {value: 'Thu', label: 'Thu', disabled: false},
+                {value: 'Fri', label: 'Fri', disabled: false},
+                {value: 'Sat', label: 'Sat', disabled: true},
+                {value: 'Sun', label: 'Sun', disabled: true},
             ],
             stringOptions: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
             value: []
