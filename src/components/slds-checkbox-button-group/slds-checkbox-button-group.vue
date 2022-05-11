@@ -12,10 +12,10 @@
                 <slds-checkbox-button-option
                     v-for="option in $data.$_options"
                     :key="option.key"
-                    :value="$data.$_value.includes(option.name)"
+                    :value="$data.$_value.includes(option.value)"
                     :label="option.label"
                     :disabled="option.disabled"
-                    @click="onClick(option.name)"
+                    @click="onClick(option.value)"
                 />
             </template>
         </div>
@@ -93,7 +93,7 @@ export default {
                     this.$data.$_options.push(new Option(
                         option.label,
                         option.disabled || this.disabled,
-                        option.name
+                        option.value
                     ))
                 }
                 else {
@@ -102,11 +102,11 @@ export default {
             }
         },
 
-        onClick(name) {
+        onClick(value) {
             if (this.disabled) return
 
-            const index = this.$data.$_value.indexOf(name)
-            if (index === -1) this.$data.$_value.push(name)
+            const index = this.$data.$_value.indexOf(value)
+            if (index === -1) this.$data.$_value.push(value)
             else this.$data.$_value.splice(index, 1)
 
             this.$emit('input', this.$data.$_value)
