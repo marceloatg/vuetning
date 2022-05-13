@@ -14,7 +14,12 @@
         </slds-page-header>
 
         <slds-card class="slds-m-top_medium">
-            <slds-dueling-picklist/>
+            <slds-dueling-picklist
+                label="Select Languages"
+                selected-label="Selected"
+                source-label="Available"
+                :options="options"
+            />
         </slds-card>
 
     </main>
@@ -23,5 +28,18 @@
 <script>
 export default {
     name: 'DuelingPicklist',
+
+    data() {
+        return {
+            options: [
+                { label: 'English', value: 'en' },
+                { label: 'German', value: 'de' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'French', value: 'fr' },
+                { label: 'Italian', value: 'it' },
+                { label: 'Japanese', value: 'ja' }
+            ]
+        }
+    }
 }
 </script>

@@ -16,6 +16,7 @@
 
             <slds-button
                 brand
+                disabled
                 label="Click Me"
                 @click="onclick"
             />

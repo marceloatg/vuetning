@@ -1,104 +1,211 @@
 <template>
-    <div class="slds-form-element" role="group" aria-labelledby="picklist-group-label">
-        <span id="picklist-group-label" class="slds-form-element__label slds-form-element__legend">Select Options</span>
-        <div class="slds-form-element__control">
-            <div class="slds-dueling-list">
-                <div id="drag-live-region" class="slds-assistive-text" aria-live="assertive"/>
-                <div id="option-drag-label" class="slds-assistive-text">
-                    Press space bar when on an item, to move it within the list. Cmd/Ctrl plus left and right arrow keys, to move items between lists.
+    <slds-form-element
+        :label="label"
+        :required="required"
+        :error="error"
+        v-bind="dataAttributes"
+    >
+
+        <div class="slds-dueling-list">
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Source label -->
+                <span class="slds-form-element__label">
+                    {{ sourceLabel }}
+                </span>
+
+                <!-- Available options -->
+                <div
+                    :aria-disabled="disabled"
+                    class="slds-dueling-list__options"
+                    :class="disableDuelingPicklistClass"
+                >
+                    <ul
+                        class="slds-listbox slds-listbox_vertical"
+                        role="listbox"
+                    >
+                        <slds-dueling-picklist-option
+                            v-for="option in options"
+                            :key="option.value"
+                            :label="option.label"
+                            @click="onClickUnselectedOption(option.value)"
+                        />
+                    </ul>
                 </div>
-                <div class="slds-dueling-list__column">
-                    <span id="label-7" class="slds-form-element__label">First Category</span>
-                    <div class="slds-dueling-list__options">
-                        <ul aria-describedby="option-drag-label" aria-labelledby="label-7" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="0">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 1">Option 1</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="-1">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 2">Option 2</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="-1">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 3">Option 3</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="-1">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 6">Option 6</span>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="slds-dueling-list__column">
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to Second Category">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#right"/>
-                        </svg>
-                        <span class="slds-assistive-text">Move Selection to Second Category</span>
-                    </button>
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to First Category">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#left"/>
-                        </svg>
-                        <span class="slds-assistive-text">Move Selection to First Category</span>
-                    </button>
-                </div>
-                <div class="slds-dueling-list__column">
-                    <span id="label-8" class="slds-form-element__label">Second Category</span>
-                    <div class="slds-dueling-list__options">
-                        <ul aria-describedby="option-drag-label" aria-labelledby="label-8" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="0">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 4">Option 4</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li role="presentation" class="slds-listbox__item">
-                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" aria-selected="false" draggable="true" role="option" tabindex="-1">
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" title="Option 5">Option 5</span>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="slds-dueling-list__column">
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection Up">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#up"/>
-                        </svg>
-                        <span class="slds-assistive-text">Move Selection Up</span>
-                    </button>
-                    <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection Down">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"/>
-                        </svg>
-                        <span class="slds-assistive-text">Move Selection Down</span>
-                    </button>
-                </div>
+
             </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Move right button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:right"
+                />
+
+                <!-- Move left button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:left"
+                />
+
+            </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Selected label -->
+                <span class="slds-form-element__label">
+                    {{ selectedLabel }}
+                </span>
+
+                <!-- Selected options -->
+                <div
+                    :aria-disabled="disabled"
+                    class="slds-dueling-list__options"
+                    :class="disableDuelingPicklistClass"
+                >
+                    <ul
+                        class="slds-listbox slds-listbox_vertical"
+                        role="listbox"
+                    >
+                        <slds-dueling-picklist-option
+                            v-for="option in options"
+                            :key="option.value"
+                            :label="option.label"
+                            @click="onClickSelectedOption(option.value)"
+                        />
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Move up button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:up"
+                />
+
+                <!-- Move down button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:down"
+                />
+
+            </div>
+
         </div>
-    </div>
+
+    </slds-form-element>
 </template>
 
 <script>
+import SldsFormElement from '@/components/slds-form-element/slds-form-element'
+import SldsDuelingPicklistOption from '@/components/slds-dueling-picklist/slds-dueling-picklist-option'
+
 export default {
-    name: 'SldsDuelingPicklist'
+    name: 'SldsDuelingPicklist',
+
+    components: {
+        SldsFormElement,
+        SldsDuelingPicklistOption,
+    },
+
+    props: {
+        /**
+         * @description If present, the dueling picklist is disabled and users cannot interact with it.
+         * @type {boolean}
+         */
+        disabled: Boolean,
+
+        /**
+         * @description Indicates whether this component has an error.
+         * @type {boolean}
+         */
+        error: Boolean,
+
+        /**
+         * @description Help text detailing the purpose and function of the dueling picklist.
+         * @type {string}
+         */
+        fieldLevelHelp: String,
+
+        /**
+         * @description Label for the dueling picklist.
+         * @type {string}
+         */
+        label: {type: String, required: true},
+
+        /**
+         * @description	A list of options that are available for selection. Each option has the following attributes: label and value.
+         * @type {string}
+         */
+        options: {type: Array, required: true},
+
+        /**
+         * @description Indicates whether this field is required.
+         * @type {boolean}
+         */
+        required: Boolean,
+
+        /**
+         * @description Label for the selected dueling picklist.
+         * @type {string}
+         */
+        selectedLabel: {type: String, required: true},
+
+        /**
+         * @description Label for the source options dueling picklist.
+         * @type {string}
+         */
+        sourceLabel: {type: String, required: true},
+
+        value: {type: Array, default: () => []},
+    },
+
+    data() {
+        return {
+            $_value: this.value,
+
+            selected: [],
+        }
+    },
+
+    computed: {
+        dataAttributes() {
+            const attributes = {...this.$attrs}
+
+            for (const attributesKey in attributes) {
+                if (!attributesKey.startsWith('data-')) {
+                    delete attributes[attributesKey]
+                }
+            }
+
+            return attributes
+        },
+
+        disableDuelingPicklistClass() {
+            return {
+                'slds-is-disabled': this.disabled,
+            }
+        }
+    },
+
+    methods: {
+        onClickUnselectedOption(value) {
+            this.$data.$_value.push(value)
+            this.$emit('input', this.$data.$_value)
+        },
+
+        onClickSelectedOption(value) {
+            const index = this.$data.$_value.findIndex(v => v === value)
+
+            this.$data.$_value.splice(index, 1)
+            this.$emit('input', this.$data.$_value)
+        }
+    }
 }
 </script>
 
