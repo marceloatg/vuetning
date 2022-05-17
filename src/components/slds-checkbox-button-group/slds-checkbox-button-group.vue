@@ -7,8 +7,7 @@
 
         <!-- Input -->
         <div class="slds-checkbox_button-group">
-            <slot v-if="$slots.default"/>
-            <template v-else>
+            <slot>
                 <slds-checkbox-button-option
                     v-for="option in $data.$_options"
                     :key="option.key"
@@ -17,7 +16,7 @@
                     :disabled="option.disabled"
                     @click="onClick(option.value)"
                 />
-            </template>
+            </slot>
         </div>
 
         <!-- Inline help -->

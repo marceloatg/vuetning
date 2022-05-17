@@ -74,7 +74,7 @@ export default {
                 {value: 'Sun', label: 'Sun', disabled: true},
             ],
             stringOptions: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-            value: []
+            value: ['Mon']
         }
     }
 }
