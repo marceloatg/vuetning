@@ -39,16 +39,24 @@ export default {
     },
 
     watch: {
-        value(value) {
-            this.$data.$_value = value
+        value() {
+            this.parseValue()
         }
+    },
+
+    created() {
+        this.parseValue()
     },
 
     methods: {
         onClick() {
             if (this.disabled) return
             this.$emit('click')
-        }
+        },
+
+        parseValue() {
+            this.$data.$_value = this.value
+        },
     }
 }
 </script>
