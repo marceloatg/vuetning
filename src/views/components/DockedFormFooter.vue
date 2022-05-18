@@ -13,7 +13,11 @@
         </slds-page-header>
 
         <slds-card class="slds-m-top_medium">
-            <slds-docked-form-footer/>
+            <slds-docked-form-footer
+                has-error
+                @cancel="onCancel"
+                @save="onSave"
+            />
         </slds-card>
 
     </main>
@@ -22,5 +26,15 @@
 <script>
 export default {
     name: 'DockedFormFooter',
+
+    methods: {
+        onCancel() {
+            alert('Cancel')
+        },
+
+        onSave() {
+            alert('Save')
+        }
+    }
 }
 </script>
