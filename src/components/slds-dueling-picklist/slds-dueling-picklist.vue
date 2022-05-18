@@ -70,12 +70,101 @@
                         role="listbox"
                     >
                         <slds-dueling-picklist-option
-                            v-for="option in options"
+                            v-for="option in selected"
                             :key="option.value"
                             :label="option.label"
                             @click="onClickSelectedOption(option.value)"
                         />
                     </ul>
+                </div>
+
+            </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Move up button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:up"
+                    @click="oneToRight"
+                />
+
+                <!-- Move down button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:down"
+                />
+
+            </div>
+
+        </div>
+
+        <div class="slds-dueling-list">
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Source label -->
+                <span class="slds-form-element__label">
+                    {{ sourceLabel }}
+                </span>
+
+                <!-- Available options -->
+                <div
+                    :aria-disabled="disabled"
+                    class="slds-dueling-list__options"
+                    :class="disableDuelingPicklistClass"
+                >
+                    <select id="list1" size="30" multiple>
+                        <option
+                            v-for="option in options"
+                            :key="option.value"
+                        >
+                            {{ option.label }}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Move right button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:right"
+                    @click="oneToRight"
+                />
+
+                <!-- Move left button -->
+                <slds-button-icon
+                    bare
+                    icon="utility:left"
+                    @click="oneToLeft"
+                />
+
+            </div>
+
+            <div class="slds-dueling-list__column">
+
+                <!-- Selected label -->
+                <span class="slds-form-element__label">
+                    {{ selectedLabel }}
+                </span>
+
+                <!-- Selected options -->
+                <div
+                    :aria-disabled="disabled"
+                    class="slds-dueling-list__options"
+                    :class="disableDuelingPicklistClass"
+                >
+                    <select id="list2" size="30" multiple>
+                        <option
+                            v-for="option in selected"
+                            :key="option.value"
+                        >
+                            {{ option }}
+                        </option>
+                    </select>
                 </div>
 
             </div>
@@ -197,6 +286,8 @@ export default {
         onClickUnselectedOption(value) {
             this.$data.$_value.push(value)
             this.$emit('input', this.$data.$_value)
+
+            this.selected.push(value)
         },
 
         onClickSelectedOption(value) {
@@ -204,6 +295,26 @@ export default {
 
             this.$data.$_value.splice(index, 1)
             this.$emit('input', this.$data.$_value)
+        },
+
+        oneToRight() {
+            const select = document.getElementById('list1').value
+
+            if (select !== '') {
+                this.selected.push(select)
+                const del = this.options.indexOf(select)
+                this.options.splice(del, 1)
+            }
+        },
+
+        oneToLeft() {
+            const select = document.getElementById('list2').value
+
+            if (select !== '') {
+                this.options.push(select)
+                const del = this.selected.indexOf(select)
+                this.selected.splice(del, 1)
+            }
         }
     }
 }
