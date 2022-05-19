@@ -8,18 +8,21 @@
             icon="utility:error"
         />
 
-        <slds-button
-            neutral
-            label="Cancel"
-            @click="onClickCancel"
-        />
+        <slot>
 
-        <slds-button
-            brand
-            label="Save"
-            @click="onClickSave"
-        />
+            <slds-button
+                neutral
+                label="Cancel"
+                @click="onClickCancel"
+            />
 
+            <slds-button
+                brand
+                label="Save"
+                @click="onClickSave"
+            />
+
+        </slot>
     </div>
 </template>
 
