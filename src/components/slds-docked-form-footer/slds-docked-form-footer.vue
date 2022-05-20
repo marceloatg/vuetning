@@ -12,13 +12,13 @@
 
             <slds-button
                 neutral
-                label="Cancel"
+                :label="cancelButtonLabel"
                 @click="onClickCancel"
             />
 
             <slds-button
                 brand
-                label="Save"
+                :label="saveButtonLabel"
                 @click="onClickSave"
             />
 
@@ -27,8 +27,16 @@
 </template>
 
 <script>
+import SldsButton from '@/components/slds-button'
+import SldsButtonIcon from '@/components/slds-button-icon'
+
 export default {
     name: 'SldsDockedFormFooter',
+
+    components:[
+        SldsButton,
+        SldsButtonIcon,
+    ],
 
     props: {
         /**
@@ -36,6 +44,18 @@ export default {
          * @type {boolean}
          */
         hasError: Boolean,
+
+        /**
+         * @description The label of the cancel button.
+         * @type {string}
+         */
+        cancelButtonLabel: {type: String, default: 'Cancel'},
+
+        /**
+         * @description The label of the save button.
+         * @type {string}
+         */
+        saveButtonLabel: {type: String, default: 'Save'},
     },
 
     methods: {

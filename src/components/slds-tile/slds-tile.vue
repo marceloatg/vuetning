@@ -55,8 +55,18 @@
 </template>
 
 <script>
+import SldsAvatar from '@/components/slds-avatar'
+import SldsIcon from '@/components/slds-icon'
+import SldsMenu from '@/components/slds-menu'
+
 export default {
     name: 'SldsTile',
+
+    components: [
+        SldsAvatar,
+        SldsIcon,
+        SldsMenu,
+    ],
 
     props: {
         /**
