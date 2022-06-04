@@ -14,7 +14,11 @@
         <div v-else-if="icon" class="slds-media__figure">
             <slds-icon
                 :icon="icon"
+                :large="iconLarge"
                 medium
+                :small="iconSmall"
+                :x-small="iconXSmall"
+                :xx-small="iconXXSmall"
             />
         </div>
 
@@ -87,6 +91,30 @@ export default {
          * @type {string}
          */
         icon: String,
+
+        /**
+         * @description Indicates whether to use a large icon.
+         * @type {boolean}
+         */
+        iconLarge: Boolean,
+
+        /**
+         * @description Indicates whether to use a small icon.
+         * @type {boolean}
+         */
+        iconSmall: Boolean,
+
+        /**
+         * @description Indicates whether to use a x-small icon.
+         * @type {boolean}
+         */
+        iconXSmall: Boolean,
+
+        /**
+         * @description Indicates whether to use a xx-small icon.
+         * @type {boolean}
+         */
+        iconXXSmall: Boolean,
 
         /**
          * @description The title of the tile.
