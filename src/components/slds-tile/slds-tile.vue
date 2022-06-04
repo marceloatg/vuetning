@@ -66,11 +66,11 @@ import SldsMenu from '@/components/slds-menu'
 export default {
     name: 'SldsTile',
 
-    components: [
+    components: {
         SldsAvatar,
         SldsIcon,
         SldsMenu,
-    ],
+    },
 
     props: {
         /**
