@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import SldsAvatar from '@/components/slds-avatar'
-import SldsIcon from '@/components/slds-icon'
-import SldsMenu from '@/components/slds-menu'
+import SldsAvatar from '@/components/slds-avatar/slds-avatar'
+import SldsIcon from '@/components/slds-icon/slds-icon'
+import SldsMenu from '@/components/slds-menu/slds-menu'
 
 export default {
     name: 'SldsTile',
