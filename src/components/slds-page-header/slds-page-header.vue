@@ -121,25 +121,27 @@
 
         <!-- Lower row -->
         <div v-if="objectHome || relatedList" class="slds-page-header__row">
+            <template v-if="meta || $slots.controls">
 
-            <!-- Meta -->
-            <div class="slds-page-header__col-meta">
-                <p class="slds-page-header__meta-text">
-                    {{ meta }}
-                </p>
-            </div>
-
-            <!-- Controls -->
-            <div class="slds-page-header__col-controls">
-                <div class="slds-page-header__controls">
-
-                    <div class="slds-page-header__control control-placeholder"/>
-
-                    <slot name="controls"/>
-
+                <!-- Meta -->
+                <div class="slds-page-header__col-meta">
+                    <p class="slds-page-header__meta-text">
+                        {{ meta }}
+                    </p>
                 </div>
-            </div>
 
+                <!-- Controls -->
+                <div class="slds-page-header__col-controls">
+                    <div class="slds-page-header__controls">
+
+                        <div class="slds-page-header__control control-placeholder"/>
+
+                        <slot name="controls"/>
+
+                    </div>
+                </div>
+
+            </template>
         </div>
 
         <!-- Details row -->
