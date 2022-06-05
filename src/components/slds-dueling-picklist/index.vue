@@ -85,272 +85,277 @@
 </template>
 
 <script>
-    import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
-    import DuelingPicklistOption from './option'
+import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
+import DuelingPicklistOption from './option'
 
-    export default {
-        name: 'SldsDuelingPicklist',
-        components: {DuelingPicklistOption, SldsButtonIcon},
-        props: {
-            disabled: {
-                type: Boolean,
-            },
-            label: {
-                type: String,
-            },
-            min: {
-                type: Number,
-            },
-            max: {
-                type: Number,
-            },
-            options: {
-                type: Array,
-                default: () => [],
-            },
-            reorderable: {
-                type: Boolean,
-            },
-            required: {
-                type: Boolean,
-            },
-            sourceLabel: {
-                type: String,
-            },
-            selectedLabel: {
-                type: String,
-            },
-            value: {
-                type: Array,
-                default: () => [],
-            },
+export default {
+    name: 'SldsDuelingPicklist',
+
+    components: {
+        DuelingPicklistOption,
+        SldsButtonIcon,
+    },
+
+    props: {
+        disabled: {
+            type: Boolean,
         },
-        data() {
-            return {
-                lastIndex: null,
-                lastList: null,
-                selectedList: null,
-                selectedOptions: [],
-                selectedValues: [],
-                sourceOptions: [],
-                values: [],
-            }
+        label: {
+            type: String,
         },
-        watch: {
-            options() {
-                if (this.options == null) this.options = []
-                this.initializeOptions()
-            },
-            value(newValues) {
-                if (JSON.stringify(newValues) === JSON.stringify(this.values)) return
-                this.initializeOptions()
-            },
+        min: {
+            type: Number,
         },
-        created() {
+        max: {
+            type: Number,
+        },
+        options: {
+            type: Array,
+            default: () => [],
+        },
+        reorderable: {
+            type: Boolean,
+        },
+        required: {
+            type: Boolean,
+        },
+        sourceLabel: {
+            type: String,
+        },
+        selectedLabel: {
+            type: String,
+        },
+        value: {
+            type: Array,
+            default: () => [],
+        },
+    },
+    data() {
+        return {
+            lastIndex: null,
+            lastList: null,
+            selectedList: null,
+            selectedOptions: [],
+            selectedValues: [],
+            sourceOptions: [],
+            values: [],
+        }
+    },
+    watch: {
+        options() {
+            if (this.options == null) this.options = []
             this.initializeOptions()
         },
-        methods: {
-            calculateValues() {
-                this.values = this.selectedOptions.map(option => option.value)
-            },
-            initializeOptions() {
-                this.selectedOptions.splice(0, this.selectedOptions.length)
-                this.sourceOptions.splice(0, this.sourceOptions.length)
+        value(newValues) {
+            if (JSON.stringify(newValues) === JSON.stringify(this.values)) return
+            this.initializeOptions()
+        },
+    },
+    created() {
+        this.initializeOptions()
+    },
+    methods: {
+        calculateValues() {
+            this.values = this.selectedOptions.map(option => option.value)
+        },
+        initializeOptions() {
+            this.selectedOptions.splice(0, this.selectedOptions.length)
+            this.sourceOptions.splice(0, this.sourceOptions.length)
 
-                if (this.options)
-                    this.sourceOptions = [...this.options]
+            if (this.options)
+                this.sourceOptions = [...this.options]
 
-                for (let value of this.value) {
-                    let selectedOption = this.sourceOptions.find(option => option.value === value)
-                    let index = this.sourceOptions.indexOf(selectedOption)
+            for (let value of this.value) {
+                let selectedOption = this.sourceOptions.find(option => option.value === value)
+                let index = this.sourceOptions.indexOf(selectedOption)
 
-                    this.sourceOptions.splice(index, 1)
-                    this.selectedOptions.push(selectedOption)
-                }
+                this.sourceOptions.splice(index, 1)
+                this.selectedOptions.push(selectedOption)
+            }
 
-                this.calculateValues()
-            },
-            onClick(list, selectedValue, index) {
-                if (this.disabled) return
+            this.calculateValues()
+        },
+        onClick(list, selectedValue, index) {
+            if (this.disabled) return
 
-                if (this.selectedList === list && this.selectedValues.length === 1 && this.selectedValues[0] === selectedValue) {
-                    this.selectedList = null
-                    this.selectedValues.splice(0, 1)
-                }
-                else {
-                    this.selectedList = list
-                    this.selectedValues.splice(0, this.selectedValues.length)
-                    this.selectedValues.push(selectedValue)
-                }
+            if (this.selectedList === list && this.selectedValues.length === 1 && this.selectedValues[0] === selectedValue) {
+                this.selectedList = null
+                this.selectedValues.splice(0, 1)
+            }
+            else {
+                this.selectedList = list
+                this.selectedValues.splice(0, this.selectedValues.length)
+                this.selectedValues.push(selectedValue)
+            }
 
-                this.lastIndex = index
-                this.lastList = list
-            },
-            onCtrlClick(list, selectedValue, index) {
-                if (this.disabled) return
+            this.lastIndex = index
+            this.lastList = list
+        },
+        onCtrlClick(list, selectedValue, index) {
+            if (this.disabled) return
 
-                if (this.lastList !== list) {
-                    this.onClick(list, selectedValue, index)
-                    return
-                }
+            if (this.lastList !== list) {
+                this.onClick(list, selectedValue, index)
+                return
+            }
 
-                if (this.selectedList !== list) {
-                    this.selectedValues.splice(0, this.selectedValues.length)
-                    this.selectedList = list
-                }
+            if (this.selectedList !== list) {
+                this.selectedValues.splice(0, this.selectedValues.length)
+                this.selectedList = list
+            }
 
+            const listIndex = this.selectedValues.indexOf(selectedValue)
+            if (listIndex === -1) this.selectedValues.push(selectedValue)
+            else this.selectedValues.splice(listIndex, 1)
+
+            this.lastIndex = index
+            this.lastList = list
+        },
+        onShiftClick(list, selectedValue, index) {
+            if (this.disabled) return
+
+            if (this.lastList !== list) {
+                this.onClick(list, selectedValue, index)
+                return
+            }
+
+            if (this.selectedList !== list) {
+                this.selectedValues.splice(0, this.selectedValues.length)
+                this.selectedList = list
+            }
+
+            let selectedValues = []
+            const start = (this.lastIndex < index) ? this.lastIndex : index
+            const end = (this.lastIndex > index) ? this.lastIndex + 1 : index + 1
+
+            for (let i = start; i < end; i++) {
+                if (list === 'source') selectedValues.push(this.sourceOptions[i].value)
+                else selectedValues.push(this.selectedOptions[i].value)
+            }
+
+            for (let selectedValue of selectedValues) {
                 const listIndex = this.selectedValues.indexOf(selectedValue)
                 if (listIndex === -1) this.selectedValues.push(selectedValue)
-                else this.selectedValues.splice(listIndex, 1)
+            }
 
-                this.lastIndex = index
-                this.lastList = list
-            },
-            onShiftClick(list, selectedValue, index) {
-                if (this.disabled) return
-
-                if (this.lastList !== list) {
-                    this.onClick(list, selectedValue, index)
-                    return
-                }
-
-                if (this.selectedList !== list) {
-                    this.selectedValues.splice(0, this.selectedValues.length)
-                    this.selectedList = list
-                }
-
-                let selectedValues = []
-                const start = (this.lastIndex < index) ? this.lastIndex : index
-                const end = (this.lastIndex > index) ? this.lastIndex + 1 : index + 1
-
-                for (let i = start; i < end; i++) {
-                    if (list === 'source') selectedValues.push(this.sourceOptions[i].value)
-                    else selectedValues.push(this.selectedOptions[i].value)
-                }
-
-                for (let selectedValue of selectedValues) {
-                    const listIndex = this.selectedValues.indexOf(selectedValue)
-                    if (listIndex === -1) this.selectedValues.push(selectedValue)
-                }
-
-                this.lastIndex = index
-                this.lastList = list
-            },
-            onclickSelect() {
-                if (this.selectedValues.length === 0) return
-                if (this.selectedList !== 'source') return
-
-                if (this.max) {
-                    const newLength = this.values.length + this.selectedValues.length
-                    if (newLength > this.max) return
-                }
-
-                for (let selectedValue of this.selectedValues) {
-                    let selectedOption = this.sourceOptions.find(option => option.value === selectedValue)
-                    let index = this.sourceOptions.indexOf(selectedOption)
-
-                    this.sourceOptions.splice(index, 1)
-                    this.selectedOptions.push(selectedOption)
-                }
-
-                this.selectedValues.splice(0, this.selectedValues.length)
-                this.selectedList = null
-
-                this.calculateValues()
-                this.$emit('input', this.values)
-            },
-            onclickDeselect() {
-                if (this.selectedValues.length === 0) return
-                if (this.selectedList !== 'selected') return
-
-                if (this.min) {
-                    const newLength = this.values.length - this.selectedValues.length
-                    if (newLength < this.min) return
-                }
-
-                for (let selectedValue of this.selectedValues) {
-                    let selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
-                    let index = this.selectedOptions.indexOf(selectedOption)
-
-                    this.selectedOptions.splice(index, 1)
-                    this.sourceOptions.push(selectedOption)
-                }
-
-                this.selectedValues.splice(0, this.selectedValues.length)
-                this.selectedList = null
-
-                this.calculateValues()
-                this.$emit('input', this.values)
-            },
-            onClickUp() {
-                if (this.selectedValues.length === 0) return
-                if (this.selectedList === 'source') return
-
-                let selectedOptionsByIndex = new Map()
-
-                for (let selectedValue of this.selectedValues) {
-                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
-                    const index = this.selectedOptions.indexOf(selectedOption)
-                    selectedOptionsByIndex.set(index, selectedOption)
-                }
-
-                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort())
-
-                for (let [index, option] of selectedOptionsByIndex.entries()) {
-                    if (index === 0) continue
-                    this.selectedOptions.splice(index, 1)
-                    this.selectedOptions.splice(index - 1, 0, option)
-                }
-
-                this.calculateValues()
-                this.$emit('input', this.values)
-            },
-            onClickDown() {
-                if (this.selectedValues.length === 0) return
-                if (this.selectedList === 'source') return
-
-                let selectedOptionsByIndex = new Map()
-
-                for (let selectedValue of this.selectedValues) {
-                    const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
-                    const index = this.selectedOptions.indexOf(selectedOption)
-                    selectedOptionsByIndex.set(index, selectedOption)
-                }
-
-                selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse())
-
-                for (let [index, option] of selectedOptionsByIndex.entries()) {
-                    if (index === (this.selectedOptions.length - 1)) continue
-                    this.selectedOptions.splice(index, 1)
-                    this.selectedOptions.splice(index + 1, 0, option)
-                }
-
-                this.calculateValues()
-                this.$emit('input', this.values)
-            },
+            this.lastIndex = index
+            this.lastList = list
         },
-    }
+        onclickSelect() {
+            if (this.selectedValues.length === 0) return
+            if (this.selectedList !== 'source') return
+
+            if (this.max) {
+                const newLength = this.values.length + this.selectedValues.length
+                if (newLength > this.max) return
+            }
+
+            for (let selectedValue of this.selectedValues) {
+                let selectedOption = this.sourceOptions.find(option => option.value === selectedValue)
+                let index = this.sourceOptions.indexOf(selectedOption)
+
+                this.sourceOptions.splice(index, 1)
+                this.selectedOptions.push(selectedOption)
+            }
+
+            this.selectedValues.splice(0, this.selectedValues.length)
+            this.selectedList = null
+
+            this.calculateValues()
+            this.$emit('input', this.values)
+        },
+        onclickDeselect() {
+            if (this.selectedValues.length === 0) return
+            if (this.selectedList !== 'selected') return
+
+            if (this.min) {
+                const newLength = this.values.length - this.selectedValues.length
+                if (newLength < this.min) return
+            }
+
+            for (let selectedValue of this.selectedValues) {
+                let selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                let index = this.selectedOptions.indexOf(selectedOption)
+
+                this.selectedOptions.splice(index, 1)
+                this.sourceOptions.push(selectedOption)
+            }
+
+            this.selectedValues.splice(0, this.selectedValues.length)
+            this.selectedList = null
+
+            this.calculateValues()
+            this.$emit('input', this.values)
+        },
+        onClickUp() {
+            if (this.selectedValues.length === 0) return
+            if (this.selectedList === 'source') return
+
+            let selectedOptionsByIndex = new Map()
+
+            for (let selectedValue of this.selectedValues) {
+                const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                const index = this.selectedOptions.indexOf(selectedOption)
+                selectedOptionsByIndex.set(index, selectedOption)
+            }
+
+            selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort())
+
+            for (let [index, option] of selectedOptionsByIndex.entries()) {
+                if (index === 0) continue
+                this.selectedOptions.splice(index, 1)
+                this.selectedOptions.splice(index - 1, 0, option)
+            }
+
+            this.calculateValues()
+            this.$emit('input', this.values)
+        },
+        onClickDown() {
+            if (this.selectedValues.length === 0) return
+            if (this.selectedList === 'source') return
+
+            let selectedOptionsByIndex = new Map()
+
+            for (let selectedValue of this.selectedValues) {
+                const selectedOption = this.selectedOptions.find(option => option.value === selectedValue)
+                const index = this.selectedOptions.indexOf(selectedOption)
+                selectedOptionsByIndex.set(index, selectedOption)
+            }
+
+            selectedOptionsByIndex = new Map([...selectedOptionsByIndex.entries()].sort().reverse())
+
+            for (let [index, option] of selectedOptionsByIndex.entries()) {
+                if (index === (this.selectedOptions.length - 1)) continue
+                this.selectedOptions.splice(index, 1)
+                this.selectedOptions.splice(index + 1, 0, option)
+            }
+
+            this.calculateValues()
+            this.$emit('input', this.values)
+        },
+    },
+}
 </script>
 
 <style scoped lang="scss">
-    .slds-form-element__label {
-        user-select: none;
-    }
+.slds-form-element__label {
+    user-select: none;
+}
 
-    .slds-dueling-list__options {
-        overflow-x: hidden;
-    }
+.slds-dueling-list__options {
+    overflow-x: hidden;
+}
 
-    .listbox-source-enter, .listbox-source-leave-to {
-        opacity: 0;
-        transform: translateX(1rem);
-    }
+.listbox-source-enter, .listbox-source-leave-to {
+    opacity: 0;
+    transform: translateX(1rem);
+}
 
-    .listbox-selected-enter, .listbox-selected-leave-to {
-        opacity: 0;
-        transform: translateX(-1rem);
-    }
+.listbox-selected-enter, .listbox-selected-leave-to {
+    opacity: 0;
+    transform: translateX(-1rem);
+}
 
-    .listbox-leave-active {
-    }
+.listbox-leave-active {
+}
 </style>

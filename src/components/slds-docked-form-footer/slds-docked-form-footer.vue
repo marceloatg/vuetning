@@ -33,10 +33,10 @@ import SldsButtonIcon from '@/components/slds-button-icon'
 export default {
     name: 'SldsDockedFormFooter',
 
-    components:[
+    components: {
         SldsButton,
         SldsButtonIcon,
-    ],
+    },
 
     props: {
         /**
