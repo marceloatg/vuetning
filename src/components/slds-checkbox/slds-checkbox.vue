@@ -1,9 +1,10 @@
 <template>
     <slds-form-element
-        :label="inline ? null : label"
-        :required="required"
-        :read-only="readonly"
+        :borderless="borderless"
         :error="error"
+        :label="inline ? null : label"
+        :read-only="readonly"
+        :required="required"
     >
 
         <!-- View mode -->
@@ -58,6 +59,7 @@ export default {
     },
 
     props: {
+        borderless: Boolean,
         disabled: Boolean,
         error: Boolean,
         inline: Boolean,
