@@ -44,6 +44,228 @@
             </slds-tooltip>
         </slds-card>
 
+        <slds-card class="slds-m-top_medium">
+            <div class="slds-grid slds-wrap">
+
+                <!-- Top -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip top>
+
+                        <template #trigger>
+                            <slds-button neutral label="Top"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Top left -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip top-left>
+
+                        <template #trigger>
+                            <slds-button neutral label="Top Left"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Top right -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip top-right>
+
+                        <template #trigger>
+                            <slds-button neutral label="Top Right"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Right -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip right>
+
+                        <template #trigger>
+                            <slds-button neutral label="Right"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Right top -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip right-top>
+
+                        <template #trigger>
+                            <slds-button neutral label="Right Top"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Right bottom -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip right-bottom>
+
+                        <template #trigger>
+                            <slds-button neutral label="Right Bottom"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Bottom -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip bottom>
+
+                        <template #trigger>
+                            <slds-button neutral label="Bottom"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Bottom left -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip bottom-left>
+
+                        <template #trigger>
+                            <slds-button neutral label="Bottom Start"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Bottom right -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip bottom-right>
+
+                        <template #trigger>
+                            <slds-button neutral label="Bottom End"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Left -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip left>
+
+                        <template #trigger>
+                            <slds-button neutral label="Left"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Left top -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip left-top>
+
+                        <template #trigger>
+                            <slds-button neutral label="Left Top"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+                <!-- Left bottom -->
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <slds-tooltip left-bottom>
+
+                        <template #trigger>
+                            <slds-button neutral label="Left Bottom"/>
+                        </template>
+
+                        <template #default>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat? Accusamus excepturi
+                            eos, molestias expedita distinctio eligendi ut esse quasi!
+                        </template>
+
+                    </slds-tooltip>
+                </div>
+
+            </div>
+        </slds-card>
+
     </main>
 </template>
 
@@ -52,3 +274,9 @@ export default {
     name: 'Tooltip',
 }
 </script>
+
+<style scoped lang="scss">
+.slds-col {
+    padding: .25rem;
+}
+</style>
