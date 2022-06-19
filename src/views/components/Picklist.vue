@@ -20,6 +20,7 @@
                 :options="stringOptions"
                 label="Relate To"
                 placeholder="Select an option..."
+                tooltip="Lorem ipsum dolor sit amet."
                 required
                 loading
             />

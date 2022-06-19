@@ -4,8 +4,14 @@
         :error="error && !$data.$_isOpen"
         :required="required"
         :read-only="readonly"
+        :tooltip="tooltip"
         v-bind="dataAttributes"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- View mode -->
         <div v-if="readonly" class="slds-form-element__static">
@@ -179,6 +185,7 @@ export default {
         readonly: Boolean,
         required: Boolean,
         small: Boolean,
+        tooltip: String,
         value: {},
         xLarge: Boolean,
         xSmall: Boolean,
