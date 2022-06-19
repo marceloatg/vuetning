@@ -3,7 +3,13 @@
         :label="label"
         :required="required"
         :error="error"
+        :tooltip="tooltip"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- Input -->
         <div class="slds-checkbox_button-group">
@@ -51,6 +57,7 @@ export default {
         label: String,
         options: Array,
         required: Boolean,
+        tooltip: String,
         value: {type: Array, default: () => []}
     },
 

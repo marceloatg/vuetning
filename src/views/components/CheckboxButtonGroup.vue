@@ -18,6 +18,7 @@
                 v-model="value"
                 label="Scheduled Day(s)"
                 :options="stringOptions"
+                tooltip="Lorem ipsum dolor sit amet."
             />
 
             <br>
