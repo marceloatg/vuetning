@@ -21,7 +21,7 @@
                 </template>
 
                 <template #content>
-                    <slds-tooltip visible disabled>
+                    <slds-tooltip>
 
                         <template #trigger>
                             <slds-icon icon="utility:info" x-small/>

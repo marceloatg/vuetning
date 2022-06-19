@@ -204,11 +204,7 @@ export default {
             if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
             if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            this.mouseEnterTimeout = setTimeout(async () => {
-                this.isVisible = true
-                await this.$nextTick()
-                this.positionTooltip()
-            }, 300)
+            this.mouseEnterTimeout = setTimeout(() => this.isVisible = true, 300)
         },
 
         /**
@@ -219,9 +215,7 @@ export default {
             if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
             if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            this.mouseLeaveTimeout = setTimeout(() => {
-                this.isVisible = false
-            }, 300)
+            this.mouseLeaveTimeout = setTimeout(() => this.isVisible = false, 300)
         },
 
         /**
