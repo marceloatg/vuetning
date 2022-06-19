@@ -21,6 +21,19 @@
                 </template>
 
                 <template #content>
+                    <slds-tooltip visible disabled>
+
+                        <template #trigger>
+                            <slds-icon icon="utility:info" x-small/>
+                        </template>
+
+                        <template #default>
+                            Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat
+                            veniam incididunt duis in sint irure nisi.
+                        </template>
+
+                    </slds-tooltip>
+
                     Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat
                     veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit
                     officia tempor esse quis. Cillum sunt ad dolore quis aute consequat ipsum magna exercitation
