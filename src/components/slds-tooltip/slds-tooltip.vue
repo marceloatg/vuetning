@@ -117,6 +117,12 @@ export default {
              * @type {boolean}
              */
             isVisible: false,
+
+            /**
+             * @description Mouse leave timeout.
+             * @type {NodeJS.Timeout}
+             */
+            timeout: 0,
         }
     },
 
@@ -191,6 +197,7 @@ export default {
          */
         async onMouseEnter() {
             if (this.disabled) return
+            if (this.timeout) clearTimeout(this.timeout)
 
             this.isVisible = true
             await this.$nextTick()
@@ -201,7 +208,10 @@ export default {
          * @description Handler for mouseleave event.
          */
         onMouseLeave() {
-            if (!this.disabled) this.isVisible = false
+            if (this.disabled) return
+
+            if (this.timeout) clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => this.isVisible = false, 200)
         },
 
         /**
@@ -212,64 +222,69 @@ export default {
             const popover = this.$refs.popover.getBoundingClientRect()
             const nubbin = {width: 24, height: 24, paddingX: 12, paddingY: 8}
 
-            let popoverTop = 0
-            let popoverLeft = 0
-
-            if (this.bottom) {
-                popoverTop = trigger.y + trigger.height + (nubbin.height / 2)
-                popoverLeft = trigger.x - ((popover.width - trigger.width) / 2)
-            }
-            else if (this.bottomLeft) {
-                popoverTop = trigger.y + trigger.height + (nubbin.height / 2)
-                popoverLeft = trigger.x + (trigger.width / 2) + nubbin.width - popover.width
-            }
-            else if (this.bottomRight) {
-                popoverTop = trigger.y + trigger.height + (nubbin.height / 2)
-                popoverLeft = trigger.x + ((trigger.width - nubbin.width) / 2) - nubbin.paddingX
-            }
-            else if (this.left) {
-                popoverTop = trigger.y - ((popover.height - trigger.height) / 2)
-                popoverLeft = trigger.x - popover.width - (nubbin.width / 2)
-            }
-            else if (this.leftBottom) {
-                popoverTop = trigger.y - ((trigger.height) / 2) + nubbin.paddingY
-                popoverLeft = trigger.x - popover.width - (nubbin.width / 2)
-            }
-            else if (this.leftTop) {
-                popoverTop = trigger.y + (trigger.height / 2) - popover.height + nubbin.height
-                popoverLeft = trigger.x - popover.width - (nubbin.width / 2)
-            }
-            else if (this.right) {
-                popoverTop = trigger.y - ((popover.height - trigger.height) / 2)
-                popoverLeft = trigger.x + trigger.width + (nubbin.width / 2)
-            }
-            else if (this.rightBottom) {
-                popoverTop = trigger.y - ((trigger.height) / 2) + nubbin.paddingY
-                popoverLeft = trigger.x + trigger.width + (nubbin.width / 2)
-            }
-            else if (this.rightTop) {
-                popoverTop = trigger.y + (trigger.height / 2) - popover.height + nubbin.height
-                popoverLeft = trigger.x + trigger.width + (nubbin.width / 2)
-            }
-            else if (this.top) {
-                popoverTop = trigger.y - popover.height - (nubbin.height / 2)
-                popoverLeft = trigger.x - ((popover.width - trigger.width) / 2)
-            }
-            else if (this.topLeft) {
-                popoverTop = trigger.y - popover.height - (nubbin.height / 2)
-                popoverLeft = trigger.x + (trigger.width / 2) + nubbin.width - popover.width
-            }
-            else if (this.topRight) {
-                popoverTop = trigger.y - popover.height - (nubbin.height / 2)
-                popoverLeft = trigger.x + ((trigger.width - nubbin.width) / 2) - nubbin.paddingX
-            }
-            else {
-                popoverTop = trigger.y - popover.height - (nubbin.height / 2)
-                popoverLeft = trigger.x - ((popover.width - trigger.width) / 2)
-            }
+            const popoverTop = this.getPopoverTop(trigger, popover, nubbin)
+            const popoverLeft = this.getPopoverLeft(trigger, popover, nubbin)
 
             this.$refs.popoverWrapper.style.setProperty('--top', `${popoverTop}px`)
             this.$refs.popoverWrapper.style.setProperty('--left', `${popoverLeft}px`)
+        },
+
+        /**
+         * @description Get the calculated popover left.
+         * @param {DOMRect} trigger - The trigger DOMRect.
+         * @param {DOMRect} popover - The popover DOMRect.
+         * @param {object} nubbin - The nubbin object.
+         * @return {number} - The calculated left.
+         */
+        getPopoverLeft(trigger, popover, nubbin) {
+            let popoverLeft = 0
+
+            if (this.bottomLeft || this.topLeft) {
+                popoverLeft = trigger.x + (trigger.width / 2) + nubbin.width - popover.width
+            }
+            else if (this.bottomRight || this.topRight) {
+                popoverLeft = trigger.x + ((trigger.width - nubbin.width) / 2) - nubbin.paddingX
+            }
+            else if (this.left || this.leftBottom || this.leftTop) {
+                popoverLeft = trigger.x - popover.width - (nubbin.width / 2)
+            }
+            else if (this.right || this.rightBottom || this.rightTop) {
+                popoverLeft = trigger.x + trigger.width + (nubbin.width / 2)
+            }
+            else {
+                popoverLeft = trigger.x - ((popover.width - trigger.width) / 2)
+            }
+
+            return popoverLeft
+        },
+
+        /**
+         * @description Get the calculated popover top.
+         * @param {DOMRect} trigger - The trigger DOMRect.
+         * @param {DOMRect} popover - The popover DOMRect.
+         * @param {object} nubbin - The nubbin object.
+         * @return {number} - The calculated top.
+         */
+        getPopoverTop(trigger, popover, nubbin) {
+            let popoverTop = 0
+
+            if (this.leftTop || this.rightTop) {
+                popoverTop = trigger.y + (trigger.height / 2) - popover.height + nubbin.height
+            }
+            else if (this.left || this.right) {
+                popoverTop = trigger.y - ((popover.height - trigger.height) / 2)
+            }
+            else if (this.bottom || this.bottomLeft || this.bottomRight) {
+                popoverTop = trigger.y + trigger.height + (nubbin.height / 2)
+            }
+            else if (this.leftBottom || this.rightBottom) {
+                popoverTop = trigger.y - ((trigger.height) / 2) + nubbin.paddingY
+            }
+            else {
+                popoverTop = trigger.y - popover.height - (nubbin.height / 2)
+            }
+
+            return popoverTop
         },
     }
 }
