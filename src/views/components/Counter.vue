@@ -16,6 +16,7 @@
             <slds-counter
                 v-model="value"
                 label="Counter Label"
+                tooltip="Lorem ipsum dolor sit amet."
                 min="0"
                 max="100"
                 step="10"

@@ -16,6 +16,7 @@
             <slds-checkbox
                 v-model="value"
                 label="Lorem ipsum"
+                tooltip="Lorem ipsum dolor sit amet."
             />
         </slds-card>
 

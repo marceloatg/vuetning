@@ -4,7 +4,13 @@
         :error="error"
         :required="required"
         :read-only="readonly"
+        :tooltip="tooltip"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- Decrement button -->
         <slds-button-icon
@@ -90,6 +96,7 @@ export default {
         readonly: Boolean,
         required: Boolean,
         step: {type: [Number, String], default: 1},
+        tooltip: String,
         value: [Number, String]
     },
 
