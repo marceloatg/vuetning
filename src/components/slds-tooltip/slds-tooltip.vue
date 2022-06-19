@@ -182,10 +182,8 @@ export default {
         }
     },
 
-    async created() {
+    created() {
         this.isVisible = this.visible
-        await this.$nextTick()
-        if (this.isVisible) this.positionTooltip()
     },
 
     mounted() {
@@ -234,11 +232,34 @@ export default {
             const popover = this.$refs.popover.getBoundingClientRect()
             const nubbin = {width: 24, height: 24, paddingX: 12, paddingY: 8}
 
+            const modalContainerLeftOffset = this.getModalContainerLeftOffset()
             const popoverTop = this.getPopoverTop(trigger, popover, nubbin)
-            const popoverLeft = this.getPopoverLeft(trigger, popover, nubbin)
+            const popoverLeft = this.getPopoverLeft(trigger, popover, nubbin) - parseInt(modalContainerLeftOffset)
 
             this.$refs.popoverWrapper.style.setProperty('--top', `${popoverTop}px`)
             this.$refs.popoverWrapper.style.setProperty('--left', `${popoverLeft}px`)
+        },
+
+        /**
+         * @description Gets the left offset of the modal container.
+         * @return {string} The left offset value in px.
+         */
+        getModalContainerLeftOffset() {
+            let modalContainerLeftOffset = '0'
+            let currentElement = this.$refs.popover
+
+            while (currentElement.parentElement) {
+                currentElement = currentElement.parentElement
+                const currentElementClassList = currentElement.classList
+                const currentElementStyle = window.getComputedStyle(currentElement)
+
+                if (currentElementClassList.contains('slds-modal__container')) {
+                    modalContainerLeftOffset = currentElementStyle.marginLeft
+                    break
+                }
+            }
+
+            return modalContainerLeftOffset
         },
 
         /**
