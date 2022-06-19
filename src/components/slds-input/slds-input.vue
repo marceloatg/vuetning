@@ -9,6 +9,7 @@
         :tooltip="tooltip"
         v-bind="dataAttributes"
     >
+
         <!-- Tooltip -->
         <template v-if="$slots.tooltip" #tooltip>
             <slot name="tooltip"/>

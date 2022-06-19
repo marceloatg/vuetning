@@ -119,10 +119,16 @@ export default {
             isVisible: false,
 
             /**
+             * @description Mouse enter timeout.
+             * @type {NodeJS.Timeout}
+             */
+            mouseEnterTimeout: 0,
+
+            /**
              * @description Mouse leave timeout.
              * @type {NodeJS.Timeout}
              */
-            timeout: 0,
+            mouseLeaveTimeout: 0,
         }
     },
 
@@ -195,13 +201,16 @@ export default {
          * @description Handler for mouseenter event.
          * @return {Promise<void>}
          */
-        async onMouseEnter() {
+        onMouseEnter() {
             if (this.disabled) return
-            if (this.timeout) clearTimeout(this.timeout)
+            if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
+            if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            this.isVisible = true
-            await this.$nextTick()
-            this.positionTooltip()
+            this.mouseEnterTimeout = setTimeout(async () => {
+                this.isVisible = true
+                await this.$nextTick()
+                this.positionTooltip()
+            }, 300)
         },
 
         /**
@@ -209,9 +218,12 @@ export default {
          */
         onMouseLeave() {
             if (this.disabled) return
+            if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
+            if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            if (this.timeout) clearTimeout(this.timeout)
-            this.timeout = setTimeout(() => this.isVisible = false, 200)
+            this.mouseLeaveTimeout = setTimeout(() => {
+                this.isVisible = false
+            }, 300)
         },
 
         /**
@@ -314,7 +326,7 @@ export default {
 .popover-bottom-enter,
 .popover-bottom-leave-to {
     opacity: 0;
-    transform: translateY(.5rem);
+    transform: translateY(-.5rem);
     will-change: transform;
 }
 
@@ -326,7 +338,7 @@ export default {
 .popover-left-enter,
 .popover-left-leave-to {
     opacity: 0;
-    transform: translateX(.5rem);
+    transform: translateX(-.5rem);
     will-change: transform;
 }
 
@@ -338,7 +350,7 @@ export default {
 .popover-right-enter,
 .popover-right-leave-to {
     opacity: 0;
-    transform: translateX(-.5rem);
+    transform: translateX(.5rem);
     will-change: transform;
 }
 
@@ -350,7 +362,7 @@ export default {
 .popover-top-enter,
 .popover-top-leave-to {
     opacity: 0;
-    transform: translateY(-.5rem);
+    transform: translateY(.5rem);
     will-change: transform;
 }
 
