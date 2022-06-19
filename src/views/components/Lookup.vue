@@ -19,6 +19,7 @@
                 label="Relate To"
                 :options="objectOptions"
                 placeholder="Search..."
+                tooltip="Lorem ipsum dolor sit amet."
                 loading
             />
 
