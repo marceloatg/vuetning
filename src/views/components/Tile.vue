@@ -13,7 +13,7 @@
         </slds-page-header>
 
         <slds-card class="slds-m-top_medium" title="Base">
-            <slds-tile title="Salesforce UX" @click="clickTitle">
+            <slds-tile title="Salesforce UX" no-link @click="clickTitle">
 
                 <slds-tile-item
                     label="First Label:"
