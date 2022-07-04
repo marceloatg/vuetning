@@ -29,9 +29,15 @@
 
                 <!-- Title -->
                 <h3 class="slds-tile__title slds-truncate" :title="title">
-                    <a @click="onClickTitle">
+
+                    <p v-if="linkless">
+                        {{ title }}
+                    </p>
+
+                    <a v-else @click="onClickTitle">
                         {{ title }}
                     </a>
+
                 </h3>
 
                 <!-- Actions -->
@@ -115,6 +121,12 @@ export default {
          * @type {boolean}
          */
         iconXXSmall: Boolean,
+
+        /**
+         * @description Indicates whether title no has link.
+         * @type {boolean}
+         */
+        linkless: Boolean,
 
         /**
          * @description The title of the tile.
