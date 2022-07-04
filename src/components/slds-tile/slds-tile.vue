@@ -30,13 +30,13 @@
                 <!-- Title -->
                 <h3 class="slds-tile__title slds-truncate" :title="title">
 
-                    <a v-if="!linkless" @click="onClickTitle">
-                        {{ title }}
-                    </a>
-
-                    <p v-else>
+                    <p v-if="linkless">
                         {{ title }}
                     </p>
+
+                    <a v-else @click="onClickTitle">
+                        {{ title }}
+                    </a>
 
                 </h3>
 
