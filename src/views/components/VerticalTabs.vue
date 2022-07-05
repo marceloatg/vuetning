@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'VerticalTabs',
+    name: 'VerticalTabsView',
 }
 </script>

@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'ListBuilder',
+    name: 'ListBuilderView',
 }
 </script>

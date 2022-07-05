@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: 'RichTextEditor',
+    name: 'RichTextEditorView',
 
     data() {
         return {

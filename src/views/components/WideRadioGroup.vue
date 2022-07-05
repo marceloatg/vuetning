@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: 'WideRadioGroup',
+    name: 'WideRadioGroupView',
 
     data(){
       return {

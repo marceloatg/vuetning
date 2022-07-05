@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: 'DataTable',
+    name: 'DataTableView',
 
     data() {
         return {

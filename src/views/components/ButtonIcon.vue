@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'ButtonIcon',
+    name: 'ButtonIconView',
 }
 </script>

@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'DuelingPicklist',
+    name: 'DuelingPicklistView',
 }
 </script>

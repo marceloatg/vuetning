@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './assets/styles/salesforce-lightning-design-system.min.css';
 
 $header-height: 40px;
 $navigation-height: 50px;

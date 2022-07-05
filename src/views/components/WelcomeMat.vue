@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'WelcomeMat',
+    name: 'WelcomeMatView',
 }
 </script>

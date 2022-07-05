@@ -165,7 +165,7 @@
 
 <script>
 export default {
-    value: 'Combobox',
+    name: 'ComboboxView',
 
     data() {
         return {

@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    name: 'Lookup',
+    name: 'LookupView',
 
     data() {
         return {

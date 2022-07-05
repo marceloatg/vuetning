@@ -27,7 +27,7 @@
 <script>
 
 export default {
-    name: 'CodeBlock',
+    name: 'CodeBlockView',
     data() {
         return {
             code:

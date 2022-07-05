@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'DynamicIcon',
+    name: 'DynamicIconView',
 }
 </script>

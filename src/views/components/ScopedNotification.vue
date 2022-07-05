@@ -68,6 +68,6 @@
 
 <script>
 export default {
-    name: 'ScopedNotification',
+    name: 'ScopedNotificationView',
 }
 </script>

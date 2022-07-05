@@ -33,7 +33,7 @@
 
 <script>
 export default {
-    name: 'MultiPicklist',
+    name: 'MultiPicklistView',
 
     data() {
         return {

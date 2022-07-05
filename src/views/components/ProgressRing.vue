@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'ProgressRing',
+    name: 'ProgressRingView',
 }
 </script>

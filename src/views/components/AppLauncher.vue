@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'AppLauncher',
+    name: 'AppLauncherView',
 }
 </script>

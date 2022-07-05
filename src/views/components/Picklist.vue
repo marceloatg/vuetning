@@ -44,7 +44,7 @@
 
 <script>
 export default {
-    name: 'Picklist',
+    name: 'PicklistView',
 
     data() {
         return {

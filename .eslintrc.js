@@ -1,3 +1,5 @@
+const MAX_ATTRIBUTES_PER_LINE = 5
+
 module.exports = {
     root: true,
     env: {
@@ -56,11 +58,12 @@ module.exports = {
             'svg': 'always',
             'math': 'always'
         }],
-        'vue/max-attributes-per-line': ['error', {
-            'singleline': 5,
+        'vue/max-attributes-per-line': ['warn', {
             'multiline': {
                 'max': 1,
-                'allowFirstLine': false
+            },
+            'singleline': {
+                'max': MAX_ATTRIBUTES_PER_LINE,
             }
         }],
         'vue/mustache-interpolation-spacing': ['error', 'always'],

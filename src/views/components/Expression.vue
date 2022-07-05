@@ -23,6 +23,6 @@
 
 <script>
 export default {
-    name: 'Expression',
+    name: 'ExpressionView',
 }
 </script>

@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: 'Input',
+    name: 'InputView',
 
     data() {
         return {

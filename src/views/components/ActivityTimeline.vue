@@ -45,6 +45,6 @@
 
 <script>
 export default {
-    name: 'ActivityTimeline',
+    name: 'ActivityTimelineView',
 }
 </script>

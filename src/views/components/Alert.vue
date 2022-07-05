@@ -91,7 +91,7 @@
 
 <script>
 export default {
-    name: 'Alert'
+    name: 'AlertView'
 }
 </script>
 

@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: 'Accordion',
+    name: 'AccordionView',
 
     data() {
         return {

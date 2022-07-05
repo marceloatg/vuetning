@@ -337,7 +337,6 @@ export default {
             const views = this.$_views
             const unusedViews = this.$_unusedViews
             const mountedViews = this.mountedViews
-            const mountedViewsThreshold = this.mountedViewsThreshold
             let startIndex, endIndex
             let totalSize
             let scroll

@@ -24,6 +24,6 @@
 
 <script>
 export default {
-    name: 'Panel',
+    name: 'PanelView',
 }
 </script>

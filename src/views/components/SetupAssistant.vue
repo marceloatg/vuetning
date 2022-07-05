@@ -23,6 +23,6 @@
 
 <script>
 export default {
-    name: 'SetupAssistant',
+    name: 'SetupAssistantView',
 }
 </script>

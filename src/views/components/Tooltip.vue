@@ -271,7 +271,7 @@
 
 <script>
 export default {
-    name: 'Tooltip',
+    name: 'TooltipView',
 }
 </script>
 

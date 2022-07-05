@@ -36,6 +36,6 @@
 
 <script>
 export default {
-    name: 'Prompt',
+    name: 'PromptView',
 }
 </script>

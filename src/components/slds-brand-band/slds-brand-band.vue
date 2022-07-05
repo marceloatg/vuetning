@@ -79,22 +79,22 @@ export default {
     }
 
     &.slds-brand-band_default:before {
-        background-image: url(/assets/images/themes/oneSalesforce/banner-brand-default.png),
+        background-image: url(./images/banner-brand-default.png),
         linear-gradient(to top, rgba(0, 0, 0, 0) 0, var(--start-color));
     }
 
     &.slds-brand-band_group-public:before {
-        background-image: url(/assets/images/themes/oneSalesforce/banner-group-public-default.png),
+        background-image: url(./images/banner-group-public-default.png),
         linear-gradient(to top, rgba(0, 0, 0, 0) 0, var(--start-color));
     }
 
     &.slds-brand-band_group-private:before {
-        background-image: url(/assets/images/themes/oneSalesforce/banner-group-private-default.png),
+        background-image: url(./images/banner-group-private-default.png),
         linear-gradient(to top, rgba(0, 0, 0, 0) 0, var(--start-color));
     }
 
     &.slds-brand-band_user:before {
-        background-image: url(/assets/images/themes/oneSalesforce/banner-user-default.png),
+        background-image: url(./images/banner-user-default.png),
         linear-gradient(to top, rgba(0, 0, 0, 0) 0, var(--start-color));
     }
 }

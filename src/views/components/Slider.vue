@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'Slider',
+    name: 'SliderView',
 }
 </script>

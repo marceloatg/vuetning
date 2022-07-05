@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'Feed',
+    name: 'FeedView',
 }
 </script>

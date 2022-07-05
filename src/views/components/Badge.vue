@@ -32,6 +32,6 @@
 
 <script>
 export default {
-    name: 'Badge',
+    name: 'BadgeView',
 }
 </script>
