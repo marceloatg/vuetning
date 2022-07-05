@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: 'Checkbox',
+    name: 'CheckboxView',
 
     data() {
         return {

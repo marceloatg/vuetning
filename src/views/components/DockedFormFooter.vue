@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: 'DockedFormFooter',
+    name: 'DockedFormFooterView',
 
     methods: {
         onCancel() {

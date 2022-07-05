@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'VisualPicker',
+    name: 'VisualPickerView',
 }
 </script>

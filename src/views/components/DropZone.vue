@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'DropZone',
+    name: 'DropZoneView',
 }
 </script>

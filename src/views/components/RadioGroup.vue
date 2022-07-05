@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'RadioGroup',
+    name: 'RadioGroupView',
 }
 </script>

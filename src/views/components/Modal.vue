@@ -62,6 +62,6 @@
 
 <script>
 export default {
-    name: 'Modal',
+    name: 'ModalView',
 }
 </script>

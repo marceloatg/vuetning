@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'TreeGrid',
+    name: 'TreeGridView',
 }
 </script>

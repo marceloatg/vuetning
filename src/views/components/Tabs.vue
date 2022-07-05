@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    name: 'Tabs',
+    name: 'TabsView',
 
     data() {
         return {

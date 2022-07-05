@@ -55,7 +55,7 @@
 
 <script>
 export default {
-    name: 'Counter',
+    name: 'CounterView',
 
     data() {
         return {

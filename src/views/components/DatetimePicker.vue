@@ -49,7 +49,7 @@
 
 <script>
 export default {
-    name: 'DatetimePicker',
+    name: 'DatetimePickerView',
 
     data() {
         return {

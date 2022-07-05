@@ -38,7 +38,7 @@
 import SldsIcon from '../slds-icon/slds-icon'
 
 export default {
-    name: 'Option',
+    name: 'SldsDuelingPicklistOption',
 
     components: {
         SldsIcon,

@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'TimePicker',
+    name: 'TimePickerView',
 }
 </script>

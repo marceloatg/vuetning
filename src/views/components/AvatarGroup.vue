@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'AvatarGroup',
+    name: 'AvatarGroupView',
 }
 </script>

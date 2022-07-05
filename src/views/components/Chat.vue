@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'Chat',
+    name: 'ChatView',
 }
 </script>

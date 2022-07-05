@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'Popover',
+    name: 'PopoverView',
 }
 </script>

@@ -77,6 +77,7 @@
 import ClickOutside from '@/directives/click-outside/index'
 
 export default {
+    name: 'SldsGlobalNavigationTab',
     directives: {
         ClickOutside
     },

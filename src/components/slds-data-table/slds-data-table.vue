@@ -615,6 +615,7 @@ export default {
                 sortedColumn.sortedDescending = true
             }
 
+            // eslint-disable-next-line vue/no-mutating-props
             this.rows.sort(this.sorter)
             this.filterRows()
         },

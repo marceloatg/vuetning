@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'TrialBar',
+    name: 'TrialBarView',
 }
 </script>

@@ -90,7 +90,7 @@
 
 <script>
 export default {
-    name: 'Tile',
+    name: 'TileView',
 
     data() {
         return {

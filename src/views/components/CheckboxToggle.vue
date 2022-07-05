@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: 'CheckboxToggle',
+    name: 'CheckboxToggleView',
 
     data() {
         return {

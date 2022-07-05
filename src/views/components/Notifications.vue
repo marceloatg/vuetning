@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'Notifications',
+    name: 'NotificationsView',
 }
 </script>

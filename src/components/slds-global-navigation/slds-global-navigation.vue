@@ -205,7 +205,9 @@ export default {
             if (index < this.maxVisibleSubTabs - 1) return
 
             let temp = this.subTabs[index]
+            // eslint-disable-next-line vue/no-mutating-props
             this.subTabs[index] = this.subTabs[this.maxVisibleSubTabs - 2]
+            // eslint-disable-next-line vue/no-mutating-props
             this.subTabs[this.maxVisibleSubTabs - 2] = temp
 
             // Force computed to recalculate tab indexes
@@ -217,7 +219,9 @@ export default {
             if (index < this.maxVisibleTabs - 1) return
 
             let temp = this.tabs[index]
+            // eslint-disable-next-line vue/no-mutating-props
             this.tabs[index] = this.tabs[this.maxVisibleTabs - 2]
+            // eslint-disable-next-line vue/no-mutating-props
             this.tabs[this.maxVisibleTabs - 2] = temp
 
             // Force computed to recalculate tab indexes

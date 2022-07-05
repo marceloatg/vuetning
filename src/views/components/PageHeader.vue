@@ -104,6 +104,6 @@
 <script>
 
 export default {
-    name: 'PageHeader',
+    name: 'PageHeaderViewView',
 }
 </script>

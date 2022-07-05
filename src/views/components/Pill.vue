@@ -130,7 +130,7 @@
 
 <script>
 export default {
-    name: 'Pill',
+    name: 'PillView',
 
     methods: {
         onRemove() {

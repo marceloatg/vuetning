@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'Toasts',
+    name: 'ToastsView',
 }
 </script>

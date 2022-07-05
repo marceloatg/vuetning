@@ -23,6 +23,6 @@
 
 <script>
 export default {
-    name: 'Spinner',
+    name: 'SpinnerView',
 }
 </script>

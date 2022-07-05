@@ -28,6 +28,6 @@
 
 <script>
 export default {
-    name: 'GlobalHeader',
+    name: 'GlobalHeaderView',
 }
 </script>

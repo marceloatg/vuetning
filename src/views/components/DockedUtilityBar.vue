@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'DockedUtilityBar',
+    name: 'DockedUtilityBarView',
 }
 </script>

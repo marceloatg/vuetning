@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    name: 'Map',
+    name: 'MapView',
 }
 </script>
