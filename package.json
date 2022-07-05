@@ -7,7 +7,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --collectCoverage",
+    "test:teamcity": "jest",
     "lint": "vue-cli-service lint --no-fix",
     "bundle": "vue-cli-service build --target lib --name vuetning src/index.js",
     "lint:fix": "vue-cli-service lint",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@types/jest": "^27.0.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -52,6 +54,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "eslint-teamcity": "^4.0.0",
     "jest": "^27.0.5",
+    "jest-teamcity": "^1.11.0",
     "jest-teamcity-reporter": "^0.9.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0"
