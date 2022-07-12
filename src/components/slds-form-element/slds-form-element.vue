@@ -11,7 +11,7 @@
             <slds-tooltip>
 
                 <template #trigger>
-                    <slds-icon icon="utility:info" x-small/>
+                    <slds-icon icon="utility:info" xx-small/>
                 </template>
 
                 <template #default>
