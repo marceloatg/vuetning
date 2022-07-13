@@ -76,7 +76,7 @@ export default {
 
             if (this.brand) return 'slds-icon-text-brand'
             if (this.error) return 'slds-icon-text-error'
-            if (this.inverse) return 'slds-icon-text-inverse'
+            if (this.inverse || this.standardFormat) return 'slds-icon-text-inverse'
             if (this.light) return 'slds-icon-text-light'
             if (this.success) return 'slds-icon-text-success'
             if (this.warning) return 'slds-icon-text-warning'
