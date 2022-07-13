@@ -17,6 +17,14 @@
             <slds-icon icon="utility:announcement"/>
         </slds-card>
 
+        <slds-card class="slds-m-top_medium" title="Standard Format">
+            <slds-icon
+                icon="utility:text_background_color"
+                icon-class="slds-icon-standard-quick-text"
+                standard-format
+            />
+        </slds-card>
+
     </main>
 </template>
 
