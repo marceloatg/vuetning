@@ -25,7 +25,7 @@ export default {
 
     props: {
         /**
-         * @description Expands the specified accordion sections.
+         * Expands the specified accordion sections.
          * Pass in a string for a single section or a list of section names.
          * To support multiple expanded sections, include allow-multiple-sections-open in your markup.
          * By default, only the first section in the accordion is expanded.
@@ -34,14 +34,14 @@ export default {
         activeSectionName: [String, Array],
 
         /**
-         * @description If present, the accordion allows multiple open sections.
+         * If present, the accordion allows multiple open sections.
          * Otherwise, opening a section closes another that's currently open.
          * @type {boolean}
          */
         allowMultipleSectionsOpen: Boolean,
 
         /**
-         * @description Accordion sections.
+         * Accordion sections.
          * @type {AccordionSection[]}
          */
         sections: Array,
@@ -50,7 +50,7 @@ export default {
     data() {
         return {
             /**
-             * @description Private variable to track the active section name.
+             * Private variable to track the active section name.
              * @type {string}
              */
             $_activeSectionName: this.activeSectionName
@@ -59,7 +59,7 @@ export default {
 
     watch: {
         /**
-         * @description Watch for changes to the active section name.
+         * Watch for changes to the active section name.
          * @param {string|string[]} activeSectionName
          */
         activeSectionName(activeSectionName) {
@@ -70,7 +70,7 @@ export default {
         },
 
         /**
-         * @description Watch for changes to the sections.
+         * Watch for changes to the sections.
          */
         sections: {
             deep: true,
@@ -86,7 +86,7 @@ export default {
 
     methods: {
         /**
-         * @description Handles the active section change event.
+         * Handles the active section change event.
          * @param {string} sectionName New section name
          */
         onActiveSectionChange(sectionName) {
@@ -108,7 +108,7 @@ export default {
         },
 
         /**
-         * @description Throws error if the section name is invalid.
+         * Throws error if the section name is invalid.
          */
         validateActiveSectionName() {
             if (this.allowMultipleSectionsOpen) {

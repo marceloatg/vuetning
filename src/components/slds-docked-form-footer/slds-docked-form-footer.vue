@@ -40,19 +40,19 @@ export default {
 
     props: {
         /**
-         * @description If present, the docked form footer is shown with an error icon on the left of the label.
+         * If present, the docked form footer is shown with an error icon on the left of the label.
          * @type {boolean}
          */
         hasError: Boolean,
 
         /**
-         * @description The label of the cancel button.
+         * The label of the cancel button.
          * @type {string}
          */
         cancelButtonLabel: {type: String, default: 'Cancel'},
 
         /**
-         * @description The label of the save button.
+         * The label of the save button.
          * @type {string}
          */
         saveButtonLabel: {type: String, default: 'Save'},
@@ -60,14 +60,14 @@ export default {
 
     methods: {
         /**
-         * @description Fires a cancel event when the cancel button is clicked.
+         * Fires a cancel event when the cancel button is clicked.
          */
         onClickCancel() {
             this.$emit('cancel')
         },
 
         /**
-         * @description Fires a save event when the save button is clicked.
+         * Fires a save event when the save button is clicked.
          */
         onClickSave() {
             this.$emit('save')

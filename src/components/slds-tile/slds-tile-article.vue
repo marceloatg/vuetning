@@ -19,16 +19,16 @@
 <script>
 export default {
     name: 'SldsTileArticle',
-    
+
     props: {
         /**
-         * @description Article author name.
+         * Article author name.
          * @type {string}
          */
         author: String,
 
         /**
-         * @description List of items present in the article.
+         * List of items present in the article.
          * @type {string}
          */
         items: Array,

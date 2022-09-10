@@ -26,85 +26,85 @@ export default {
 
     props: {
         /**
-         * @description Indicates whether the tooltip is disabled.
+         * Indicates whether the tooltip is disabled.
          * @type {boolean}
          */
         disabled: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on bottom position.
+         * Indicates whether the tooltip is on bottom position.
          * @type {boolean}
          */
         bottom: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on bottom left position.
+         * Indicates whether the tooltip is on bottom left position.
          * @type {boolean}
          */
         bottomLeft: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on bottom right position.
+         * Indicates whether the tooltip is on bottom right position.
          * @type {boolean}
          */
         bottomRight: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on left position.
+         * Indicates whether the tooltip is on left position.
          * @type {boolean}
          */
         left: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on left bottom position.
+         * Indicates whether the tooltip is on left bottom position.
          * @type {boolean}
          */
         leftBottom: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on left top position.
+         * Indicates whether the tooltip is on left top position.
          * @type {boolean}
          */
         leftTop: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on right position.
+         * Indicates whether the tooltip is on right position.
          * @type {boolean}
          */
         right: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on right bottom position.
+         * Indicates whether the tooltip is on right bottom position.
          * @type {boolean}
          */
         rightBottom: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on right top position.
+         * Indicates whether the tooltip is on right top position.
          * @type {boolean}
          */
         rightTop: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on top position.
+         * Indicates whether the tooltip is on top position.
          * @type {boolean}
          */
         top: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on top left position.
+         * Indicates whether the tooltip is on top left position.
          * @type {boolean}
          */
         topLeft: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is on top right position.
+         * Indicates whether the tooltip is on top right position.
          * @type {boolean}
          */
         topRight: Boolean,
 
         /**
-         * @description Indicates whether the tooltip is visible.
+         * Indicates whether the tooltip is visible.
          * @type {boolean}
          */
         visible: Boolean,
@@ -113,19 +113,19 @@ export default {
     data() {
         return {
             /**
-             * @description Indicates whether the tooltip is currently visible.
+             * Indicates whether the tooltip is currently visible.
              * @type {boolean}
              */
             isVisible: false,
 
             /**
-             * @description Mouse enter timeout.
+             * Mouse enter timeout.
              * @type {NodeJS.Timeout}
              */
             mouseEnterTimeout: 0,
 
             /**
-             * @description Mouse leave timeout.
+             * Mouse leave timeout.
              * @type {NodeJS.Timeout}
              */
             mouseLeaveTimeout: 0,
@@ -134,7 +134,7 @@ export default {
 
     computed: {
         /**
-         * @description Popover class names.
+         * Popover class names.
          * @type {string[]}
          */
         popoverClass() {
@@ -158,7 +158,7 @@ export default {
         },
 
         /**
-         * @description Popover transition name.
+         * Popover transition name.
          * @type {string}
          */
         popoverTransitionName() {
@@ -196,7 +196,7 @@ export default {
 
     methods: {
         /**
-         * @description Handler for mouseenter event.
+         * Handler for mouseenter event.
          * @return {Promise<void>}
          */
         onMouseEnter() {
@@ -208,7 +208,7 @@ export default {
         },
 
         /**
-         * @description Handler for mouseleave event.
+         * Handler for mouseleave event.
          */
         onMouseLeave() {
             if (this.disabled) return
@@ -219,7 +219,7 @@ export default {
         },
 
         /**
-         * @description Positions the tooltip relative to its trigger.
+         * Positions the tooltip relative to its trigger.
          */
         positionTooltip() {
             const trigger = this.$refs.trigger.firstChild.getBoundingClientRect()
@@ -235,7 +235,7 @@ export default {
         },
 
         /**
-         * @description Gets the left offset of the modal container.
+         * Gets the left offset of the modal container.
          * @return {string} The left offset value in px.
          */
         getModalContainerLeftOffset() {
@@ -257,7 +257,7 @@ export default {
         },
 
         /**
-         * @description Get the calculated popover left.
+         * Get the calculated popover left.
          * @param {DOMRect} trigger - The trigger DOMRect.
          * @param {DOMRect} popover - The popover DOMRect.
          * @param {object} nubbin - The nubbin object.
@@ -286,7 +286,7 @@ export default {
         },
 
         /**
-         * @description Get the calculated popover top.
+         * Get the calculated popover top.
          * @param {DOMRect} trigger - The trigger DOMRect.
          * @param {DOMRect} popover - The popover DOMRect.
          * @param {object} nubbin - The nubbin object.
