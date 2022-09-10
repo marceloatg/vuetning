@@ -16,13 +16,14 @@
         />
 
         <!-- Content -->
-        <h2 v-if="message">
-            {{ message }}
-        </h2>
-        <slot v-else/>
+        <slot>
+            <h2>
+                {{ message }}
+            </h2>
+        </slot>
 
         <!-- Close button -->
-        <div v-if="closeable" class="slds-notify__close">
+        <div v-if="!nonCloseable" class="slds-notify__close">
             <slds-button-icon
                 icon="utility:close"
                 small
@@ -36,6 +37,7 @@
     </div>
 </template>
 
+<!--suppress JSValidateTypes -->
 <script>
 import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
 import SldsIcon from '@/components/slds-icon/slds-icon'
@@ -49,29 +51,74 @@ export default {
     },
 
     props: {
+        /**
+         * Hidden text used by a screen reader to read text.
+         * @type {string}
+         */
         assistiveText: String,
-        closeable: {
-            type: Boolean,
-            default: true
-        },
+
+        /**
+         * Indicates whether this alert is closeable.
+         * @type {boolean}
+         */
+        nonCloseable: Boolean,
+
+        /**
+         * Indicates whether this alert has the error theme.
+         * @type {boolean}
+         */
         error: Boolean,
+
+        /**
+         * The Lightning Design System name of the icon.
+         * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         * @type {string}
+         */
         icon: String,
+
+        /**
+         * Indicates whether this alert has the info theme.
+         * If no other theme is set, this onw will be used by default.
+         * @type {boolean}
+         */
         info: Boolean,
+
+        /**
+         * Alert message.
+         * When using the default slot this prop is ignored.
+         * @type {string}
+         */
         message: String,
+
+        /**
+         * Indicates whether this alert has the offline theme.
+         * @type {boolean}
+         */
         offline: Boolean,
-        texture: {
-            type: Boolean,
-            default: true
-        },
+
+        /**
+         * Indicates whether this alert has texture.
+         * @type {boolean}
+         */
+        noTexture: Boolean,
+
+        /**
+         * Indicates whether this alert has the warning theme.
+         * @type {boolean}
+         */
         warning: Boolean
     },
 
     computed: {
+        /**
+         * Returns the CSS class names for the alert.
+         * @returns {string}
+         */
         alertClass() {
             let classNames = ''
 
             // Alert texture
-            if (this.texture) classNames += ' slds-theme_alert-texture'
+            if (!this.noTexture) classNames += ' slds-theme_alert-texture'
 
             // Alert theme
             if (this.error) classNames += ' slds-theme_error'
@@ -84,6 +131,10 @@ export default {
     },
 
     methods: {
+        /**
+         * Handles the click on the close button.
+         * Emits a click event when the close button is clicked.
+         */
         onClickClose() {
             this.$emit('close')
         }
