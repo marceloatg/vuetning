@@ -250,7 +250,7 @@ export default {
         },
 
         onKeyUp(event) {
-            if (this.readonly || !(event.key === 'Enter' || event.key === 'Escape')) return
+            if (this.readonly || !(event.key === 'Escape')) return
 
             event.stopPropagation()
             if (event.key === 'Escape') this.onClear()

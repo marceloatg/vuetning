@@ -4,8 +4,6 @@
 
             <!-- Summary -->
             <div class="slds-accordion__summary">
-
-                <!-- Heading -->
                 <h2 class="slds-accordion__summary-heading">
                     <button
                         :aria-expanded="isOpen"
@@ -28,10 +26,6 @@
 
                     </button>
                 </h2>
-
-                <!-- Actions -->
-                <slot name="actions"/>
-
             </div>
 
             <!-- Content -->
