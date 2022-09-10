@@ -78,7 +78,7 @@ export default {
 
         /**
          * Indicates whether this alert has the info theme.
-         * If no other theme is set, this onw will be used by default.
+         * If no other theme is set, this one will be used by default.
          * @type {boolean}
          */
         info: Boolean,
@@ -112,7 +112,7 @@ export default {
     computed: {
         /**
          * Returns the CSS class names for the alert.
-         * @returns {string}
+         * @returns {string} The CSS class names.
          */
         alertClass() {
             let classNames = ''
