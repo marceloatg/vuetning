@@ -9,10 +9,10 @@
         <!-- Icon -->
         <slds-icon
             v-if="icon"
+            class="slds-m-right_x-small"
+            current-color
             :icon="icon"
             x-small
-            current-color
-            class="slds-m-right_x-small"
         />
 
         <!-- Content -->
@@ -25,11 +25,11 @@
         <!-- Close button -->
         <div v-if="!nonCloseable" class="slds-notify__close">
             <slds-button-icon
-                icon="utility:close"
-                small
-                inverse
-                title="Close"
                 assistive-text="Close"
+                icon="utility:close"
+                inverse
+                small
+                title="Close"
                 @click="onClickClose"
             />
         </div>

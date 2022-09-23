@@ -4,15 +4,14 @@
         <!-- Image -->
         <img
             v-if="src"
-            :src="src"
             :alt="alternativeText"
+            :src="src"
             @error="onImageError"
         >
 
         <!-- Initials -->
         <abbr
             v-else-if="initials"
-            class="slds-avatar__initials"
             :class="initialsClass">
             {{ initials }}
         </abbr>
@@ -20,8 +19,8 @@
         <!-- Fallback icon -->
         <slds-icon
             v-else
-            :icon="fallbackIcon"
             :alternative-text="alternativeText"
+            :icon="fallbackIcon"
         />
 
     </span>
@@ -133,13 +132,13 @@ export default {
          * @returns {string} The CSS class names.
          */
         initialsClass() {
-            let classNames = ''
+            let classNames = 'slds-avatar__initials'
 
             // Initials background color
             if (this.fallbackIcon) {
                 const category = this.fallbackIcon.split(':')[0]
                 const name = this.fallbackIcon.split(':')[1]
-                classNames += `slds-icon-${category}-${name}`
+                classNames += ` slds-icon-${category}-${name}`
             }
 
             // Initials inverse
