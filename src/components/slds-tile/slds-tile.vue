@@ -80,56 +80,56 @@ export default {
 
     props: {
         /**
-         * @description The list of available stocks.
+         * The list of available stocks.
          * @type {array}
          */
         actions: Array,
 
         /**
-         * @description The URL for the avatar.
+         * The URL for the avatar.
          * @type {string}
          */
         avatar: String,
 
         /**
-         * @description The Lightning Design System name of the icon. Names are written in the format
+         * The Lightning Design System name of the icon. Names are written in the format
          * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
          * @type {string}
          */
         icon: String,
 
         /**
-         * @description Indicates whether to use a large icon.
+         * Indicates whether to use a large icon.
          * @type {boolean}
          */
         iconLarge: Boolean,
 
         /**
-         * @description Indicates whether to use a small icon.
+         * Indicates whether to use a small icon.
          * @type {boolean}
          */
         iconSmall: Boolean,
 
         /**
-         * @description Indicates whether to use a x-small icon.
+         * Indicates whether to use a x-small icon.
          * @type {boolean}
          */
         iconXSmall: Boolean,
 
         /**
-         * @description Indicates whether to use a xx-small icon.
+         * Indicates whether to use a xx-small icon.
          * @type {boolean}
          */
         iconXXSmall: Boolean,
 
         /**
-         * @description Indicates whether title no has link.
+         * Indicates whether title no has link.
          * @type {boolean}
          */
         linkless: Boolean,
 
         /**
-         * @description The title of the tile.
+         * The title of the tile.
          * @type {string}
          */
         title: {type: String, required: true},
@@ -143,7 +143,7 @@ export default {
 
     methods: {
         /**
-         * @description Fires a click event when the title is clicked.
+         * Fires a click event when the title is clicked.
          */
         onClickTitle() {
             this.$emit('click')

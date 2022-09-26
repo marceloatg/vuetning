@@ -18,13 +18,13 @@ export default {
 
     props: {
         /**
-         * @description The text detail that displays in the tile item.
+         * The text detail that displays in the tile item.
          * @type {string}
          */
         detail: String,
 
         /**
-         * @description The text label that displays in the tile item.
+         * The text label that displays in the tile item.
          * @type {string}
          */
         label: String,
