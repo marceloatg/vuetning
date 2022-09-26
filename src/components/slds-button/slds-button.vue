@@ -14,20 +14,24 @@
         <slot>
 
             <!-- Label for right icon -->
-            <span v-if="$data.$_right" :class="{'slds-hidden': loading}">
-                {{ label || '&nbsp;' }}
+            <span v-if="hasRightPositionedIcon" :class="{'slds-hidden': loading}">
+                {{ label }}
             </span>
 
             <!-- Icon -->
             <slds-svg
                 v-if="icon"
-                :icon="icon"
                 class="slds-button__icon"
                 :class="iconClass"
+                :icon="icon"
             />
 
+            <template v-else>
+                {{ label }}
+            </template>
+
             <!-- Label for left icon -->
-            <span v-if="$data.$_left" :class="labelClass">
+            <span v-if="hasLeftPositionedIcon" :class="labelClass">
                 {{ label }}
             </span>
 
@@ -44,6 +48,7 @@
     </button>
 </template>
 
+<!--suppress JSValidateTypes -->
 <script>
 import SldsSvg from '../slds-svg/slds-svg.vue'
 import AnimatedDirective from '@/directives/animated/index'
@@ -65,66 +70,170 @@ export default {
     ],
 
     props: {
+        /**
+         * Indicates whether this button has the brand theme.
+         * @type {boolean}
+         */
         brand: Boolean,
+
+        /**
+         * Indicates whether this button has the destructive theme.
+         * @type {boolean}
+         */
         destructive: Boolean,
+
+        /**
+         * Indicates whether this button is disabled.
+         * @type {boolean}
+         */
         disabled: Boolean,
-        icon: String,
+
+        /**
+         * Indicates whether this button has the inverse theme.
+         * @type {boolean}
+         */
         inverse: Boolean,
+
+        /**
+         * Button label.
+         * @type {string}
+         */
         label: String,
+
+        /**
+         * Indicates whether this button is loading.
+         * @type {boolean}
+         */
         loading: Boolean,
+
+        /**
+         * Indicates whether this button has the neutral theme.
+         * @type {boolean}
+         */
         neutral: Boolean,
+
+        /**
+         * Indicates whether this button has the outline brand theme.
+         * @type {boolean}
+         */
         outlineBrand: Boolean,
+
+        /**
+         * Indicates whether this button has the success theme.
+         * @type {boolean}
+         */
         success: Boolean,
+
+        /**
+         * Indicates whether this button should stretch.
+         * @type {boolean}
+         */
         stretch: Boolean,
+
+        /**
+         * Indicates whether this button has the text destructive theme.
+         * @type {boolean}
+         */
         textDestructive: Boolean,
+
+        /**
+         * Button title.
+         * @type {string}
+         */
         title: String,
+
+        /**
+         * Button type.
+         * @type {string}
+         */
         type: {type: String, default: 'button'},
     },
 
     computed: {
+        /**
+         * Returns the CSS class names for the button.
+         * @returns {string} The CSS class names.
+         */
         buttonClass() {
-            return {
-                'slds-button_neutral': this.neutral,
-                'slds-button_brand': this.brand,
-                'slds-button_outline-brand': this.outlineBrand,
-                'slds-button_destructive': this.destructive,
-                'slds-button_text-destructive': this.textDestructive,
-                'slds-button_success': this.success,
-                'slds-button_inverse': this.inverse,
-                'slds-button_stretch': this.stretch,
-                'slds-not-clickable': this.loading,
-            }
+            let classNames = ''
+
+            // Button theme
+            if (this.neutral) classNames += ' slds-button_neutral'
+            else if (this.brand) classNames += ' slds-button_brand'
+            else if (this.outlineBrand) classNames += ' slds-button_outline-brand'
+            else if (this.destructive) classNames += ' slds-button_destructive'
+            else if (this.textDestructive) classNames += ' slds-button_text-destructive'
+            else if (this.success) classNames += ' slds-button_success'
+            else if (this.inverse) classNames += ' slds-button_inverse'
+
+            // Stretch
+            if (this.stretch) classNames += ' slds-button_stretch'
+
+            // Loading
+            if (this.loading) classNames += ' slds-not-clickable'
+
+            return classNames
         },
 
+        /**
+         * Returns the CSS class names for the button icon.
+         * @returns {string} The CSS class names.
+         */
         iconClass() {
-            return {
-                'slds-hidden': this.loading,
-                'slds-button__icon_right': this.icon && this.$data.$_right,
-                'slds-button__icon_left': this.icon && this.$data.$_left,
-            }
+            let classNames = ''
+
+            // Icon position
+            if (this.hasLeftPositionedIcon) classNames += ' slds-button__icon_left'
+            else if (this.hasRightPositionedIcon) classNames += ' slds-button__icon_right'
+
+            // Loading
+            if (this.loading) classNames += ' slds-hidden'
+
+            return classNames
         },
 
+        /**
+         * Returns the CSS class names for the label.
+         * @returns {string} The CSS class names.
+         */
         labelClass() {
-            return {
-                'slds-hidden': this.loading
-            }
+            let classNames = ''
+
+            // Loading
+            if (this.loading) classNames += ' slds-hidden'
+
+            return classNames
         },
 
+        /**
+         * Button listeners.
+         * @returns {object}
+         */
         listeners() {
             const listeners = {...this.$listeners}
             delete listeners.click
             return listeners
         },
 
+        /**
+         * Returns the CSS class names for the spinner.
+         * @returns {string} The CSS class names.
+         */
         spinnerClass() {
-            return {
-                'slds-spinner-white': this.loading && (this.brand || this.destructive || this.success),
-                'slds-spinner-brand': this.loading && this.outlineBrand,
-            }
+            let classNames = ''
+
+            // Spinner theme
+            if (this.loading && (this.brand || this.destructive || this.success)) classNames += ' slds-spinner-white'
+            else if (this.loading && this.outlineBrand) classNames += ' slds-spinner-brand'
+
+            return classNames
         },
     },
 
     methods: {
+        /**
+         * Handles the click event on the button.
+         */
         onClick() {
             if (this.loading) return
             this.$emit('click')
@@ -163,5 +272,4 @@ export default {
         }
     }
 }
-
 </style>
