@@ -26,9 +26,9 @@
                 :icon="icon"
             />
 
-            <template v-else>
+            <span v-else :class="labelClass">
                 {{ label }}
-            </template>
+            </span>
 
             <!-- Label for left icon -->
             <span v-if="hasLeftPositionedIcon" :class="labelClass">
