@@ -15,7 +15,7 @@
 
             <!-- Label for right icon -->
             <span v-if="hasRightPositionedIcon" :class="{'slds-hidden': loading}">
-                {{ label || '&nbsp;' }}
+                {{ label }}
             </span>
 
             <!-- Icon -->
@@ -25,6 +25,10 @@
                 :class="iconClass"
                 :icon="icon"
             />
+
+            <template v-else>
+                {{ label }}
+            </template>
 
             <!-- Label for left icon -->
             <span v-if="hasLeftPositionedIcon" :class="labelClass">

@@ -246,6 +246,7 @@ export default {
         },
 
         onClickClear() {
+            this.$refs.input.focus()
             this.$emit('input', null)
         },
 
