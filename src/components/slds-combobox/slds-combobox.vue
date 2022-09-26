@@ -290,6 +290,8 @@ export default {
                 this.clearFilter()
                 this.$refs.input.value = null
             }
+
+            this.$refs.input.focus()
         },
 
         async onClick() {
