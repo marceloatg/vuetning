@@ -65,7 +65,7 @@ export default {
         /**
          * Badge label.
          * When using the default slot this prop is ignored.
-         * @type {boolean}
+         * @type {string}
          */
         label: String,
 
