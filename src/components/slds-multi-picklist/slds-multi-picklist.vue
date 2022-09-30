@@ -4,7 +4,13 @@
         :error="error && !$data.$_isOpen"
         :required="required"
         :read-only="readonly"
+        :tooltip="tooltip"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- View mode -->
         <div v-if="readonly" class="slds-form-element__static">
@@ -154,6 +160,7 @@ export default {
         readonly: Boolean,
         required: Boolean,
         small: Boolean,
+        tooltip: String,
         value: {type: Array, default: () => []},
         xLarge: Boolean,
         xSmall: Boolean,
@@ -168,11 +175,6 @@ export default {
     },
 
     computed: {
-        buttonTransitionName() {
-            const isAnimated = (this.$vuetning && this.$vuetning.animations)
-            return isAnimated ? 'fade' : ''
-        },
-
         containerClass() {
             if (this.xxSmall) return 'slds-size_xx-small'
             if (this.xSmall) return 'slds-size_x-small'

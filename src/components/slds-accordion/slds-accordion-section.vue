@@ -4,8 +4,6 @@
 
             <!-- Summary -->
             <div class="slds-accordion__summary">
-
-                <!-- Heading -->
                 <h2 class="slds-accordion__summary-heading">
                     <button
                         :aria-expanded="isOpen"
@@ -28,10 +26,6 @@
 
                     </button>
                 </h2>
-
-                <!-- Actions -->
-                <slot name="actions"/>
-
             </div>
 
             <!-- Content -->
@@ -58,19 +52,19 @@ export default {
 
     props: {
         /**
-         * @description The content in the accordion section.
+         * The content in the accordion section.
          * @type {String}
          */
         content: String,
 
         /**
-         * @description The text that displays as the title of the section.
+         * The text that displays as the title of the section.
          * @type {String}
          */
         label: String,
 
         /**
-         * @description The unique section name to use with the active-section-name attribute in the accordion component.
+         * The unique section name to use with the active-section-name attribute in the accordion component.
          * @type {String}
          */
         name: String,
@@ -78,7 +72,7 @@ export default {
 
     computed: {
         /**
-         * @description Gets the single active section name or list of section names.
+         * Gets the single active section name or list of section names.
          * @return {Boolean}
          */
         isOpen() {
@@ -92,7 +86,7 @@ export default {
 
     methods: {
         /**
-         * @description Handles the click event on the section label.
+         * Handles the click event on the section label.
          */
         onClickLabel() {
             this.$parent.onActiveSectionChange(this.name)

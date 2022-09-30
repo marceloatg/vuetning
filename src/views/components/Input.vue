@@ -17,6 +17,7 @@
                 v-model="value"
                 label="Form Label"
                 icon="utility:search"
+                tooltip="Lorem ipsum dolor sit amet."
             >
                 <template #error>
                     Enter a value.

@@ -1,10 +1,17 @@
 <template>
     <slds-form-element
-        :label="inline ? null : label"
-        :required="required"
-        :read-only="readonly"
+        :borderless="borderless"
         :error="error"
+        :label="inline ? null : label"
+        :read-only="readonly"
+        :required="required"
+        :tooltip="tooltip"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- View mode -->
         <template v-if="readonly">
@@ -58,12 +65,14 @@ export default {
     },
 
     props: {
+        borderless: Boolean,
         disabled: Boolean,
         error: Boolean,
         inline: Boolean,
         label: String,
         readonly: Boolean,
         required: Boolean,
+        tooltip: String,
         value: Boolean
     },
 

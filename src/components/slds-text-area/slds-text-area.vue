@@ -22,7 +22,7 @@
             class="slds-textarea"
             v-on="listeners"
             @input="onInput"
-            @keydown.enter.stop
+            @keyup="onKeyUp"
         />
 
         <!-- Inline help -->
@@ -83,6 +83,12 @@ export default {
     methods: {
         onInput(event) {
             this.$emit('input', event.target.value)
+        },
+
+        onKeyUp(event) {
+            if (this.readonly || !(event.key === 'Enter' || event.key === 'Escape')) return
+
+            event.stopPropagation()
         },
     }
 }

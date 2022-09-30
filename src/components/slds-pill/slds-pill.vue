@@ -51,44 +51,44 @@ export default {
 
     props: {
         /**
-         * @description If present, the pill is shown with a red border and an error icon on the left of the label.
+         * If present, the pill is shown with a red border and an error icon on the left of the label.
          * @type {boolean}
          */
         hasError: Boolean,
 
         /**
-         * @description The Lightning Design System name of the icon. Names are written in the format
+         * The Lightning Design System name of the icon. Names are written in the format
          * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
          * @type {string}
          */
         icon: String,
 
         /**
-         * @description Specifies whether the element variant is a link.
+         * Specifies whether the element variant is a link.
          * @type {boolean}
          */
         link: Boolean,
 
         /**
-         * @description The text label that displays in the pill.
+         * The text label that displays in the pill.
          * @type {string}
          */
         label: {Type: String, required: true},
 
         /**
-         * @description If present, the does not show the remove button.
+         * If present, the does not show the remove button.
          * @type {boolean}
          */
         nonRemovable: Boolean,
 
         /**
-         * @description The URL for the image.
+         * The URL for the image.
          * @type {string}
          */
         src: String,
 
         /**
-         * @description The title text containing full pill label verbiage.
+         * The title text containing full pill label verbiage.
          * @type {string}
          */
         title: String,
@@ -105,14 +105,14 @@ export default {
 
     methods: {
         /**
-         * @description Fires a remove event when the remove button is clicked.
+         * Fires a remove event when the remove button is clicked.
          */
         onClickRemove() {
             this.$emit('remove')
         },
 
         /**
-         * @description Fires a click event when the pill link is clicked.
+         * Fires a click event when the pill link is clicked.
          */
         onClickPill() {
             if (this.link) this.$emit('click')

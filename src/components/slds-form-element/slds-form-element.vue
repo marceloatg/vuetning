@@ -6,6 +6,23 @@
             {{ label }}
         </slds-label>
 
+        <!-- Icon -->
+        <div v-if="tooltip || $slots.tooltip" class="slds-form-element__icon">
+            <slds-tooltip>
+
+                <template #trigger>
+                    <slds-icon icon="utility:info" xx-small/>
+                </template>
+
+                <template #default>
+                    <slot name="tooltip">
+                        {{ tooltip }}
+                    </slot>
+                </template>
+
+            </slds-tooltip>
+        </div>
+
         <!-- Control -->
         <div class="slds-form-element__control" :class="controlClass">
             <slot/>
@@ -25,13 +42,17 @@
 </template>
 
 <script>
+import SldsIcon from '@/components/slds-icon/slds-icon'
 import SldsLabel from '@/components/slds-label/slds-label'
+import SldsTooltip from '@/components/slds-tooltip/slds-tooltip'
 
 export default {
     name: 'SldsFormElement',
 
     components: {
-        SldsLabel
+        SldsIcon,
+        SldsLabel,
+        SldsTooltip,
     },
 
     props: {
@@ -42,7 +63,8 @@ export default {
         error: Boolean,
         label: String,
         readOnly: Boolean,
-        required: Boolean
+        required: Boolean,
+        tooltip: String,
     },
 
     computed: {
@@ -57,3 +79,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.slds-form-element__icon {
+    position: static;
+}
+</style>

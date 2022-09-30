@@ -33,22 +33,31 @@ export default {
     computed: {
         labelClass() {
             return {
-                'slds-checkbox-button_is-disabled': this.disabled
+                'slds-checkbox-button_is-selected': this.value,
+                'slds-checkbox-button_is-disabled': this.disabled,
             }
         }
     },
 
     watch: {
-        value(value) {
-            this.$data.$_value = value
+        value() {
+            this.parseValue()
         }
+    },
+
+    created() {
+        this.parseValue()
     },
 
     methods: {
         onClick() {
             if (this.disabled) return
             this.$emit('click')
-        }
+        },
+
+        parseValue() {
+            this.$data.$_value = this.value
+        },
     }
 }
 </script>
@@ -59,6 +68,12 @@ export default {
 
     .slds-checkbox_faux {
         cursor: default;
+    }
+
+    &.slds-checkbox-button_is-selected {
+        background-color: #c9c7c5 !important;
+        border-color: #c9c7c5 !important;
+        color: #fff !important;
     }
 }
 </style>

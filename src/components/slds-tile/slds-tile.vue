@@ -1,35 +1,153 @@
 <template>
-    <article class="slds-tile">
-        <h3 class="slds-tile__title slds-truncate" title="Salesforce UX">
-            <a href="javascript:void(0);">
-                Salesforce UX
-            </a>
-        </h3>
-        <div class="slds-tile__detail">
-            <dl class="slds-list_horizontal slds-wrap">
-                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">
-                    First Label:
-                </dt>
-                <dd class="slds-item_detail slds-truncate" title="Description for first label">Description for first
-                    label
-                </dd>
-                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Second Label">
-                    Second Label:
-                </dt>
-                <dd class="slds-item_detail slds-truncate" title="Description for second label">Description for second
-                    label
-                </dd>
-            </dl>
+    <div class="slds-tile slds-media">
+
+        <!-- Avatar -->
+        <div v-if="avatar" class="slds-media__figure">
+            <slds-avatar
+                circle
+                medium
+                :src="avatar"
+            />
         </div>
-    </article>
+
+        <!-- Icon -->
+        <div v-else-if="icon" class="slds-media__figure">
+            <slds-icon
+                :icon="icon"
+                :large="iconLarge"
+                medium
+                :small="iconSmall"
+                :x-small="iconXSmall"
+                :xx-small="iconXXSmall"
+            />
+        </div>
+
+        <!-- Body -->
+        <div class="slds-media__body">
+
+            <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate slds-hint-parent">
+
+                <!-- Title -->
+                <h3 class="slds-tile__title slds-truncate" :title="title">
+
+                    <p v-if="linkless">
+                        {{ title }}
+                    </p>
+
+                    <a v-else @click="onClickTitle">
+                        {{ title }}
+                    </a>
+
+                </h3>
+
+                <!-- Actions -->
+                <div v-if="showActions" class="slds-shrink-none">
+                    <slds-menu
+                        right-alignment
+                        bordered-filled
+                        :items="actions"
+                        x-small
+                    />
+                </div>
+
+            </div>
+
+            <!-- Content -->
+            <div class="slds-tile__detail">
+
+                <!-- Items -->
+                <slot/>
+            </div>
+
+        </div>
+
+    </div>
 </template>
 
 <script>
+import SldsAvatar from '@/components/slds-avatar/slds-avatar'
+import SldsIcon from '@/components/slds-icon/slds-icon'
+import SldsMenu from '@/components/slds-menu/slds-menu'
+
 export default {
-    name: 'SldsTitle'
+    name: 'SldsTile',
+
+    components: {
+        SldsAvatar,
+        SldsIcon,
+        SldsMenu,
+    },
+
+    props: {
+        /**
+         * The list of available stocks.
+         * @type {array}
+         */
+        actions: Array,
+
+        /**
+         * The URL for the avatar.
+         * @type {string}
+         */
+        avatar: String,
+
+        /**
+         * The Lightning Design System name of the icon. Names are written in the format
+         * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         * @type {string}
+         */
+        icon: String,
+
+        /**
+         * Indicates whether to use a large icon.
+         * @type {boolean}
+         */
+        iconLarge: Boolean,
+
+        /**
+         * Indicates whether to use a small icon.
+         * @type {boolean}
+         */
+        iconSmall: Boolean,
+
+        /**
+         * Indicates whether to use a x-small icon.
+         * @type {boolean}
+         */
+        iconXSmall: Boolean,
+
+        /**
+         * Indicates whether to use a xx-small icon.
+         * @type {boolean}
+         */
+        iconXXSmall: Boolean,
+
+        /**
+         * Indicates whether title no has link.
+         * @type {boolean}
+         */
+        linkless: Boolean,
+
+        /**
+         * The title of the tile.
+         * @type {string}
+         */
+        title: {type: String, required: true},
+    },
+
+    computed: {
+        showActions() {
+            return this.actions && this.actions.length > 0
+        }
+    },
+
+    methods: {
+        /**
+         * Fires a click event when the title is clicked.
+         */
+        onClickTitle() {
+            this.$emit('click')
+        }
+    }
 }
 </script>
-
-<style scoped>
-
-</style>

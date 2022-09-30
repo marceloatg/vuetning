@@ -24,24 +24,23 @@
     "src/index.js"
   ],
   "dependencies": {
-    "core-js": "^3.22.4",
+    "core-js": "^3.25.1",
     "duration": "^0.2.2",
     "highlight.js": "^10.6.0",
-    "humanize-duration": "^3.27.1",
+    "humanize-duration": "^3.27.3",
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "quill": "^1.3.7",
     "scrollparent": "^2.0.1",
-    "tippy.js": "^6.3.7",
-    "uuid": "^8.3.2",
+    "uuid": "^9.0.0",
     "v-clipboard": "^2.2.3",
     "vue": "^2.6.14",
     "vue-observe-visibility": "^1.0.0",
-    "vue-router": "^3.5.3"
+    "vue-router": "^3.6.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.19.0",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-plugin-router": "^4.5.15",

@@ -3,12 +3,17 @@
         :label="label"
         :required="required"
         :error="error"
+        :tooltip="tooltip"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
         <!-- Input -->
         <div class="slds-checkbox_button-group">
-            <slot v-if="$slots.default"/>
-            <template v-else>
+            <slot>
                 <slds-checkbox-button-option
                     v-for="option in $data.$_options"
                     :key="option.key"
@@ -17,7 +22,7 @@
                     :disabled="option.disabled"
                     @click="onClick(option.value)"
                 />
-            </template>
+            </slot>
         </div>
 
         <!-- Inline help -->
@@ -52,6 +57,7 @@ export default {
         label: String,
         options: Array,
         required: Boolean,
+        tooltip: String,
         value: {type: Array, default: () => []}
     },
 

@@ -24,6 +24,19 @@
             icon="standard:opportunity"
             name="Opportunities"
             title="Recently Viewed"
+            class="slds-m-top_medium"
+            has-dropdown
+        >
+            <template #actions>
+                <slds-button neutral label="New"/>
+            </template>
+        </slds-page-header>
+
+        <slds-page-header
+            object-home
+            icon="standard:opportunity"
+            name="Opportunities"
+            title="Recently Viewed"
             meta="10 items • Updated 13 minutes ago"
             class="slds-m-top_medium"
             has-dropdown

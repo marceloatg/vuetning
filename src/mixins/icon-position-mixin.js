@@ -1,32 +1,41 @@
+// noinspection JSValidateTypes
 export default {
     props: {
+        /**
+         * The Lightning Design System name of the icon.
+         * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         * @type {string}
+         */
+        icon: String,
+
+        /**
+         * Indicates whether the icon is left positioned.
+         * @type {boolean}
+         */
         left: Boolean,
+
+        /**
+         * Indicates whether the icon is right positioned.
+         * @type {boolean}
+         */
         right: Boolean,
     },
 
-    data() {
-        return {
-            $_left: true,
-            $_right: false,
-        }
-    },
-
-    watch: {
-        left(value) {
-            this.data.$_left = value
-            this.data.$_right = !value
+    computed: {
+        /**
+         * Indicates whether this component has a left positioned icon.
+         * @returns {boolean}
+         */
+        hasLeftPositionedIcon() {
+            return this.icon && (this.left || (!this.left && !this.right))
         },
 
-        right(value) {
-            this.data.$_left = !value
-            this.data.$_right = value
+        /**
+         * Indicates whether this component has a right positioned icon.
+         * @returns {boolean}
+         */
+        hasRightPositionedIcon() {
+            return this.icon && this.right
         },
     },
-
-    created() {
-        if (this.right) {
-            this.$data.$_left = false
-            this.$data.$_right = true
-        }
-    }
 }

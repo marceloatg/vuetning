@@ -6,8 +6,15 @@
         :error="error"
         :borderless="borderless"
         :control-class="controlClass"
+        :tooltip="tooltip"
         v-bind="dataAttributes"
     >
+
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
+
         <!-- Pre fixed text -->
         <span v-if="addonPre" class="slds-form-element__addon">
             {{ addonPre }}
@@ -121,6 +128,7 @@ export default {
         placeholder: String,
         readonly: Boolean,
         required: Boolean,
+        tooltip: String,
         type: {type: String, default: 'text'},
         value: {}
     },
@@ -238,11 +246,12 @@ export default {
         },
 
         onClickClear() {
+            this.$refs.input.focus()
             this.$emit('input', null)
         },
 
         onKeyUp(event) {
-            if (this.readonly || !(event.key === 'Enter' || event.key === 'Escape')) return
+            if (this.readonly || !(event.key === 'Escape')) return
 
             event.stopPropagation()
             if (event.key === 'Escape') this.onClear()

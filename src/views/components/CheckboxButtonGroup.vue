@@ -18,6 +18,7 @@
                 v-model="value"
                 label="Scheduled Day(s)"
                 :options="stringOptions"
+                tooltip="Lorem ipsum dolor sit amet."
             />
 
             <br>
@@ -74,7 +75,7 @@ export default {
                 {value: 'Sun', label: 'Sun', disabled: true},
             ],
             stringOptions: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-            value: []
+            value: ['Mon', 'Sun']
         }
     }
 }

@@ -28,6 +28,14 @@
                 @click="onclick"
             />
 
+            <slds-button
+                brand
+                label="Click Me"
+                icon="utility:add"
+                right
+                @click="onclick"
+            />
+
         </slds-card>
 
     </main>

@@ -42,6 +42,10 @@ import SldsVerticalNavigationItem from '@/components/slds-vertical-navigation/sl
 
 export default {
     name: 'VerticalNavigation',
-    components: {SldsVerticalNavigationItem, SldsVerticalNavigationSection},
+
+    components: {
+        SldsVerticalNavigationItem,
+        SldsVerticalNavigationSection,
+    },
 }
 </script>
