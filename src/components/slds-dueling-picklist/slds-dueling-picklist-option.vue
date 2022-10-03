@@ -22,7 +22,7 @@ export default {
          * @description Option label.
          * @type {array}
          */
-        label: {type: String, required: true},
+        label: String,
     },
 }
 </script>

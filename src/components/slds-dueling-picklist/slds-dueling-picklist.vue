@@ -162,7 +162,7 @@
                             v-for="option in selected"
                             :key="option.value"
                         >
-                            {{ option }}
+                            {{ option.label }}
                         </option>
                     </select>
                 </div>
@@ -175,12 +175,14 @@
                 <slds-button-icon
                     bare
                     icon="utility:up"
+                    @click="oneToUp"
                 />
 
                 <!-- Move down button -->
                 <slds-button-icon
                     bare
                     icon="utility:down"
+                    @click="oneToDown"
                 />
 
             </div>
@@ -284,6 +286,7 @@ export default {
 
     methods: {
         onClickUnselectedOption(value) {
+            console.log('Test', value)
             this.$data.$_value.push(value)
             this.$emit('input', this.$data.$_value)
 
@@ -301,8 +304,11 @@ export default {
             const select = document.getElementById('list1').value
 
             if (select !== '') {
-                this.selected.push(select)
-                const del = this.options.indexOf(select)
+                const obj = this.options.find(o => o.label === select)
+                this.selected.push(obj)
+
+                const del = this.options.findIndex(opt => opt.label === select)
+
                 this.options.splice(del, 1)
             }
         },
@@ -311,9 +317,36 @@ export default {
             const select = document.getElementById('list2').value
 
             if (select !== '') {
-                this.options.push(select)
-                const del = this.selected.indexOf(select)
+                const obj = this.selected.find(o => o.label === select)
+                this.options.push(obj)
+
+                const del = this.selected.findIndex(s => s.label === select)
+
                 this.selected.splice(del, 1)
+            }
+        },
+
+        oneToDown() {
+            const select = document.getElementById('list2').value
+
+            if (select !== '') {
+                const index = this.selected.findIndex(s => s.label === select)
+                const item1 = this.selected[index]
+
+                this.selected.splice(index, 1)
+                this.selected.splice(index + 1, 0, item1)
+            }
+        },
+
+        oneToUp() {
+            const select = document.getElementById('list2').value
+
+            if (select !== '') {
+                const index = this.selected.findIndex(s => s.label === select)
+                const item1 = this.selected[index]
+
+                this.selected.splice(index, 1)
+                this.selected.splice(index - 1, 0, item1)
             }
         }
     }
