@@ -15,11 +15,14 @@
 
         <slds-card class="slds-m-top_medium">
             <slds-dueling-picklist
+                v-model="value"
                 label="Select Languages"
                 selected-label="Selected"
                 source-label="Available"
                 :options="options"
             />
+            
+            value: {{ value }}
         </slds-card>
 
     </main>
@@ -38,7 +41,9 @@ export default {
                 { label: 'French', value: 'fr' },
                 { label: 'Italian', value: 'it' },
                 { label: 'Japanese', value: 'ja' }
-            ]
+            ],
+            
+            value: null,
         }
     }
 }
