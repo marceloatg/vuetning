@@ -184,7 +184,7 @@ export default defineComponent({
             return Boolean(
                 this.description &&
                 this.iconName &&
-                IconUtils.getCategory(this.iconName) === ICON_CATEGORIES.STANDARD
+                IconUtils.getCategory(this.iconName) === ICON_CATEGORIES.STANDARD,
             )
         },
 
