@@ -549,7 +549,7 @@ export default {
             ],
 
             options3: [
-                { label: "English", value: "en", },
+                { label: "English", value: "en" },
                 { label: "German", value: "de" },
                 { label: "Spanish", value: "es" },
                 { label: "French", value: "fr" },

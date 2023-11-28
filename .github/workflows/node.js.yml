@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "develop", "feature/*", "release/*", "bugfix/*", "hotfix/*" ]
+    branches: [ "feature/*", "release/*", "bugfix/*", "hotfix/*" ]
   pull_request:
     branches: [ "develop", "master" ]
 
@@ -23,5 +23,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
     - run: npm run lint --if-present
+    - run: npm run build --if-present
