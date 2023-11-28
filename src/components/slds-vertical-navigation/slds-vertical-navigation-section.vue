@@ -14,18 +14,17 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SldsVerticalNavigationSection',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsVerticalNavigationSection",
 
     props: {
+        /**
+         * Section title.
+         */
         title: String,
     },
-
-    computed: {
-        selectedItem() {
-            return this.$parent.selectedItem
-        }
-    },
-}
+})
 </script>

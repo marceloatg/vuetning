@@ -5,14 +5,10 @@
                 class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__setup slds-global-actions__item-action"
                 aria-haspopup="true"
                 :title="assistiveText"
-                @click="onClick"
             >
 
                 <!-- SVG -->
-                <slds-svg
-                    :icon="icon"
-                    class="slds-button__icon slds-global-header__icon"
-                />
+                <slds-svg :icon="iconName" class="slds-button__icon slds-global-header__icon"/>
 
                 <!-- Assistive text -->
                 <span class="slds-assistive-text">
@@ -24,25 +20,30 @@
     </li>
 </template>
 
-<script>
-import SldsSvg from '@/components/slds-svg/slds-svg'
+<script lang="ts">
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsGlobalAction',
+export default defineComponent({
+    name: "SldsGlobalAction",
 
     components: {
-        SldsSvg
+        SldsSvg,
     },
 
     props: {
+        /**
+         * The alternative text used to describe the icon.
+         * This text should describe what happens when you click the button,
+         * for example 'Upload File', not what the icon looks like, 'Paperclip'.
+         */
         assistiveText: String,
-        icon: {type: String, required: true}
-    },
 
-    methods: {
-        onClick() {
-            this.$emit('click')
-        },
+        /**
+         * The Lightning Design System name of the icon.
+         * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         */
+        iconName: { type: String, required: true },
     },
-}
+})
 </script>

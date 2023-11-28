@@ -2,86 +2,106 @@
     <div class="slds-button-group">
 
         <slds-button-icon
-            icon="utility:chevronleft"
+            bordered
             :disabled="isInFirstPage || disabled"
-            @click.stop="onClickPreviousPage"/>
+            icon-name="utility:chevronleft"
+            @click.stop="handleClickPreviousPage"
+        />
 
-        <template v-for="page in pages">
+        <template v-for="page in pages" :key="page">
             <slds-button
                 v-if="page !== 0"
-                :key="page"
-                :label="`${page}`"
                 :class="buttonVariant(page)"
-                :style="{padding: '0 12px'}"
                 :disabled="disabled"
-                @click="onClickPage(page)"/>
+                :label="page.toString()"
+                @click="handleClickPage(page)"
+            />
         </template>
 
         <slds-button-icon
-            icon="utility:chevronright"
+            bordered
             :disabled="isInLastPage || disabled"
-            @click="onClickNextPage"/>
+            icon-name="utility:chevronright"
+            @click="handleClickNextPage"
+        />
 
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'SldsPagination',
-        props: {
-            currentPage: {
-                type: Number,
-                required: true
-            },
-            disabled: {
-                type: Boolean,
-                default: false,
-            },
-            range: {
-                type: Number,
-                default: 3,
-            },
-            totalPages: {
-                type: Number,
-                required: true,
-            },
+<script lang="ts">
+import { defineComponent } from "vue"
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsButton from "../slds-button/slds-button.vue"
+import { EVENTS } from "../../constants"
+
+export default defineComponent ({
+    name: "SldsPagination",
+
+    components: { SldsButton, SldsButtonIcon },
+
+    props: {
+        currentPage: { type: Number, required: true },
+
+        disabled: { type: Boolean, default: false },
+
+        range: { type: Number, default: 3 },
+
+        totalPages: { type: Number, required: true },
+    },
+
+    computed: {
+        endPage(): number {
+            return Math.min(this.startPage + this.range - 1, this.totalPages)
         },
-        computed: {
-            endPage() {
-                return Math.min(this.startPage + this.range - 1, this.totalPages)
-            },
-            isInFirstPage() {
-                return this.currentPage === 1
-            },
-            isInLastPage() {
-                return this.currentPage === this.totalPages
-            },
-            pages() {
-                const pages = []
-                for (let i = this.startPage; i <= this.endPage; i += 1) pages.push(i)
-                return pages
-            },
-            startPage() {
-                if (this.currentPage === 1) return 1
-                if (this.currentPage === this.totalPages) return this.totalPages - this.range + 1
-                return this.currentPage - 1
-            },
+
+        isInFirstPage(): boolean {
+            return this.currentPage === 1
         },
-        methods: {
-            onClickPreviousPage() {
-                this.$emit('pagechanged', this.currentPage - 1)
-            },
-            onClickPage(page) {
-                if (page === this.currentPage) return
-                this.$emit('pagechanged', page)
-            },
-            onClickNextPage() {
-                this.$emit('pagechanged', this.currentPage + 1)
-            },
-            buttonVariant(page) {
-                if (page === this.currentPage) return 'slds-button_brand'
-                return 'slds-button_neutral'
-            },
-        }
-    }
+
+        isInLastPage(): boolean {
+            return this.currentPage === this.totalPages
+        },
+
+        pages(): number[] {
+            const pages = []
+            for (let i = this.startPage; i <= this.endPage; i += 1) pages.push(i)
+
+            return pages
+        },
+
+        startPage(): number {
+            const halfRange = Math.floor(this.range / 2)
+
+            if (this.currentPage <= halfRange) return 1
+            else if (this.currentPage >= this.totalPages - halfRange) return this.totalPages - this.range + 1
+            else return this.currentPage - halfRange
+        },
+    },
+
+    methods: {
+        handleClickPreviousPage(): void {
+            this.$emit(EVENTS.PAGE_CHANGED, this.currentPage - 1)
+        },
+
+        handleClickPage(page: number): void {
+            if (page === this.currentPage) return
+
+            this.$emit(EVENTS.PAGE_CHANGED, page)
+        },
+
+        handleClickNextPage(): void {
+            this.$emit(EVENTS.PAGE_CHANGED, this.currentPage + 1)
+        },
+
+        buttonVariant(page: number): string {
+            let classNames = "slds-p-horizontal_small"
+
+            if (page === this.currentPage) classNames += " slds-button_brand"
+            else classNames += " slds-button_neutral"
+
+            return classNames
+        },
+    },
+})
 </script>
+

@@ -1,46 +1,55 @@
 <template>
     <slds-form-element
-        :label="inline ? null : label"
-        :required="required"
-        :error="error"
         :dir="rightToLeft ? 'rtl' : 'ltr'"
+        :errors="errors"
+        :help="help"
+        :label="inline ? undefined : label"
+        :required="required"
+        :stacked="stacked"
     >
 
-        <!-- Input -->
-        <label class="slds-checkbox_toggle slds-grid">
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
-            <!-- Label -->
-            <span v-if="inline" class="slds-form-element__label slds-m-bottom_none">
-                <abbr v-if="required" class="slds-required" title="required">* </abbr>
-                {{ label }}
-            </span>
+        <!-- Default slot -->
+        <template #default="slotProps">
+            <label class="slds-checkbox_toggle slds-grid">
 
-            <!-- Input -->
-            <input
-                type="checkbox"
-                v-bind="$attrs"
-                :checked="$data.$_value"
-                :disabled="disabled"
-                v-on="listeners"
-                @input="onInput"
-            >
-
-            <!-- Faux -->
-            <span class="slds-checkbox_faux_container" aria-live="assertive">
-
-                <span class="slds-checkbox_faux slds-m-right_x-small"/>
-
-                <span v-if="!noMessage" class="slds-checkbox_on slds-m-right_x-small">
-                    {{ messageActive }}
+                <!-- Label -->
+                <span v-if="inline" class="slds-form-element__label slds-m-bottom_none">
+                    <abbr v-if="required" class="slds-required" title="required">* </abbr>
+                    {{ label }}
                 </span>
 
-                <span v-if="!noMessage" class="slds-checkbox_off slds-m-right_x-small">
-                    {{ messageInactive }}
+                <!-- Input -->
+                <input
+                    :id="slotProps['inputId']"
+                    type="checkbox"
+                    v-bind="$attrs"
+                    :checked="modelValue"
+                    :disabled="disabled"
+                    @input="handleInput"
+                >
+
+                <!-- Faux -->
+                <span class="slds-checkbox_faux_container" aria-live="assertive">
+
+                    <span class="slds-checkbox_faux slds-m-right_x-small"/>
+
+                    <span v-if="!noMessage" class="slds-checkbox_on slds-m-right_x-small">
+                        {{ messageActive }}
+                    </span>
+
+                    <span v-if="!noMessage" class="slds-checkbox_off slds-m-right_x-small">
+                        {{ messageInactive }}
+                    </span>
+
                 </span>
 
-            </span>
-
-        </label>
+            </label>
+        </template>
 
         <!-- Inline help -->
         <template #help>
@@ -55,11 +64,13 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
+<script lang="ts">
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsCheckboxToggle',
+export default defineComponent({
+    name: "SldsCheckboxToggle",
 
     components: {
         SldsFormElement,
@@ -68,49 +79,55 @@ export default {
     inheritAttrs: false,
 
     props: {
-        error: Boolean,
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: Array,
+
         disabled: Boolean,
+
+        /**
+         * Inline help text.
+         * When using the help slot this prop is ignored.
+         */
+        help: String,
+
         inline: Boolean,
+
         label: String,
-        messageActive: {type: String, default: 'Enabled'},
-        messageInactive: {type: String, default: 'Disabled'},
+
+        messageActive: { type: String, default: "Enabled" },
+
+        messageInactive: { type: String, default: "Disabled" },
+
+        /**
+         * Input value.
+         */
+        modelValue: Boolean,
+
         noMessage: Boolean,
+
         required: Boolean,
+
         rightToLeft: Boolean,
-        value: Boolean
-    },
 
-    data() {
-        return {
-            $_value: this.value
-        }
-    },
-
-    computed: {
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
-        },
-    },
-
-    watch: {
-        value(value) {
-            this.$data.$_value = value
-        }
+        /**
+         * Indicates whether the input is stacked among other inputs.
+         */
+        stacked: Boolean,
     },
 
     methods: {
-        onInput() {
+        handleInput() {
             if (this.disabled) return
-            this.$data.$_value = !this.$data.$_value
-            this.$emit('input', this.$data.$_value)
-        }
-    }
-}
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, !this.modelValue)
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-checkbox_faux {
     transition: all 300ms ease-out;
 }
@@ -122,4 +139,5 @@ export default {
     -ms-user-select: none;
     user-select: none;
 }
+
 </style>

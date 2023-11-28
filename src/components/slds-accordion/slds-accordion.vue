@@ -3,7 +3,7 @@
         <slot>
             <slds-accordion-section
                 v-for="section of sections"
-                :key="section.name"
+                :key="section.id"
                 :content="section.content"
                 :label="section.label"
                 :name="section.name"
@@ -12,12 +12,14 @@
     </ul>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
-import SldsAccordionSection from '@/components/slds-accordion/slds-accordion-section'
+<script lang="ts">
+import SldsAccordionSection from "./slds-accordion-section.vue"
+import { defineComponent } from "vue"
+import type { PropType } from "vue"
+import type { AccordionSection } from "./accordion-section"
 
-export default {
-    name: 'SldsAccordion',
+export default defineComponent({
+    name: "SldsAccordion",
 
     components: {
         SldsAccordionSection,
@@ -25,48 +27,65 @@ export default {
 
     props: {
         /**
-         * Expands the specified accordion sections.
-         * Pass in a string for a single section or a list of section names.
+         * Expands the specified accordion section passing in a string for a single section.
+         * By default, only the first section in the accordion is expanded.
+         */
+        activeSectionName: String,
+
+        /**
+         * Expands the specified accordion sections passing in a list of section names.
          * To support multiple expanded sections, include allow-multiple-sections-open in your markup.
          * By default, only the first section in the accordion is expanded.
-         * @type {string|string[]}
          */
-        activeSectionName: [String, Array],
+        activeSectionNames: { type: Array as PropType<string[]>, default: () => [] as string[] },
 
         /**
          * If present, the accordion allows multiple open sections.
          * Otherwise, opening a section closes another that's currently open.
-         * @type {boolean}
          */
         allowMultipleSectionsOpen: Boolean,
 
         /**
          * Accordion sections.
-         * @type {AccordionSection[]}
          */
-        sections: Array,
+        sections: Array as PropType<AccordionSection[]>,
     },
 
     data() {
         return {
             /**
              * Private variable to track the active section name.
-             * @type {string}
              */
-            $_activeSectionName: this.activeSectionName
+            internalActiveSectionName: this.activeSectionName,
+
+            /**
+             * Private variable to track the active section names.
+             */
+            internalActiveSectionNames: this.activeSectionNames,
         }
     },
 
     watch: {
         /**
          * Watch for changes to the active section name.
-         * @param {string|string[]} activeSectionName
+         * @param activeSectionName The new active section name.
          */
-        activeSectionName(activeSectionName) {
-            if (this.$data.$_activeSectionName !== activeSectionName) {
-                this.$data.$_activeSectionName = activeSectionName
-                this.onActiveSectionChange(activeSectionName)
-            }
+        activeSectionName(activeSectionName: string): void {
+            if (this.internalActiveSectionName === activeSectionName) return
+
+            this.internalActiveSectionName = activeSectionName
+            this.handleActiveSectionChange(activeSectionName)
+        },
+
+        /**
+         * Watch for changes to the active section names.
+         * @param activeSectionNames The new active section names.
+         */
+        activeSectionNames(activeSectionNames: string[]) {
+            if (this.internalActiveSectionNames === activeSectionNames) return
+
+            this.internalActiveSectionNames = activeSectionNames
+            this.handleActiveSectionChange(activeSectionNames)
         },
 
         /**
@@ -75,53 +94,38 @@ export default {
         sections: {
             deep: true,
             handler() {
-                this.onActiveSectionChange(this.activeSectionName)
-            }
+                if (this.allowMultipleSectionsOpen) this.handleActiveSectionChange(this.activeSectionNames)
+                else this.handleActiveSectionChange(this.activeSectionName)
+            },
         },
-    },
-
-    created() {
-        this.validateActiveSectionName()
     },
 
     methods: {
         /**
          * Handles the active section change event.
-         * @param {string} sectionName New section name
+         * @param input New section name.
          */
-        onActiveSectionChange(sectionName) {
-            this.validateActiveSectionName()
-
+        handleActiveSectionChange(input: string | string[] | undefined): void {
             if (this.allowMultipleSectionsOpen) {
-                const index = this.$data.$_activeSectionName.indexOf(sectionName)
+                if (!Array.isArray(input)) {
+                    throw Error(`Accordion expected an array of string but got ${input}`)
+                }
 
-                if (index === -1) this.$data.$_activeSectionName.push(sectionName)
-                else this.$data.$_activeSectionName.splice(index, 1)
-            }
-            else {
-                this.$data.$_activeSectionName = (this.$data.$_activeSectionName !== sectionName)
-                    ? sectionName
-                    : null
-            }
+                for (const sectionName of input) {
+                    const index = this.internalActiveSectionNames.indexOf(sectionName)
 
-            this.$emit('active-section-change', sectionName)
-        },
-
-        /**
-         * Throws error if the section name is invalid.
-         */
-        validateActiveSectionName() {
-            if (this.allowMultipleSectionsOpen) {
-                if (typeof (this.activeSectionName) === 'string') {
-                    throw new Error('If allow-multiple-sections-open is present, activeSectionName must be a string array.')
+                    if (index === -1) this.internalActiveSectionNames.push(sectionName)
+                    else this.internalActiveSectionNames.splice(index, 1)
                 }
             }
             else {
-                if (typeof (this.activeSectionName) !== 'string') {
-                    throw new Error('If allow-multiple-sections-open is not present, activeSectionName must be a string.')
-                }
+                this.internalActiveSectionName = (this.internalActiveSectionName !== input)
+                    ? input as string
+                    : undefined
             }
+
+            this.$emit("active-section-change", input)
         },
     },
-}
+})
 </script>

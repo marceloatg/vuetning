@@ -8,10 +8,7 @@
                 aria-atomic="true"
             >
                 <!-- SVG -->
-                <slds-svg
-                    :icon="icon"
-                    class="slds-button__icon slds-global-header__icon"
-                />
+                <slds-svg :icon="iconName" class="slds-button__icon slds-global-header__icon"/>
 
                 <!-- Assistive text -->
                 <span class="slds-assistive-text">
@@ -30,21 +27,23 @@
 </template>
 
 
-<script>
-import SldsSvg from '@/components/slds-svg/slds-svg'
+<script lang="ts">
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsGlobalActionNotifications',
+export default defineComponent({
+    name: "SldsGlobalActionNotifications",
 
     components: {
-        SldsSvg
+        SldsSvg,
     },
 
     props: {
-        icon: {
-            type: String,
-            default: 'utility:notification',
-        }
+        /**
+         * The Lightning Design System name of the icon.
+         * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         */
+        iconName: { type: String, default: "utility:notification" },
     },
-}
+})
 </script>

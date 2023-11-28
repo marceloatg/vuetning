@@ -1,0 +1,212 @@
+@use "sass:math";
+
+// Imports
+@import "salesforce-lightning-design-system.min.css";
+@import "animations";
+@import "placeholders";
+
+html {
+    background: none;
+}
+
+// Font
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-Light.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-Light.woff") format("woff");
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-LightItalic.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-LightItalic.woff") format("woff");
+    font-style: italic;
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-Regular.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-Regular.woff") format("woff");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-Italic.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-Italic.woff") format("woff");
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-Bold.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-Bold.woff") format("woff");
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Salesforce Sans";
+    src: url("../fonts/webfonts/SalesforceSans-BoldItalic.woff2") format("woff2"), url("../fonts/webfonts/SalesforceSans-BoldItalic.woff") format("woff");
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+}
+
+[class^='slds'],
+[class*=' slds'] {
+    font-family: "Salesforce Sans", Arial, sans-serif !important;
+}
+
+// Sizing
+.slds-full-height {
+    height: 100%;
+}
+
+.slds-full-width {
+    width: 100%;
+}
+
+// Overflow
+.slds-scrollable_hidden {
+    max-height: 100%;
+    overflow: hidden;
+}
+
+// cursor
+$cursors: (pointer, not-allowed);
+
+@each $cursor in $cursors {
+    .slds-cursor_#{$cursor} {
+        cursor: $cursor;
+    }
+}
+
+// Grid FHD and UHD
+$columns: (1, 2, 3, 4, 5, 6, 7, 8, 12);
+
+@mixin width($breakpoint: null, $max: false) {
+    // Loop through the number of columns for each denominator of our fractions.
+    @each $denominator in $columns {
+        $breakpoint-string: if($max, 'max-', '') + $breakpoint + '-';
+
+        @for $i from 1 through $denominator {
+            .slds-#{$breakpoint-string}size_#{$i}-of-#{$denominator} {
+                width: math.div($i, $denominator) * 100% !important;
+            }
+        }
+    }
+}
+
+$breakpoints: (
+    'huge': 96em,
+    'x-huge': 120em
+);
+
+$sizes: (
+    'xxx-small,': 3rem,
+    'xx-small': 6rem,
+    'x-small': 12rem,
+    'small': 15rem,
+    'medium': 20rem,
+    'large': 25rem,
+    'x-large': 40rem,
+    'xx-large': 60rem
+);
+
+@each $breakpoint-size in map-keys($breakpoints) {
+    $breakpoint: map-get($breakpoints, $breakpoint-size);
+
+    @media (min-width: #{$breakpoint}) {
+        .slds-#{$breakpoint-size}-nowrap {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+        }
+
+        // Fixes issue when sizing is used with slds-col
+        [class*="slds-#{$breakpoint-size}-size_"] {
+            -webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+        }
+
+        // Absolute sizes (rem)
+        @each $name, $width in $sizes {
+            .slds-#{$breakpoint-size}-size_#{$name} {
+                width: $width;
+            }
+        }
+
+        // Generate responsive relative (%) width names,
+        // e.g. <div class="slds-medium-size--3-of-6">
+        @include width($breakpoint: #{$breakpoint-size});
+
+        // Loop through column spread and generate
+        // ordering helpers, e.g. <div class="slds-medium-order--2">
+        @for $i from 1 through 12 {
+
+            .slds-#{$breakpoint-size}-order_#{$i} {
+                -webkit-box-ordinal-group: #{$i + 1};
+                -ms-flex-order: $i;
+                order: $i;
+            }
+        }
+    }
+
+    @media (max-width: #{$breakpoint}) {
+        // Fixes issue when sizing is used with slds-col
+        [class*="slds-max-#{$breakpoint-size}-size_"] {
+            -webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+        }
+
+        // Absolute sizes (rem)
+        @each $name, $width in $sizes {
+            .slds-max-#{$breakpoint-size}-size_#{$name} {
+                width: $width;
+            }
+        }
+
+        // Generate responsive relative (%) width names (up to size),
+        // e.g. <div class="slds-max-medium-size--3-of-6">
+        @include width($breakpoint: #{$breakpoint-size}, $max: true);
+
+        // Loop through column spread and generate
+        // ordering helpers, e.g. <div class="slds-max-medium-order--2">
+        @for $i from 1 through 12 {
+            .slds-max-#{$breakpoint-size}-order_#{$i} {
+                -webkit-box-ordinal-group: #{$i + 1};
+                -ms-flex-order: $i;
+                order: $i;
+            }
+        }
+    }
+}
+
+.slds-grid_vertical-stretch {
+    align-items: stretch;
+    align-content: stretch;
+}
+
+// Misc
+.slds-unselectable {
+    user-select: none;
+}
+
+.slds-unclickable {
+    pointer-events: none;
+}
+
+// Notification size fix for more than 4 notifications
+.slds-notification:nth-of-type(n+4) {
+    max-height: 3.75rem;
+}

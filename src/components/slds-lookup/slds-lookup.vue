@@ -1,10 +1,13 @@
 <template>
     <slds-form-element
+        :errors="errors"
+        :help="help"
         :label="label"
-        :error="error && !$data.$_isOpen"
         :required="required"
-        :read-only="readonly"
+        :stacked="stacked"
+        :suppress-errors="isOpen"
         :tooltip="tooltip"
+        v-bind="formElementAttributes"
     >
 
         <!-- Tooltip -->
@@ -12,209 +15,156 @@
             <slot name="tooltip"/>
         </template>
 
-        <!-- View mode -->
-        <div v-if="readonly" class="slds-form-element__static">
-            {{ $data.$_value }}
-        </div>
-
-        <!-- Container -->
-        <div
-            v-else
-            v-click-outside="onClickOutside"
-            class="slds-combobox_container slds-has-selection"
-            :class="containerClass"
-        >
-            <div
-                class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                role="combobox"
-                @keyup.up="onKeyUp"
-                @keyup.down="onKeyDown"
-                @keyup.enter="onKeyEnter"
-            >
-
-                <!-- Form element -->
+        <!-- Default slot -->
+        <template #default="slotProps">
+            <div v-click-outside="handleClickOutside" :class="containerClassNames">
                 <div
-                    class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
-                    :class="comboboxElementClass"
-                    role="none"
+                    class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                    role="combobox"
+                    @keydown.down.prevent
+                    @keydown.up.prevent
+                    @keyup.down="handleKeyDownAsync"
+                    @keyup.enter.stop="handleKeyEnterAsync"
+                    @keyup.up="handleKeyUpAsync"
                 >
 
-                    <!-- Write input -->
-                    <template v-if="$data.$_isOpen">
+                    <!-- Form element -->
+                    <div :class="comboboxElementClassNames" role="none">
 
-                        <!-- Input -->
-                        <input
-                            ref="input"
-                            type="text"
-                            role="textbox"
-                            class="slds-input slds-combobox__input"
-                            v-bind="$attrs"
-                            :value="$data.$_filter"
-                            :disabled="disabled"
-                            :placeholder="placeholder"
-                            v-on="listeners"
-                            @click="onClick"
-                            @input="onInput"
-                            @keyup.esc.stop="onClear"
-                        >
+                        <!-- Write input -->
+                        <template v-if="!modelValue">
 
-                        <!-- Right group -->
-                        <div
-                            class="slds-input__icon-group slds-input__icon-group_right"
-                            :style="$data.$_rightGroupStyle"
-                        >
-
-                            <!-- Spinner -->
-                            <transition :name="buttonTransitionName">
-                                <slds-spinner
-                                    v-if="loading"
-                                    brand
-                                    x-small
-                                    class="slds-input__spinner"
-                                    :style="{right: spinnerRight}"
-                                />
-                            </transition>
-
-                            <!-- Clear button -->
-                            <transition :name="buttonTransitionName">
-                                <slds-button-icon
-                                    v-if="$data.$_filter != null"
-                                    icon="utility:clear"
-                                    class="slds-input__icon slds-input__icon_right"
-                                    title="Clear"
-                                    tabindex="-1"
-                                    @click.prevent="onClear"
-                                />
-                            </transition>
-
-                        </div>
-
-                    </template>
-
-                    <!-- Read input -->
-                    <template v-else>
-
-                        <!-- Icon -->
-                        <slds-icon
-                            v-if="selectedOptionIcon"
-                            :icon="selectedOptionIcon"
-                            small
-                            class="slds-combobox__input-entity-icon"
-                        />
-
-                        <!-- Input -->
-                        <input
-                            ref="input"
-                            type="text"
-                            role="textbox"
-                            class="slds-input slds-combobox__input"
-                            :class="{'slds-combobox__input-value': $data.$_value}"
-                            :autocomplete="$data.$_value ? 'on' : 'off'"
-                            v-bind="$attrs"
-                            :value="selectedOptionLabel"
-                            :disabled="disabled"
-                            :placeholder="placeholder"
-                            v-on="listeners"
-                            @click="onClick"
-                            @input="onClick();onInput($event)"
-                        >
-
-                        <!-- Clear button -->
-                        <slds-button-icon
-                            v-if="$data.$_value"
-                            icon="utility:close"
-                            class="slds-input__icon slds-input__icon_right"
-                            title="Remove selected option"
-                            assistive-text="Remove selected option"
-                            @click="selectOption(null)"
-                        />
-
-                        <!-- Search icon -->
-                        <slds-icon
-                            v-else
-                            icon="utility:search"
-                            x-small
-                            class="slds-input__icon slds-input__icon_right"
-                        />
-
-                    </template>
-
-                </div>
-
-                <!-- Dropdown -->
-                <transition v-bind="dropdownTransitionProperties">
-                    <div
-                        v-if="$data.$_isOpen"
-                        class="slds-dropdown slds-dropdown_left slds-dropdown_top slds-dropdown_fluid"
-                        :class="dropdownClass"
-                        role="listbox"
-                    >
-                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-
-                            <!-- filter -->
-                            <li
-                                v-if="$data.$_filter && $data.$_filter.length"
-                                role="presentation"
-                                class="slds-listbox__item slds-theme_shade"
-                                @mousedown.prevent.stop=""
+                            <!-- Input -->
+                            <input
+                                :id="slotProps['inputId']"
+                                ref="input"
+                                type="text"
+                                role="textbox"
+                                class="slds-input slds-combobox__input"
+                                tabindex="0"
+                                :disabled="disabled"
+                                :placeholder="placeholder"
+                                :value="filter"
+                                v-bind="inputAttributes"
+                                @click="handleClickInput"
+                                @focus="handleFocusInput"
+                                @input="handleInputFilter"
+                                @keyup.esc.stop="handleEscInputAsync"
                             >
-                                <div
-                                    role="option"
-                                    class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                >
 
-                                    <!-- Figure -->
-                                    <span class="slds-media__figure slds-listbox__option-icon">
-                                        <slds-icon icon="utility:search" x-small/>
-                                    </span>
+                            <!-- Right group -->
+                            <div class="slds-input__icon-group slds-input__icon-group_right">
 
-                                    <!-- Body -->
-                                    <span class="slds-media__body">
-                                        <span class="slds-truncate" :title="$data.$_filter">
-                                            {{ $data.$_filter }}
-                                        </span>
-                                    </span>
+                                <!-- Spinner -->
+                                <transition name="fade">
+                                    <slds-spinner
+                                        v-if="showSpinner"
+                                        brand
+                                        class="slds-input__spinner"
+                                        :style="{right: spinnerRight}"
+                                        x-small
+                                    />
+                                </transition>
 
-                                </div>
-                            </li>
+                                <!-- Clear button -->
+                                <transition name="fade">
+                                    <slds-button-icon
+                                        v-if="hasFilter"
+                                        bare
+                                        icon-name="utility:clear"
+                                        class="slds-input__icon slds-input__icon_right"
+                                        title="Clear"
+                                        tabindex="-1"
+                                        @click.stop="handleClickClearAsync"
+                                    />
+                                </transition>
 
-                            <!-- Slot options -->
-                            <slot
-                                v-if="$slots.options"
-                                name="options"
+                            </div>
+
+                        </template>
+
+                        <!-- Read input -->
+                        <template v-else>
+
+                            <!-- Icon -->
+                            <slds-icon
+                                v-if="selectedOption?.iconName"
+                                class="slds-combobox__input-entity-icon"
+                                :icon-name="selectedOption?.iconName"
+                                small
                             />
 
-                            <!-- Prop options -->
-                            <template v-else>
-                                <slds-lookup-option
-                                    v-for="option in filteredOptions"
-                                    :key="option.key"
-                                    :label="option.label"
-                                    :meta="option.meta"
-                                    :icon="option.icon"
-                                    :disabled="option.disabled"
-                                    :has-focus="$data.$_focusedOption === option.value"
-                                    :filter="$data.$_filter"
-                                    @click="onClickOption(option.value)"
-                                    @mouseover="onMouseOverOption(option.value)"
-                                />
-                            </template>
+                            <!-- Input -->
+                            <!--<input
+                                :id="slotProps['inputId']"
+                                ref="input"
+                                type="text"
+                                role="textbox"
+                                :class="inputClassNames"
+                                :autocomplete="modelValue ? 'on' : 'off'"
+                                tabindex="0"
+                                :value="selectedOption?.label"
+                                :disabled="disabled"
+                                :placeholder="placeholder"
+                                v-bind="inputAttributes"
+                                @click="handleClickInput"
+                                @input="handleInputFilter"
+                            >-->
 
-                            <!-- No options -->
-                            <li v-if="isEmpty" role="presentation" class="slds-listbox__item">
-                                <div class="slds-align_absolute-center slds-p-vertical_small">
-                                    No options to display
-                                </div>
-                            </li>
+                            <div
+                                :id="slotProps['inputId']"
+                                ref="input"
+                                aria-expanded="false"
+                                aria-haspopup="listbox"
+                                class="slds-input_faux slds-combobox__input slds-combobox__input-value"
+                                role="combobox"
+                                type="text"
+                                tabindex="0"
+                                v-bind="inputAttributes"
+                                @click="handleClickSelectedOption"
+                            >
+                                <span class="slds-truncate">
+                                    {{ selectedOption?.label }}
+                                </span>
+                            </div>
 
-                        </ul>
+                            <!-- Clear button -->
+                            <slds-button-icon
+                                v-if="modelValue"
+                                assistive-text="Remove selected option"
+                                class="slds-input__icon slds-input__icon_right"
+                                icon-name="utility:close"
+                                title="Remove selected option"
+                                @click="selectOption"
+                            />
+
+                            <!-- Search icon -->
+                            <slds-icon
+                                v-else
+                                class="slds-input__icon slds-input__icon_right"
+                                icon-name="utility:search"
+                                x-small
+                            />
+
+                        </template>
+
                     </div>
-                </transition>
 
+                    <!-- Dropdown -->
+                    <slds-dropdown
+                        :filter="filter"
+                        :focused-option="focusedOption"
+                        :is-open="isOpen"
+                        :options="filteredOptions"
+                        :selected-option="selectedOption"
+                        :show-spinner="showSpinner"
+                        @click-option="handleClickOptionAsync"
+                        @mouse-over-option="setFocusedOption"
+                    />
+
+                </div>
             </div>
-        </div>
+        </template>
 
         <!-- Inline help -->
         <template #help>
@@ -229,253 +179,401 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import SldsLookupOption from './slds-lookup-option'
-import SldsSpinner from '@/components/slds-spinner/slds-spinner'
-import ClickOutside from '@/directives/click-outside/index'
-import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import DropdownOption from '@/components/slds-options/dropdown-option-class'
+<script lang="ts">
+import HasDropdownMixin from "../../mixins/has-dropdown-mixin"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import { vOnClickOutside } from "@vueuse/components"
+import { defineComponent, type PropType } from "vue"
+import type { ValidationError } from "../slds-form-element/validation-error"
+import type { DropdownOption } from "../slds-dropdown/dropdown-option"
+import { EVENTS } from "../../constants"
+import SldsDropdown from "../slds-dropdown/slds-dropdown.vue"
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsSpinner from "../slds-spinner/slds-spinner.vue"
 
-export default {
-    name: 'SldsLookup',
+export default defineComponent({
+    name: "SldsCombobox",
 
     components: {
+        SldsSpinner,
         SldsButtonIcon,
+        SldsDropdown,
         SldsFormElement,
         SldsIcon,
-        SldsLookupOption,
-        SldsSpinner
     },
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
-    mixins: [
-        HasDropdownMixin
-    ],
-
-    inheritAttrs: false,
+    mixins: [HasDropdownMixin],
 
     props: {
+        /**
+         * Indicates whether the picklist is disabled.
+         */
         disabled: Boolean,
-        error: Boolean,
+
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
+
+        /**
+         * Inline help text.
+         * When using the help slot this prop is ignored.
+         */
+        help: String,
+
+        /**
+         * Picklist label.
+         */
         label: String,
-        length: {
-            type: Number,
-            validator(value) {
-                return [5, 7, 10].indexOf(value) !== -1
-            },
-        },
+
+        large: Boolean,
+
         medium: Boolean,
-        options: Array,
+
+        /**
+         * Picklist value.
+         */
+        modelValue: String,
+
+        /**
+         * Picklist placeholder.
+         */
         placeholder: String,
-        readonly: Boolean,
+
+        /**
+         * Indicates whether this label's picklist is required.
+         */
         required: Boolean,
+
         small: Boolean,
+
+        /**
+         * Indicates whether the picklist is stacked among other inputs.
+         */
+        stacked: Boolean,
+
+        /**
+         * Tooltip text.
+         * When using the tooltip slot this prop is ignored.
+         */
         tooltip: String,
-        value: {},
+
         xLarge: Boolean,
+
         xSmall: Boolean,
+
         xxLarge: Boolean,
+
         xxSmall: Boolean,
     },
 
-    data() {
-        return {
-            $_value: this.value
-        }
-    },
-
     computed: {
-        buttonTransitionName() {
-            const isAnimated = (this.$vuetning && this.$vuetning.hasAnimations)
-            return isAnimated ? 'fade' : ''
+        comboboxElementClassNames(): string {
+            let classNames = "slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+
+            if (this.selectedOption) classNames += " slds-input-has-icon_left-right"
+
+            return classNames
         },
 
-        comboboxElementClass() {
-            return {
-                'slds-input-has-icon slds-input-has-icon_left-right': this.selectedOptionIcon
+        /**
+         * The CSS class names for the container.
+         */
+        containerClassNames(): string {
+            let classNames = "slds-combobox_container slds-has-selection"
+
+            // Size
+            if (this.xxSmall) classNames += " slds-size_xx-small"
+            else if (this.xSmall) classNames += " slds-size_x-small"
+            else if (this.small) classNames += " slds-size_small"
+            else if (this.medium) classNames += " slds-size_medium"
+            else if (this.large) classNames += " slds-size_large"
+            else if (this.xLarge) classNames += " slds-size_x-large"
+            else if (this.xxLarge) classNames += " slds-size_xx-large"
+
+            return classNames
+        },
+
+        /**
+         * Indicates whether the input is autocomplete.
+         */
+        hasAutoComplete(): string {
+            return this.modelValue ? "on" : "off"
+        },
+
+        /**
+         * Indicates whether the options should be filtered.
+         */
+        hasFilter(): boolean {
+            return Boolean(this.filter && this.filter.length > 0)
+        },
+
+        /**
+         * Bindable form element attributes.
+         */
+        formElementAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (attribute.startsWith("data-") || attribute === "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
             }
+
+            return attributes
         },
 
-        containerClass() {
-            if (this.xxSmall) return 'slds-size_xx-small'
-            if (this.xSmall) return 'slds-size_x-small'
-            if (this.small) return 'slds-size_small'
-            if (this.medium) return 'slds-size_medium'
-            if (this.large) return 'slds-size_large'
-            if (this.xLarge) return 'slds-size_x-large'
-            if (this.xxLarge) return 'slds-size_xx-large'
-            return null
+        /**
+         * Bindable input attributes.
+         */
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
         },
 
-        dropdownClass() {
-            return `slds-dropdown_length-${this.length}`
+        /**
+         * The CSS class names for the input.
+         */
+        inputClassNames(): string {
+            let classNames = "slds-input slds-combobox__input"
+
+            // Showing input value
+            if (this.modelValue) classNames += " slds-combobox__input-value"
+
+            return classNames
         },
 
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
+        /**
+         * The readable value displayed inside the input.
+         */
+        readableValue(): string {
+            return this.modelValue
+                ? this.options.find(option => option.value === this.modelValue)?.label || this.placeholder || ""
+                : this.placeholder || ""
         },
 
-        selectedOptionIcon() {
-            if (this.$data.$_value == null) return null
-
-            const selectedOption = this.$data.$_options.find(option => option.value === this.$data.$_value)
-            return selectedOption ? selectedOption.icon : null
-        },
-
-        selectedOptionLabel() {
-            if (this.$data.$_value == null) return null
-
-            const selectedOption = this.$data.$_options.find(option => option.value === this.$data.$_value)
-            return selectedOption ? selectedOption.label : null
+        /**
+         * The currently selected option, if any.
+         */
+        selectedOption(): DropdownOption | undefined {
+            return this.modelValue && this.modelValue.length > 0
+                ? this.options?.find(option => option?.value === this.modelValue)
+                : undefined
         },
 
         spinnerRight() {
-            if (this.$data.$_filter) return '1.5rem'
-            return '.2rem'
-        }
-    },
-
-    watch: {
-        options: {
-            deep: true,
-            handler() {
-                this.parseOptions()
-            }
+            if (this.filter) return "1.5rem"
+            return ".2rem"
         },
-
-        value(value) {
-            this.$data.$_value = value
-        }
-    },
-
-    created() {
-        this.parseOptions()
     },
 
     methods: {
-        onClear() {
-            if (this.$data.$_filter == null) {
+        /**
+         * Focus on input element.
+         */
+        async focusOnInputAsync(): Promise<void> {
+            await this.$nextTick()
+            const focusableElement = this.$refs.input as HTMLElement
+            focusableElement.focus()
+        },
+
+        /**
+         * Handles the blur event on the input.
+         */
+        handleBlurInput(): void {
+            if (this.isOpen) this.hideDropdown()
+        },
+
+        /**
+         * Handles the input event on the write input.
+         * @param event The fired event.
+         */
+        handleInputFilter(event: Event): void {
+            const target = event.target as HTMLInputElement
+            this.filter = target.value
+
+            this.$emit(EVENTS.SEARCH, target.value)
+            if (this.hasFilter && !this.isOpen) this.isOpen = true
+            this.setFocusedOption()
+        },
+
+        /**
+         * Handles the events that related to clearing the options filter.
+         */
+        async handleClickClearAsync(): Promise<void> {
+            await this.focusOnInputAsync()
+            this.clearFilter()
+        },
+
+        /**
+         * Handles the click event on the input.
+         */
+        async handleClickInput(): Promise<void> {
+            if (this.disabled) return
+
+            if (this.isOpen) {
+                this.hideDropdown()
+            }
+            else {
+                this.setFocusedOption()
+                this.showDropdown()
+
+                await this.focusOnInputAsync()
+            }
+        },
+
+        /**
+         * Handles the click event on the select option.
+         */
+        async handleClickSelectedOption(): Promise<void> {
+            if (this.disabled) return
+
+            await this.focusOnInputAsync()
+        },
+
+        /**
+         * Handles the click event on an option.
+         * @param option The clicked option.
+         */
+        async handleClickOptionAsync(option: DropdownOption): Promise<void> {
+            if (this.disabled || option.disabled) return
+            this.selectOption(option)
+            await this.focusOnInputAsync()
+        },
+
+        /**
+         * Handles the click event outside this component.
+         */
+        handleClickOutside(): void {
+            this.hideDropdown()
+        },
+
+        /**
+         * Handles the key up esc event of the input.
+         * @param event The fired event.
+         */
+        async handleEscInputAsync(event: Event): Promise<void> {
+            if (!this.isOpen) return
+
+            event.stopPropagation()
+
+            if (this.filter === "") {
                 this.hideDropdown()
                 this.clearFocusedOption()
-                this.clearFilter()
-            }
-            else {
-                this.clearFilter()
-                this.$refs.input.value = null
             }
 
-            this.$refs.input.focus()
-        },
-
-        async onClick() {
-            if (this.disabled || this.$data.$_isOpen) return
-            this.setFocusedOption()
-            this.showDropdown()
-
-            await this.$nextTick()
-            this.$refs.input.focus()
-        },
-
-        onClickOption(value) {
-            this.selectOption(value)
-        },
-
-        onClickOutside() {
             this.clearFilter()
-            this.hideDropdown()
+            await this.focusOnInputAsync()
         },
 
-        onInput(event) {
-            this.$data.$_filter = event.target.value
-            this.$emit('search', event.target.value)
+        /**
+         * Handles the focus event on the write input.
+         */
+        handleFocusInput(): void {
+            this.clearFilter()
         },
 
-        onKeyDown() {
-            if (!this.$data.$_isOpen) {
+        /**
+         * Handles the key down event on the combobox.
+         */
+        async handleKeyDownAsync(): Promise<void> {
+            if (!this.isOpen) {
                 this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
+            else if (!this.isEmpty) {
                 this.setFocusedOptionDown()
             }
+
+            await this.focusOnInputAsync()
         },
 
-        onKeyEnter() {
-            if (!this.$data.$_isOpen) {
+        /**
+         * Handles the key enter event on the combobox.
+         */
+        async handleKeyEnterAsync(): Promise<void> {
+            if (!this.isOpen) {
                 this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
-                this.selectOption(this.$data.$_focusedOption)
+            else if (!this.isEmpty) {
+                this.selectOption(this.focusedOption!)
             }
+
+            await this.focusOnInputAsync()
         },
 
-        onKeyUp() {
-            if (!this.$data.$_isOpen) {
+        /**
+         * Handles the key up event on the combobox.
+         */
+        async handleKeyUpAsync(): Promise<void> {
+            if (!this.isOpen) {
                 this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
+            else if (!this.isEmpty) {
                 this.setFocusedOptionUp()
             }
+
+            await this.focusOnInputAsync()
         },
 
-        onMouseOverOption() {
-        },
-
-        parseOptions() {
-            this.$data.$_options.splice(0, this.$data.$_options.length)
-            if (this.options == null) return
-
-            for (const option of this.options) {
-                if (typeof option === 'string') {
-                    this.$data.$_options.push(new DropdownOption(null, option))
-                }
-                else if (typeof option === 'object') {
-                    const dropdownOption = new DropdownOption(null, option.label, option.value)
-                    dropdownOption.meta = option.meta
-                    dropdownOption.icon = option.icon
-                    dropdownOption.disabled = option.disabled
-
-                    this.$data.$_options.push(dropdownOption)
-                }
-                else {
-                    throw'[slds-lookup] options must be of type string or a valid lookup option object.'
-                }
-            }
-        },
-
-        selectOption(value) {
+        /**
+         * Selects an option.
+         * @param selectedOption Selected option.
+         */
+        selectOption(selectedOption: DropdownOption): void {
             this.hideDropdown()
-            this.$emit('input', value)
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, selectedOption.value)
+            if (selectedOption.value !== this.modelValue) this.$emit(EVENTS.CHANGE, selectedOption.value)
+
             this.clearFocusedOption()
-            this.clearFilter()
         },
 
-        setFocusedOption(value = null) {
-            if (value) this.$data.$_focusedOption = value
-            else if (this.$data.$_value) this.$data.$_focusedOption = this.$data.$_value
-            else this.$data.$_focusedOption = this.filteredOptions
-                    .find(option => !option.disabled)?.value
-        }
-    }
-}
+        /**
+         * Set the focused item.
+         * @param focusedOption Hovered option, if any.
+         */
+        setFocusedOption(focusedOption?: DropdownOption): void {
+            if (this.isEmpty) return
+
+            if (focusedOption) this.focusedOption = focusedOption
+            else if (this.modelValue) this.focusedOption = this.selectedOption
+            else this.focusedOption = this.options.find(option => !option.disabled && !option.isHeading && !option.isDivider)
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
+// Fixes chromium bug which makes all focus rings black regardless of color defined
+.slds-input_faux:focus-visible {
+    outline: none !important;
+}
+
 .slds-combobox__input-entity-icon {
     margin-left: .125rem;
 }
 
 .slds-combobox__input-value {
-    pointer-events: none;
+    cursor: default;
+
+    &:focus {
+        box-shadow: 0 0 0 2px #fff inset, 0 0 0 3px #e5e5e5 inset, 0 0 3px #0176d3 !important;
+    }
 }
+
 </style>

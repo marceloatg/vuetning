@@ -1,11 +1,11 @@
 <template>
-    <li class="slds-nav-vertical__item" :class="itemClass">
-        <a class="slds-nav-vertical__action" @click="onClick">
+    <li :class="itemClassNames">
+        <a class="slds-nav-vertical__action">
 
             <!-- Icon -->
             <slds-icon
-                v-if="this.icon"
-                :icon="icon"
+                v-if="iconName"
+                :icon-name="iconName"
                 x-small
                 class="slds-line-height_reset slds-m-right_x-small"
             />
@@ -20,11 +20,12 @@
     </li>
 </template>
 
-<script>
-import SldsIcon from '../slds-icon/slds-icon'
+<script lang="ts">
+import { defineComponent } from "vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
 
-export default {
-    name: 'SldsVerticalNavigationItem',
+export default defineComponent({
+    name: "SldsVerticalNavigationItem",
 
     components: {
         SldsIcon,
@@ -32,31 +33,43 @@ export default {
 
     props: {
         badge: String,
-        icon: String,
-        label: {type: String, required: true},
-        name: {type: String, required: true},
+
+        iconName: String,
+
+        label: { type: String, required: true },
+
+        name: { type: String, required: true },
     },
 
     computed: {
-        isActive() {
-            return this.name === this.selectedItem
+        /**
+         * Indicates whether this item is active.
+         */
+        isActive(): boolean {
+            let activeItemName = this.$parent?.active || this.$parent?.$parent?.active || null
+            return this.name === activeItemName
         },
 
-        selectedItem() {
-            return this.$parent.selectedItem
-        },
+        /**
+         * The CSS class names for the item.
+         */
+        itemClassNames(): string {
+            let classNames = "slds-nav-vertical__item"
 
-        itemClass() {
-            return {
-                'slds-is-active': this.isActive
-            }
+            // Is active
+            if (this.isActive) classNames += " slds-is-active"
+
+            return classNames
         },
     },
-
-    methods: {
-        onClick() {
-            this.$emit('click', this.name)
-        }
-    }
-}
+})
 </script>
+
+<style scoped lang="scss">
+
+.slds-nav-vertical__action,
+.slds-nav-vertical__item:before {
+    transition: all 300ms ease-out;
+}
+
+</style>

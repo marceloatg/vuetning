@@ -8,10 +8,18 @@
             <div ref="header" class="slds-virtual-table_header">
 
                 <!-- Line number header-->
-                <div v-if="!hideLineNumber" class="slds-virtual-table_header-line-number"/>
+                <div
+                    v-if="!hideLineNumber"
+                    class="slds-virtual-table_header-line-number"
+                    :class="{scrolled: showLeftFixedColumnShadow}"
+                />
 
                 <!-- Selection all header -->
-                <div v-if="hasSelection" class="slds-virtual-table_header-select-all" @click="$emit('select-all')">
+                <div
+                    v-if="hasSelection"
+                    class="slds-virtual-table_header-select-all"
+                    @click="$emit('select-all')"
+                >
                     <div class="slds-checkbox">
                         <input type="checkbox" :checked="allRowsSelected">
                         <label class="slds-checkbox__label">
@@ -40,6 +48,13 @@
                     @sort="(order) => onSort(order, column)"
                 />
 
+                <!-- Actions header -->
+                <div
+                    v-if="hasActions"
+                    class="slds-virtual-table_header-actions"
+                    :class="{scrolled: showRightFixedColumnShadow}"
+                />
+
             </div>
 
             <!-- Body -->
@@ -47,8 +62,9 @@
                 class="slds-virtual-table_body"
                 :items="filteredRows"
                 :item-size="rowHeight"
-                :key-field="keyField">
-                <template v-slot="/* eslint-disable vue/no-unused-vars */{ item, index }">
+                :key-field="keyField"
+            >
+                <template #default="{ item, index }">
                     <div
                         :data-index="index"
                         class="slds-virtual-table_row"
@@ -56,12 +72,20 @@
                     >
 
                         <!-- Line number cell -->
-                        <div v-if="!hideLineNumber" class="slds-virtual-table_cell slds-virtual-table_cell-line-number">
+                        <div
+                            v-if="!hideLineNumber"
+                            class="slds-virtual-table_cell slds-virtual-table_cell-line-number"
+                            :class="{scrolled: showLeftFixedColumnShadow}"
+                        >
                             {{ getLineNumber(index) }}
                         </div>
 
                         <!-- Selection cell -->
-                        <div v-if="hasSelection" class="slds-virtual-table_cell slds-virtual-table_cell-selection" @click="onClickSelect(item)">
+                        <div
+                            v-if="hasSelection"
+                            class="slds-virtual-table_cell slds-virtual-table_cell-selection"
+                            @click="onClickSelect(item)"
+                        >
                             <div class="slds-checkbox">
                                 <input type="checkbox" :checked="item.isSelected">
                                 <label class="slds-checkbox__label">
@@ -71,8 +95,8 @@
                         </div>
 
                         <!-- Dynamic cell -->
-                        <template v-for="column in columnConfigurations">
-                            <div :key="column.id" class="slds-virtual-table_cell" :style="{width: `${column.width}px`}">
+                        <template v-for="column in columnConfigurations" :key="column.id">
+                            <div class="slds-virtual-table_cell" :style="{width: `${column.width}px`}">
                                 <span class="slds-grid slds-grid_align-spread slds-virtual-table_cell-content">
 
                                     <!-- Text -->
@@ -80,7 +104,8 @@
                                         v-if="column.type === 'text'"
                                         :title="getFieldValue(column, item)"
                                         class="slds-truncate"
-                                        :class="{'slds-text-font_monospace': column.isMonospaced}">
+                                        :class="{'slds-text-font_monospace': column.isMonospaced}"
+                                    >
                                         {{ getFieldValue(column, item) }}
                                     </span>
 
@@ -90,7 +115,8 @@
                                         :title="getFieldValue(column, item)"
                                         class="slds-truncate"
                                         :class="{'slds-text-font_monospace': column.isMonospaced}"
-                                        @click="onClickAction(column, item)">
+                                        @click="onClickAction(column, item)"
+                                    >
                                         {{ getFieldValue(column, item) }}
                                     </a>
 
@@ -98,13 +124,19 @@
                                     <span
                                         v-else-if="column.type === 'badge' && getFieldValue(column, item) != null"
                                         class="slds-badge"
-                                        :class="['slds-badge_' + getFieldValue(column, item).color]">
+                                        :class="['slds-badge_' + getFieldValue(column, item).color]"
+                                    >
                                         <span
                                             v-if="getFieldValue(column, item).icon"
                                             class="slds-badge__icon slds-badge__icon_left"
-                                            :class="'slds-badge__icon_' + getFieldValue(column, item).color">
+                                            :class="'slds-badge__icon_' + getFieldValue(column, item).color"
+                                        >
                                             <span class="slds-icon_container slds-current-color">
-                                                <slds-svg :icon="getFieldValue(column, item).icon" class="slds-icon slds-icon_xx-small" style="margin-top: -4px;"/>
+                                                <slds-svg
+                                                    :icon="getFieldValue(column, item).icon"
+                                                    class="slds-icon slds-icon_xx-small"
+                                                    style="margin-top: -4px;"
+                                                />
                                             </span>
                                         </span>{{ getFieldValue(column, item).label }}
                                     </span>
@@ -112,22 +144,27 @@
                                     <!-- Boolean -->
                                     <span
                                         v-else-if="column.type === 'boolean' && getFieldValue(column, item)"
-                                        class="slds-truncate">
+                                        class="slds-truncate"
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
                                             width="100%"
                                             style="width: .95rem;height: .95rem;"
                                             height="100%"
-                                            fill="#706e6b">
-                                            <path d="M8.8 19.6L1.2 12c-.3-.3-.3-.8 0-1.1l1-1c.3-.3.8-.3 1 0L9 15.7c.1.2.5.2.6 0L20.9 4.4c.2-.3.7-.3 1 0l1 1c.3.3.3.7 0 1L9.8 19.6c-.2.3-.7.3-1 0z"/>
+                                            fill="#706e6b"
+                                        >
+                                            <path
+                                                d="M8.8 19.6L1.2 12c-.3-.3-.3-.8 0-1.1l1-1c.3-.3.8-.3 1 0L9 15.7c.1.2.5.2.6 0L20.9 4.4c.2-.3.7-.3 1 0l1 1c.3.3.3.7 0 1L9.8 19.6c-.2.3-.7.3-1 0z"
+                                            />
                                         </svg>
                                     </span>
 
                                     <!-- Avatar -->
                                     <span
                                         v-else-if="column.type === 'avatar'"
-                                        class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                                        class="slds-avatar slds-avatar_circle slds-avatar_medium"
+                                    >
                                         <img alt="avatar" :src="getFieldValue(column, item)">
                                     </span>
 
@@ -137,7 +174,7 @@
                                             small
                                             inverse
                                             standard-format
-                                            :icon="getFieldValue(column, item).name"
+                                            :icon-name="getFieldValue(column, item).name"
                                             :icon-class="getFieldValue(column, item).class"
                                         />
                                     </span>
@@ -146,27 +183,9 @@
                                     <button
                                         v-else-if="column.type === 'button' && getFieldValue(column, item) != null"
                                         class="slds-button slds-button_outline-brand"
-                                        @click="onClickButton(column, item)">
+                                        @click="onClickButton(column, item)"
+                                    >
                                         {{ getFieldValue(column, item).label }}
-                                    </button>
-
-                                    <!-- Copy to clipboard button -->
-                                    <button
-                                        v-if="column.hasCopyButton"
-                                        class="slds-button slds-button_icon slds-virtual-table_cell-copy__button slds-m-left_x-small"
-                                        title="Copy to clipboard"
-                                        @click="onClickCopy(column, item)">
-
-                                        <svg
-                                            fill="#b0adab"
-                                            style="width: .875rem;height: .875rem;"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            width="100%"
-                                            height="100%">
-                                            <path d="M8 5.4h8c.4 0 .8-.4.8-.8V3.1c0-1.2-1-2.2-2.2-2.2H9.5c-1.2 0-2.2 1-2.2 2.2v1.5c0 .4.3.8.7.8zm12-2.6h-.8c-.2 0-.3.1-.3.3v1.5c0 1.6-1.3 3-2.9 3H8c-1.6 0-2.9-1.4-2.9-3V3.1c0-.2-.1-.3-.3-.3H4c-1.2 0-2.2 1-2.2 2.2v15.9c0 1.2 1 2.2 2.2 2.2h16c1.2 0 2.2-1 2.2-2.2V5c0-1.2-1-2.2-2.2-2.2z"/>
-                                        </svg>
-
                                     </button>
 
                                 </span>
@@ -177,6 +196,7 @@
                         <div
                             v-if="hasActions && item.actions != null && item.actions.length > 0"
                             class="slds-virtual-table_cell slds-virtual-table_cell-actions"
+                            :class="{scrolled: showRightFixedColumnShadow}"
                         >
                             <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 
@@ -184,12 +204,16 @@
                                 <button
                                     class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
                                     title="Actions"
-                                    @click="onClickActionMenu(item, index)">
+                                    @click="onClickActionMenu(item, index)"
+                                >
                                     <svg
                                         class="slds-button__icon"
                                         xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24">
-                                        <path d="M3.8 6.5h16.4c.4 0 .8.6.4 1l-8 9.8c-.3.3-.9.3-1.2 0l-8-9.8c-.4-.4-.1-1 .4-1z"/>
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M3.8 6.5h16.4c.4 0 .8.6.4 1l-8 9.8c-.3.3-.9.3-1.2 0l-8-9.8c-.4-.4-.1-1 .4-1z"
+                                        />
                                     </svg>
                                 </button>
 
@@ -201,7 +225,8 @@
                                         v-click-outside="onCloseActionMenu"
                                         class="slds-dropdown slds-dropdown_length-5 slds-dropdown_right"
                                         :class="[`slds-dropdown_${actionMenu.orientation}`]"
-                                        :style="{opacity: actionMenu.opacity}">
+                                        :style="{opacity: actionMenu.opacity}"
+                                    >
 
                                         <ul class="slds-dropdown__list" role="menu">
                                             <li
@@ -209,15 +234,17 @@
                                                 :key="action.value"
                                                 class="slds-dropdown__item"
                                                 role="presentation"
-                                                @mousedown.prevent="onMouseDownAction(action, item)">
+                                                @mousedown.prevent="onMouseDownAction(action, item)"
+                                            >
 
                                                 <a role="menuitem" :class="{'slds-is-disabled': action.disabled}">
                                                     <span class="slds-truncate" :title="action.label">
                                                         <slds-icon
                                                             v-if="action.icon != null"
-                                                            :icon="action.icon"
+                                                            :icon-name="action.icon"
                                                             x-small
-                                                            class="slds-m-right_x-small"/>
+                                                            class="slds-m-right_x-small"
+                                                        />
                                                         {{ action.label }}
                                                     </span>
                                                 </a>
@@ -245,13 +272,16 @@
     </div>
 </template>
 
-<script>
-import Column from './slds-data-table-column'
-import ColumnConfiguration from './column-configuration'
-import SldsVirtualScroller from '../slds-virtual-scroller/slds-virtual-scroller'
-import ClickOutside from '@/directives/click-outside/index'
-import 'numeral/locales/pt-br'
-import numeral from 'numeral'
+<script lang="ts">
+import Column from "./slds-data-table-column.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import SldsVirtualScroller from "../slds-virtual-scroller/slds-virtual-scroller.vue"
+import numeral from "numeral"
+import { vOnClickOutside } from "@vueuse/components"
+import { defineComponent, type PropType } from "vue"
+import type { DataTableColumn } from "./data-table-column"
+import { DataTableColumnConfiguration } from "./data-table-column-configuration"
 
 const DEFAULT_FIXED_WIDTH = 48
 const DEFAULT_MINIMUM_WIDTH = 100
@@ -260,50 +290,75 @@ const LINE_COUNTER_WIDTH = 60
 const LINE_CHECKBOX_WIDTH = 32
 const ROUNDING_ERROR = 1
 
-export default {
-    name: 'SldsDataTable',
+export default defineComponent({
+    name: "SldsDataTable",
 
     components: {
-        Column,
         SldsVirtualScroller,
+        SldsSvg,
+        SldsIcon,
+        Column,
     },
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
     props: {
         actions: Array,
+
         allRowsSelected: Boolean,
-        columns: {type: Array, required: true},
-        filter: {type: String, default: null},
+
+        columns: { type: Array as PropType<DataTableColumn[]>, default: () => [] as DataTableColumn[] },
+
+        filter: { type: String, default: null },
+
         hasSelection: Boolean,
+
         hideLineNumber: Boolean,
-        keyField: {type: String, default: 'id'},
-        rows: {type: Array, required: true},
+
+        keyField: { type: String, default: "id" },
+
+        rows: { type: Array, default: () => [] },
     },
 
     data() {
         return {
             actionMenu: {
                 openedRowId: null,
-                orientation: 'top',
+                orientation: "top",
                 opacity: 0,
             },
+
             columnConfigurations: [],
+
             currentActions: [],
+
             filteredRows: [],
+
             filterTimerId: null,
+
+            hasHorizontalOverflow: false,
+
             rowWidth: null,
+
             ruler: {
-                value: '',
-                active: false
+                value: "",
+                active: false,
             },
+
+            scrollArrived: false,
+
             scrollbarWidth: 0,
+
             scrollLeft: 0,
+
             scrollTop: 0,
+
             sortedColumnId: null,
+
             sortedOrder: null,
+
             tableWidth: null,
         }
     },
@@ -315,15 +370,23 @@ export default {
         },
 
         rowHeight() {
-            return this.columnConfigurations.some(column => column.type === 'avatar')
+            return this.columnConfigurations.some(column => column.type === "avatar")
                 ? 40
-                : 28
+                : 32
+        },
+
+        showLeftFixedColumnShadow() {
+            return this.scrollLeft !== 0
+        },
+
+        showRightFixedColumnShadow() {
+            return this.hasHorizontalOverflow && !this.scrollArrived
         },
     },
 
     watch: {
         filter() {
-            this.$el.querySelector('.slds-virtual-table_body').scrollTop = 0
+            this.$el.querySelector(".slds-virtual-table_body").scrollTop = 0
 
             // Debouncing filtration
             if (this.filterTimerId) clearTimeout(this.filterTimerId)
@@ -339,34 +402,33 @@ export default {
     },
 
     created() {
-        numeral.locale('pt-br')
         this.initializeColumns()
         this.filterRows()
     },
 
     async mounted() {
-        this.$refs.root.style.setProperty('--row-height', `${this.rowHeight}px`)
+        this.$refs.root.style.setProperty("--row-height", `${this.rowHeight}px`)
         await this.$nextTick()
 
-        await this.getScrollbarWidth()
+        this.getScrollbarWidth()
         this.getTableWidth()
 
         this.initializeColumnWidths()
         this.initializeColumnOffsets()
 
         this.$el
-            .querySelector('.slds-virtual-table_body')
-            .addEventListener('scroll', this.onScrollBody)
+            .querySelector(".slds-virtual-table_body")
+            .addEventListener("scroll", this.onScrollBody)
     },
 
     activated() {
-        this.$el.querySelector('.slds-virtual-table_body').scrollTop = this.scrollTop
+        this.$el.querySelector(".slds-virtual-table_body").scrollTop = this.scrollTop
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         this.$el
-            .querySelector('.slds-virtual-table_body')
-            .removeEventListener('scroll', this.onScrollBody)
+            .querySelector(".slds-virtual-table_body")
+            .removeEventListener("scroll", this.onScrollBody)
     },
 
     methods: {
@@ -376,7 +438,7 @@ export default {
             }
             else {
                 this.filteredRows = this.rows.filter((row) => {
-                    for (let column of this.columnConfigurations) {
+                    for (const column of this.columnConfigurations) {
                         if (column.fieldName == null) return false
                         const value = this.getFieldValue(column, row)
 
@@ -393,43 +455,43 @@ export default {
         getFieldValue(column, row) {
             if (column.fieldName == null) return null
 
-            return column.fieldName.split('.').reduce(function (prev, curr) {
+            return column.fieldName.split(".").reduce(function (prev, curr) {
                 return prev ? prev[curr] : null
             }, row || self)
         },
 
         getLineNumber(index) {
-            return numeral(index + 1).format('0,0')
+            return numeral(index + 1).format("0,0")
         },
 
-        async getScrollbarWidth() {
-            const scroller = this.$el.querySelector('.virtual-scroller')
+        getScrollbarWidth() {
+            const scroller = this.$el.querySelector(".virtual-scroller")
             if (scroller == null) return
 
-            await this.$nextTick()
+            this.hasHorizontalOverflow = scroller.clientWidth < scroller.scrollWidth
 
             const noVerticalOverflow = scroller.scrollHeight <= scroller.clientHeight
             if (noVerticalOverflow) return
 
             this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth
+            this.$refs.header.style.setProperty("--scrollbar-width", `${this.scrollbarWidth}px`)
         },
 
         getTableWidth() {
             if (this.$refs.container != null) {
                 this.tableWidth = this.$refs.container.offsetWidth
-                this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`)
+                this.$refs.header.style.setProperty("--header-width", `${this.tableWidth}px`)
             }
 
             if (this.$refs.root != null) {
                 this.rowWidth = this.tableWidth - this.scrollbarWidth - ROUNDING_ERROR
-                this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`)
+                this.$refs.root.style.setProperty("--row-width", `${this.rowWidth}px`)
             }
         },
 
         initializeColumns() {
             for (const column of this.columns) {
-                const columnConfiguration = new ColumnConfiguration(column)
-                this.columnConfigurations.push(columnConfiguration)
+                this.columnConfigurations.push(new DataTableColumnConfiguration(column))
             }
         },
 
@@ -439,7 +501,7 @@ export default {
             if (!this.hideLineNumber) columnLeftSum += LINE_COUNTER_WIDTH
             if (this.hasSelection) columnLeftSum += LINE_CHECKBOX_WIDTH
 
-            for (let column of this.columnConfigurations) {
+            for (const column of this.columnConfigurations) {
                 column.offsetLeft = columnLeftSum
                 column.left = columnLeftSum
                 columnLeftSum += column.width
@@ -454,7 +516,7 @@ export default {
             if (this.hasSelection) knownWidth += LINE_CHECKBOX_WIDTH
             if (this.hasActions) knownWidth += LINE_ACTIONS_WIDTH
 
-            for (let column of this.columnConfigurations) {
+            for (const column of this.columnConfigurations) {
                 if (column.isResizable) {
                     if (column.width == null) unknownWidthColumns++
                     else knownWidth += column.width
@@ -470,10 +532,24 @@ export default {
                 }
             }
 
-            const width = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns)
+            const flexibleWidth = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns)
+            let usedWidth = 0
 
-            for (let column of this.columnConfigurations) {
-                if (column.width == null) column.width = width
+            for (const column of this.columnConfigurations) {
+                if (column.width == null) column.width = flexibleWidth
+                usedWidth += column.width
+            }
+
+            let remainingWidth = this.rowWidth - usedWidth
+            if (!this.hideLineNumber) remainingWidth -= LINE_COUNTER_WIDTH
+            if (this.hasSelection) remainingWidth -= LINE_CHECKBOX_WIDTH
+            if (this.hasActions) remainingWidth -= LINE_ACTIONS_WIDTH
+
+            for (const column of this.columnConfigurations) {
+                if (column.isResizable) {
+                    column.width += remainingWidth
+                    break
+                }
             }
         },
 
@@ -492,23 +568,23 @@ export default {
             await this.$nextTick()
 
             // Adjusting z-index
-            const items = this.$el.querySelectorAll('.virtual-scroller__item-view')
+            const items = this.$el.querySelectorAll(".virtual-scroller__item-view")
             for (const item of items) {
                 item.style.zIndex = item.querySelector(`[data-index="${index}"]`)
-                    ? '1000'
-                    : '0'
+                    ? "1000"
+                    : "0"
             }
 
             // Setting vertical orientation of dropdown
             const dropdown = this.$refs.dropdown
             let parent = dropdown.offsetParent
 
-            while (!parent.classList.contains('virtual-scroller')) {
+            while (!parent.classList.contains("virtual-scroller")) {
                 parent = parent.offsetParent
             }
 
             if (dropdown.getBoundingClientRect().bottom > parent.getBoundingClientRect().bottom) {
-                this.actionMenu.orientation = 'bottom'
+                this.actionMenu.orientation = "bottom"
             }
 
             this.actionMenu.opacity = 1
@@ -526,19 +602,19 @@ export default {
         },
 
         onClickSelect(item) {
-            this.$emit('select', item)
+            this.$emit("select", item)
         },
 
         onCloseActionMenu() {
             this.actionMenu.openedRowId = null
             this.actionMenu.opacity = 0
-            this.actionMenu.orientation = 'top'
+            this.actionMenu.orientation = "top"
             this.currentActions.splice(0, this.currentActions.length)
         },
 
         async onExpandColumn(index, column) {
             if (column.width === column.fullWidth) return
-            let aColumn = column // Enforce atomicity
+            const aColumn = column // Enforce atomicity
 
             if (aColumn.fullWidth == null) {
                 for (const row of this.rows) {
@@ -555,7 +631,7 @@ export default {
                 if (aColumn.hasCopyButton) aColumn.fullWidth += 24
                 if (aColumn.fullWidth < DEFAULT_MINIMUM_WIDTH) aColumn.fullWidth = DEFAULT_MINIMUM_WIDTH
 
-                this.ruler.value = ''
+                this.ruler.value = ""
                 this.ruler.active = false
             }
 
@@ -572,15 +648,18 @@ export default {
             this.columnConfigurations[index].width += delta
 
             this.tableWidth += delta
-            this.$refs.header.style.setProperty('--header-width', `${this.tableWidth}px`)
+            this.$refs.header.style.setProperty("--header-width", `${this.tableWidth}px`)
 
             this.rowWidth += delta
-            this.$refs.root.style.setProperty('--row-width', `${this.rowWidth}px`)
+            this.$refs.root.style.setProperty("--row-width", `${this.rowWidth}px`)
 
             for (++index; index < this.columnConfigurations.length; index++) {
                 this.columnConfigurations[index].left += delta
                 this.columnConfigurations[index].offsetLeft += delta
             }
+
+            const scroller = this.$el.querySelector(".virtual-scroller")
+            this.hasHorizontalOverflow = scroller.clientWidth < scroller.scrollWidth
         },
 
         onScrollBody(event) {
@@ -594,19 +673,22 @@ export default {
             // Handle horizontal scroll
             if (event.target.scrollLeft === this.scrollLeft) return
             this.scrollLeft = event.target.scrollLeft
-            this.$refs.header.style.setProperty('--header-offset', `-${event.target.scrollLeft}px`)
+            this.$refs.header.style.setProperty("--header-offset", `-${event.target.scrollLeft}px`)
+
+            const scroller = this.$el.querySelector(".virtual-scroller")
+            this.scrollArrived = Math.ceil(scroller.scrollLeft) === (scroller.scrollWidth - scroller.clientWidth)
         },
 
         onSort(order, sortedColumn) {
             this.sortedOrder = order
             this.sortedColumnId = sortedColumn.id
 
-            for (let column of this.columnConfigurations) {
+            for (const column of this.columnConfigurations) {
                 column.sortedAscending = false
                 column.sortedDescending = false
             }
 
-            if (order === 'asc') {
+            if (order === "asc") {
                 sortedColumn.sortedAscending = true
                 sortedColumn.sortedDescending = false
             }
@@ -615,6 +697,7 @@ export default {
                 sortedColumn.sortedDescending = true
             }
 
+            // eslint-disable-next-line vue/no-mutating-props
             this.rows.sort(this.sorter)
             this.filterRows()
         },
@@ -633,14 +716,14 @@ export default {
                 b = rowB[sortedColumn.fieldName]
             }
 
-            if (typeof a === 'string') a = a.toLowerCase()
-            if (typeof b === 'string') b = b.toLowerCase()
-            const bothStringValues = ((typeof a === 'string') && (typeof b === 'string'))
+            if (typeof a === "string") a = a.toLowerCase()
+            if (typeof b === "string") b = b.toLowerCase()
+            const bothStringValues = ((typeof a === "string") && (typeof b === "string"))
 
             if (a === b) return 0
             else if (a === null) return 1
             else if (b === null) return -1
-            else if (this.sortedOrder === 'asc') {
+            else if (this.sortedOrder === "asc") {
                 if (bothStringValues) return (a.localeCompare(b) < 0) ? -1 : 1
                 return (a < b) ? -1 : 1
             }
@@ -650,10 +733,11 @@ export default {
             }
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 $header-height: 2rem;
 $table-color-background: #fafaf9;
 $table-color-hover: #f3f2f2;
@@ -671,6 +755,7 @@ $table-color-hover: #f3f2f2;
     &_header {
         --header-offset: 0px;
         --header-width: 100%;
+        --scrollbar-width: 0px;
 
         display: flex;
         position: relative;
@@ -684,10 +769,32 @@ $table-color-hover: #f3f2f2;
         .slds-virtual-table_header-line-number {
             height: $header-height;
             min-width: 3.75rem;
+            position: sticky;
+            left: 0;
+            background-color: #fafaf9;
+
+            &.scrolled {
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.40);
+                clip-path: inset(0px -8px 0px 0px);
+                transition: all 300ms;
+            }
         }
 
         .slds-virtual-table_header-select-all {
             padding: .5rem;
+        }
+
+        .slds-virtual-table_header-actions {
+            width: calc(3rem + var(--scrollbar-width));
+            position: sticky;
+            right: 0;
+            background-color: #fafaf9;
+
+            &.scrolled {
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
+                clip-path: inset(0px 0px 0px -8px);
+                transition: all 300ms;
+            }
         }
     }
 
@@ -703,6 +810,12 @@ $table-color-hover: #f3f2f2;
         align-items: center;
         border-bottom: 1px solid #dddbda;
         background-color: white;
+        position: relative;
+        z-index: 0;
+
+        &.opened-dropdown {
+            z-index: 1;
+        }
 
         &.is-selected {
             background-color: $table-color-hover;
@@ -732,6 +845,16 @@ $table-color-hover: #f3f2f2;
             text-align: center;
             line-height: calc(var(--row-height) - .5rem);
             color: #3e3e3c;
+            position: sticky;
+            left: 0;
+            background-color: inherit;
+            box-shadow: inherit;
+
+            &.scrolled {
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.40);
+                clip-path: inset(0px -8px 0px 0px);
+                transition: all 300ms;
+            }
         }
 
         &.slds-virtual-table_cell-selection {
@@ -745,6 +868,16 @@ $table-color-hover: #f3f2f2;
 
         &.slds-virtual-table_cell-actions {
             width: 3rem;
+            position: sticky;
+            right: 0;
+            background-color: inherit;
+            box-shadow: inherit;
+
+            &.scrolled {
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
+                clip-path: inset(0px 0px 0px -8px);
+                transition: all 300ms;
+            }
 
             .slds-dropdown-trigger {
                 margin: 0;

@@ -1,31 +1,38 @@
 <template>
     <div
-        :id="`tab-default-${id}`"
-        class="slds-tabs_default__content slds-show"
-        :class="contentClass"
+        :id="`tab-default-${name}`"
+        :class="contentClassNames"
         role="tabpanel"
-        :aria-labelledby="`${id}__item`"
+        :aria-labelledby="`${name}__item`"
     >
         <slot/>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SldsTabContent',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsTabContent",
 
     props: {
-        id: {type: String, required: true},
-        isActive: Boolean
+        name: { type: String, required: true },
+
+        isActive: Boolean,
     },
 
     computed: {
-        contentClass() {
-            return {
-                'slds-show': this.isSelected,
-                'slds-hide': !this.isActive
-            }
-        }
-    }
-}
+        /**
+         * The CSS class names for the content.
+         */
+        contentClassNames(): string {
+            let classNames = "slds-tabs_default__content"
+
+            if (this.isActive) classNames += " slds-show"
+            else classNames += " slds-hide"
+
+            return classNames
+        },
+    },
+})
 </script>

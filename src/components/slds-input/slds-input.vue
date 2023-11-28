@@ -1,13 +1,12 @@
 <template>
     <slds-form-element
+        :errors="errors"
+        :help="help"
         :label="label"
         :required="required"
-        :read-only="readonly"
-        :error="error"
-        :borderless="borderless"
-        :control-class="controlClass"
+        :stacked="stacked"
         :tooltip="tooltip"
-        v-bind="dataAttributes"
+        v-bind="formElementAttributes"
     >
 
         <!-- Tooltip -->
@@ -15,70 +14,54 @@
             <slot name="tooltip"/>
         </template>
 
-        <!-- Pre fixed text -->
-        <span v-if="addonPre" class="slds-form-element__addon">
-            {{ addonPre }}
-        </span>
+        <!-- Default slot -->
+        <template #default="slotProps">
 
-        <!-- Icon -->
-        <slds-svg
-            v-if="icon"
-            :icon="icon"
-            class="slds-icon slds-input__icon slds-input__icon_left"
-            :class="iconClass"
-        />
+            <!-- Input -->
+            <input
+                :id="slotProps['inputId']"
+                ref="input"
+                class="slds-input"
+                :disabled="disabled"
+                :maxlength="maxlength"
+                :placeholder="placeholder"
+                type="text"
+                :value="modelValue"
+                v-bind="inputAttributes"
+                @input="handleInput"
+                @keyup="handleKeyUp"
+            >
 
-        <!-- View mode -->
-        <div v-if="readonly" class="slds-form-element__static">
-            {{ this.$data.$_value }}
-        </div>
+            <!-- Right group -->
+            <div class="slds-input__icon-group slds-input__icon-group_right" :style="rightGroupStyle">
 
-        <!-- Input -->
-        <input
-            v-else
-            ref="input"
-            v-bind="attributes"
-            :value="$data.$_value"
-            :readonly="readonly"
-            :disabled="disabled"
-            class="slds-input"
-            v-on="listeners"
-            @input="onInput"
-            @keyup="onKeyUp"
-        >
+                <!-- Spinner -->
+                <transition name="fade">
+                    <slds-spinner
+                        v-if="showSpinner"
+                        class="slds-input__spinner"
+                        brand
+                        x-small
+                        :style="spinnerStyle"
+                    />
+                </transition>
 
-        <!-- Right group -->
-        <div class="slds-input__icon-group slds-input__icon-group_right" :style="$data.$_rightGroupStyle">
+                <!-- Clear button -->
+                <transition name="fade">
+                    <slds-button-icon
+                        v-if="showClearButton"
+                        bare
+                        class="slds-input__icon slds-input__icon_right"
+                        icon-name="utility:clear"
+                        tabindex="-1"
+                        title="Clear"
+                        @click.prevent="handleClickClear"
+                    />
+                </transition>
 
-            <!-- Spinner -->
-            <transition :name="transitionName">
-                <slds-spinner
-                    v-if="loading"
-                    variant="brand"
-                    size="x-small"
-                    class="slds-input__spinner"
-                    :style="{right: spinnerRight}"
-                />
-            </transition>
+            </div>
 
-            <!-- Clear button -->
-            <transition :name="transitionName">
-                <slds-button-icon
-                    v-if="$data.$_value && !readonly && !disabled"
-                    icon="utility:clear"
-                    class="slds-input__icon slds-input__icon_right"
-                    title="Clear"
-                    tabindex="-1"
-                    @click.prevent="onClickClear"
-                />
-            </transition>
-
-        </div>
-
-        <!-- Post fixed text -->
-        <span v-if="addonPost" ref="addonPost" class="slds-form-element__addon">
-            {{ addonPost }}
-        </span>
+        </template>
 
         <!-- Inline help -->
         <template #help>
@@ -93,186 +76,182 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
-import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
-import SldsSpinner from '@/components/slds-spinner/slds-spinner'
-import SldsSvg from '@/components/slds-svg/slds-svg'
+<script lang="ts">
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import SldsSpinner from "../slds-spinner/slds-spinner.vue"
+import { EVENTS, KEYS } from "../../constants"
+import { defineComponent, type PropType } from "vue"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
-export default {
-    name: 'SldsInput',
+export default defineComponent({
+    name: "SldsInput",
 
     components: {
         SldsButtonIcon,
-        SldsFormElement,
         SldsSpinner,
-        SldsSvg
+        SldsFormElement,
     },
 
     inheritAttrs: false,
 
     props: {
-        addonPost: String,
-        addonPre: String,
-        borderless: Boolean,
+        /**
+         * Indicates whether the input is disabled.
+         */
         disabled: Boolean,
-        error: Boolean,
-        icon: String,
-        iconError: Boolean,
-        iconLight: Boolean,
-        iconSuccess: Boolean,
-        iconWarning: Boolean,
+
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
+
+        /**
+         * Inline help text.
+         * When using the help slot this prop is ignored.
+         */
+        help: String,
+
+        /**
+         * Input label.
+         */
         label: String,
-        loading: Boolean,
+
+        /**
+         * Input max length.
+         */
         maxlength: [Number, String],
+
+        /**
+         * Input value.
+         */
+        modelValue: null,
+
+        /**
+         * Input placeholder.
+         */
         placeholder: String,
-        readonly: Boolean,
+
+        /**
+         * Indicates whether this label's input is required.
+         */
         required: Boolean,
+
+        /**
+         * Indicates whether the input is showing its spinner.
+         */
+        showSpinner: Boolean,
+
+        /**
+         * Indicates whether the input is stacked among other inputs.
+         */
+        stacked: Boolean,
+
+        /**
+         * Tooltip text.
+         * When using the tooltip slot this prop is ignored.
+         */
         tooltip: String,
-        type: {type: String, default: 'text'},
-        value: {}
     },
 
     data() {
         return {
-            $_rightGroupStyle: {right: '0px'},
-            $_value: this.value
+            rightGroupStyle: { right: "0px" },
         }
     },
 
     computed: {
-        attributes() {
-            const attributes = {
-                ...this.$attrs,
-                maxlength: this.maxlength,
-                placeholder: this.placeholder,
-                type: this.type,
-            }
+        /**
+         * Bindable form element attributes.
+         */
+        formElementAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
 
-            for (const attributesKey in attributes) {
-                if (attributesKey.startsWith('data-')) {
-                    delete attributes[attributesKey]
+            for (const attribute in this.$attrs) {
+                if (attribute.startsWith("data-") || attribute === "class") {
+                    attributes[attribute] = this.$attrs[attribute]
                 }
             }
 
             return attributes
         },
 
-        controlClass() {
-            const classNames = ['slds-input-has-icon']
+        /**
+         * Bindable input attributes.
+         */
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
 
-            if (this.icon) classNames.push('slds-input-has-icon_left-right')
-            else classNames.push('slds-input-has-icon_right')
-
-            if (this.addonPre || this.addonPost) classNames.push('slds-input-has-fixed-addon')
-
-            return classNames
-        },
-
-        dataAttributes() {
-            const attributes = {...this.$attrs}
-
-            for (const attributesKey in attributes) {
-                if (!attributesKey.startsWith('data-')) {
-                    delete attributes[attributesKey]
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
                 }
             }
 
             return attributes
         },
 
-        iconClass() {
-            const classNames = []
-
-            if (this.error || this.iconError) classNames.push('slds-icon-text-error')
-            else if (this.iconLight) classNames.push('slds-icon-text-light')
-            else if (this.iconSuccess) classNames.push('slds-icon-text-success')
-            else if (this.iconWarning) classNames.push('slds-icon-text-warning')
-            else classNames.push('slds-icon-text-default')
-
-            return classNames
+        /**
+         * Indicates whether the input is showing its clear button.
+         */
+        showClearButton(): boolean {
+            return Boolean(this.modelValue && this.modelValue.length > 0 && !this.disabled)
         },
 
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
+        /**
+         * Spinner style.
+         */
+        spinnerStyle(): { right: string } {
+            const style = { right: ".2rem" }
+
+            if (this.modelValue && this.modelValue.length > 0) style.right = "1.5rem"
+
+            return style
         },
-
-        spinnerRight() {
-            if (this.$data.$_value) return '1.5rem'
-            return '.2rem'
-        },
-
-        transitionName() {
-            const isAnimated = (this.$vuetning && this.$vuetning.hasAnimations)
-            return isAnimated ? 'fade' : ''
-        },
-    },
-
-    watch: {
-        async addonPost() {
-            await this.$nextTick()
-
-            const addonPost = this.$refs.addonPost
-
-            if (this.addonPost == null || addonPost == null) {
-                this.$data.$_rightGroupStyle.right = '0px'
-                return
-            }
-
-            this.$data.$_rightGroupStyle.right = `${addonPost.offsetWidth + 16}px`
-        },
-
-        value(value) {
-            this.$data.$_value = value
-        }
-    },
-
-    mounted() {
-        if (this.addonPost == null) return
-        const addonPost = this.$refs.addonPost
-        this.$data.$_rightGroupStyle.style = `${addonPost.offsetWidth + 16}px`
     },
 
     methods: {
-        onInput(event) {
-            this.$emit('input', event.target.value)
+        /**
+         * Handles the click event from the clear button.
+         */
+        handleClickClear(): void {
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
+
+            const input = this.$refs.input as HTMLInputElement
+            input.focus()
         },
 
-        onClear() {
-            this.$refs.input.value = null
-            this.$emit('input', null)
+        /**
+         * Handles the input event on the input.
+         * @param event The fired event.
+         */
+        handleInput(event: Event): void {
+            const target = event.target as HTMLInputElement
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, target.value)
         },
 
-        onClickClear() {
-            this.$refs.input.focus()
-            this.$emit('input', null)
-        },
-
-        onKeyUp(event) {
-            if (this.readonly || !(event.key === 'Escape')) return
+        /**
+         * Handles the keyup event on the input.
+         * @param event The fired event.
+         */
+        handleKeyUp(event: Event): void {
+            if (!(event instanceof KeyboardEvent) || event.key !== KEYS.ESCAPE) return
 
             event.stopPropagation()
-            if (event.key === 'Escape') this.onClear()
+            if (event.key === KEYS.ESCAPE) this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
         },
-    }
-}
+    },
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../directives/animated/animations';
 
-$colors: (
-    'error': #c23934,
-    'light': #b0adab,
-    'success': #027e46,
-    'warning': #ffb75d,
-);
-
-@each $name, $color in $colors {
-    .slds-icon-text-#{$name} {
-        fill: $color !important;
-    }
+.slds-input {
+    transition: all 300ms;
 }
+
+.slds-button_icon {
+    vertical-align: baseline;
+}
+
 </style>

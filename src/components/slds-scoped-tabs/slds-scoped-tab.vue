@@ -1,37 +1,56 @@
 <template>
-    <li
-        :title="label"
-        role="presentation"
-        class="slds-tabs_scoped__item"
-        :class="{'slds-is-active': isActive}"
-    >
+    <li :class="itemClassNames" role="presentation" :title="label">
         <a
-            :id="`tab-scoped-${id}__item`"
+            :id="`tab-scoped-${name}__item`"
+            :aria-controls="`tab-scoped-${name}`"
+            :aria-selected="isActive"
             class="slds-tabs_scoped__link"
             role="tab"
-            tabindex="0"
-            :aria-selected="isActive"
-            :aria-controls="`tab-scoped-${id}`"
+            :tabIndex="scopedTabIndex"
         >
             {{ label }}
         </a>
     </li>
+
 </template>
 
-<script>
-export default {
-    name: 'SldsScopedTab',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsScopedTab",
 
     props: {
-        id: {type: String, required: true},
+        hasError: Boolean,
+
+        iconName: String,
+
         isActive: Boolean,
-        label: {type: String, required: true}
+
+        label: { type: String, required: true },
+
+        name: { type: String, required: true },
     },
 
-    methods: {
-        onClick() {
-            this.$emit('click')
-        }
-    }
-}
+    computed: {
+        /**
+         * The CSS class names for the item.
+         */
+        itemClassNames(): string {
+            let classNames = "slds-tabs_scoped__item"
+
+            if (this.isActive) classNames += " slds-is-active"
+
+            return classNames
+        },
+
+        /**
+         * Tab index.
+         */
+        scopedTabIndex(): number {
+            return this.isActive ? 0 : -1
+        },
+    },
+})
 </script>
+

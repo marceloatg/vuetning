@@ -1,230 +1,195 @@
 <template>
     <button
-        v-animated
-        class="slds-button"
-        :class="buttonClass"
+        :class="buttonClassNames"
         :disabled="disabled"
         :title="title"
         :type="type"
-        v-on="listeners"
-        @click="onClick"
+        @click="handleClick"
     >
 
         <!-- Content -->
         <slot>
 
             <!-- Label for right icon -->
-            <span v-if="hasRightPositionedIcon" :class="{'slds-hidden': loading}">
-                {{ label }}
+            <span v-if="hasRightPositionedIcon" :class="labelClassNames">
+                <slot>{{ label }}</slot>
             </span>
 
             <!-- Icon -->
-            <slds-svg
-                v-if="icon"
-                class="slds-button__icon"
-                :class="iconClass"
-                :icon="icon"
-            />
+            <slds-svg v-if="iconName" :class="iconClassNames" :icon="iconName"/>
 
-            <span v-else :class="labelClass">
-                {{ label }}
+            <!-- Label without icon -->
+            <span v-else :class="labelClassNames">
+                <slot>{{ label }}</slot>
             </span>
 
             <!-- Label for left icon -->
-            <span v-if="hasLeftPositionedIcon" :class="labelClass">
-                {{ label }}
+            <span v-if="hasLeftPositionedIcon" :class="labelClassNames">
+                <slot>{{ label }}</slot>
             </span>
 
         </slot>
 
         <!-- Spinner -->
-        <div v-if="loading">
-            <div class="slds-spinner slds-spinner_x-small" :class="spinnerClass">
-                <div class="slds-spinner__dot-a"/>
-                <div class="slds-spinner__dot-b"/>
-            </div>
-        </div>
+        <span v-if="showSpinner">
+            <span class="slds-spinner slds-spinner_x-small" :class="spinnerClassNames">
+                <span class="slds-spinner__dot-a"/>
+                <span class="slds-spinner__dot-b"/>
+            </span>
+        </span>
 
     </button>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
-import SldsSvg from '../slds-svg/slds-svg.vue'
-import AnimatedDirective from '@/directives/animated/index'
-import IconPositionMixin from '@/mixins/icon-position-mixin'
+<script lang="ts">
+import PositionableIconMixin from "../../mixins/positionable-icon-mixin"
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsButton',
+export default defineComponent({
+    name: "SldsButton",
 
     components: {
         SldsSvg,
     },
 
-    directives: {
-        animated: AnimatedDirective
-    },
-
     mixins: [
-        IconPositionMixin
+        PositionableIconMixin,
     ],
 
     props: {
         /**
-         * Indicates whether this button has the brand theme.
-         * @type {boolean}
+         * Indicates whether the button has the brand theme.
          */
         brand: Boolean,
 
         /**
-         * Indicates whether this button has the destructive theme.
-         * @type {boolean}
+         * Indicates whether the button has the destructive theme.
          */
         destructive: Boolean,
 
         /**
-         * Indicates whether this button is disabled.
-         * @type {boolean}
+         * Indicates whether the button is disabled.
          */
         disabled: Boolean,
 
         /**
-         * Indicates whether this button has the inverse theme.
-         * @type {boolean}
+         * Indicates whether the button has the inverse theme.
          */
         inverse: Boolean,
 
         /**
          * Button label.
-         * @type {string}
+         * When using the default slot this prop is ignored.
          */
         label: String,
 
         /**
-         * Indicates whether this button is loading.
-         * @type {boolean}
-         */
-        loading: Boolean,
-
-        /**
-         * Indicates whether this button has the neutral theme.
-         * @type {boolean}
+         * Indicates whether the button has the neutral theme.
          */
         neutral: Boolean,
 
         /**
-         * Indicates whether this button has the outline brand theme.
-         * @type {boolean}
+         * Indicates whether the button has the outline brand theme.
          */
         outlineBrand: Boolean,
 
         /**
-         * Indicates whether this button has the success theme.
-         * @type {boolean}
+         * Indicates whether the button is showing its spinner.
          */
-        success: Boolean,
+        showSpinner: Boolean,
 
         /**
-         * Indicates whether this button should stretch.
-         * @type {boolean}
+         * Indicates whether the button should stretch.
          */
         stretch: Boolean,
 
         /**
-         * Indicates whether this button has the text destructive theme.
-         * @type {boolean}
+         * Indicates whether the button has the success theme.
+         */
+        success: Boolean,
+
+        /**
+         * Indicates whether the button has the text destructive theme.
          */
         textDestructive: Boolean,
 
         /**
          * Button title.
-         * @type {string}
          */
         title: String,
 
         /**
          * Button type.
-         * @type {string}
          */
-        type: {type: String, default: 'button'},
+        type: { type: String, default: "button" },
     },
 
     computed: {
         /**
-         * Returns the CSS class names for the button.
-         * @returns {string} The CSS class names.
+         * The CSS class names for the button.
          */
-        buttonClass() {
-            let classNames = ''
+        buttonClassNames(): string {
+            let classNames = "slds-button"
 
             // Button theme
-            if (this.neutral) classNames += ' slds-button_neutral'
-            else if (this.brand) classNames += ' slds-button_brand'
-            else if (this.outlineBrand) classNames += ' slds-button_outline-brand'
-            else if (this.destructive) classNames += ' slds-button_destructive'
-            else if (this.textDestructive) classNames += ' slds-button_text-destructive'
-            else if (this.success) classNames += ' slds-button_success'
-            else if (this.inverse) classNames += ' slds-button_inverse'
+            if (this.neutral) classNames += " slds-button_neutral"
+            else if (this.brand) classNames += " slds-button_brand"
+            else if (this.outlineBrand) classNames += " slds-button_outline-brand"
+            else if (this.destructive) classNames += " slds-button_destructive"
+            else if (this.textDestructive) classNames += " slds-button_text-destructive"
+            else if (this.success) classNames += " slds-button_success"
+            else if (this.inverse) classNames += " slds-button_inverse"
+
+            // Disabled
+            if (!this.disabled) classNames += " slds-has-animation"
 
             // Stretch
-            if (this.stretch) classNames += ' slds-button_stretch'
+            if (this.stretch) classNames += " slds-button_stretch"
 
-            // Loading
-            if (this.loading) classNames += ' slds-not-clickable'
+            // Showing spinner
+            if (this.showSpinner) classNames += " slds-unclickable"
 
             return classNames
         },
 
         /**
-         * Returns the CSS class names for the button icon.
-         * @returns {string} The CSS class names.
+         * The CSS class names for the button icon.
          */
-        iconClass() {
-            let classNames = ''
+        iconClassNames(): string {
+            let classNames = "slds-button__icon"
 
             // Icon position
-            if (this.hasLeftPositionedIcon) classNames += ' slds-button__icon_left'
-            else if (this.hasRightPositionedIcon) classNames += ' slds-button__icon_right'
+            if (this.hasLeftPositionedIcon) classNames += " slds-button__icon_left"
+            else if (this.hasRightPositionedIcon) classNames += " slds-button__icon_right"
 
-            // Loading
-            if (this.loading) classNames += ' slds-hidden'
-
-            return classNames
-        },
-
-        /**
-         * Returns the CSS class names for the label.
-         * @returns {string} The CSS class names.
-         */
-        labelClass() {
-            let classNames = ''
-
-            // Loading
-            if (this.loading) classNames += ' slds-hidden'
+            // Showing spinner
+            if (this.showSpinner) classNames += " slds-hidden"
 
             return classNames
         },
 
         /**
-         * Button listeners.
-         * @returns {object}
+         * The CSS class names for the label.
          */
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.click
-            return listeners
+        labelClassNames(): string {
+            let classNames = ""
+
+            // Showing spinner
+            if (this.showSpinner) classNames += " slds-hidden"
+
+            return classNames
         },
 
         /**
-         * Returns the CSS class names for the spinner.
-         * @returns {string} The CSS class names.
+         * The CSS class names for the spinner.
          */
-        spinnerClass() {
-            let classNames = ''
+        spinnerClassNames(): string {
+            let classNames = ""
 
             // Spinner theme
-            if (this.loading && (this.brand || this.destructive || this.success)) classNames += ' slds-spinner-white'
-            else if (this.loading && this.outlineBrand) classNames += ' slds-spinner-brand'
+            if (this.showSpinner && (this.brand || this.destructive || this.success)) classNames += " slds-spinner-white"
+            else if (this.showSpinner && this.outlineBrand) classNames += " slds-spinner-brand"
 
             return classNames
         },
@@ -233,23 +198,20 @@ export default {
     methods: {
         /**
          * Handles the click event on the button.
+         * @param event The fired event.
          */
-        onClick() {
-            if (this.loading) return
-            this.$emit('click')
-        }
-    }
-}
+        handleClick(event: Event): void {
+            if (this.showSpinner || this.disabled) {
+                event.preventDefault()
+            }
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../directives/animated/animations';
 
 .slds-button {
-    &.slds-not-clickable {
-        pointer-events: none;
-    }
-
     .slds-spinner-white {
         &.slds-spinner:before,
         &.slds-spinner:after,
@@ -272,4 +234,5 @@ export default {
         }
     }
 }
+
 </style>

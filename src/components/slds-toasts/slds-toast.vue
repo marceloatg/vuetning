@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-notify slds-notify_toast" :class="toastClass" role="status">
+    <div :class="toastClassNames" role="status">
 
         <!-- Assistive text -->
         <span v-if="assistiveText" class="slds-assistive-text">
@@ -9,11 +9,10 @@
         <!-- Icon -->
         <slds-icon
             v-if="icon"
-            :icon="icon"
+            :icon-name="icon"
             small
             inverse
-            class="slds-m-right_small slds-no-flex slds-align-top"
-            :class="iconClass"
+            :class="iconClassNames"
         />
 
         <!-- Content -->
@@ -30,23 +29,26 @@
         <!-- Close button -->
         <div class="slds-notify__close">
             <slds-button-icon
-                icon="utility:close"
+                icon-name="utility:close"
+                bare
                 large
                 inverse
                 assistive-text="Close"
-                @click="onClickClose"
+                @click="handleClickClose"
             />
         </div>
 
     </div>
 </template>
 
-<script>
-import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
-import SldsIcon from '../slds-icon/slds-icon'
+<script lang="ts">
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import { defineComponent } from "vue"
+import { EVENTS } from "../../constants"
 
-export default {
-    name: 'SldsToast',
+export default defineComponent({
+    name: "SldsToast",
 
     components: {
         SldsButtonIcon,
@@ -55,38 +57,61 @@ export default {
 
     props: {
         assistiveText: String,
+
         error: Boolean,
+
         icon: String,
+
         success: Boolean,
+
         warning: Boolean,
     },
 
     computed: {
-        iconClass() {
-            if (this.error) return 'slds-icon-utility-error'
-            if (this.success) return 'slds-icon-utility-success'
-            if (this.warning) return 'slds-icon-utility-warning'
-            return 'slds-icon-utility-info'
+        /**
+         * The CSS class names for the icon.
+         */
+        iconClassNames(): string {
+            let classNames = "slds-m-right_small slds-no-flex slds-align-top"
+
+            if (this.error) classNames += " slds-icon-utility-error"
+            else if (this.success) classNames += " slds-icon-utility-success"
+            else if (this.warning) classNames += " slds-icon-utility-warning"
+            else classNames += " slds-icon-utility-info"
+
+            return classNames
         },
 
-        toastClass() {
-            if (this.error) return 'slds-theme_error'
-            if (this.success) return 'slds-theme_success'
-            if (this.warning) return 'slds-theme_warning'
-            return 'slds-theme_info'
+        /**
+         * The CSS class names for the toast.
+         */
+        toastClassNames(): string {
+            let classNames = "slds-notify slds-notify_toast"
+
+            if (this.error) classNames += " slds-theme_error"
+            else if (this.success) classNames += " slds-theme_success"
+            else if (this.warning) classNames += " slds-theme_warning"
+            else classNames += " slds-theme_info"
+
+            return classNames
         },
     },
 
     methods: {
-        onClickClose() {
-            this.$emit('close')
+        /**
+         * Handles the click event on the close button.
+         */
+        handleClickClose(): void {
+            this.$emit(EVENTS.CLOSE)
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-notify_toast {
     pointer-events: auto;
 }
+
 </style>
