@@ -1,5 +1,5 @@
 <template>
-    <div role="alert" class="slds-notify slds-notify_alert" :class="alertClass">
+    <div role="alert" :class="alertClass">
 
         <!-- Assistive text -->
         <span v-if="assistiveText" class="slds-assistive-text">
@@ -8,10 +8,10 @@
 
         <!-- Icon -->
         <slds-icon
-            v-if="icon"
+            v-if="iconName"
             class="slds-m-right_x-small"
             current-color
-            :icon="icon"
+            :icon-name="iconName"
             x-small
         />
 
@@ -26,118 +26,117 @@
         <div v-if="!nonCloseable" class="slds-notify__close">
             <slds-button-icon
                 assistive-text="Close"
-                icon="utility:close"
+                icon-name="utility:close"
                 inverse
                 small
                 title="Close"
-                @click="onClickClose"
+                @click="handleClickClose"
             />
         </div>
 
     </div>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
-import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
-import SldsIcon from '@/components/slds-icon/slds-icon'
+<script lang="ts">
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import { defineComponent } from "vue"
+import { EVENTS } from "../../constants"
 
-export default {
-    name: 'SldsAlert',
+export default defineComponent({
+    name: "SldsAlert",
 
     components: {
         SldsButtonIcon,
-        SldsIcon
+        SldsIcon,
     },
 
     props: {
         /**
          * Hidden text used by a screen reader to read text.
-         * @type {string}
          */
         assistiveText: String,
 
         /**
-         * Indicates whether this alert is closeable.
-         * @type {boolean}
+         * Indicates whether this alert has a close button.
          */
         nonCloseable: Boolean,
 
         /**
          * Indicates whether this alert has the error theme.
-         * @type {boolean}
          */
         error: Boolean,
 
         /**
          * The Lightning Design System name of the icon.
          * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
-         * @type {string}
          */
-        icon: String,
+        iconName: String,
 
         /**
          * Indicates whether this alert has the info theme.
          * If no other theme is set, this one will be used by default.
-         * @type {boolean}
          */
         info: Boolean,
 
         /**
          * Alert message.
          * When using the default slot this prop is ignored.
-         * @type {string}
          */
         message: String,
 
         /**
-         * Indicates whether this alert has the offline theme.
-         * @type {boolean}
-         */
-        offline: Boolean,
-
-        /**
          * Indicates whether this alert has texture.
-         * @type {boolean}
          */
         noTexture: Boolean,
 
         /**
-         * Indicates whether this alert has the warning theme.
-         * @type {boolean}
+         * Indicates whether this alert has the offline theme.
          */
-        warning: Boolean
+        offline: Boolean,
+
+        /**
+         * Indicates whether this alert has the warning theme.
+         */
+        warning: Boolean,
     },
 
     computed: {
         /**
-         * Returns the CSS class names for the alert.
-         * @returns {string} The CSS class names.
+         * The CSS class names for the alert.
          */
-        alertClass() {
-            let classNames = ''
+        alertClass(): string {
+            let classNames = "slds-notify slds-notify_alert"
 
             // Alert texture
-            if (!this.noTexture) classNames += ' slds-theme_alert-texture'
+            if (this.noTexture) classNames += " slds-theme_alert-no-texture"
 
             // Alert theme
-            if (this.error) classNames += ' slds-theme_error'
-            else if (this.offline) classNames += ' slds-theme_offline'
-            else if (this.warning) classNames += ' slds-theme_warning'
-            else classNames += ' slds-theme_info'
+            if (this.error) classNames += " slds-theme_error"
+            else if (this.offline) classNames += " slds-theme_offline"
+            else if (this.warning) classNames += " slds-theme_warning"
+            else classNames += " slds-theme_info"
 
             return classNames
-        }
+        },
     },
 
     methods: {
         /**
          * Handles the click on the close button.
-         * Emits a click event when the close button is clicked.
+         * Emits a close event when the close button is clicked.
          */
-        onClickClose() {
-            this.$emit('close')
-        }
-    }
-}
+        handleClickClose(): void {
+            this.$emit(EVENTS.CLOSE)
+        },
+    },
+})
 </script>
+
+<style scoped lang="scss">
+
+.slds-theme_alert-no-texture {
+    background-image: unset;
+}
+
+</style>

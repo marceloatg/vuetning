@@ -1,11 +1,11 @@
 <template>
-    <span class="slds-button slds-checkbox_button" @click="onClick">
+    <span class="slds-button slds-checkbox_button slds-has-animation" @click="handleClick">
 
         <!-- Input -->
-        <input v-model="$data.$_value" type="checkbox">
+        <input :checked="checked" type="checkbox">
 
         <!-- Faux -->
-        <label class="slds-checkbox_button__label" :class="labelClass">
+        <label :class="labelClassNames">
             <span class="slds-checkbox_faux">
                 {{ label }}
             </span>
@@ -14,55 +14,48 @@
     </span>
 </template>
 
-<script>
-export default {
-    name: 'SldsCheckboxButtonOption',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsCheckboxButtonOption",
 
     props: {
-        disabled: Boolean,
-        label: {type: String, required: true},
-        value: Boolean
-    },
+        checked: Boolean,
 
-    data() {
-        return {
-            $_value: false
-        }
+        disabled: Boolean,
+
+        label: { type: String, required: true },
     },
 
     computed: {
-        labelClass() {
-            return {
-                'slds-checkbox-button_is-selected': this.value,
-                'slds-checkbox-button_is-disabled': this.disabled,
-            }
-        }
-    },
+        /**
+         * The CSS class names for the label.
+         */
+        labelClassNames(): string {
+            let classNames = "slds-checkbox_button__label slds-cursor_pointer"
 
-    watch: {
-        value() {
-            this.parseValue()
-        }
-    },
+            if (this.checked) classNames += " slds-checkbox-button_is-selected"
+            if (this.disabled) classNames += " slds-checkbox-button_is-disabled"
 
-    created() {
-        this.parseValue()
+            return classNames
+        },
     },
 
     methods: {
-        onClick() {
-            if (this.disabled) return
-            this.$emit('click')
+        /**
+         * Handles the click event on the checkbox button.
+         * @param event The fired event.
+         */
+        handleClick(event: Event): void {
+            if (this.disabled) event.preventDefault()
         },
-
-        parseValue() {
-            this.$data.$_value = this.value
-        },
-    }
-}
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-checkbox-button_is-disabled {
     cursor: default;
 
@@ -76,4 +69,9 @@ export default {
         color: #fff !important;
     }
 }
+
+.slds-cursor_pointer {
+    cursor: pointer;
+}
+
 </style>

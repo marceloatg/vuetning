@@ -1,32 +1,29 @@
 <template>
-    <span
-        class="slds-pill slds-pill_link"
-        :class="{'slds-has-error': hasError}"
-        @click="onClickPill"
-    >
-        <span v-if="icon" class="slds-pill__icon_container">
-            <slds-icon
-                aria-hidden="true"
-                :icon="icon"
-                :error="hasError"
-            />
+    <span :class="pillClassNames" @click="handleClickPill">
+
+        <!-- Icon -->
+        <span v-if="iconName" class="slds-pill__icon_container">
+            <slds-icon aria-hidden="true" :icon-name="iconName" :error="hasError"/>
         </span>
 
+        <!-- Image -->
         <span v-if="src" class="slds-pill__icon_container">
             <slds-avatar circle :src="src"/>
         </span>
 
-        <a class="slds-pill__action" :class="pillActionClass" :title="title">
+        <!-- Label -->
+        <a :class="pillActionClassNames" :title="title">
             <span class="slds-pill__label">
                 {{ label }}
             </span>
         </a>
 
+        <!-- Remove button -->
         <button
             v-if="!nonRemovable"
             class="slds-button slds-button_icon slds-button_icon slds-pill__remove"
             title="Remove"
-            @click.stop="onClickRemove"
+            @click.stop="handleClickRemove"
         >
             <slds-svg aria-hidden="true" class="slds-button__icon" icon="utility:close"/>
         </button>
@@ -34,94 +31,101 @@
     </span>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
-import SldsSvg from '@/components/slds-svg/slds-svg'
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import SldsAvatar from '@/components/slds-avatar/slds-avatar'
+<script lang="ts">
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsAvatar from "../slds-avatar/slds-avatar.vue"
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
+import { EVENTS } from "../../constants"
 
-export default {
-    name: 'SldsPill',
+export default defineComponent({
+    name: "SldsPill",
 
-    components: {
-        SldsSvg,
-        SldsIcon,
-        SldsAvatar,
-    },
+    components: { SldsSvg, SldsAvatar, SldsIcon },
 
     props: {
         /**
          * If present, the pill is shown with a red border and an error icon on the left of the label.
-         * @type {boolean}
          */
         hasError: Boolean,
 
         /**
          * The Lightning Design System name of the icon. Names are written in the format
          * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
-         * @type {string}
          */
-        icon: String,
+        iconName: String,
 
         /**
          * Specifies whether the element variant is a link.
-         * @type {boolean}
          */
         link: Boolean,
 
         /**
          * The text label that displays in the pill.
-         * @type {string}
          */
-        label: {Type: String, required: true},
+        label: { Type: String, required: true },
 
         /**
          * If present, the does not show the remove button.
-         * @type {boolean}
          */
         nonRemovable: Boolean,
 
         /**
          * The URL for the image.
-         * @type {string}
          */
         src: String,
 
         /**
          * The title text containing full pill label verbiage.
-         * @type {string}
          */
         title: String,
     },
 
     computed: {
-        pillActionClass() {
-            return {
-                'slds-text-link_reset': !this.link,
-                'non-removable': this.nonRemovable,
-            }
-        }
+        /**
+         * The CSS class names for the pill.
+         */
+        pillClassNames(): string {
+            let classNames = "slds-pill slds-pill_link"
+
+            if (this.hasError) classNames += " slds-has-error"
+
+            return classNames
+        },
+
+        /**
+         * The CSS class names for the pill action.
+         */
+        pillActionClassNames(): string {
+            let classNames = "slds-pill__action"
+
+            if (!this.link) classNames += " slds-text-link_reset"
+            if (this.nonRemovable) classNames += " non-removable"
+
+            return classNames
+        },
     },
 
     methods: {
         /**
-         * Fires a remove event when the remove button is clicked.
+         * Handles the click event on the remove button.
          */
-        onClickRemove() {
-            this.$emit('remove')
+        handleClickRemove(): void {
+            this.$emit(EVENTS.REMOVE)
         },
 
         /**
-         * Fires a click event when the pill link is clicked.
+         * Handles the click event on the pill link.
          */
-        onClickPill() {
-            if (this.link) this.$emit('click')
-        }
+        handleClickPill(): void {
+            if (this.link) this.$emit(EVENTS.CLICK)
+        },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .non-removable {
     padding-right: .125rem
 }
@@ -129,4 +133,5 @@ export default {
 .slds-text-link_reset {
     cursor: default !important;
 }
+
 </style>

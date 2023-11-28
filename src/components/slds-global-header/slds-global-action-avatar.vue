@@ -7,17 +7,16 @@
                 class="slds-button slds-global-actions__avatar slds-global-actions__item-action"
                 :title="title"
                 aria-haspopup="true"
-                @click="onClick"
+                @click="handleClick"
             >
                 <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
                     <img :alt="alt" :src="src" :title="title">
                 </span>
             </button>
 
-
             <!-- Dropdown -->
-            <transition v-bind="dropdownTransitionProperties">
-                <section v-show="$data.$_isOpen" class="slds-popover slds-popover_large slds-nubbin_top-right" role="dialog">
+            <transition name="dropdown">
+                <section v-show="isOpen" class="slds-popover slds-popover_large slds-nubbin_top-right" role="dialog">
                     <slot/>
                 </section>
             </transition>
@@ -26,41 +25,38 @@
     </li>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsGlobalActionAvatar',
+export default defineComponent({
+    name: "SldsGlobalActionAvatar",
 
     props: {
         alt: String,
-        src: {type: String, required: true},
-        title: String
+
+        src: { type: String, required: true },
+
+        title: String,
     },
 
     data() {
         return {
-            $_isOpen: false,
+            isOpen: false,
         }
-    },
-
-    computed: {
-        dropdownTransitionProperties() {
-            const isAnimated = (this.$vuetning && this.$vuetning.hasAnimations)
-            return isAnimated ? {name: 'dropdown'} : {duration: 0}
-        },
     },
 
     methods: {
-        onClick() {
-            this.$emit('click')
-            if (this.$slots.default) this.$data.$_isOpen = !this.$data.$_isOpen
-        }
+        /**
+         * Handles the click event on the avatar button.
+         */
+        handleClick() {
+            if (this.$slots.default) this.isOpen = !this.isOpen
+        },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../directives/animated/animations';
 
 .slds-popover {
     position: absolute;
@@ -69,4 +65,5 @@ export default {
     min-width: 12rem;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
+
 </style>

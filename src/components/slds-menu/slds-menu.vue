@@ -1,20 +1,21 @@
 <template>
     <div
-        v-click-outside="hideDropdown"
+        v-click-outside="handleClickOutside"
         class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-        @keyup.esc="onKeyEsc"
-        @keyup.up="onKeyUp"
-        @keyup.down="onKeyDown"
-        @keyup.enter="onKeyEnter"
-        @keydown.enter.prevent
+        @keydown.down.prevent
+        @keydown.up.prevent
+        @keyup.down="handleKeyDown"
+        @keyup.enter.stop="handleKeyEnter"
+        @keyup.esc="handleKeyEsc"
+        @keyup.up="handleKeyUp"
     >
 
-        <!-- Buttons -->
+        <!-- Button -->
         <slds-button-icon
-            :icon="icon"
+            :icon-name="icon"
             :has-dropdown="icon !== 'utility:down'"
             :bare="bare"
-            :bordered="bordered"
+            :bordered="borderedFallback"
             :bordered-filled="borderedFilled"
             :bordered-inverse="borderedInverse"
             :inverse="inverse"
@@ -26,100 +27,58 @@
             :title="title"
             :assistive-text="title"
             aria-haspopup="true"
-            @click="onClick"
+            @click="handleClickButton"
+            @keyup.enter.stop.prevent
         />
 
         <!-- Dropdown -->
-        <transition v-bind="dropdownTransitionProperties">
-            <div v-if="$data.$_isOpen" class="slds-dropdown" :class="dropDownClass">
-                <ul class="slds-listbox slds-listbox_vertical" role="menu" aria-label="Show More">
+        <slds-dropdown
+            :bottom-alignment="bottomAlignment"
+            :center-alignment="centerAlignment"
+            :focused-option="focusedOption"
+            :is-open="isOpen"
+            :options="options"
+            :right-alignment="rightAlignment"
+            @click-option="handleClickOption"
+            @mouse-over-option="setFocusedOption"
+        >
 
-                    <!-- Slot items -->
-                    <slot
-                        v-if="$slots.items"
-                        name="items"
-                    />
+            <template #before>
+                <slot name="before"/>
+            </template>
 
-                    <!-- Prop items -->
-                    <template v-else>
-                        <template v-for="item in filteredOptions">
+            <template #after>
+                <slot name="after"/>
+            </template>
 
-                            <!-- Dividers -->
-                            <slds-menu-divider
-                                v-if="item.divider"
-                                :key="item.key"
-                            />
-
-                            <!-- Headings -->
-                            <slds-menu-heading
-                                v-else-if="item.heading"
-                                :key="item.key"
-                                :heading="item.heading"
-                            />
-
-                            <!-- Items -->
-                            <slds-menu-item
-                                v-else
-                                :key="item.key"
-                                :label="item.label"
-                                :level="item.level"
-                                :left-icon="item.leftIcon"
-                                :right-icon="item.rightIcon"
-                                :disabled="item.disabled"
-                                :has-focus="$data.$_focusedOption === item.value"
-                                @click="onClickItem(item.value)"
-                                @mouseover="onMouseOverItem(item.value)"
-                            />
-
-                        </template>
-                    </template>
-
-                    <!-- No options -->
-                    <li v-if="isEmpty" role="presentation" class="slds-listbox__item">
-                        <div class="slds-align_absolute-center slds-p-vertical_small">
-                            No options to display
-                        </div>
-                    </li>
-
-                    <!-- Spinner -->
-                    <li v-if="loading" role="presentation" class="slds-listbox__item">
-                        <div class="slds-align_absolute-center slds-p-top_medium">
-                            <slds-spinner x-small inline/>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </transition>
+        </slds-dropdown>
 
     </div>
 </template>
 
-<script>
-import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
-import SldsMenuDivider from './slds-menu-divider'
-import SldsMenuItem from './slds-menu-item'
-import SldsSpinner from '@/components/slds-spinner/slds-spinner'
-import ClickOutside from '@/directives/click-outside/index'
-import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import DropdownOption from '@/components/slds-options/dropdown-option-class'
+<script lang="ts">
+import HasDropdownMixin from "../../mixins/has-dropdown-mixin"
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsDropdown from "../slds-dropdown/slds-dropdown.vue"
+import { vOnClickOutside } from "@vueuse/components"
+import { defineComponent } from "vue"
+import { type DropdownOption } from "../slds-dropdown/dropdown-option"
+import { ICONS } from "../../constants"
 
-export default {
-    name: 'SldsMenu',
+export default defineComponent({
+    name: "SldsMenu",
 
     components: {
+        SldsDropdown,
         SldsButtonIcon,
-        SldsMenuDivider,
-        SldsMenuItem,
-        SldsSpinner
     },
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
     mixins: [
-        HasDropdownMixin
+        HasDropdownMixin,
     ],
 
     props: {
@@ -127,182 +86,126 @@ export default {
         bordered: Boolean,
         borderedFilled: Boolean,
         borderedInverse: Boolean,
-        bottomCenterAlignment: Boolean,
-        bottomLeftAlignment: Boolean,
-        bottomRightAlignment: Boolean,
-        centerAlignment: Boolean,
         disabled: Boolean,
-        icon: {type: String, default: 'utility:down'},
+        icon: { type: String, default: ICONS.UTILITY.DOWN },
         inverse: Boolean,
-        items: Array,
         large: Boolean,
-        leftAlignment: Boolean,
-        length: {
-            type: Number,
-            validator(value) {
-                return [5, 7, 10].indexOf(value) !== -1
-            },
-        },
         nubbin: Boolean,
-        rightAlignment: Boolean,
         small: Boolean,
         title: String,
         xSmall: Boolean,
-        xxSmall: Boolean
+        xxSmall: Boolean,
     },
 
     computed: {
-        dropDownClass() {
-            let classNames = []
-
-            // Menu alignment
-            if (this.leftAlignment || this.isAutoAlignment) classNames.push(' slds-dropdown_left')
-            else if (this.centerAlignment) classNames.push(' slds-dropdown_center')
-            else if (this.rightAlignment) classNames.push(' slds-dropdown_right')
-            else if (this.bottomCenterAlignment) classNames.push(' slds-dropdown_bottom')
-            else if (this.bottomRightAlignment) classNames.push(' slds-dropdown_bottom slds-dropdown_right slds-dropdown_bottom-right')
-            else if (this.bottomLeftAlignment) classNames.push(' slds-dropdown_bottom slds-dropdown_left slds-dropdown_bottom-left')
-
-            // Nubbin alignment
-            if (this.nubbin) {
-                if (this.leftAlignment || this.isAutoAlignment) classNames.push(' slds-nubbin_top-left')
-                else if (this.rightAlignment) classNames.push(' slds-nubbin_top-right')
-                else if (this.centerAlignment) classNames.push(' slds-nubbin_top')
-                else if (this.bottomLeftAlignment) classNames.push(' slds-nubbin_bottom-left')
-                else if (this.bottomRightAlignment) classNames.push(' slds-nubbin_bottom-right')
-                else if (this.bottomCenterAlignment) classNames.push(' slds-nubbin_bottom')
-            }
-
-            if (this.length) {
-                classNames.push(`slds-dropdown_length-${this.length}`)
-            }
-
-            return classNames
-        },
-
-        isAutoAlignment() {
+        borderedFallback(): boolean {
             return (
-                !this.leftAlignment &&
-                !this.centerAlignment &&
-                !this.rightAlignment &&
-                !this.bottomLeftAlignment &&
-                !this.bottomCenterAlignment &&
-                !this.bottomRightAlignment
+                (this.bordered) ||
+                (!this.bare && !this.borderedFilled && !this.borderedInverse && !this.inverse && !this.bare)
             )
         },
     },
 
-    watch: {
-        items: {
-            deep: true,
-            handler() {
-                this.parseItems()
-            }
-        },
-    },
-
-    created() {
-        this.parseItems()
-    },
-
     methods: {
-        onClick() {
-            if (this.disabled) return
-
-            if (this.$data.$_isOpen) {
+        /**
+         * Handles the click event on the button.
+         */
+        handleClickButton(): void {
+            if (this.isOpen) {
                 this.hideDropdown()
-                this.clearFocusedOption()
             }
-            else {
-                this.setFocusedItem()
+            else if (!this.disabled) {
                 this.showDropdown()
+                this.setFocusedOption()
             }
         },
 
-        onKeyEsc() {
-            if (!this.$data.$_isOpen) return
+        /**
+         * Handles the click event on an option.
+         * @param option The clicked option.
+         */
+        handleClickOption(option: DropdownOption): void {
+            if (this.disabled || option.disabled) return
+            this.selectOption(option)
+        },
 
+        /**
+         * Handles the click event outside this component.
+         */
+        handleClickOutside(): void {
             this.hideDropdown()
-            this.clearFocusedOption()
         },
 
-        onClickItem(value) {
-            this.selectItem(value)
-        },
-
-        onKeyDown() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
+        /**
+         * Handles the key down event on the menu.
+         */
+        handleKeyDown(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
+            else if (!this.isEmpty) {
                 this.setFocusedOptionDown()
             }
         },
 
-        onKeyEnter() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
+        /**
+         * Handles the key enter event on the menu.
+         */
+        handleKeyEnter(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
-                this.selectItem(this.$data.$_focusedOption)
+            else if (!this.isEmpty) {
+                this.selectOption(this.focusedOption!)
             }
         },
 
-        onKeyUp() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
+        /**
+         * Handles the key enter event on the menu.
+         */
+        handleKeyEsc(): void {
+            if (!this.isOpen) return
+
+            this.hideDropdown()
+            this.clearFocusedOption()
+        },
+
+        /**
+         * Handles the key up event on the menu.
+         */
+        handleKeyUp(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
+            else if (!this.isEmpty) {
                 this.setFocusedOptionUp()
             }
         },
 
-        onMouseOverItem(value) {
-            this.setFocusedItem(value)
-        },
-
-        parseItems() {
-            this.$data.$_options = this.$data.$_options.splice(0, this.$data.$_options.length)
-            if (this.items == null) return
-
-            for (const item of this.items) {
-                if (typeof item === 'string') {
-                    this.$data.$_options.push(new DropdownOption(null, item))
-                }
-                else if (typeof item === 'object') {
-                    const dropdownOption = new DropdownOption(item.heading, item.label, item.value, item.divider)
-                    dropdownOption.leftIcon = item.leftIcon
-                    dropdownOption.rightIcon = item.rightIcon
-                    dropdownOption.disabled = item.disabled
-                    dropdownOption.level = item.level
-
-                    this.$data.$_options.push(dropdownOption)
-                }
-                else {
-                    throw'[slds-menu] items must be of type string or a valid menu item object.'
-                }
-            }
-        },
-
-        selectItem(value) {
+        /**
+         * Selects an option.
+         * @param selectedOption Selected option.
+         */
+        selectOption(selectedOption: DropdownOption): void {
+            this.$emit(selectedOption.value!)
             this.hideDropdown()
-            this.$emit(value)
+
             this.clearFocusedOption()
         },
 
-        setFocusedItem(value = null) {
-            if (value) this.$data.$_focusedOption = value
-            else this.$data.$_focusedOption = this.$data.$_options
-                .find(option => !option.disabled && !option.heading)
-                .value
-        }
-    }
-}
-</script>
+        /**
+         * Set the focused item.
+         * @param focusedOption Hovered option, if any.
+         */
+        setFocusedOption(focusedOption?: DropdownOption): void {
+            if (this.isEmpty) return
 
-<style scoped lang="scss">
-@import '../../directives/animated/animations';
-</style>
+            if (focusedOption) this.focusedOption = focusedOption
+            else this.focusedOption = this.options.find(option => !option.disabled && !option.isHeading && !option.isDivider)
+        },
+    },
+})
+</script>

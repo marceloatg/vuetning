@@ -1,22 +1,33 @@
 <template>
-    <div class="slds-spinner_container" :class="containerClass">
+    <div :class="containerClassNames">
         <slot/>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SldsSpinnerContainer',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsSpinnerContainer",
 
     props: {
-        fixed: Boolean
+        /**
+         * Indicates whether the examples container is fixed.
+         */
+        fixed: Boolean,
     },
 
     computed: {
-        containerClass() {
-            if (this.fixed) return ' slds-is-fixed'
-            return ''
-        }
-    }
-}
+        /**
+         * Returns the CSS class names for the examples container.
+         */
+        containerClassNames(): string {
+            let classNames = "slds-spinner_container"
+
+            if (this.fixed) classNames += " slds-is-fixed"
+
+            return classNames
+        },
+    },
+})
 </script>

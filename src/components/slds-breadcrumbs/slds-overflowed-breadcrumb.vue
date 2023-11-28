@@ -8,22 +8,27 @@
     </li>
 </template>
 
-<script>
-export default {
-    name: 'SldsOverflowedBreadcrumb',
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsOverflowedBreadcrumb",
 
     props: {
         href: String,
-        label: {type: String, required: true},
-        name: String
+
+        label: { type: String, required: true },
+
+        name: { type: String, required: true },
     },
 
     methods: {
         onClick() {
-            this.$parent.hideDropdown()
+            (this.$parent as any).hideDropdown()
+
             if (this.href) window.location.assign(this.href)
-            else this.$emit('click', this.name)
-        }
-    }
-}
+            else this.$emit("click", this.name)
+        },
+    },
+})
 </script>

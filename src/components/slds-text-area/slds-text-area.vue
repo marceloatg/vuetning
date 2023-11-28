@@ -1,29 +1,34 @@
 <template>
     <slds-form-element
+        :errors="errors"
+        :help="help"
         :label="label"
         :required="required"
-        :read-only="readonly"
-        :error="error"
-        :borderless="borderless"
+        :stacked="stacked"
+        :tooltip="tooltip"
+        v-bind="formElementAttributes"
     >
 
-        <!-- View mode -->
-        <div v-if="readonly" class="slds-form-element__static">
-            <p>{{ $data.$_value }}</p>
-        </div>
+        <!-- Tooltip -->
+        <template v-if="$slots.tooltip" #tooltip>
+            <slot name="tooltip"/>
+        </template>
 
-        <!-- Text area -->
-        <textarea
-            v-else
-            v-bind="$attrs"
-            :value="$data.$_value"
-            :readonly="readonly"
-            :disabled="disabled"
-            class="slds-textarea"
-            v-on="listeners"
-            @input="onInput"
-            @keyup="onKeyUp"
-        />
+        <!-- Default slot -->
+        <template #default="slotProps">
+            <textarea
+                :id="slotProps['inputId']"
+                class="slds-textarea"
+                :disabled="disabled"
+                :maxlength="maxlength"
+                :placeholder="placeholder"
+                :rows="rows"
+                :value="modelValue"
+                v-bind="inputAttributes"
+                @input="handleInput"
+                @keyup="onKeyUp"
+            />
+        </template>
 
         <!-- Inline help -->
         <template #help>
@@ -38,58 +43,131 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
+<script lang="ts">
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import { EVENTS, KEYS } from "../../constants"
+import { defineComponent, type PropType } from "vue"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
-export default {
-    name: 'SldsTextArea',
+export default defineComponent({
+    name: "SldsTextArea",
 
     components: {
-        SldsFormElement
+        SldsFormElement,
     },
 
     inheritAttrs: false,
 
     props: {
-        borderless: Boolean,
+        /**
+         * Indicates whether the textarea is disabled.
+         */
         disabled: Boolean,
-        error: Boolean,
-        label: String,
-        readonly: Boolean,
-        required: Boolean,
-        value: {}
-    },
 
-    data() {
-        return {
-            $_value: this.value
-        }
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
+
+        /**
+         * Inline help text.
+         * When using the help slot this prop is ignored.
+         */
+        help: String,
+
+        /**
+         * Textarea label.
+         */
+        label: String,
+
+        /**
+         * Textarea max length.
+         */
+        maxlength: [Number, String],
+
+        /**
+         * Textarea value.
+         */
+        modelValue: null,
+
+        /**
+         * Textarea placeholder.
+         */
+        placeholder: String,
+
+        /**
+         * Indicates whether this label's textarea is required.
+         */
+        required: Boolean,
+
+        /**
+         * Number of rows.
+         */
+        rows: { type: Number, default: 3 },
+
+        /**
+         * Indicates whether the textarea is stacked among other inputs.
+         */
+        stacked: Boolean,
+
+        /**
+         * Tooltip text.
+         * When using the tooltip slot this prop is ignored.
+         */
+        tooltip: String,
     },
 
     computed: {
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
-        },
-    },
+        /**
+         * Bindable form element attributes.
+         */
+        formElementAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
 
-    watch: {
-        value(value) {
-            this.$data.$_value = value
-        }
+            for (const attribute in this.$attrs) {
+                if (attribute.startsWith("data-") || attribute === "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
+        },
+
+        /**
+         * Bindable input attributes.
+         */
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
+        },
     },
 
     methods: {
-        onInput(event) {
-            this.$emit('input', event.target.value)
+        /**
+         * Handles the input event on the textarea.
+         * @param event The fired event.
+         */
+        handleInput(event: Event) {
+            const target = event.target as HTMLTextAreaElement
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, target.value)
         },
 
-        onKeyUp(event) {
-            if (this.readonly || !(event.key === 'Enter' || event.key === 'Escape')) return
+        /**
+         * Handles the keyup event on the textarea.
+         * @param event The fired event.
+         */
+        onKeyUp(event: KeyboardEvent) {
+            if (!(event.key === KEYS.ENTER || event.key === KEYS.ESCAPE)) return
 
             event.stopPropagation()
         },
-    }
-}
+    },
+})
 </script>

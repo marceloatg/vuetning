@@ -1,0 +1,154 @@
+.slds-has-animation {
+    &.slds-button {
+        transition: all 200ms linear;
+
+        &:active {
+            animation: button-click-effect 120ms cubic-bezier(1, 1.9, 0.95, 0.98);
+        }
+
+        &.slds-button_icon:active {
+            animation: button-icon-click-effect 120ms cubic-bezier(1, 1.9, 0.94, 0.98);
+        }
+    }
+}
+
+// Fade transition
+.fade {
+    &-enter-active,
+    &-leave-active {
+        transition: opacity 200ms;
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
+    }
+}
+
+// Toast transition
+.toast {
+    &-enter-active,
+    &-leave-active {
+        transform: translate3d(0, 0, 0);
+        transition-duration: 200ms;
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+        transition-duration: 200ms;
+    }
+}
+
+// Dropdown transition
+.dropdown {
+    // Left top
+    &-enter-active,
+    &-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0 !important;
+        transform: translateY(-5%) !important;
+    }
+
+    // Right top
+    &-right-enter-active,
+    &-right-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-right-enter-from,
+    &-right-leave-to {
+        opacity: 0 !important;
+        transform: translate(-6%, -5%) !important;
+    }
+
+    // Center top
+    &-center-enter-active,
+    &-center-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-center-enter-from,
+    &-center-leave-to {
+        opacity: 0 !important;
+        transform: translate(-50%, -5%) !important;
+    }
+
+    // Left bottom
+    &-bottom-enter-active,
+    &-bottom-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-bottom-enter-from,
+    &-bottom-leave-to {
+        opacity: 0 !important;
+        transform: translateY(5%) !important;
+    }
+
+    // Right bottom
+    &-right-bottom-enter-active,
+    &-right-bottom-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-right-bottom-enter-from,
+    &-right-bottom-leave-to {
+        opacity: 0 !important;
+        transform: translate(-6%, 5%) !important;
+    }
+
+    // Center bottom
+    &-center-bottom-enter-active,
+    &-center-bottom-leave-active {
+        transition: transform .3s, opacity .15s !important;
+    }
+
+    &-center-bottom-enter-from,
+    &-center-bottom-leave-to {
+        opacity: 0 !important;
+        transform: translate(-50%, 5%) !important;
+    }
+}
+
+// Blow-up transition
+.blow-up {
+    &-enter-active,
+    &-leave-active {
+        transition: all 250ms ease-in-out;
+        transform: scale(1);
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+// Button keyframes
+@keyframes button-click-effect {
+    25% {
+        transform: scale(0.97, 0.95);
+    }
+
+    100% {
+        transform: scale(0.99, 0.98);
+    }
+}
+
+// Button icon keyframes
+@keyframes button-icon-click-effect {
+    25% {
+        transform: scale(0.94, 0.94);
+    }
+
+    100% {
+        transform: scale(0.98, 0.98);
+    }
+}

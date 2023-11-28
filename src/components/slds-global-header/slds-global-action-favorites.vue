@@ -10,10 +10,7 @@
                     title="Toggle Favorites"
                 >
                     <!-- SVG -->
-                    <slds-svg
-                        :icon="icon"
-                        class="slds-button__icon"
-                    />
+                    <slds-svg :icon="iconName" class="slds-button__icon"/>
 
                     <!-- Assistive text -->
                     <span class="slds-assistive-text">
@@ -28,10 +25,7 @@
                     title="View Favorites"
                 >
                     <!-- SVG -->
-                    <slds-svg
-                        icon="utility:down"
-                        class="slds-button__icon slds-button__icon_small"
-                    />
+                    <slds-svg icon="utility:down" class="slds-button__icon slds-button__icon_small"/>
 
                     <!-- Assistive text -->
                     <span class="slds-assistive-text">
@@ -45,21 +39,23 @@
     </li>
 </template>
 
-<script>
-import SldsSvg from '@/components/slds-svg/slds-svg'
+<script lang="ts">
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsGlobalActionFavorites',
+export default defineComponent({
+    name: "SldsGlobalActionFavorites",
 
     components: {
-        SldsSvg
+        SldsSvg,
     },
 
     props: {
-        icon: {
-            type: String,
-            default: 'utility:favorite',
-        }
+        /**
+         * The Lightning Design System name of the icon.
+         * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
+         */
+        iconName: { type: String, default: "utility:favorite" },
     },
-}
+})
 </script>

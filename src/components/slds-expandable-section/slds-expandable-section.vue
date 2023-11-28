@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-section" :class="[{'slds-is-open': (isOpen || nonCollapsible) && !disabled}]">
+    <div :class="sectionClassNames">
 
         <!-- Span title -->
         <h3 v-if="nonCollapsible" class="slds-section__title slds-theme_shade">
@@ -17,7 +17,10 @@
                 @click="toggle"
             >
 
-                <slds-svg icon="utility:switch" class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"/>
+                <slds-svg
+                    icon="utility:switch"
+                    class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                />
 
                 <span class="slds-truncate" :title="title">
                     {{ title }}
@@ -32,7 +35,8 @@
             @enter="expand"
             @after-enter="resetHeight"
             @before-leave="expand"
-            @leave="collapse">
+            @leave="collapse"
+        >
             <div
                 v-if="isOpen && !disabled"
                 role="region"
@@ -45,11 +49,12 @@
     </div>
 </template>
 
-<script>
-import SldsSvg from '../slds-svg/slds-svg'
+<script lang="ts">
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsExpandableSection',
+export default defineComponent({
+    name: "SldsExpandableSection",
 
     components: {
         SldsSvg,
@@ -57,16 +62,30 @@ export default {
 
     props: {
         closedOnStart: Boolean,
+
         disabled: Boolean,
+
         nonCollapsible: Boolean,
-        title: {type: String, required: true},
+
+        title: { type: String, required: true },
     },
 
     data() {
         return {
             isOpen: false,
+
             initialized: false,
         }
+    },
+
+    computed: {
+        sectionClassNames() {
+            let classNames = "slds-section"
+
+            if ((this.isOpen || this.nonCollapsible) && !this.disabled) classNames += " slds-is-open"
+
+            return classNames
+        },
     },
 
     async mounted() {
@@ -76,33 +95,33 @@ export default {
     },
 
     methods: {
-        collapse(element) {
+        collapse(element: HTMLElement): void {
             if (!this.initialized) return
 
-            element.style.overflow = ''
-            element.style.height = 0
-            element.style.opacity = 0
+            element.style.overflow = ""
+            element.style.height = "0"
+            element.style.opacity = "0"
         },
 
-        expand(element) {
+        expand(element: HTMLElement): void {
             if (!this.initialized) return
 
-            element.style.overflow = ''
-            element.style.height = element.scrollHeight + 'px'
+            element.style.overflow = ""
+            element.style.height = element.scrollHeight + "px"
             element.scrollHeight
-            element.style.opacity = 1
+            element.style.opacity = "1"
         },
 
-        resetHeight(element) {
-            element.style.height = null
-            element.style.overflow = 'initial'
+        resetHeight(element: HTMLElement): void {
+            element.style.height = ""
+            element.style.overflow = "initial"
         },
 
         toggle() {
             this.isOpen = !this.isOpen
-        }
-    }
-}
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">

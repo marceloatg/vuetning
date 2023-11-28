@@ -1,12 +1,8 @@
 <template>
-    <div
-        class="slds-scoped-notification slds-media slds-media_center"
-        :class="scopedNotificationClass"
-        role="status"
-    >
+    <div :class="scopedNotificationClass" role="status">
 
         <div class="slds-media__figure">
-            <slds-icon :icon="iconName" :inverse="inverse" small/>
+            <slds-icon :icon-name="iconName || fallbackIconName" :inverse="inverse" small/>
         </div>
 
         <div class="slds-media__body">
@@ -16,55 +12,64 @@
     </div>
 </template>
 
-<script>
-import SldsIcon from '@/components/slds-icon/slds-icon'
+<script lang="ts">
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import { ICONS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsScopedNotification',
+export default defineComponent({
+    name: "SldsScopedNotification",
 
-    components: {
-        SldsIcon
-    },
+    components: { SldsIcon },
 
     props: {
         error: Boolean,
-        icon: String,
+
+        iconName: String,
+
         info: Boolean,
+
         success: Boolean,
-        warning: Boolean
+
+        warning: Boolean,
     },
 
     computed: {
-        iconName() {
-            let iconName = ''
+        /**
+         * Scoped notification icon name.
+         */
+        fallbackIconName(): string {
+            let iconName = ""
 
-            if (this.error) iconName += 'utility:error'
-            else if (this.success) iconName += 'utility:success'
-            else if (this.warning) iconName += 'utility:warning'
-            else iconName += this.icon || 'utility:info'
+            if (this.error) iconName += ICONS.UTILITY.ERROR
+            else if (this.success) iconName += ICONS.UTILITY.SUCCESS
+            else if (this.warning) iconName += ICONS.UTILITY.WARNING
+            else iconName += ICONS.UTILITY.INFO
 
             return iconName
         },
 
-        inverse() {
-            return (this.error || this.info || this.success)
+        /**
+         * Indicates whether this scoped notification has the inverse theme.
+         */
+        inverse(): boolean {
+            return Boolean(this.error || this.info || this.success)
         },
 
-        scopedNotificationClass() {
-            let classNames = ''
+        /**
+         * The CSS class names for the scoped notification.
+         */
+        scopedNotificationClass(): string {
+            let classNames = "slds-scoped-notification slds-media slds-media_center"
 
-            if (this.error) classNames += ' slds-theme_error'
-            else if (this.info) classNames += ' slds-theme_info'
-            else if (this.success) classNames += ' slds-theme_success'
-            else if (this.warning) classNames += ' slds-theme_warning'
-            else classNames += ' slds-scoped-notification_light'
+            if (this.error) classNames += " slds-theme_error"
+            else if (this.info) classNames += " slds-theme_info"
+            else if (this.success) classNames += " slds-theme_success"
+            else if (this.warning) classNames += " slds-theme_warning"
+            else classNames += " slds-scoped-notification_light"
 
             return classNames
-        }
-    }
-}
+        },
+    },
+})
 </script>
-
-<style scoped>
-
-</style>

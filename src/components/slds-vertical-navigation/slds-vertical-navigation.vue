@@ -1,9 +1,9 @@
 <template>
-    <nav class="slds-nav-vertical" :class="verticalNavigationClass">
+    <nav :class="verticalNavigationClassNames">
 
         <!-- Quickfind -->
         <div v-if="hasQuickfind" class="slds-form-element slds-p-horizontal_large slds-p-top_large">
-            <slds-input v-model="$data.$_search" icon="utility:search" placeholder="Quick Find"/>
+            <slds-input v-model="search" icon="utility:search" placeholder="Quick Find"/>
         </div>
 
         <!-- Sections/Items -->
@@ -14,36 +14,53 @@
     </nav>
 </template>
 
-<script>
-export default {
-    name: 'SldsVerticalNavigation',
+<script lang="ts">
+import SldsInput from "../slds-input/slds-input.vue"
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    name: "SldsVerticalNavigation",
+
+    components: { SldsInput },
 
     props: {
+        /**
+         * Active item name.
+         */
+        active: String,
+
         compact: Boolean,
+
         hasQuickfind: Boolean,
-        selectedItem: String,
+
         shaded: Boolean,
     },
 
     data() {
         return {
-            $_search: null,
+            search: null,
         }
     },
 
     computed: {
-        verticalNavigationClass() {
-            return {
-                'slds-nav-vertical_shade': this.shaded,
-                'slds-nav-vertical_compact': this.compact,
-                'slds-nav-vertical_has-quickfind': this.hasQuickfind,
-            }
-        }
+        /**
+         * The CSS class names for the vertical navigation.
+         */
+        verticalNavigationClassNames(): string {
+            let classNames = "slds-nav-vertical"
+
+            if (this.shaded) classNames += " slds-nav-vertical_shade"
+            if (this.compact) classNames += " slds-nav-vertical_compact"
+            if (this.hasQuickfind) classNames += " slds-nav-vertical_has-quickfind"
+
+            return classNames
+        },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-nav-vertical {
     height: 100%;
 }

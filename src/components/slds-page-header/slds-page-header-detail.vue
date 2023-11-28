@@ -2,15 +2,15 @@
     <li class="slds-page-header__detail-block">
 
         <!-- Title -->
-        <div class="slds-text-title slds-truncate" :title="title">
-            {{ title }}
+        <div class="slds-text-title slds-truncate" :title="label">
+            {{ label }}
         </div>
 
         <!-- Value -->
         <slot>
             <div class="slds-truncate" :title="value || ''">
 
-                <a v-if="isLink" @click="onClickLink">
+                <a v-if="isLink" @click="handleClickLink">
                     {{ value || '' }}
                 </a>
 
@@ -24,27 +24,25 @@
     </li>
 </template>
 
-<script>
-export default {
-    name: 'SldsPageHeaderDetail',
+<script lang="ts">
+import { defineComponent } from "vue"
+import { EVENTS } from "../../constants"
+
+export default defineComponent({
+    name: "SldsPageHeaderDetail",
 
     props: {
-        isLink: {
-            type: Boolean
-        },
-        title: {
-            type: String,
-            required: true
-        },
-        value: {
-            type: String
-        },
+        isLink: { type: Boolean },
+
+        label: { type: String, required: true },
+
+        value: { type: String },
     },
 
     methods: {
-        onClickLink() {
-            this.$emit('click')
-        }
-    }
-}
+        handleClickLink() {
+            this.$emit(EVENTS.CLICK)
+        },
+    },
+})
 </script>

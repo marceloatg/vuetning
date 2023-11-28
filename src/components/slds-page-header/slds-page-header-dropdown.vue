@@ -13,28 +13,28 @@
                 <template v-for="option in options">
 
                     <!-- Headings -->
-                    <slds-page-header-heading
-                        v-if="option.heading"
-                        :key="option.key"
-                        :heading="option.heading"
+                    <slds-page-header-dropdown-heading
+                        v-if="option.isHeading"
+                        :key="option.value"
+                        :label="option.label"
                     />
 
                     <!-- Options -->
-                    <slds-page-header-option
+                    <slds-page-header-dropdown-option
                         v-else
-                        :key="option.key"
+                        :key="option.value"
                         :label="option.label"
                         :is-selected="option.value === value"
                         :has-focus="focusedOption === option.value"
-                        @click="onClickOption(option.value)"
-                        @mouseover="onMouseOverOption(option.value)"
+                        @click="handleClickOption(option.value)"
+                        @mouseover="handleMouseOverOption(option.value)"
                     />
 
                 </template>
             </template>
 
             <!-- Spinner -->
-            <li v-if="loading" role="presentation" class="slds-listbox__item">
+            <li v-if="showSpinner" role="presentation" class="slds-listbox__item">
                 <div class="slds-align_absolute-center slds-p-top_medium">
                     <slds-spinner brand x-small inline/>
                 </div>
@@ -44,41 +44,52 @@
     </div>
 </template>
 
-<script>
-import SldsPageHeaderHeading from './slds-page-header-heading'
-import SldsPageHeaderOption from './slds-page-header-option'
-import SldsSpinner from '@/components/slds-spinner/slds-spinner'
+<script lang="ts">
+import SldsPageHeaderDropdownHeading from "./slds-page-header-dropdown-heading.vue"
+import SldsPageHeaderDropdownOption from "./slds-page-header-dropdown-option.vue"
+import SldsSpinner from "../slds-spinner/slds-spinner.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent, type PropType } from "vue"
+import type { PageHeaderDropdownOption } from "./page-header-dropdown-option"
 
-export default {
-    name: 'SldsPageHeaderDropdown',
+export default defineComponent({
+    name: "SldsPageHeaderDropdown",
 
     components: {
-        SldsPageHeaderHeading,
-        SldsPageHeaderOption,
-        SldsSpinner
+        SldsPageHeaderDropdownHeading,
+        SldsPageHeaderDropdownOption,
+        SldsSpinner,
     },
 
     props: {
         focusedOption: String,
-        loading: Boolean,
-        options: Array,
-        value: String
+
+        showSpinner: Boolean,
+
+        options: {
+            type: Array as PropType<PageHeaderDropdownOption[]>,
+            default: () => [] as PageHeaderDropdownOption[],
+        },
+
+        value: String,
     },
 
     methods: {
-        onMouseOverOption(value) {
-            this.$emit('mouseover', value)
+        handleMouseOverOption(value: string): void {
+            this.$emit(EVENTS.MOUSE_OVER, value)
         },
 
-        onClickOption(value) {
-            this.$emit('click', value)
+        handleClickOption(value: string): void {
+            this.$emit(EVENTS.CLICK, value)
         },
-    }
-}
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-dropdown_large {
     min-width: 512px;
 }
+
 </style>

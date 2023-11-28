@@ -16,7 +16,8 @@
                 v-for="option in options"
                 :key="option.value"
                 class="slds-radio"
-                @input="onInput(option.value)">
+                @input="handleInput(option.value)"
+            >
 
                 <!-- Input -->
                 <input
@@ -25,7 +26,8 @@
                     type="radio"
                     :disabled="disabled"
                     :value="option.value"
-                    :checked="value === option.value">
+                    :checked="modelValue === option.value"
+                >
 
                 <!-- Input label -->
                 <label class="slds-radio__label" :for="`radio-${id}-${option.value}`">
@@ -42,8 +44,8 @@
                         </div>
 
                         <div class="slds-col">
-                            <div v-if="option.meta != null" class="slds-radio_meta">
-                                {{ option.meta }}
+                            <div v-if="option.description" class="slds-form-element__description">
+                                {{ option.description }}
                             </div>
                         </div>
 
@@ -62,59 +64,48 @@
     </fieldset>
 </template>
 
-<script>
-import {v4 as newId} from 'uuid'
+<script lang="ts">
+import { v4 as newId } from "uuid"
+import { EVENTS } from "../../constants"
+import { defineComponent, type PropType } from "vue"
+import type { WideRadioGroupOption } from "./wide-radio-group-option"
 
-export default {
-    name: 'SldsWideRadioGroup',
+export default defineComponent({
+    name: "SldsWideRadioGroup",
 
     props: {
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
+        disabled: { type: Boolean, default: false },
 
-        error: {
-            type: Boolean,
-            default: false,
-        },
+        error: { type: Boolean, default: false },
 
-        label: {
-            type: String,
-        },
+        label: String,
 
-        options: {
-            type: Array,
-            required: true,
-        },
+        options: { type: Array as PropType<WideRadioGroupOption[]>, default: () => [] as WideRadioGroupOption[] },
 
-        required: {
-            type: Boolean,
-            default: false,
-        },
+        required: { type: Boolean, default: false },
 
-        value: {}
+        /**
+         * Input value.
+         */
+        modelValue: null,
     },
+
     data() {
         return {
             id: newId(),
         }
     },
-    created() {
-        for (let option of this.options) {
-            if (option == null || option.value == null)
-                throw 'Missing value for option.'
-        }
-    },
+
     methods: {
-        onInput(value) {
-            this.$emit('input', value)
-        }
+        handleInput(value: string) {
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, value)
+        },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .legend-wrapper {
     text-align: right;
     padding-right: 1.5rem;
@@ -144,11 +135,12 @@ export default {
         padding-left: 1rem;
     }
 
-    .slds-radio_meta {
+    .slds-form-element__description {
         color: #3e3e3c;
         padding-bottom: .75rem;
         padding-left: 4.25rem;
         word-wrap: break-word;
     }
 }
+
 </style>
