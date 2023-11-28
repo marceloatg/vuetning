@@ -1,201 +1,279 @@
 <template>
-    <li>
-        <div class="slds-timeline__item_expandable" :class="itemClass">
+    <div :class="itemClassNames">
 
-            <!-- Assistive text -->
-            <span v-if="assistiveText" class="slds-assistive-text">
-                {{ assistiveText }}
-            </span>
+        <!-- Assistive Text -->
+        <span v-if="assistiveText" class="slds-assistive-text">
+            {{ assistiveText }}
+        </span>
 
-            <!-- Media object -->
-            <slds-media-object>
+        <!-- Item -->
+        <slds-media-object>
 
-                <template #figure>
+            <!-- Switch and Activity Icon -->
+            <template #figure>
 
-                    <!-- Switch -->
+                <!-- Switch -->
+                <slds-grid align-middle>
+
                     <slds-button-icon
                         v-if="expandable"
-                        icon="utility:switch"
+                        aria-controls="task-item-base"
+                        :assistive-text="`Toggle details for ${subject}`"
+                        bare
+                        icon-name="utility:switch"
                         icon-class="slds-timeline__details-action-icon"
                         :title="`Toggle details for ${subject}`"
-                        :assistive-text="`Toggle details for ${subject}`"
-                        aria-controls="task-item-base"
+                        @click="toggle"
                     />
 
-                    <!-- Switch placeholder -->
+                    <!-- Switch Placeholder -->
                     <div v-else class="switch-placeholder slds-button_icon"/>
 
-                    <!--  Icon -->
+                    <!-- Item Icon -->
                     <slds-icon
-                        :icon="icon"
-                        small
                         class="slds-timeline__icon"
-                        :class="iconClass"
+                        :class="iconClassNames"
+                        :icon-name="iconName"
+                        small
+                        :title="type"
                     />
 
-                </template>
+                </slds-grid>
 
-                <template #default>
+            </template>
 
-                    <!-- Subject -->
-                    <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+            <!-- Subject and Expandable box -->
+            <template #default>
 
-                        <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
+                <!-- Subject -->
+                <slds-grid :class="subjectClassNames" align-spread>
 
-                            <h3 class="slds-truncate" :title="subject">
+                    <!-- Left Content -->
+                    <slds-column-grid align-bottom class="slds-truncate_container_75">
 
-                                <a v-if="expandable">
-                                    <strong>{{ subject }}</strong>
-                                </a>
+                        <slds-checkbox
+                            v-if="isTask"
+                            v-model="checkbox"
+                            class="slds-p-right_xx-small slds-p-bottom_xxx-small"
+                            label=""
+                        />
 
-                                <span v-else>
-                                    <strong>{{ subject }}</strong>
-                                </span>
+                        <!-- Tile title (subject) -->
+                        <h3 class="slds-truncate" :title="subject">
 
-                            </h3>
+                            <a v-if="expandable">
+                                <strong>{{ subject }}</strong>
+                            </a>
 
-                            <!-- Subject icons -->
-                            <div class="slds-no-flex">
-                                <slot name="subject-icons">
-                                    <slds-icon
-                                        v-for="(icon, index) in formattedSubjectIcons"
-                                        :key="index"
-                                        :icon="icon"
-                                        xx-small
-                                        class="slds-m-left_x-small"
-                                    />
-                                </slot>
-                            </div>
+                            <span v-else>
+                                <strong>{{ subject }}</strong>
+                            </span>
 
+                        </h3>
+
+                        <!-- Subject icon, stackable -->
+                        <div class="slds-no-flex">
+                            <slot name="subject-action-icons">
+                                <slds-icon
+                                    v-for="(subjectIconName, index) in normalizedSubjectIconNames"
+                                    :key="index"
+                                    :icon-name="subjectIconName"
+                                    xx-small
+                                    class="slds-m-left_x-small"
+                                />
+                            </slot>
                         </div>
+
+                    </slds-column-grid>
+
+                    <!-- Right Content -->
+                    <slds-column class="slds-timeline__actions slds-timeline__actions_inline">
+
+                        <!-- Date -->
+                        <p class="slds-timeline__date">
+                            {{ date }}
+                        </p>
 
                         <!-- Actions -->
-                        <div class="slds-timeline__actions slds-timeline__actions_inline">
+                        <slot name="actions"/>
 
-                            <p class="slds-timeline__date">
-                                {{ date }}
-                            </p>
+                    </slds-column>
 
-                            <slot name="subject-action"/>
+                </slds-grid>
 
-                        </div>
+                <!-- Activity -->
+                <p class="slds-m-horizontal_xx-small">
+                    <slot name="activity"/>
+                </p>
 
-                    </div>
+                <!-- Expandable Section -->
+                <article
+                    v-if="expandable && isOpen"
+                    class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small"
+                    aria-hidden="true"
+                >
+                    <slot/>
+                </article>
 
-                    <!-- Activity -->
-                    <p class="slds-m-horizontal_xx-small">
-                        <slot name="activity"/>
-                    </p>
+            </template>
 
-                    <!-- Expandable section -->
-                    <article
-                        v-if="expandable"
-                        class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small"
-                        aria-hidden="true"
-                    >
+        </slds-media-object>
 
-                        <ul class="slds-list_horizontal slds-wrap">
-                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
-                                <span class="slds-text-title slds-p-bottom_x-small">Name</span>
-                                <span class="slds-text-body_medium slds-truncate" title="Charlie Gomez">
-                                    <a href="javascript:void(0);">Charlie Gomez</a>
-                                </span>
-                            </li>
-                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
-                                <span class="slds-text-title slds-p-bottom_x-small">Related To</span>
-                                <span class="slds-text-body_medium slds-truncate" title="Tesla Cloudhub + Anypoint Connectors">
-                                    <a href="javascript:void(0);">Tesla Cloudhub + Anypoint Connectors</a>
-                                </span>
-                            </li>
-                        </ul>
-
-                        <div>
-                            <span class="slds-text-title">Description</span>
-                            <p class="slds-p-top_x-small">Need to finalize proposals and brand details before the
-                                meeting</p>
-                        </div>
-
-                    </article>
-
-                </template>
-
-            </slds-media-object>
-
-        </div>
-    </li>
+    </div>
 </template>
 
-<script>
-import SldsButtonIcon from '@/components/slds-button-icon/slds-button-icon'
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import SldsMediaObject from '@/components/slds-media-object/slds-media-object'
+<script lang="ts">
+import { defineComponent } from "vue"
+import SldsMediaObject from "../slds-media-object/slds-media-object.vue"
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsGrid from "../slds-grid/slds-grid.vue"
+import SldsColumnGrid from "../slds-grid/slds-column-grid.vue"
+import SldsColumn from "../slds-grid/slds-column.vue"
+import SldsCheckbox from "../slds-checkbox/slds-checkbox.vue"
 
-export default {
-    name: 'SldsActivityTimelineItem',
+export default defineComponent({
+    name: "slds-activity-timeline-item",
 
     components: {
         SldsButtonIcon,
+        SldsCheckbox,
+        SldsColumn,
+        SldsColumnGrid,
+        SldsGrid,
         SldsIcon,
-        SldsMediaObject
+        SldsMediaObject,
     },
 
     props: {
         assistiveText: String,
+
+        /**
+         * Activity icon name.
+         */
+        iconName: { type: String, required: true },
+
+        /**
+         * Activity type.
+         */
+        type: { type: String, required: true },
+
+        call: Boolean,
+
         date: String,
+
+        default: Boolean,
+
+        email: Boolean,
+
+        event: Boolean,
+
         expandable: Boolean,
-        icon: {
-            type: String,
-            required: true
-        },
-        subject: {
-            type: String,
-            required: true
-        },
-        subjectIcons: [String, Array],
-        type: String,
+
+        task: Boolean,
+
+        subject: String,
+
+        /**
+         * Subject icon names.
+         */
+        subjectIconsNames: [String, Array],
+    },
+
+    data() {
+        return {
+            isOpen: false,
+
+            checkbox: false,
+        }
     },
 
     computed: {
-        formattedSubjectIcons() {
-            const icons = []
+        /**
+         * The CSS class names for the item.
+         */
+        itemClassNames(): string {
+            let classNames = "slds-timeline__item_expandable"
 
-            if (this.subjectIcons == null) return icons
-            if (Array.isArray(this.subjectIcons)) return this.subjectIcons
-            if (typeof this.subjectIcons === 'string') icons.push(this.subjectIcons)
+            // setting item type
+            classNames += ` slds-timeline__item_${this.type}`
 
-            return icons
+            if (this.isOpen) classNames += " slds-is-open"
+
+            return classNames
         },
 
-        iconClass() {
-            switch (this.type) {
-                case 'call':
-                    return 'slds-icon-standard-log-a-call'
+        /**
+         * The CSS class names for the icon.
+         */
+        iconClassNames() {
+            let classNames = "slds-timeline__icon"
 
-                case 'email':
-                    return 'slds-icon-standard-email'
+            if (this.call) classNames += " slds-icon-standard-log-a-call"
+            else if (this.default) classNames += " slds-icon-standard-generic-loading"
+            else if (this.email) classNames += " slds-icon-standard-email"
+            else if (this.event) classNames += " slds-icon-standard-event"
+            else if (this.task) classNames += " slds-icon-standard-task"
 
-                case 'event':
-                    return 'slds-icon-standard-event'
-
-                case 'task':
-                    return 'slds-icon-standard-task'
-
-                default:
-                    return 'slds-icon-standard-generic-loading'
-            }
+            return classNames
         },
 
-        itemClass() {
-            return `slds-timeline__item_${this.type}`
+        isTask() {
+            return this.type === "task"
         },
-    }
-}
+
+        normalizedSubjectIconNames(): string[] {
+            let iconNames = [] as string[]
+
+            // Check subjectIcon is empty then returns empty array
+            if (!this.subjectIconsNames) return iconNames
+
+            // Check and returns string array
+            if (this.isStringArray(this.subjectIconsNames)) return this.subjectIconsNames as string[]
+
+            // If it's just one string, add it to array
+            if (typeof this.subjectIconsNames === "string") iconNames.push(this.subjectIconsNames)
+
+            return iconNames
+        },
+
+        subjectClassNames() {
+            let classNames = "slds-timeline__trigger"
+
+            if (!this.expandable) classNames += " non-hoverable"
+
+            return classNames
+        },
+    },
+
+    methods: {
+        /**
+         * Check if a variable and its elements is of type Array.
+         * @param variable Variable to be checked.
+         */
+        isStringArray(variable: any): boolean {
+            if (!Array.isArray(variable)) return false
+
+            return variable.every((item) => typeof item === "string")
+        },
+
+        toggle() {
+            this.isOpen = !this.isOpen
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
+.non-hoverable {
+    pointer-events: none;
+}
+
 .switch-placeholder {
     padding: .5rem;
     position: relative;
     display: inline-flex;
 }
+
 </style>

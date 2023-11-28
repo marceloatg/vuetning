@@ -5,7 +5,10 @@
         <div class="slds-context-bar slds-context-bar_tabs">
 
             <!-- App name -->
-            <a class="slds-context-bar__primary slds-icon-waffle_container slds-text-link_reset" @click="onClickHome">
+            <a
+                class="slds-context-bar__primary slds-icon-waffle_container slds-text-link_reset"
+                @click="handleClickHome"
+            >
                 <div class="slds-context-bar__item">
 
                     <!-- Icon -->
@@ -43,20 +46,22 @@
                 <ul class="slds-grid tab-list">
                     <template v-if="isMounted">
 
-                        <slds-tab
-                            v-for="tab in visibleTabs"
-                            :key="tab.id"
+                        <slds-global-navigation-tab
+                            v-for="(tab, index) in visibleTabs"
+                            :key="index"
                             :has-sub-tabs="hasSubTabs"
-                            :icon="tab.icon"
+                            :icon-name="tab.iconName"
                             :is-active="tab.isActive"
                             :label="tab.label"
-                            @click="onClickTab(tab)"
-                            @close="onCloseTab(tab)"/>
+                            @click="handleClickTab(tab)"
+                            @close="handleCloseTab(tab)"
+                        />
 
                         <slds-more-tabs
                             v-if="hasOverflowedTabs"
                             :overflowed-tabs="overflowedTabs"
-                            @click="onClickTab"/>
+                            @click="handleClickTab"
+                        />
 
                     </template>
                 </ul>
@@ -71,21 +76,23 @@
                 <ul class="slds-tabs_default__nav">
 
                     <!-- Sub tabs -->
-                    <slds-sub-tab
+                    <slds-global-navigation-sub-tab
                         v-for="(subTab, index) in visibleSubTabs"
-                        :key="subTab.id"
-                        :icon="subTab.icon"
+                        :key="index"
+                        :icon-name="subTab.iconName"
                         :is-active="subTab.isActive"
                         :is-main="index === 0"
                         :label="subTab.label"
-                        @click="onClickSubTab(subTab)"
-                        @close="onCloseSubTab(subTab)"/>
+                        @click="handleClickSubTab(subTab)"
+                        @close="handleCloseSubTab(subTab)"
+                    />
 
                     <!-- Overflow -->
                     <slds-more-sub-tabs
                         v-if="hasOverflowedSubTabs"
                         :overflowed-sub-tabs="overflowedSubTabs"
-                        @click="onClickSubTab"/>
+                        @click="handleClickSubTab"
+                    />
 
                 </ul>
             </div>
@@ -94,117 +101,124 @@
     </nav>
 </template>
 
-<script>
-import SldsSubTab from './sub-tab'
-import SldsTab from './tab'
-import SldsMoreTabs from './slds-global-navigation-overflowed-tabs'
-import SldsMoreSubTabs from './slds-global-navigation-overflowed-sub-tabs'
-import lodash from 'lodash'
+<script lang="ts">
+/* eslint-disable vue/no-mutating-props */// TODO
 
-export default {
-    name: 'SldsGlobalNavigation',
+import SldsGlobalNavigationSubTab from "./slds-global-navigation-sub-tab.vue"
+import SldsGlobalNavigationTab from "./slds-global-navigation-tab.vue"
+import SldsMoreTabs from "./slds-global-navigation-overflowed-tabs.vue"
+import SldsMoreSubTabs from "./slds-global-navigation-overflowed-sub-tabs.vue"
+import { EVENTS } from "../../constants"
+import { useDebounceFn } from "@vueuse/core"
+import { defineComponent, type PropType } from "vue"
+import type { GlobalNavigationSubTab } from "./global-navigation-sub-tab"
+import type { GlobalNavigationTab } from "./global-navigation-tab"
+
+export default defineComponent({
+    name: "SldsGlobalNavigation",
 
     components: {
         SldsMoreTabs,
         SldsMoreSubTabs,
-        SldsSubTab,
-        SldsTab,
+        SldsGlobalNavigationSubTab,
+        SldsGlobalNavigationTab,
     },
 
     props: {
-        appName: {
-            type: String,
-            required: true,
-        },
+        appName: { type: String, required: true },
 
-        subTabs: {
-            type: Array,
-            default: () => [],
-        },
+        subTabs: { type: Array as PropType<GlobalNavigationSubTab[]>, default: () => [] },
 
-        tabs: {
-            type: Array,
-            required: true,
-        },
+        tabs: { type: Array as PropType<GlobalNavigationTab[]>, default: () => [] },
     },
 
     data() {
         return {
             isMounted: false,
+
             navContainerWidth: 0,
+
             subTabsCacheKey: 0,
+
             tabsCacheKey: 0,
+
             tabsContainerWidth: 0,
         }
     },
 
     computed: {
-        activeSubTab() {
-            if (this.subTabs == null || this.subTabs.length === 0) return null
+        activeSubTab(): GlobalNavigationSubTab | undefined {
+            if (!this.hasSubTabs) return undefined
             return this.subTabs.find(subTab => subTab.isActive)
         },
 
-        activeTab() {
+        activeTab(): GlobalNavigationTab | undefined {
             return this.tabs.find(tab => tab.isActive)
         },
 
-        hasSubTabs() {
-            return ((this.subTabs != null) && (this.subTabs.length > 1))
+        hasSubTabs(): boolean {
+            return (this.subTabs.length > 1)
         },
 
-        hasOverflowedSubTabs() {
-            if (this.subTabs == null || this.subTabs.length === 0) return false
-            return (this.subTabs.length > this.maxVisibleSubTabs)
+        hasOverflowedSubTabs(): boolean {
+            if (!this.hasSubTabs) return false
+            return Boolean(this.subTabs.length > this.maxVisibleSubTabs)
         },
 
-        hasOverflowedTabs() {
-            if (this.tabs == null || this.tabs.length === 0) return false
+        hasOverflowedTabs(): boolean {
+            if (this.tabs.length === 0) return false
             return (this.tabs.length > this.maxVisibleTabs)
         },
 
-        maxVisibleSubTabs() {
+        maxVisibleSubTabs(): number {
             const tabWidth = 192
             return Math.floor(this.navContainerWidth / tabWidth)
         },
 
-        maxVisibleTabs() {
+        maxVisibleTabs(): number {
             const tabWidth = 192
             return Math.floor(this.tabsContainerWidth / tabWidth)
         },
 
-        overflowedSubTabs() {
-            if (this.subTabsCacheKey < 0) throw 'Invalid cache key'
-            if (this.subTabs == null || this.subTabs.length <= this.maxVisibleSubTabs) return []
+        overflowedSubTabs(): GlobalNavigationSubTab[] {
+            if (this.subTabsCacheKey < 0) throw "Invalid cache key"
+            if (this.subTabs.length <= this.maxVisibleSubTabs) return []
+
             return this.subTabs.slice(this.maxVisibleSubTabs - 1)
         },
 
-        overflowedTabs() {
-            if (this.tabsCacheKey < 0) throw 'Invalid cache key'
-            if (this.tabs == null || this.tabs.length <= this.maxVisibleTabs) return []
+        overflowedTabs(): GlobalNavigationTab[] {
+            if (this.tabsCacheKey < 0) throw "Invalid cache key"
+            if (this.tabs.length <= this.maxVisibleTabs) return []
+
             return this.tabs.slice(this.maxVisibleTabs - 1)
         },
 
-        visibleSubTabs() {
-            if (this.subTabsCacheKey < 0) throw 'Invalid cache key'
-            if (this.subTabs == null || this.subTabs.length === 0) return []
+        visibleSubTabs(): GlobalNavigationSubTab[] {
+            if (this.subTabsCacheKey < 0) throw "Invalid cache key"
+            if (this.subTabs.length === 0) return []
             if (this.subTabs.length <= this.maxVisibleSubTabs) return this.subTabs.slice(0, this.maxVisibleSubTabs)
+
             return this.subTabs.slice(0, this.maxVisibleSubTabs - 1)
         },
 
-        visibleTabs() {
-            if (this.tabsCacheKey < 0) throw 'Invalid cache key'
-            if (this.tabs == null || this.tabs.length === 0) return []
+        visibleTabs(): GlobalNavigationTab[] {
+            if (this.tabsCacheKey < 0) throw "Invalid cache key"
+            if (this.tabs.length === 0) return []
             if (this.tabs.length <= this.maxVisibleTabs) return this.tabs.slice(0, this.maxVisibleTabs)
+
             return this.tabs.slice(0, this.maxVisibleTabs - 1)
         },
     },
 
     watch: {
         activeSubTab() {
+            if (!this.activeSubTab) return
+
             const index = this.subTabs.indexOf(this.activeSubTab)
             if (index < this.maxVisibleSubTabs - 1) return
 
-            let temp = this.subTabs[index]
+            const temp = this.subTabs[index]
             this.subTabs[index] = this.subTabs[this.maxVisibleSubTabs - 2]
             this.subTabs[this.maxVisibleSubTabs - 2] = temp
 
@@ -213,10 +227,12 @@ export default {
         },
 
         activeTab() {
+            if (!this.activeTab) return
+
             const index = this.tabs.indexOf(this.activeTab)
             if (index < this.maxVisibleTabs - 1) return
 
-            let temp = this.tabs[index]
+            const temp = this.tabs[index]
             this.tabs[index] = this.tabs[this.maxVisibleTabs - 2]
             this.tabs[this.maxVisibleTabs - 2] = temp
 
@@ -226,42 +242,45 @@ export default {
     },
 
     mounted() {
-        window.addEventListener('resize', lodash.debounce(this.onWindowResize, 250))
-        this.onWindowResize()
+        const debouncedWindowResizeHandler = useDebounceFn(() => this.handleWindowResize, 250)
+
+        window.addEventListener(EVENTS.RESIZE, debouncedWindowResizeHandler)
+        this.handleWindowResize()
 
         this.isMounted = true
     },
 
     methods: {
-        onClickHome() {
-            this.$emit('click-home')
+        handleClickHome(): void {
+            this.$emit(EVENTS.CLICK_HOME)
         },
 
-        onClickTab(tab) {
-            this.$emit('click-tab', tab)
+        handleClickSubTab(subTab: GlobalNavigationSubTab): void {
+            this.$emit(EVENTS.CLICK_SUB_TAB, subTab)
         },
 
-        onCloseTab(tab) {
-            this.$emit('close-tab', tab)
+        handleClickTab(tab: GlobalNavigationTab): void {
+            this.$emit(EVENTS.CLICK_TAB, tab)
         },
 
-        onClickSubTab(subTab) {
-            this.$emit('click-sub-tab', subTab)
+        handleCloseSubTab(subTab: GlobalNavigationSubTab): void {
+            this.$emit(EVENTS.CLOSE_SUB_TAB, subTab)
         },
 
-        onCloseSubTab(subTab) {
-            this.$emit('close-sub-tab', subTab)
+        handleCloseTab(tab: GlobalNavigationTab): void {
+            this.$emit(EVENTS.CLOSE_TAB, tab)
         },
 
-        onWindowResize() {
-            this.navContainerWidth = this.$refs.nav.offsetWidth
-            this.tabsContainerWidth = this.$refs.tabs.offsetWidth
+        handleWindowResize(): void {
+            this.navContainerWidth = (this.$refs.nav as HTMLDivElement).offsetWidth
+            this.tabsContainerWidth = (this.$refs.tabs as HTMLDivElement).offsetWidth
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-context-bar {
     z-index: 99;
     user-select: none;
@@ -270,4 +289,5 @@ export default {
 .slds-sub-tabs {
     background-color: white;
 }
+
 </style>

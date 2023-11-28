@@ -1,5 +1,5 @@
 <template>
-    <div class="trigger-wrapper" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <div class="trigger-wrapper" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
 
         <!-- Trigger -->
         <div ref="trigger" class="trigger-wrapper">
@@ -7,9 +7,14 @@
         </div>
 
         <!-- Content -->
-        <transition :name="popoverTransitionName">
+        <transition
+            @before-enter="hideTooltip"
+            @enter="positionTooltip"
+            @after-enter="showTooltip"
+            @leave="hideTooltip"
+        >
             <div v-if="isVisible" ref="popoverWrapper" class="popover-wrapper">
-                <div ref="popover" role="tooltip" class="slds-popover slds-popover_tooltip" :class="popoverClass">
+                <div ref="popover" role="tooltip" :class="popoverClassNames">
                     <div class="slds-popover__body">
                         <slot/>
                     </div>
@@ -20,92 +25,81 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SldsTooltip',
+<script lang="ts">
+import { defineComponent } from "vue"
+import { EVENTS } from "../../constants"
+
+export default defineComponent({
+    name: "SldsTooltip",
 
     props: {
         /**
          * Indicates whether the tooltip is disabled.
-         * @type {boolean}
          */
         disabled: Boolean,
 
         /**
          * Indicates whether the tooltip is on bottom position.
-         * @type {boolean}
          */
         bottom: Boolean,
 
         /**
          * Indicates whether the tooltip is on bottom left position.
-         * @type {boolean}
          */
         bottomLeft: Boolean,
 
         /**
          * Indicates whether the tooltip is on bottom right position.
-         * @type {boolean}
          */
         bottomRight: Boolean,
 
         /**
          * Indicates whether the tooltip is on left position.
-         * @type {boolean}
          */
         left: Boolean,
 
         /**
          * Indicates whether the tooltip is on left bottom position.
-         * @type {boolean}
          */
         leftBottom: Boolean,
 
         /**
          * Indicates whether the tooltip is on left top position.
-         * @type {boolean}
          */
         leftTop: Boolean,
 
         /**
          * Indicates whether the tooltip is on right position.
-         * @type {boolean}
          */
         right: Boolean,
 
         /**
          * Indicates whether the tooltip is on right bottom position.
-         * @type {boolean}
          */
         rightBottom: Boolean,
 
         /**
          * Indicates whether the tooltip is on right top position.
-         * @type {boolean}
          */
         rightTop: Boolean,
 
         /**
          * Indicates whether the tooltip is on top position.
-         * @type {boolean}
          */
         top: Boolean,
 
         /**
          * Indicates whether the tooltip is on top left position.
-         * @type {boolean}
          */
         topLeft: Boolean,
 
         /**
          * Indicates whether the tooltip is on top right position.
-         * @type {boolean}
          */
         topRight: Boolean,
 
         /**
          * Indicates whether the tooltip is visible.
-         * @type {boolean}
          */
         visible: Boolean,
     },
@@ -113,64 +107,54 @@ export default {
     data() {
         return {
             /**
+             * Initial scroll value.
+             */
+            initialScroll: 0,
+
+            /**
              * Indicates whether the tooltip is currently visible.
-             * @type {boolean}
              */
             isVisible: false,
 
             /**
              * Mouse enter timeout.
-             * @type {NodeJS.Timeout}
              */
             mouseEnterTimeout: 0,
 
             /**
              * Mouse leave timeout.
-             * @type {NodeJS.Timeout}
              */
             mouseLeaveTimeout: 0,
+
+            /**
+             * Original popover top value.
+             */
+            originalPopoverTop: 0,
         }
     },
 
     computed: {
         /**
-         * Popover class names.
-         * @type {string[]}
+         * The CSS class names for the popover.
          */
-        popoverClass() {
-            const classNames = ['slds-input-has-icon']
+        popoverClassNames(): string {
+            let classNames = "slds-popover slds-popover_tooltip slds-input-has-icon"
 
-            if (this.bottom) classNames.push('slds-nubbin_top')
-            else if (this.bottomLeft) classNames.push('slds-nubbin_top-right')
-            else if (this.bottomRight) classNames.push('slds-nubbin_top-left')
-            else if (this.left) classNames.push('slds-nubbin_right')
-            else if (this.leftBottom) classNames.push('slds-nubbin_right-top')
-            else if (this.leftTop) classNames.push('slds-nubbin_right-bottom')
-            else if (this.right) classNames.push('slds-nubbin_left')
-            else if (this.rightBottom) classNames.push('slds-nubbin_left-top')
-            else if (this.rightTop) classNames.push('slds-nubbin_left-bottom')
-            else if (this.top) classNames.push('slds-nubbin_bottom')
-            else if (this.topLeft) classNames.push('slds-nubbin_bottom-right')
-            else if (this.topRight) classNames.push('slds-nubbin_bottom-left')
-            else classNames.push('slds-nubbin_bottom')
+            if (this.bottom) classNames += " slds-nubbin_top"
+            else if (this.bottomLeft) classNames += " slds-nubbin_top-right"
+            else if (this.bottomRight) classNames += " slds-nubbin_top-left"
+            else if (this.left) classNames += " slds-nubbin_right"
+            else if (this.leftBottom) classNames += " slds-nubbin_right-top"
+            else if (this.leftTop) classNames += " slds-nubbin_right-bottom"
+            else if (this.right) classNames += " slds-nubbin_left"
+            else if (this.rightBottom) classNames += " slds-nubbin_left-top"
+            else if (this.rightTop) classNames += " slds-nubbin_left-bottom"
+            else if (this.top) classNames += " slds-nubbin_bottom"
+            else if (this.topLeft) classNames += " slds-nubbin_bottom-right"
+            else if (this.topRight) classNames += " slds-nubbin_bottom-left"
+            else classNames += " slds-nubbin_bottom"
 
             return classNames
-        },
-
-        /**
-         * Popover transition name.
-         * @type {string}
-         */
-        popoverTransitionName() {
-            let popoverTransitionName
-
-            if (this.bottom || this.bottomLeft || this.bottomRight) popoverTransitionName = 'popover-bottom'
-            else if (this.top || this.topLeft || this.topRight) popoverTransitionName = 'popover-top'
-            else if (this.left || this.leftBottom || this.leftTop) popoverTransitionName = 'popover-left'
-            else if (this.right || this.rightBottom || this.rightTop) popoverTransitionName = 'popover-right'
-            else popoverTransitionName = 'popover-top'
-
-            return popoverTransitionName
         },
     },
 
@@ -179,11 +163,12 @@ export default {
             this.isVisible = this.visible
             await this.$nextTick()
             if (this.isVisible) this.positionTooltip()
-        }
+        },
     },
 
     created() {
         this.isVisible = this.visible
+        window.addEventListener("scroll", this.handleScroll)
     },
 
     mounted() {
@@ -194,60 +179,81 @@ export default {
         if (this.isVisible) this.positionTooltip()
     },
 
+    beforeUnmount() {
+        window.removeEventListener(EVENTS.SCROLL, this.handleScroll)
+    },
+
     methods: {
         /**
          * Handler for mouseenter event.
-         * @return {Promise<void>}
          */
-        onMouseEnter() {
+        handleMouseEnter(): void {
             if (this.disabled) return
             if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
             if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            this.mouseEnterTimeout = setTimeout(() => this.isVisible = true, 300)
+            this.mouseEnterTimeout = setTimeout(() => this.isVisible = true, 100)
         },
 
         /**
          * Handler for mouseleave event.
          */
-        onMouseLeave() {
+        handleMouseLeave(): void {
             if (this.disabled) return
             if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
             if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
-            this.mouseLeaveTimeout = setTimeout(() => this.isVisible = false, 300)
+            this.mouseLeaveTimeout = setTimeout(() => this.isVisible = false, 100)
+        },
+
+        /**
+         * Handle for scroll event.
+         * @param event The scroll event.
+         */
+        handleScroll(event: Event) {
+            if (!this.isVisible) return
+
+            const target = event.target as Document
+            const popoverWrapper = this.$refs.popoverWrapper as HTMLElement
+
+            const popoverTop = this.initialScroll + this.originalPopoverTop - target.scrollingElement!.scrollTop
+            popoverWrapper.style.setProperty("--top", `${popoverTop}px`)
         },
 
         /**
          * Positions the tooltip relative to its trigger.
          */
         positionTooltip() {
-            const trigger = this.$refs.trigger.firstChild.getBoundingClientRect()
-            const popover = this.$refs.popover.getBoundingClientRect()
-            const nubbin = {width: 24, height: 24, paddingX: 12, paddingY: 8}
+            const trigger = (this.$refs.trigger as HTMLElement).getBoundingClientRect()
+            const popover = (this.$refs.popover as HTMLElement).getBoundingClientRect()
+            const nubbin = { width: 24, height: 24, paddingX: 12, paddingY: 8 }
 
             const modalContainerLeftOffset = this.getModalContainerLeftOffset()
             const popoverTop = this.getPopoverTop(trigger, popover, nubbin)
             const popoverLeft = this.getPopoverLeft(trigger, popover, nubbin) - parseInt(modalContainerLeftOffset)
 
-            this.$refs.popoverWrapper.style.setProperty('--top', `${popoverTop}px`)
-            this.$refs.popoverWrapper.style.setProperty('--left', `${popoverLeft}px`)
+            this.initialScroll = window.scrollY
+            this.originalPopoverTop = popoverTop
+
+            const popoverWrapper = this.$refs.popoverWrapper as HTMLElement
+            popoverWrapper.style.setProperty("--top", `${popoverTop}px`)
+            popoverWrapper.style.setProperty("--left", `${popoverLeft}px`)
         },
 
         /**
          * Gets the left offset of the modal container.
-         * @return {string} The left offset value in px.
+         * @return The left offset value in px.
          */
-        getModalContainerLeftOffset() {
-            let modalContainerLeftOffset = '0'
-            let currentElement = this.$refs.popover
+        getModalContainerLeftOffset(): string {
+            let modalContainerLeftOffset = "0"
+            let currentElement = this.$refs.popover as HTMLElement
 
             while (currentElement.parentElement) {
                 currentElement = currentElement.parentElement
                 const currentElementClassList = currentElement.classList
                 const currentElementStyle = window.getComputedStyle(currentElement)
 
-                if (currentElementClassList.contains('slds-modal__container')) {
+                if (currentElementClassList.contains("slds-modal__container")) {
                     modalContainerLeftOffset = currentElementStyle.marginLeft
                     break
                 }
@@ -258,12 +264,12 @@ export default {
 
         /**
          * Get the calculated popover left.
-         * @param {DOMRect} trigger - The trigger DOMRect.
-         * @param {DOMRect} popover - The popover DOMRect.
-         * @param {object} nubbin - The nubbin object.
-         * @return {number} - The calculated left.
+         * @param trigger The trigger DOMRect.
+         * @param popover The popover DOMRect.
+         * @param nubbin The nubbin object.
+         * @return The calculated left.
          */
-        getPopoverLeft(trigger, popover, nubbin) {
+        getPopoverLeft(trigger: DOMRect, popover: DOMRect, nubbin: any): number {
             let popoverLeft = 0
 
             if (this.bottomLeft || this.topLeft) {
@@ -287,12 +293,12 @@ export default {
 
         /**
          * Get the calculated popover top.
-         * @param {DOMRect} trigger - The trigger DOMRect.
-         * @param {DOMRect} popover - The popover DOMRect.
-         * @param {object} nubbin - The nubbin object.
-         * @return {number} - The calculated top.
+         * @param trigger The trigger DOMRect.
+         * @param popover The popover DOMRect.
+         * @param nubbin The nubbin object.
+         * @return The calculated top.
          */
-        getPopoverTop(trigger, popover, nubbin) {
+        getPopoverTop(trigger: DOMRect, popover: DOMRect, nubbin: any): number {
             let popoverTop = 0
 
             if (this.leftTop || this.rightTop) {
@@ -313,8 +319,33 @@ export default {
 
             return popoverTop
         },
-    }
-}
+
+        /**
+         * Hides the tooltip.
+         * @param element Tooltip wrapper element.
+         */
+        hideTooltip(element: HTMLElement): void {
+            element.style.opacity = "0"
+            element.style.transition = "transform 300ms, opacity 150ms"
+
+            if (this.bottom || this.bottomLeft || this.bottomRight) element.style.transform = "translateY(-.5rem)"
+            else if (this.top || this.topLeft || this.topRight) element.style.transform = "translateY(.5rem)"
+            else if (this.left || this.leftBottom || this.leftTop) element.style.transform = "translateX(-.5rem)"
+            else if (this.right || this.rightBottom || this.rightTop) element.style.transform = "translateX(.5rem)"
+            else element.style.transform = "translateY(.5rem)"
+        },
+
+        /**
+         * Shows the tooltip.
+         * @param element Tooltip wrapper element.
+         */
+        showTooltip(element: HTMLElement): void {
+            element.style.opacity = "1"
+            element.style.transform = "translate(0, 0)"
+            element.style.transition = "transform 300ms, opacity 150ms"
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
@@ -330,55 +361,8 @@ export default {
     position: fixed;
     top: var(--top);
     left: var(--left);
+    will-change: transform;
     z-index: 100;
-}
-
-.popover-bottom-enter-active,
-.popover-bottom-leave-active {
-    transition: transform 300ms, opacity 150ms;
-}
-
-.popover-bottom-enter,
-.popover-bottom-leave-to {
-    opacity: 0;
-    transform: translateY(-.5rem);
-    will-change: transform;
-}
-
-.popover-left-enter-active,
-.popover-left-leave-active {
-    transition: transform 300ms, opacity 150ms;
-}
-
-.popover-left-enter,
-.popover-left-leave-to {
-    opacity: 0;
-    transform: translateX(-.5rem);
-    will-change: transform;
-}
-
-.popover-right-enter-active,
-.popover-right-leave-active {
-    transition: transform 300ms, opacity 150ms;
-}
-
-.popover-right-enter,
-.popover-right-leave-to {
-    opacity: 0;
-    transform: translateX(.5rem);
-    will-change: transform;
-}
-
-.popover-top-enter-active,
-.popover-top-leave-active {
-    transition: transform 300ms, opacity 150ms;
-}
-
-.popover-top-enter,
-.popover-top-leave-to {
-    opacity: 0;
-    transform: translateY(.5rem);
-    will-change: transform;
 }
 
 </style>

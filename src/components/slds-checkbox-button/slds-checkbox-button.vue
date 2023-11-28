@@ -1,35 +1,36 @@
 <template>
     <slds-form-element
-        :label="inline ? null : label"
+        :errors="errors"
+        :help="help"
+        :label="inline ? undefined : label"
         :required="required"
-        :read-only="readonly"
-        :error="error"
+        :stacked="stacked"
     >
 
         <!-- Input -->
-        <label class="slds-checkbox-button" :class="checkboxButtonClass">
+        <label :class="checkboxButtonClassNames">
 
             <input
-                type="checkbox"
                 class="slds-assistive-text"
-                v-bind="$attrs"
-                :value="$data.$_value"
-                v-on="listeners"
-                @input="onClick"
+                :disabled="disabled"
+                type="checkbox"
+                :value="modelValue"
+                v-bind="inputAttributes"
+                @input="handleInput"
             >
 
             <slds-icon
-                v-if="value"
-                :icon="iconChecked"
-                x-small
+                v-if="modelValue"
+                :icon-name="iconChecked"
                 inverse
+                x-small
             />
 
             <slds-icon
                 v-else
-                :icon="iconUnchecked"
-                x-small
                 current-color
+                :icon-name="iconUnchecked"
+                x-small
             />
 
             <span class="slds-assistive-text">
@@ -51,71 +52,82 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
-import SldsIcon from '../slds-icon/slds-icon'
+<script lang="ts">
+import { defineComponent, type PropType } from "vue"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import { EVENTS } from "../../constants"
+import { type ValidationError } from "../slds-form-element/validation-error"
 
-export default {
-    name: 'SldsCheckboxButton',
+export default defineComponent({
+    name: "SldsCheckboxButton",
 
-    components: {
-        SldsFormElement,
-        SldsIcon
-    },
-
-    inheritAttrs: false,
+    components: { SldsIcon, SldsFormElement },
 
     props: {
         assistiveText: String,
-        disabled: Boolean,
-        error: Boolean,
-        iconChecked: {type: String, default: 'utility:check'},
-        iconUnchecked: {type: String, default: 'utility:add'},
-        inline: Boolean,
-        label: String,
-        readonly: Boolean,
-        required: Boolean,
-        value: Boolean
-    },
 
-    data() {
-        return {
-            $_value: this.value
-        }
+        disabled: Boolean,
+
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
+
+        help: String,
+
+        iconChecked: { type: String, default: "utility:check" },
+
+        iconUnchecked: { type: String, default: "utility:add" },
+
+        inline: Boolean,
+
+        label: String,
+
+        modelValue: Boolean,
+
+        readonly: Boolean,
+
+        required: Boolean,
+
+        stacked: Boolean,
     },
 
     computed: {
-        checkboxButtonClass() {
-            return [
-                {'slds-checkbox-button_is-checked': this.value},
-                {'slds-checkbox-button_is-disabled': this.disabled}
-            ]
+        checkboxButtonClassNames(): string {
+            let classNames = "slds-checkbox-button"
+
+            if (this.modelValue) classNames += " slds-checkbox-button_is-checked"
+            if (this.disabled) classNames += " slds-checkbox-button_is-disabled"
+
+            return classNames
         },
 
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
-        },
-    },
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
 
-    watch: {
-        value(value) {
-            this.$data.$_value = value
-        }
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
+        },
     },
 
     methods: {
-        onClick() {
+        handleInput(): void {
             if (this.disabled) return
-            this.$data.$_value = !this.$data.$_value
-            this.$emit('input', this.$data.$_value)
-        }
-    }
-}
+
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, !this.modelValue)
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-checkbox-button {
     user-select: none;
     transition: all 140ms ease-in-out;
@@ -124,4 +136,5 @@ export default {
         transition: all 140ms ease-in-out;
     }
 }
+
 </style>

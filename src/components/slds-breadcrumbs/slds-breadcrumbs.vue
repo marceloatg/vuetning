@@ -11,29 +11,26 @@
 
                     <!-- Button -->
                     <slds-button-icon
-                        icon="utility:threedots"
+                        icon-name="utility:threedots"
                         x-small
                         bordered-filled
                         title="Show More"
                         assistive-text="Show More"
-                        @click="onClickDropdown"
+                        @click="handleClickDropdown"
                     />
 
                     <!-- Dropdown -->
-                    <transition v-bind="dropdownTransitionProperties">
-                        <div v-if="$data.$_isOpen" class="slds-dropdown slds-dropdown_left slds-dropdown_actions">
+                    <transition name="dropdown">
+                        <div v-if="isDropdownOpen" class="slds-dropdown slds-dropdown_left slds-dropdown_actions">
                             <ul class="slds-dropdown__list" role="menu">
-                                <slot v-if="$slots['dropdown-list']" name="dropdown-list"/>
-                                <template v-else>
-                                    <slds-overflowed-breadcrumb
-                                        v-for="overflowedItem in $data.$_overflowedItems"
-                                        :key="overflowedItem.key"
-                                        :name="overflowedItem.name"
-                                        :label="overflowedItem.label"
-                                        :href="overflowedItem.href"
-                                        @click=onClickBreadcrumb
-                                    />
-                                </template>
+                                <slds-overflowed-breadcrumb
+                                    v-for="overflowedItem in overflownItems"
+                                    :key="overflowedItem.name"
+                                    :name="overflowedItem.name"
+                                    :label="overflowedItem.label"
+                                    :href="overflowedItem.href"
+                                    @click="handleClickBreadcrumb"
+                                />
                             </ul>
                         </div>
                     </transition>
@@ -42,112 +39,89 @@
             </li>
 
             <!-- Items -->
-            <slot>
-                <slds-breadcrumb
-                    v-for="item in $data.$_items"
-                    :key="item.id"
-                    :name="item.name"
-                    :label="item.label"
-                    :href="item.href"
-                    :neutral="neutral"
-                    @click=onClickBreadcrumb
-                />
-            </slot>
+            <slds-breadcrumb
+                v-for="item in visibleItems"
+                :key="item.name"
+                :name="item.name"
+                :label="item.label"
+                :href="item.href"
+                :neutral="neutral"
+                @click="handleClickBreadcrumb"
+            />
 
         </ol>
     </nav>
 </template>
 
-<script>
-import SldsBreadcrumb from './slds-breadcrumb'
-import SldsOverflowedBreadcrumb from './slds-overflowed-breadcrumb'
-import ClickOutside from '@/directives/click-outside/index'
-import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import Item from './item'
+<script lang="ts">
+import SldsBreadcrumb from "./slds-breadcrumb.vue"
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import SldsOverflowedBreadcrumb from "./slds-overflowed-breadcrumb.vue"
+import { vOnClickOutside } from "@vueuse/components"
+import { EVENTS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsBreadcrumbs',
+import type { Breadcrumb } from "./breadcrumb"
+import type { PropType } from "vue"
+
+export default defineComponent({
+    name: "SldsBreadcrumbs",
 
     components: {
+        SldsButtonIcon,
         SldsBreadcrumb,
-        SldsOverflowedBreadcrumb
+        SldsOverflowedBreadcrumb,
     },
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
-    mixins: [
-        HasDropdownMixin
-    ],
-
     props: {
-        items: Array,
-        maxItems: {type: Number, default: 3},
-        neutral: Boolean
+        items: { type: Array as PropType<Breadcrumb[]>, default: () => [] as Breadcrumb[] },
+
+        maxItems: { type: Number, default: 3 },
+
+        neutral: Boolean,
     },
 
     data() {
         return {
-            $_items: [],
-            $_overflowedItems: []
+            isDropdownOpen: false,
         }
     },
 
     computed: {
-        hasOverflow() {
-            return (
-                this.$slots['dropdown-list'] ||
-                (this.items && (this.items.length > this.maxItems))
-            )
+        /**
+         * Indicates whether the breadcrumbs have overflow.
+         */
+        hasOverflow(): boolean {
+            return Boolean(this.items.length > this.maxItems)
         },
 
-        isOverflowNotPopulated() {
-            return ((this.items.length - this.$data.$_overflowedItems.length) <= this.maxItems)
+        overflownItems(): Breadcrumb[] {
+            return this.items.slice(-this.maxItems)
         },
-    },
 
-    watch: {
-        items: {
-            deep: true,
-            handler() {
-                return this.parseItems()
-            }
-        }
-    },
-
-    created() {
-        this.parseItems()
+        visibleItems(): Breadcrumb[] {
+            return this.hasOverflow
+                ? this.items.slice(0, this.items.length - this.maxItems)
+                : this.items
+        },
     },
 
     methods: {
-        onClickBreadcrumb(name) {
-            this.$emit('click', name)
+        handleClickBreadcrumb(name: string): void {
+            this.$emit(EVENTS.CLICK, name)
         },
 
-        onClickDropdown() {
-            this.toggleDropdown()
+        handleClickDropdown(): void {
+            this.isDropdownOpen = !this.isDropdownOpen
         },
 
-        parseItems() {
-            this.$data.$_items = this.$data.$_items.splice(0, this.$data.$_items.length)
-            if (this.items == null) return
-
-            for (const item of this.items) {
-                let breadcrumbItem
-
-                if (typeof item === 'string') breadcrumbItem = new Item(item)
-                else if (typeof item === 'object') breadcrumbItem = new Item(item.label, item.name, item.href)
-                else throw'[slds-breadcrumbs] items must be of type string or a valid breadcrumb object.'
-
-                if (!this.hasOverflow || (this.hasOverflow && this.isOverflowNotPopulated)) this.$data.$_items.push(breadcrumbItem)
-                else this.$data.$_overflowedItems.push(breadcrumbItem)
-            }
+        hideDropdown(): void {
+            this.isDropdownOpen = false
         },
-    }
-}
+    },
+})
 </script>
-
-<style scoped lang="scss">
-@import '../../directives/animated/animations';
-</style>

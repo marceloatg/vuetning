@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-publisher" :class="{'slds-is-active':isActive}">
+    <div :class="publisherClassNames">
 
         <!-- Label -->
         <label v-if="label" class="slds-publisher__toggle-visibility slds-m-bottom_small">
@@ -9,26 +9,26 @@
         <!-- Input -->
         <textarea
             ref="input"
-            :value="value"
-            v-bind="$attrs"
             class="slds-publisher__input slds-textarea slds-text-longform"
-            @focus="onFocus"
-            @input="$emit('input', $event.target.value)"
-            v-on="listeners"
+            :value="modelValue"
+            v-bind="inputAttributes"
+            @focus="handleFocus"
+            @input="handleInput"
+            @keyup="handleKeyUp"
         />
 
         <div class="slds-publisher__actions slds-grid slds-grid_align-spread">
 
-            <div class="slds-grid slds-publisher__toggle-visibility">
+            <slds-grid class="slds-publisher__toggle-visibility">
                 <slot name="actions"/>
-            </div>
+            </slds-grid>
 
             <!-- Button -->
             <slds-button
                 brand
                 :label="buttonLabel"
-                :spinner="loading"
-                @click="onClickShare"
+                :show-spinner="showSpinner"
+                @click="handleClickShare"
             />
 
         </div>
@@ -36,18 +36,25 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SldsPublisher',
+<script lang="ts">
+import { defineComponent } from "vue"
+import SldsButton from "../slds-button/slds-button.vue"
+import { EVENTS, KEYS } from "../../constants"
+import SldsGrid from "../../components/slds-grid/slds-grid.vue"
 
-    inheritAttrs: false,
+export default defineComponent({
+    name: "SldsPublisher",
+
+    components: { SldsGrid, SldsButton },
 
     props: {
-        buttonLabel: {type: String, default: 'Share'},
+        buttonLabel: { type: String, default: "Share" },
+
         label: String,
-        loading: Boolean,
-        richText: Boolean,
-        value: {}
+
+        modelValue: String,
+
+        showSpinner: Boolean,
     },
 
     data() {
@@ -57,36 +64,55 @@ export default {
     },
 
     computed: {
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
         },
-    },
 
-    mounted() {
-        this.$refs.input.addEventListener('keyup', this.onKeyUp)
-    },
+        publisherClassNames(): string {
+            let classNames = "slds-publisher"
 
-    beforeDestroy() {
-        this.$refs.input.removeEventListener('keyup', this.onKeyUp)
+            if (this.isActive) classNames += " slds-is-active"
+
+            return classNames
+        },
     },
 
     methods: {
-        onClickShare() {
-            if (this.isActive) this.$emit('post')
-            else this.isActive = true
+        handleClickShare(): void {
+            if (this.isActive) {
+                this.$emit(EVENTS.POST)
+            }
+            else {
+                const input = this.$refs.input as HTMLInputElement
+                input.focus()
+
+                this.isActive = true
+            }
         },
 
-        onFocus() {
+        handleFocus(): void {
             if (!this.isActive) this.isActive = true
         },
 
-        onKeyUp(event) {
-            if (event.key === 'Enter' && this.$refs.input === document.activeElement) {
-                event.stopPropagation()
-            }
+        handleInput(event: Event): void {
+            const target = event.target as HTMLInputElement
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, target.value)
+        },
+
+        handleKeyUp(event: Event): void {
+            if (!(event instanceof KeyboardEvent) || event.key !== KEYS.ENTER) return
+
+            event.stopPropagation()
         },
     },
-}
+})
 </script>
+

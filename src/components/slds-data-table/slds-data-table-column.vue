@@ -1,134 +1,176 @@
 <template>
-    <clicker :class="{unclickable: touchingResizer}" @single-click="onSingleClick" @double-click="onDoubleClick">
-        <div
-            class="column"
-            :class="{'is-resizable': isResizable,'slds-is-sortable':sortable, 'slds-is-sorted slds-is-sorted_desc': sortedAscending, 'slds-is-sorted slds-is-sorted_asc': sortedDescending}"
-            :style="{ width: `${width}px`, left: `${left}px` }">
+    <div :class="columnClassNames" :style="columnStyleValues">
+
+        <!-- Label -->
+        <div class="cell slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
 
             <!-- Label -->
-            <div class="cell slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" :title="label">
+                {{ label }}
+            </span>
 
-                <!-- Label -->
-                <span class="slds-truncate" :title="label">
-                    {{ label }}
-                </span>
-
-                <!-- Sort icon -->
-                <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
-                    <slds-svg icon="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
-                </span>
-
-            </div>
-
-            <!-- Menu -->
-            <slds-menu
-                v-if="hasMenu"
-                bare
-                x-small
-                :items="options"
-                class="slds-m-right_xx-small"
-                @sort-asc="$emit('sort', 'asc')"
-                @sort-desc="$emit('sort', 'desc')">
-                <template #after>
-                    <div class="slds-p-around_small" style="width: 15rem">
-                        <slds-input label="Filter this column by:"/>
-                    </div>
-                </template>
-            </slds-menu>
-
-            <!-- Handle -->
-            <span
-                v-if="isResizable"
-                class="handle"
-                :style="{transform: `translateX(${resizerTranslation}px)`}"
-                @mousedown.prevent.stop="onResizerMouseDown"
-                @click.stop>
-                <span class="divider"/>
+            <!-- Sort icon -->
+            <span v-if="sortable" class="slds-icon_container slds-icon-utility-arrowup">
+                <slds-svg icon="utility:arrowup" class="slds-icon slds-icon-text-default slds-is-sortable__icon"/>
             </span>
 
         </div>
-    </clicker>
+
+        <!-- Menu -->
+        <slds-menu
+            v-if="hasMenu"
+            bare
+            x-small
+            :options="options"
+            class="slds-m-right_xx-small"
+            @sort-asc="$emit('sort', 'asc')"
+            @sort-desc="$emit('sort', 'desc')"
+        >
+            <template #after>
+                <div class="slds-p-around_small" style="width: 15rem">
+                    <slds-input label="Filter this column by:"/>
+                </div>
+            </template>
+        </slds-menu>
+
+        <!-- Handle -->
+        <span
+            v-if="isResizable"
+            class="handle"
+            :style="{transform: `translateX(${resizerTranslation}px)`}"
+            @mousedown.prevent.stop="handleResizerMouseDown"
+            @click.stop
+        >
+            <span class="divider"/>
+        </span>
+
+    </div>
 </template>
 
-<script>
-import SldsSvg from '../slds-svg/slds-svg'
-import Clicker from './slds-data-table-clicker'
+<script lang="ts">
+import SldsSvg from "../slds-svg/slds-svg.vue"
+import SldsInput from "../slds-input/slds-input.vue"
+import SldsMenu from "../slds-menu/slds-menu.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent, type StyleValue } from "vue"
+import type { DropdownOption } from "../slds-dropdown/dropdown-option"
 
-export default {
-    name: 'SldsDataTableColumn',
+export default defineComponent({
+    name: "SldsDataTableColumn",
+
     components: {
-        Clicker,
+        SldsMenu,
+        SldsInput,
         SldsSvg,
     },
+
     props: {
         hasMenu: Boolean,
-        index: {
-            type: Number,
-            required: true,
-        },
+
+        index: { type: Number, required: true },
+
         left: Number,
+
         label: String,
-        minimumWidth: {
-            type: Number,
-            default: 100,
-        },
-        isResizable: {
-            type: Boolean,
-            default: true,
-        },
-        sortable: {
-            type: Boolean,
-            default: true,
-        },
+
+        minimumWidth: { type: Number, default: 48 },
+
+        isResizable: { type: Boolean, default: true },
+
+        sortable: { type: Boolean, default: true },
+
         sortedAscending: Boolean,
+
         sortedDescending: Boolean,
+
         type: {
             type: String,
-            required: true,
-            validator(value) {
+            default: "text",
+            validator(value: string) {
                 return [
-                    'avatar',
-                    'badge',
-                    'boolean',
-                    'button',
-                    'link',
-                    'icon',
-                    'text',
+                    "avatar",
+                    "badge",
+                    "boolean",
+                    "button",
+                    "link",
+                    "icon",
+                    "text",
                 ].indexOf(value) !== -1
             },
         },
+
         width: Number,
     },
+
     data() {
         return {
-            startX: null,
-            currentX: null,
-            options: [],
+            startX: null as unknown as number,
+
+            currentX: null as unknown as number,
+
+            options: [] as DropdownOption[],
+
             touchingResizer: false,
+
             resizerTranslation: 0,
         }
     },
+
+    computed: {
+        /**
+         * The CSS class names for the column.
+         */
+        columnClassNames(): string {
+            let classNames = "column"
+
+            if (this.isResizable) classNames += " is-resizable"
+            if (this.sortable) classNames += " slds-is-sortable"
+
+            if (this.sortedAscending) classNames += " slds-is-sorted slds-is-sorted_asc"
+            else if (this.sortedDescending) classNames += " slds-is-sorted slds-is-sorted_desc"
+
+            return classNames
+        },
+
+        /**
+         * The CSS style values for the column.
+         */
+        columnStyleValues(): StyleValue {
+            return {
+                width: `${this.width}px`,
+                left: `${this.left}px`,
+            }
+        },
+    },
+
     created() {
         if (this.sortable) {
-            this.options.push({value: 'sort-asc', label: 'Sort A to Z', prefixIcon: 'utility:arrowup'})
-            this.options.push({value: 'sort-desc', label: 'Sort Z to A', prefixIcon: 'utility:arrowdown'})
+            this.options.push({ value: "sort-asc", label: "Sort A to Z", iconName: "utility:arrowup" })
+            this.options.push({ value: "sort-desc", label: "Sort Z to A", iconName: "utility:arrowdown" })
         }
     },
+
     methods: {
-        onDoubleClick() {
-            if (!this.isResizable || (this.type !== 'text' && this.type !== 'link')) return
-            this.$emit('expand')
+        handleDoubleClick() {
+            if (!this.isResizable || (this.type !== "text" && this.type !== "link")) return
+            this.$emit("expand")
         },
-        onResizerMouseDown(event) {
+
+        handleResizerMouseDown(event: Event) {
+            if (!(event instanceof MouseEvent)) return
+
             this.startX = event.pageX
             this.currentX = this.startX
             this.touchingResizer = true
 
-            document.body.addEventListener('mousemove', this.onResizerMove)
-            document.body.addEventListener('mouseup', this.onResizerMoveEnd)
-            document.body.addEventListener('mouseleave', this.onResizerMoveEnd)
+            document.body.addEventListener(EVENTS.MOUSE_MOVE, this.handleResizerMove)
+            document.body.addEventListener(EVENTS.MOUSE_UP, this.onResizerMoveEnd)
+            document.body.addEventListener(EVENTS.MOUSE_LEAVE, this.onResizerMoveEnd)
         },
-        onResizerMove(event) {
+
+        handleResizerMove(event: Event) {
+            if (!(event instanceof MouseEvent)) return
+
             if (!this.touchingResizer) return
             if (this.currentX === event.pageX) return
 
@@ -137,24 +179,27 @@ export default {
 
             this.resizing(delta)
         },
+
         onResizerMoveEnd() {
             if (!this.touchingResizer) return
 
             this.touchingResizer = false
-            document.body.removeEventListener('mousemove', this.onResizerMove)
-            document.body.removeEventListener('mouseup', this.onResizerMoveEnd)
-            document.body.removeEventListener('mouseleave', this.onResizerMoveEnd)
+            document.body.removeEventListener(EVENTS.MOUSE_MOVE, this.handleResizerMove)
+            document.body.removeEventListener(EVENTS.MOUSE_UP, this.onResizerMoveEnd)
+            document.body.removeEventListener(EVENTS.MOUSE_LEAVE, this.onResizerMoveEnd)
 
             const delta = this.currentX - this.startX
             this.resize(delta)
         },
-        onSingleClick() {
+
+        handleSingleClick() {
             if (!this.sortable) return
 
-            if (this.sortedAscending) this.$emit('sort', 'desc')
-            else this.$emit('sort', 'asc')
+            if (this.sortedAscending) this.$emit("sort", "desc")
+            else this.$emit("sort", "asc")
         },
-        resize(delta) {
+
+        resize(delta: number) {
             // Apply column width validations to delta
             if (this.width + delta < this.minimumWidth) {
                 delta = this.minimumWidth - this.width
@@ -162,15 +207,16 @@ export default {
             }
 
             // Emit resize event with delta
-            this.$emit('resize', this.index, delta)
+            this.$emit(EVENTS.RESIZE, this.index, delta)
             this.resizerTranslation = 0
         },
-        resizing(delta) {
+
+        resizing(delta: number) {
             if (this.width + delta < this.minimumWidth) delta = this.minimumWidth - this.width
             this.resizerTranslation = delta
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
@@ -235,4 +281,5 @@ $spacing-xx-small: .25rem;
 .unclickable {
     pointer-events: none;
 }
+
 </style>

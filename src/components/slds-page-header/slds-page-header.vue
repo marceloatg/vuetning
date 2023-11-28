@@ -12,11 +12,12 @@
                     <!-- Figure -->
                     <template v-if="hasIcon" #figure>
                         <slds-icon
-                            :icon="icon"
+                            :class="iconClass"
+                            :icon-name="iconName!"
+                            :icon-class="['slds-page-header__icon']"
                             inverse
                             standard-format
                             :assistive-text="assistiveText"
-                            :icon-class="[iconClass,'slds-page-header__icon']"
                         />
                     </template>
 
@@ -70,7 +71,7 @@
                                             {{ title }}
 
                                             <slds-icon
-                                                icon="utility:down"
+                                                icon-name="utility:down"
                                                 current
                                                 x-small
                                                 class="slds-m-left_x-small"
@@ -79,12 +80,12 @@
                                         </span>
 
                                         <!-- Dropdown -->
-                                        <transition v-bind="dropdownTransitionProperties">
+                                        <transition name="dropdown">
                                             <slds-page-header-dropdown
                                                 v-if="$data.$_isOpen"
                                                 :value="selectedListView"
                                                 :options="filteredOptions"
-                                                :focused-option="$data.$_focusedOption"
+                                                :focused-option="focusedOption"
                                                 :loading="loading"
                                                 @click="onClickOption"
                                                 @mouseover="onMouseOverOption"
@@ -156,117 +157,102 @@
     </div>
 </template>
 
-<script>
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import ClickOutside from '@/directives/click-outside/index'
-import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import SldsPageHeaderDropdown from '@/components/slds-page-header/slds-page-header-dropdown'
-import DropdownOption from '@/components/slds-options/dropdown-option-class'
+<script lang="ts">
+import { vOnClickOutside } from "@vueuse/components"
+import HasDropdownMixin from "../../mixins/has-dropdown-mixin.js"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsMediaObject from "../slds-media-object/slds-media-object.vue"
+import SldsPageHeaderDropdown from "../slds-page-header/slds-page-header-dropdown.vue"
+import { defineComponent } from "vue"
+import type { DropdownOption } from "../slds-dropdown/dropdown-option"
 
-export default {
-    name: 'SldsPageHeader',
+export default defineComponent({
+    name: "SldsPageHeader",
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
     components: {
+        SldsMediaObject,
         SldsPageHeaderDropdown,
-        SldsIcon
+        SldsIcon,
     },
 
     mixins: [
-        HasDropdownMixin
+        HasDropdownMixin,
     ],
 
     props: {
         assistiveText: String,
+
         details: String,
+
         hasDropdown: Boolean,
-        icon: String,
+
+        iconName: String,
+
         iconClass: String,
-        listViewOptions: Array,
+
         meta: String,
+
         name: String,
+
         objectHome: Boolean,
+
         recordHome: Boolean,
+
         relatedList: Boolean,
+
         selectedListView: String,
-        title: {type: String, required: true}
+
+        title: { type: String, required: true },
     },
 
     computed: {
-        hasBaseBody() {
-            return !this.objectHome && !this.recordHome && !this.relatedList
+        hasBaseBody(): boolean {
+            return Boolean(!this.objectHome && !this.recordHome && !this.relatedList)
         },
 
-        hasIcon() {
-            return !this.relatedList && !!this.icon
+        hasIcon(): boolean {
+            return Boolean(!this.relatedList && !!this.iconName)
         },
-    },
-
-    watch: {
-        listViewOptions: {
-            deep: true,
-            handler() {
-                this.parseLisViewOptions()
-            }
-        }
-    },
-
-    created() {
-        this.parseLisViewOptions()
     },
 
     methods: {
-        onClickDropdown() {
-            if (this.$data.$_isOpen) return
+        onClickDropdown(): void {
+            if (this.isOpen) return
+
             this.setFocusedOption()
             this.showDropdown()
-            this.$emit('dropdown-click')
+            this.$emit("dropdown-click")
         },
 
-        onClickOption(value) {
+        onClickOption(value: string): void {
             this.hideDropdown()
-            this.$emit('dropdown-select', value)
+            this.$emit("dropdown-select", value)
             this.clearFocusedOption()
         },
 
-        onMouseOverOption(value) {
-            this.setFocusedOption(value)
+        onMouseOverOption(option: DropdownOption): void {
+            this.setFocusedOption(option)
         },
 
-        parseLisViewOptions() {
-            this.$data.$_options = this.$data.$_options.splice(0, this.$data.$_options.length)
-            if (this.listViewOptions == null) return
+        /**
+         * Set the focused item.
+         * @param focusedOption Hovered option, if any.
+         */
+        setFocusedOption(focusedOption?: DropdownOption): void {
+            if (this.isEmpty) return
 
-            for (const option of this.listViewOptions) {
-                if (typeof option === 'string') {
-                    this.$data.$_options.push(new DropdownOption(null, option))
-                }
-                else if (typeof option === 'object') {
-                    const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
-                    this.$data.$_options.push(dropdownOption)
-                }
-                else {
-                    throw'[slds-page-header] options must be of type string or a valid page header option object.'
-                }
-            }
+            if (focusedOption) this.focusedOption = focusedOption
+            console.warn("To be implemented")
         },
-
-        setFocusedOption(value = null) {
-            if (value) this.$data.$_focusedOption = value
-            else if (this.selectedListView) this.$data.$_focusedOption = this.selectedListView
-            else this.$data.$_focusedOption = this.filteredOptions
-                    .find(option => !option.heading)
-                    .value
-        }
-    }
-}
+    },
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../directives/animated/animations';
 
 .control-placeholder {
     height: 2rem;

@@ -1,39 +1,46 @@
 <template>
-    <div ref="root" tabindex="0" @keyup.esc="onClose" @keyup.enter="onSubmit">
+    <div
+        ref="root"
+        tabindex="0"
+        @keyup.esc="handleClose"
+        @keyup.enter="handleSubmit"
+    >
 
         <!-- Modal -->
-        <section tabindex="-1" class="slds-modal slds-fade-in-open" :class="modalClass">
-            <div class="slds-modal__container">
+        <transition appear :name="transitionName">
+            <section tabindex="-1" :class="modalClassNames">
+                <div class="slds-modal__container">
 
-                <!-- Header -->
-                <header class="slds-modal__header" :class="modalHeaderClass">
+                    <!-- Header -->
+                    <header :class="modalHeaderClassNames">
 
-                    <!-- Close button -->
-                    <slds-button-icon
-                        icon="utility:close"
-                        inverse
-                        large
-                        title="close"
-                        class="slds-modal__close"
-                        @click.stop="onClose"
-                    />
+                        <!-- Close button -->
+                        <slds-button-icon
+                            icon-name="utility:close"
+                            inverse
+                            large
+                            title="close"
+                            class="slds-modal__close"
+                            @click.stop="handleClose"
+                        />
 
-                    <slot name="header"/>
+                        <slot name="header"/>
 
-                </header>
+                    </header>
 
-                <!-- Content -->
-                <div class="slds-modal__content" :class="modalContentClass">
-                    <slot name="content"/>
+                    <!-- Content -->
+                    <div :class="modalContentClassNames">
+                        <slot name="content"/>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer v-if="$slots.footer" :class="modalFooterClassNames">
+                        <slot name="footer"/>
+                    </footer>
+
                 </div>
-
-                <!-- Footer -->
-                <footer v-if="$slots.footer" class="slds-modal__footer" :class="footerClass">
-                    <slot name="footer"/>
-                </footer>
-
-            </div>
-        </section>
+            </section>
+        </transition>
 
         <!-- Backdrop -->
         <div class="slds-backdrop slds-backdrop_open"/>
@@ -41,72 +48,123 @@
     </div>
 </template>
 
-<script>
-import SldsButtonIcon from '../slds-button-icon/slds-button-icon'
+<script lang="ts">
+import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsModal',
+export default defineComponent({
+    name: "SldsModal",
 
     components: {
         SldsButtonIcon,
     },
 
     props: {
-        contentClass: {type: String, default: 'slds-p-around_medium'},
+        contentClass: { type: String, default: "slds-p-around_medium" },
+
         fixedHeight: Boolean,
+
         footerClass: String,
+
         headerClass: String,
+
         initialOverflow: Boolean,
+
         large: Boolean,
+
         maxHeight: Boolean,
+
         medium: Boolean,
+
+        noAnimation: Boolean,
+
         small: Boolean,
     },
 
     computed: {
-        modalClass() {
-            if (this.small) return 'slds-modal_small'
-            if (this.medium) return 'slds-modal_medium'
-            if (this.large) return 'slds-modal_large'
-            return ''
+        /**
+         * Transition name, if any.
+         */
+        transitionName(): string {
+            return this.noAnimation ? "" : "blow-up"
         },
 
-        modalContentClass() {
-            return [
-                {
-                    'slds-grow': this.maxHeight,
-                    'slds-modal_fixed-height': this.fixedHeight,
-                    'slds-overflow_initial': this.initialOverflow
-                },
-                this.contentClass
-            ]
+        /**
+         * The CSS class names for the modal.
+         */
+        modalClassNames(): string {
+            let classNames = "slds-modal slds-fade-in-open"
+
+            if (this.small) classNames += " slds-modal_small"
+            else if (this.medium) classNames += " slds-modal_medium"
+            else if (this.large) classNames += " slds-modal_large"
+
+            return classNames
         },
 
-        modalHeaderClass() {
-            return [
-                {'slds-modal__header_empty': !this.$slots.header},
-                this.headerClass
-            ]
+        /**
+         * The CSS class names for the modal content.
+         */
+        modalContentClassNames(): string {
+            let classNames = "slds-modal__content"
+
+            if (this.maxHeight) classNames += " slds-grow"
+            if (this.fixedHeight) classNames += " slds-modal_fixed-height"
+            if (this.initialOverflow) classNames += " slds-overflow_initial"
+            if (this.contentClass && this.contentClass.length > 0) classNames += ` ${this.contentClass}`
+
+            return classNames
+        },
+
+        /**
+         * The CSS class names for the modal footer.
+         */
+        modalFooterClassNames(): string {
+            let classNames = "slds-modal__footer"
+
+            if (this.footerClass && this.footerClass.length > 0) classNames += this.footerClass
+
+            return classNames
+        },
+
+        /**
+         * The CSS class names for the modal header.
+         */
+        modalHeaderClassNames(): string {
+            let classNames = "slds-modal__header"
+
+            if (!this.$slots.header) classNames += " slds-modal__header_empty"
+            if (this.headerClass && this.headerClass.length > 0) classNames += this.headerClass
+
+            return classNames
         },
     },
 
     mounted() {
-        this.$refs.root.focus()
+        (this.$refs.root as HTMLDivElement).focus()
     },
 
     methods: {
-        onClose() {
-            this.$emit('close')
+        /**
+         * Handles the key up event on the esc key.
+         */
+        handleClose() {
+            this.$emit(EVENTS.CLOSE)
         },
 
-        onSubmit() {
-            this.$emit('submit')
+        /**
+         * Handles the key up event on the enter key.
+         */
+        handleSubmit() {
+            this.$emit(EVENTS.SUBMIT)
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
+
 .slds-modal {
     .slds-modal__content.slds-overflow_initial {
         overflow: initial;
@@ -130,5 +188,10 @@ export default {
             margin-left: 0.5rem;
         }
     }
+
+    .slds-modal__container {
+        padding: 3rem 0 3rem;
+    }
 }
+
 </style>

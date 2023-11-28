@@ -1,104 +1,80 @@
 <template>
     <slds-form-element
+        :errors="errors"
         :label="label"
-        :error="error && !$data.$_isOpen"
         :required="required"
-        :read-only="readonly"
+        :stacked="stacked"
+        :suppress-errors="isOpen"
         :tooltip="tooltip"
+        v-bind="formElementAttributes"
     >
-
         <!-- Tooltip -->
         <template v-if="$slots.tooltip" #tooltip>
             <slot name="tooltip"/>
         </template>
 
-        <!-- View mode -->
-        <div v-if="readonly" class="slds-form-element__static">
-            {{ this.$data.$_value }}
-        </div>
-
-        <!-- Container -->
-        <div
-            v-else
-            v-click-outside="hideDropdown"
-            class="slds-combobox_container"
-            :class="containerClass"
-        >
-            <div
-                class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                role="combobox"
-                @keyup.up="onKeyUp"
-                @keyup.down="onKeyDown"
-                @keyup.enter.stop="onKeyEnter"
-            >
-
-                <!-- Form element -->
+        <!-- Default slot -->
+        <template #default="slotProps">
+            <div v-click-outside="handleClickOutside" :class="containerClassNames">
                 <div
-                    class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
-                    role="none"
+                    class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                    @keydown.down.prevent
+                    @keydown.up.prevent
+                    @keyup.down="handleKeyDown"
+                    @keyup.enter.stop="handleKeyEnter"
+                    @keyup.up="handleKeyUp"
                 >
 
-                    <!-- Input -->
-                    <input
-                        ref="input"
-                        type="text"
-                        role="textbox"
-                        class="slds-input slds-combobox__input slds-combobox__input-value"
-                        autocomplete="off"
-                        v-bind="$attrs"
-                        :value="selectedLabel"
-                        :disabled="disabled"
-                        :placeholder="placeholder"
-                        readonly
-                        v-on="listeners"
-                        @click="onClick"
-                    >
+                    <!-- Form element -->
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
 
-                    <!-- Down icon -->
-                    <slds-icon
-                        icon="utility:down"
-                        x-small
-                        class="slds-input__icon slds-input__icon_right"
+                        <!-- Input -->
+                        <div
+                            :id="slotProps['inputId']"
+                            :class="inputClassNames"
+                            role="combobox"
+                            tabindex="0"
+                            @blur="handleBlurInput"
+                            @click="handleClickInput"
+                            @focus="handleFocusInput"
+                            @keyup.esc="handleEscInput"
+                        >
+                            <span class="slds-truncate">
+                                {{ readableValue }}
+                            </span>
+                        </div>
+
+                        <!-- Down icon -->
+                        <slds-icon class="slds-input__icon slds-input__icon_right" icon-name="utility:down" x-small/>
+
+                    </div>
+
+                    <!-- Pill container -->
+                    <div class="slds-pill_container">
+                        <slds-pill
+                            v-for="(selectedOption, index) in selectedOptions"
+                            :key="index"
+                            :label="selectedOption.label"
+                            :non-removable="selectedOption.nonRemovable"
+                            :title="selectedOption.label"
+                            @remove="handleRemoveOption(selectedOption)"
+                        />
+                    </div>
+
+                    <!-- Dropdown -->
+                    <slds-dropdown
+                        :focused-option="focusedOption"
+                        :is-open="isOpen"
+                        :options="options"
+                        :selected-options="selectedOptions"
+                        :show-spinner="showSpinner"
+                        @click-option="handleClickOption"
+                        @mouse-over-option="setFocusedOption"
                     />
 
                 </div>
-
-                <!-- Pill container -->
-                <div class="slds-pill_container">
-                    <slds-pill
-                        v-for="value in $data.$_value"
-                        :key="value"
-                        :label="getOption(value).label"
-                        :non-removable="getOption(value).nonRemovable"
-                        :title="getOption(value).label"
-                        @remove="onRemove(value)"
-                    />
-                </div>
-
-                <!-- Dropdown -->
-                <transition v-bind="dropdownTransitionProperties">
-                    <slds-multi-picklist-dropdown
-                        v-if="$data.$_isOpen"
-                        :value="$data.$_value"
-                        class="pill-container-offset"
-                        :class="dropdownClass"
-                        :options="filteredOptions"
-                        :focused-option="$data.$_focusedOption"
-                        :is-empty="isEmpty"
-                        :loading="loading"
-                        @click="onClickOption"
-                        @mouseover="onMouseOverOption"
-                    >
-                        <template v-if="$slots.options">
-                            <slot name="options"/>
-                        </template>
-                    </slds-multi-picklist-dropdown>
-                </transition>
-
             </div>
-        </div>
+        </template>
 
         <!-- Inline help -->
         <template #help>
@@ -113,231 +89,336 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import HasDropdownMixin from '@/mixins/has-dropdown-mixin'
-import ClickOutside from '@/directives/click-outside/index'
-import DropdownOption from '@/components/slds-options/dropdown-option-class'
-import SldsMultiPicklistDropdown from '@/components/slds-multi-picklist/slds-multi-picklist-dropdown'
-import SldsPill from '@/components/slds-pill/slds-pill'
+<script lang="ts">
+import { defineComponent, type PropType } from "vue"
+import HasDropdownMixin from "../../mixins/has-dropdown-mixin"
+import SldsDropdown from "../slds-dropdown/slds-dropdown.vue"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsPill from "../slds-pill/slds-pill.vue"
+import { vOnClickOutside } from "@vueuse/components"
+import { EVENTS } from "../../constants"
+import type { DropdownOption } from "../slds-dropdown/dropdown-option"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
-export default {
-    name: 'SldsMultiPicklist',
+export default defineComponent({
+    name: "SldsMultiPicklist",
 
     components: {
-        SldsFormElement,
-        SldsIcon,
-        SldsMultiPicklistDropdown,
         SldsPill,
+        SldsIcon,
+        SldsDropdown,
+        SldsFormElement,
     },
 
     directives: {
-        ClickOutside
+        ClickOutside: vOnClickOutside,
     },
 
-    mixins: [
-        HasDropdownMixin
-    ],
-
-    inheritAttrs: false,
+    mixins: [HasDropdownMixin],
 
     props: {
+        /**
+         * Indicates whether the picklist is disabled.
+         */
         disabled: Boolean,
-        error: Boolean,
+
+        /**
+         * Array of error objects from vuelidate.
+         */
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
+
+        /**
+         * Picklist label.
+         */
         label: String,
+
         large: Boolean,
-        length: {
-            type: Number,
-            validator(value) {
-                return [5, 7, 10].indexOf(value) !== -1
-            },
-        },
-        loading: Boolean,
+
         medium: Boolean,
-        options: Array,
+
+        /**
+         * Picklist value.
+         */
+        modelValue: { type: Array as PropType<string[]>, default: () => [] as string[] },
+
+        /**
+         * Picklist placeholder.
+         */
         placeholder: String,
-        readonly: Boolean,
+
+        /**
+         * Indicates whether this label's picklist is required.
+         */
         required: Boolean,
+
         small: Boolean,
+
+        /**
+         * Indicates whether the picklist is stacked among other inputs.
+         */
+        stacked: Boolean,
+
+        /**
+         * Tooltip text.
+         * When using the tooltip slot this prop is ignored.
+         */
         tooltip: String,
-        value: {type: Array, default: () => []},
+
         xLarge: Boolean,
+
         xSmall: Boolean,
+
         xxLarge: Boolean,
+
         xxSmall: Boolean,
     },
 
-    data() {
-        return {
-            $_value: this.value
-        }
-    },
-
     computed: {
-        containerClass() {
-            if (this.xxSmall) return 'slds-size_xx-small'
-            if (this.xSmall) return 'slds-size_x-small'
-            if (this.small) return 'slds-size_small'
-            if (this.medium) return 'slds-size_medium'
-            if (this.large) return 'slds-size_large'
-            if (this.xLarge) return 'slds-size_x-large'
-            if (this.xxLarge) return 'slds-size_xx-large'
-            return null
+        /**
+         * The CSS class names for the container.
+         */
+        containerClassNames(): string {
+            let classNames = "slds-combobox_container"
+
+            // Size
+            if (this.xxSmall) classNames += " slds-size_xx-small"
+            else if (this.xSmall) classNames += " slds-size_x-small"
+            else if (this.small) classNames += " slds-size_small"
+            else if (this.medium) classNames += " slds-size_medium"
+            else if (this.large) classNames += " slds-size_large"
+            else if (this.xLarge) classNames += " slds-size_x-large"
+            else if (this.xxLarge) classNames += " slds-size_xx-large"
+
+            return classNames
         },
 
-        dropdownClass() {
-            return `slds-dropdown_length-${this.length}`
+        /**
+         * Bindable form element attributes.
+         */
+        formElementAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (attribute.startsWith("data-") || attribute === "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
         },
 
-        listeners() {
-            const listeners = {...this.$listeners}
-            delete listeners.input
-            return listeners
+        /**
+         * Bindable input attributes.
+         */
+        inputAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (!attribute.startsWith("data-") && attribute !== "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
         },
 
-        selectedLabel() {
-            return this.$data.$_value && this.$data.$_value.length === 1
-                ? `${this.$data.$_value.length} Option Selected`
-                : `${this.$data.$_value.length} Options Selected`
-        },
-    },
+        /**
+         * The CSS class names for the input.
+         */
+        inputClassNames(): string {
+            let classNames = "slds-input_faux slds-combobox__input slds-cursor_pointer"
 
-    watch: {
-        options: {
-            deep: true,
-            handler() {
-                this.parseOptions()
+            // Showing input value
+            if (this.modelValue) classNames += " slds-combobox__input-value"
+
+            // Showing spinner
+            if (this.isFocused) classNames += " slds-has-focus"
+
+            return classNames
+        },
+
+        /**
+         * The readable value displayed inside the input.
+         */
+        readableValue(): string {
+            if (this.modelValue) {
+                if (this.modelValue.length === 0) return this.placeholder || ""
+                if (this.modelValue.length === 1) return `${this.modelValue.length} Option Selected`
+                return `${this.modelValue.length} Options Selected`
+            }
+            else {
+                return this.placeholder || ""
             }
         },
 
-        value(value) {
-            this.$data.$_value = value
-        }
-    },
-
-    created() {
-        this.parseOptions()
+        /**
+         * The currently selected options, if any.
+         */
+        selectedOptions(): DropdownOption[] {
+            return this.modelValue && this.modelValue.length > 0
+                ? this.options?.filter(option => option.value && this.modelValue.includes(option.value)) || []
+                : []
+        },
     },
 
     methods: {
-        getOption(value) {
-            return this.$data.$_options.find(option => option.value === value)
+        /**
+         * Handles the blur event on the input.
+         */
+        handleBlurInput(): void {
+            if (!this.disabled) this.isFocused = false
+            if (this.isOpen) this.hideDropdown()
         },
 
-        async onClick() {
-            if (this.disabled || this.$data.$_isOpen) return
-            this.setFocusedItem()
-            this.showDropdown()
+        /**
+         * Handles the click event on the input.
+         */
+        handleClickInput(): void {
+            if (this.disabled) return
 
-            await this.$nextTick()
-            this.$refs.input.focus()
-        },
-
-        onClickOption(value) {
-            this.selectOption(value)
-        },
-
-        onKeyDown() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
-                this.showDropdown()
+            if (this.isOpen) {
+                this.hideDropdown()
             }
             else {
+                this.setFocusedOption()
+                this.showDropdown()
+            }
+        },
+
+        /**
+         * Handles the click event on an option.
+         * @param option The clicked option.
+         */
+        handleClickOption(option: DropdownOption): void {
+            if (this.disabled || option.disabled) return
+            this.selectOption(option)
+        },
+
+        /**
+         * Handles the focus event on the input.
+         */
+        handleFocusInput(): void {
+            if (!this.disabled) this.isFocused = true
+        },
+
+        /**
+         * Handles the click event outside this component.
+         */
+        handleClickOutside(): void {
+            this.hideDropdown()
+        },
+
+        /**
+         * Handles the key up esc event on the input.
+         * @param event The fired event.
+         */
+        handleEscInput(event: Event): void {
+            if (!this.isOpen) return
+
+            this.hideDropdown()
+            event.stopPropagation()
+        },
+
+        /**
+         * Handles the key down event on the combobox.
+         */
+        handleKeyDown(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
+                this.showDropdown()
+            }
+            else if (!this.isEmpty) {
                 this.setFocusedOptionDown()
             }
         },
 
-        onKeyEnter() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
+        /**
+         * Handles the key enter event on the combobox.
+         */
+        handleKeyEnter(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
-                this.selectOption(this.$data.$_focusedOption)
+            else if (!this.isEmpty) {
+                this.selectOption(this.focusedOption!)
             }
         },
 
-        onKeyUp() {
-            if (!this.$data.$_isOpen) {
-                this.setFocusedItem()
+        /**
+         * Handles the key up event on the combobox.
+         */
+        handleKeyUp(): void {
+            if (!this.isOpen) {
+                this.setFocusedOption()
                 this.showDropdown()
             }
-            else {
+            else if (!this.isEmpty) {
                 this.setFocusedOptionUp()
             }
         },
 
-        onMouseOverOption(value) {
-            this.setFocusedItem(value)
+        /**
+         * Handles the remove event on pill.
+         * @param option The removed option.
+         */
+        handleRemoveOption(option: DropdownOption): void {
+            const index = this.modelValue.indexOf(option.value!)
+            const modelValue = [...this.modelValue]
+
+            modelValue.splice(index, 1)
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, modelValue)
         },
 
-        onRemove(value) {
-            const index = this.$data.$_value.indexOf(value)
-            this.$data.$_value.splice(index, 1)
-            this.$emit('input', this.$data.$_value)
-        },
+        /**
+         * Selects an option.
+         * @param selectedOption Selected option.
+         */
+        selectOption(selectedOption: DropdownOption): void {
+            if (!selectedOption.value) return
 
-        parseOptions() {
-            this.$data.$_options.splice(0, this.$data.$_options.length)
-            if (this.options == null) return
-
-            for (const option of this.options) {
-                if (typeof option === 'string') {
-                    this.$data.$_options.push(new DropdownOption(null, option))
-                }
-                else if (typeof option === 'object') {
-                    const dropdownOption = new DropdownOption(option.heading, option.label, option.value)
-                    dropdownOption.meta = option.meta
-                    dropdownOption.disabled = option.disabled
-                    dropdownOption.nonRemovable = option.nonRemovable
-
-                    this.$data.$_options.push(dropdownOption)
-                }
-                else {
-                    throw'[slds-multi-picklist] options must be of type string or a valid picklist option object.'
-                }
-            }
-        },
-
-        selectOption(value) {
             this.hideDropdown()
-            const index = this.$data.$_value.indexOf(value)
+            const index = this.modelValue.indexOf(selectedOption.value)
+            const modelValue = [...this.modelValue]
 
             if (index === -1) {
-                this.$data.$_value.push(value)
-                this.$emit('input', this.$data.$_value)
+                modelValue.push(selectedOption.value)
+                this.$emit(EVENTS.UPDATE_MODEL_VALUE, modelValue)
             }
-            else {
-                const selectedOption = this.$data.$_options.find(option => option.value === value)
-
-                if (!selectedOption.nonRemovable) {
-                    this.$data.$_value.splice(index, 1)
-                    this.$emit('input', this.$data.$_value)
-                }
+            else if (!selectedOption.nonRemovable) {
+                modelValue.splice(index, 1)
+                this.$emit(EVENTS.UPDATE_MODEL_VALUE, modelValue)
             }
 
             this.clearFocusedOption()
         },
 
-        setFocusedItem(value = null) {
-            if (value) this.$data.$_focusedOption = value
-            else if (this.$data.$_value) this.$data.$_focusedOption = this.$data.$_value[0]
-            else this.$data.$_focusedOption = this.filteredOptions
-                    .find(option => !option.disabled && !option.heading)
-                    .value
-        }
-    }
-}
+        /**
+         * Set the focused item.
+         * @param option Hovered option, if any.
+         */
+        setFocusedOption(option?: DropdownOption): void {
+            if (this.isEmpty) return
+
+            if (option) this.focusedOption = option
+            else if (this.modelValue && this.modelValue.length > 0) this.focusedOption = this.selectedOptions[0]
+            else this.focusedOption = this.options.find(option => !option.disabled && !option.isHeading && !option.isDivider)
+        },
+    },
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../directives/animated/animations';
 
-input {
-    cursor: pointer;
+.slds-input_faux {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+
+    // Fixes chromium bug which makes all focus rings black regardless of color defined
+    &:focus-visible {
+        outline: none !important;
+    }
 }
 
 .slds-pill_container {
@@ -350,4 +431,5 @@ input {
 .pill-container-offset {
     margin-top: -1.875rem;
 }
+
 </style>

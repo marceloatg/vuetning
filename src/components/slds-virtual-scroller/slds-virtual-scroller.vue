@@ -7,7 +7,7 @@
     <div
         v-observe-visibility="handleVisibilityChange"
         class="virtual-scroller"
-        :class="{ ready, 'page-mode': pageMode }"
+        :class="{ ready }"
         @scroll.passive="handleScroll"
     >
         <div
@@ -29,16 +29,17 @@
     </div>
 </template>
 
-<script>
-import {ObserveVisibility} from 'vue-observe-visibility'
-import ScrollParent from 'scrollparent'
-import {supportsPassive} from './utils'
+<script lang="ts">
+import { ObserveVisibility } from "vue-observe-visibility"
+import { supportsPassive } from "./utils"
+import { defineComponent, markRaw, shallowReactive } from "vue"
+import ScrollParent from "scrollparent"
 
 let uid = 0
 const ITEMS_LIMIT = 1000
 
-export default {
-    name: 'SldsVirtualScroller',
+export default defineComponent({
+    name: "SldsVirtualScroller",
 
     directives: {
         ObserveVisibility,
@@ -52,7 +53,7 @@ export default {
 
         keyField: {
             type: String,
-            default: 'id',
+            default: "id",
         },
 
         itemSize: {
@@ -62,15 +63,13 @@ export default {
 
         sizeField: {
             type: String,
-            default: 'size',
+            default: "size",
         },
 
         buffer: {
             type: Number,
             default: 200,
         },
-
-        pageMode: Boolean,
 
         prerender: {
             type: Number,
@@ -98,7 +97,7 @@ export default {
         },
 
         simpleArray() {
-            return this.items.length && typeof this.items[0] !== 'object'
+            return this.items.length && typeof this.items[0] !== "object"
         },
     },
 
@@ -116,11 +115,6 @@ export default {
 
                 this.updateVisibleItems(true)
             }
-        },
-
-        pageMode() {
-            this.applyPageMode()
-            this.updateVisibleItems(false)
         },
     },
 
@@ -140,54 +134,42 @@ export default {
         }
     },
 
-    async mounted() {
-        this.applyPageMode()
-        await this.$nextTick()
-
+    mounted() {
         // In SSR mode, render the real number of visible items
         this.$_prerender = false
         this.updateVisibleItems(true)
         this.ready = true
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         this.removeListeners()
     },
 
     methods: {
         addListeners() {
             this.listenerTarget = this.getListenerTarget()
-            this.listenerTarget.addEventListener('scroll', this.handleScroll, supportsPassive ? {
+            this.listenerTarget.addEventListener("scroll", this.handleScroll, supportsPassive ? {
                 passive: true,
             } : false)
-            this.listenerTarget.addEventListener('resize', this.handleResize)
+            this.listenerTarget.addEventListener("resize", this.handleResize)
         },
 
         addView(mountedViews, index, item, key) {
-            const view = {
-                item,
-                position: 0,
-            }
-
-            const nonReactive = {
+            const nr = markRaw({
                 id: uid++,
                 index,
                 used: true,
                 key,
-            }
+            })
 
-            Object.defineProperty(view, 'nr', {
-                configurable: false,
-                value: nonReactive,
+            const view = shallowReactive({
+                item,
+                position: 0,
+                nr,
             })
 
             mountedViews.push(view)
             return view
-        },
-
-        applyPageMode() {
-            if (this.pageMode) this.addListeners()
-            else this.removeListeners()
         },
 
         getListenerTarget() {
@@ -200,31 +182,7 @@ export default {
         },
 
         getScroll() {
-            const {$el: el} = this
-
-            if (this.pageMode) {
-                const bounds = el.getBoundingClientRect()
-                const boundsSize = bounds.height
-                const originalStart = -(bounds.top)
-                const originalSize = window.innerHeight
-                let start = originalStart
-                let size = originalSize
-
-                if (start < 0) {
-                    size += start
-                    start = 0
-                }
-
-                if (start + size > boundsSize) {
-                    size = boundsSize - start
-                }
-
-                return {
-                    originalStart,
-                    start,
-                    end: start + size,
-                }
-            }
+            const { $el: el } = this
 
             return {
                 originalStart: el.scrollTop,
@@ -234,7 +192,7 @@ export default {
         },
 
         handleResize() {
-            this.$emit('resize')
+            this.$emit("resize")
             if (this.ready) this.updateVisibleItems(false)
         },
 
@@ -247,7 +205,7 @@ export default {
             cancelAnimationFrame(this.$_scrollAnimationRequest)
             this.$_scrollAnimationRequest = requestAnimationFrame(() => {
                 this.$_scrollAnimationRequest = false
-                const {continuous} = this.updateVisibleItems(false, true)
+                const { continuous } = this.updateVisibleItems(false, true)
 
                 // It seems sometimes chrome doesn't fire scroll event :/
                 // When non continuous scrolling is ending, we force a refresh
@@ -262,30 +220,29 @@ export default {
             if (!this.ready) return
 
             if (isVisible || entry.boundingClientRect.width !== 0 || entry.boundingClientRect.height !== 0) {
-                this.$emit('visible')
+                this.$emit("visible")
                 requestAnimationFrame(() => {
                     this.updateVisibleItems(false)
                 })
-            }
-            else {
-                this.$emit('hidden')
+            } else {
+                this.$emit("hidden")
             }
         },
 
         itemsLimitError() {
-            throw new Error('Rendered items limit reached. Rendering all items at once.')
+            throw new Error("Rendered items limit reached. Rendering all items at once.")
         },
 
         removeListeners() {
             if (!this.listenerTarget) return
 
-            this.listenerTarget.removeEventListener('scroll', this.handleScroll)
-            this.listenerTarget.removeEventListener('resize', this.handleResize)
+            this.listenerTarget.removeEventListener("scroll", this.handleScroll)
+            this.listenerTarget.removeEventListener("resize", this.handleResize)
             this.listenerTarget = null
         },
 
         scrollToItem(index) {
-            const {viewport, scrollDirection, scrollDistance} = this.scrollToPosition(index)
+            const { viewport, scrollDirection, scrollDistance } = this.scrollToPosition(index)
             viewport[scrollDirection] = scrollDistance
         },
 
@@ -295,21 +252,7 @@ export default {
             }
 
             const position = getPositionOfItem(index)
-            const direction = {scroll: 'scrollTop', start: 'top'}
-
-            if (this.pageMode) {
-                const viewportEl = ScrollParent(this.$el)
-                // HTML doesn't overflow like other elements
-                const scrollTop = viewportEl.tagName === 'HTML' ? 0 : viewportEl[direction.scroll]
-                const viewport = viewportEl.getBoundingClientRect()
-                const scroller = this.$el.getBoundingClientRect()
-                const scrollerPosition = scroller[direction.start] - viewport[direction.start]
-                return {
-                    viewport: viewportEl,
-                    scrollDirection: direction.scroll,
-                    scrollDistance: position + scrollTop + scrollerPosition,
-                }
-            }
+            const direction = { scroll: "scrollTop", start: "top" }
 
             return {
                 viewport: this.$el,
@@ -337,7 +280,7 @@ export default {
             const views = this.$_views
             const unusedViews = this.$_unusedViews
             const mountedViews = this.mountedViews
-            const mountedViewsThreshold = this.mountedViewsThreshold
+            //const mountedViewsThreshold = this.mountedViewsThreshold
             let startIndex, endIndex
             let totalSize
             let scroll
@@ -349,7 +292,7 @@ export default {
                 if (checkPositionDiff) {
                     const positionDiff = Math.abs(scroll.originalStart - this.$_lastUpdateScrollPosition)
                     if (itemSize === null && positionDiff < itemSize) {
-                        return {continuous: true}
+                        return { continuous: true }
                     }
                 }
             }
@@ -357,13 +300,11 @@ export default {
             // Sets start index, end index, and total size
             if (!count) {
                 startIndex = endIndex = totalSize = 0
-            }
-            else if (this.$_prerender) {
+            } else if (this.$_prerender) {
                 startIndex = 0
                 endIndex = this.prerender
                 totalSize = null
-            }
-            else {
+            } else {
                 this.$_lastUpdateScrollPosition = scroll.originalStart
 
                 const buffer = this.buffer
@@ -398,8 +339,7 @@ export default {
                     }
                 }
                 this.$_continuous = continuous
-            }
-            else if (continuous) {
+            } else if (continuous) {
                 for (let i = 0, l = mountedViews.length; i < l; i++) {
                     view = mountedViews[i]
 
@@ -451,12 +391,10 @@ export default {
                             view.nr.used = true
                             view.nr.index = i
                             view.nr.key = key
-                        }
-                        else {
+                        } else {
                             view = this.addView(mountedViews, i, item, key)
                         }
-                    }
-                    else {
+                    } else {
                         // Use existing view
                         // We don't care if they are already used
                         // because we are not in continuous scrolling
@@ -476,8 +414,7 @@ export default {
                         v++
                     }
                     views.set(key, view)
-                }
-                else {
+                } else {
                     view.nr.used = true
                     view.item = item
                 }
@@ -489,14 +426,14 @@ export default {
             this.$_startIndex = startIndex
             this.$_endIndex = endIndex
 
-            if (this.emitUpdate) this.$emit('update', startIndex, endIndex)
+            if (this.emitUpdate) this.$emit("update", startIndex, endIndex)
 
             return {
                 continuous,
             }
         },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">

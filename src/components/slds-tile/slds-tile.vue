@@ -1,153 +1,138 @@
 <template>
-    <div class="slds-tile slds-media">
+    <slds-media-object class="slds-tile">
 
-        <!-- Avatar -->
-        <div v-if="avatar" class="slds-media__figure">
+        <template #figure>
+
+            <!-- Avatar -->
             <slds-avatar
+                v-if="avatar"
                 circle
                 medium
                 :src="avatar"
             />
-        </div>
 
-        <!-- Icon -->
-        <div v-else-if="icon" class="slds-media__figure">
+            <!-- Icon -->
             <slds-icon
-                :icon="icon"
+                v-else-if="iconName"
+                :icon-name="iconName"
+                :icon-class="iconClass"
                 :large="iconLarge"
                 medium
                 :small="iconSmall"
                 :x-small="iconXSmall"
                 :xx-small="iconXXSmall"
             />
-        </div>
 
-        <!-- Body -->
-        <div class="slds-media__body">
+        </template>
 
+        <template #default>
+
+            <!-- Header -->
             <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate slds-hint-parent">
 
                 <!-- Title -->
                 <h3 class="slds-tile__title slds-truncate" :title="title">
+                    <slot name="title">
 
-                    <p v-if="linkless">
-                        {{ title }}
-                    </p>
+                        <p v-if="linkless">
+                            <b>{{ title }}</b>
+                        </p>
 
-                    <a v-else @click="onClickTitle">
-                        {{ title }}
-                    </a>
+                        <a v-else @click="handleClickTitle">
+                            {{ title }}
+                        </a>
 
+                    </slot>
                 </h3>
 
                 <!-- Actions -->
-                <div v-if="showActions" class="slds-shrink-none">
-                    <slds-menu
-                        right-alignment
-                        bordered-filled
-                        :items="actions"
-                        x-small
-                    />
+                <div v-if="$slots.actions" class="slds-shrink-none">
+                    <slot name="actions"/>
                 </div>
 
             </div>
 
             <!-- Content -->
             <div class="slds-tile__detail">
-
-                <!-- Items -->
                 <slot/>
             </div>
 
-        </div>
+        </template>
 
-    </div>
+    </slds-media-object>
 </template>
 
-<script>
-import SldsAvatar from '@/components/slds-avatar/slds-avatar'
-import SldsIcon from '@/components/slds-icon/slds-icon'
-import SldsMenu from '@/components/slds-menu/slds-menu'
+<script lang="ts">
+import SldsAvatar from "../slds-avatar/slds-avatar.vue"
+import SldsIcon from "../slds-icon/slds-icon.vue"
+import SldsMediaObject from "../slds-media-object/slds-media-object.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsTile',
+export default defineComponent({
+    name: "SldsTile",
 
     components: {
+        SldsMediaObject,
         SldsAvatar,
         SldsIcon,
-        SldsMenu,
     },
 
     props: {
         /**
-         * The list of available stocks.
-         * @type {array}
-         */
-        actions: Array,
-
-        /**
-         * The URL for the avatar.
-         * @type {string}
+         * The URL for the avatar
          */
         avatar: String,
 
         /**
-         * The Lightning Design System name of the icon. Names are written in the format
-         * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
-         * @type {string}
+         * The class names to be passed to the icon.
          */
-        icon: String,
+        iconClass: String,
+
+        /**
+         * The Lightning Design System name of the icon. Names are written in the format
+         * 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.value
+         */
+        iconName: String,
 
         /**
          * Indicates whether to use a large icon.
-         * @type {boolean}
          */
         iconLarge: Boolean,
 
         /**
          * Indicates whether to use a small icon.
-         * @type {boolean}
          */
         iconSmall: Boolean,
 
         /**
-         * Indicates whether to use a x-small icon.
-         * @type {boolean}
+         * Indicates whether to use an x-small icon.
          */
         iconXSmall: Boolean,
 
         /**
          * Indicates whether to use a xx-small icon.
-         * @type {boolean}
          */
         iconXXSmall: Boolean,
 
         /**
          * Indicates whether title no has link.
-         * @type {boolean}
          */
         linkless: Boolean,
 
         /**
          * The title of the tile.
-         * @type {string}
          */
-        title: {type: String, required: true},
-    },
-
-    computed: {
-        showActions() {
-            return this.actions && this.actions.length > 0
-        }
+        title: String,
     },
 
     methods: {
         /**
-         * Fires a click event when the title is clicked.
+         * Handles the click event on the title.
          */
-        onClickTitle() {
-            this.$emit('click')
-        }
-    }
-}
+        handleClickTitle(): void {
+            this.$emit(EVENTS.CLICK)
+        },
+    },
+})
 </script>

@@ -1,10 +1,9 @@
 <template>
     <slds-form-element
-        :borderless="borderless"
-        :error="error"
-        :label="inline ? null : label"
-        :read-only="readonly"
+        :help="help"
+        :label="inline ? undefined : label"
         :required="required"
+        :stacked="stacked"
         :tooltip="tooltip"
     >
 
@@ -13,29 +12,17 @@
             <slot name="tooltip"/>
         </template>
 
-        <!-- View mode -->
-        <template v-if="readonly">
-
-            <slds-icon
-                :icon="value ? 'utility:check' : 'utility:steps'"
-                x-small
+        <!-- Default slot -->
+        <template #default="slotProps">
+            <slds-checkbox-option
+                :id="slotProps['input-id']"
+                :value="modelValue"
+                :option="label"
+                :disabled="disabled"
+                :inline="inline"
+                @click="onClick"
             />
-
-            <span v-if="inline" class="slds-p-left_xx-small">
-                {{ label }}
-            </span>
-
         </template>
-
-        <!-- Input -->
-        <slds-checkbox-option
-            v-else
-            v-model="$data.$_value"
-            :option="label"
-            :disabled="disabled"
-            :inline="inline"
-            @click="onClick"
-        />
 
         <!-- Inline help -->
         <template #help>
@@ -50,50 +37,55 @@
     </slds-form-element>
 </template>
 
-<script>
-import SldsCheckboxOption from '@/components/slds-options/slds-checkbox-option'
-import SldsFormElement from '@/components/slds-form-element/slds-form-element'
-import SldsIcon from '@/components/slds-icon/slds-icon'
+<script lang="ts">
+import SldsCheckboxOption from "./slds-checkbox-option.vue"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import { EVENTS } from "../../constants"
+import { defineComponent } from "vue"
 
-export default {
-    name: 'SldsCheckbox',
+export default defineComponent({
+    name: "SldsCheckbox",
 
     components: {
         SldsCheckboxOption,
         SldsFormElement,
-        SldsIcon
     },
 
     props: {
-        borderless: Boolean,
         disabled: Boolean,
+
         error: Boolean,
+
+        /**
+         * Inline help text.
+         * When using the help slot this prop is ignored.
+         */
+        help: String,
+
         inline: Boolean,
-        label: String,
-        readonly: Boolean,
+
+        label: { type: String, required: true },
+
+        /**
+         * Input value.
+         */
+        modelValue: Boolean,
+
         required: Boolean,
+
+        /**
+         * Indicates whether the input is stacked among other inputs.
+         */
+        stacked: Boolean,
+
         tooltip: String,
-        value: Boolean
-    },
-
-    data() {
-        return {
-            $_value: this.value
-        }
-    },
-
-    watch: {
-        value(value) {
-            this.$data.$_value = value
-        }
     },
 
     methods: {
-        onClick() {
-            if (this.disabled || this.readonly) return
-            this.$data.$_value = !this.$data.$_value
-            this.$emit('input', this.$data.$_value)
-        }
-    }
-}
+        onClick(): void {
+            if (this.disabled) return
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, !this.modelValue)
+        },
+    },
+})
 </script>
