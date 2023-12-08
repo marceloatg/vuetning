@@ -67,7 +67,8 @@
 <script lang="ts">
 import SldsFormElement from "../slds-form-element/slds-form-element.vue"
 import { EVENTS } from "../../constants"
-import { defineComponent } from "vue"
+import { defineComponent, type PropType } from "vue"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
 export default defineComponent({
     name: "SldsCheckboxToggle",
@@ -79,10 +80,11 @@ export default defineComponent({
     inheritAttrs: false,
 
     props: {
+
         /**
          * Array of error objects from vuelidate.
          */
-        errors: Array,
+        errors: { type: Array as PropType<ValidationError[]>, default: () => [] as ValidationError[] },
 
         disabled: Boolean,
 

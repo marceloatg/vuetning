@@ -1,5 +1,15 @@
 <template>
 
+    <!-- Checkbox group -->
+    <example-container class="slds-m-bottom_medium">
+        <slds-checkbox-group
+            v-model="values"
+            :options="options1"
+            inline
+        />
+        value: {{ values }}
+    </example-container>
+
     <!-- Lookup -->
     <example-container class="slds-m-bottom_medium">
         <slds-grid>
@@ -417,11 +427,13 @@ import SldsLookup from "../../src/components/slds-lookup/slds-lookup.vue"
 import SldsGrid from "../../src/components/slds-grid/slds-grid.vue"
 import SldsColumn from "../../src/components/slds-grid/slds-column.vue"
 import SldsInput from "../../src/components/slds-input/slds-input.vue"
+import SldsCheckboxGroup from "../../src/components/slds-checkbox-group/slds-checkbox-group.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsCheckboxGroup,
         SldsInput,
         SldsColumn,
         SldsGrid,
@@ -531,16 +543,36 @@ export default {
             test1: "en",
 
             options1: [
-                { label: "English", value: "en", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
-                { label: "German", value: "de", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
-                { label: "Spanish", value: "es", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
-                { label: "French", value: "fr", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
-                { label: "Italian", value: "it", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
-                { label: "Japanese", value: "ja", description: "Lorem ipsum dolor sit amet.",  iconName: "standard:user" },
+                {
+                    label: "English",
+                    value: "en",
+                    description: "Lorem ipsum dolor sit amet.",
+                    iconName: "standard:user",
+                },
+                { label: "German", value: "de", description: "Lorem ipsum dolor sit amet.", iconName: "standard:user" },
+                {
+                    label: "Spanish",
+                    value: "es",
+                    description: "Lorem ipsum dolor sit amet.",
+                    iconName: "standard:user",
+                },
+                { label: "French", value: "fr", description: "Lorem ipsum dolor sit amet.", iconName: "standard:user" },
+                {
+                    label: "Italian",
+                    value: "it",
+                    description: "Lorem ipsum dolor sit amet.",
+                    iconName: "standard:user",
+                },
+                {
+                    label: "Japanese",
+                    value: "ja",
+                    description: "Lorem ipsum dolor sit amet.",
+                    iconName: "standard:user",
+                },
             ],
 
             options2: [
-                { label: "English", value: "en",  iconName: "standard:user" },
+                { label: "English", value: "en", iconName: "standard:user" },
                 { label: "German", value: "de", iconName: "standard:user" },
                 { label: "Spanish", value: "es", iconName: "standard:user" },
                 { label: "French", value: "fr", iconName: "standard:user" },
