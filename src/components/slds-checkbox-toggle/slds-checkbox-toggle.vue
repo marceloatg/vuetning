@@ -68,7 +68,7 @@
 import SldsFormElement from "../slds-form-element/slds-form-element.vue"
 import { EVENTS } from "../../constants"
 import { defineComponent, type PropType } from "vue"
-import type { ValidationError } from "@/components/slds-form-element/validation-error"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
 export default defineComponent({
     name: "SldsCheckboxToggle",

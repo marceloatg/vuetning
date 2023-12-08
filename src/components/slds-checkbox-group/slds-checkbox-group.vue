@@ -41,12 +41,12 @@
 </template>
 
 <script lang="ts">
-import SldsFormElement from "@/components/slds-form-element/slds-form-element.vue"
+import SldsFormElement from "../slds-form-element/slds-form-element.vue"
 import { defineComponent, type PropType } from "vue"
 import { type CheckboxGroupOption } from "./checkbox-group-option"
-import { EVENTS } from "@/constants"
+import { EVENTS } from "../../constants"
 import SldsCheckboxGroupOption from "../slds-checkbox-group/slds-checkbox-group-option.vue"
-import type { ValidationError } from "@/components/slds-form-element/validation-error"
+import type { ValidationError } from "../slds-form-element/validation-error"
 
 export default defineComponent ({
     name: "SldsCheckboxGroup",
