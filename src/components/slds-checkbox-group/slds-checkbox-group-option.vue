@@ -1,6 +1,7 @@
 <template>
     <div class="slds-checkbox" @click="handleClick">
 
+        <!-- Input -->
         <input
             type="checkbox"
             :checked="checked"
@@ -8,6 +9,7 @@
             :class="inputClassNames"
         >
 
+        <!-- Faux -->
         <label class="slds-checkbox__label">
 
             <span class="slds-checkbox_faux"/>
@@ -24,14 +26,23 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
-export default defineComponent ({
+export default defineComponent({
     name: "SldsCheckboxGroupOption",
 
     props: {
+        /**
+         * Indicates whether this option is checked.
+         */
         checked: Boolean,
 
+        /**
+         * Indicates whether this option is disabled.
+         */
         disabled: Boolean,
 
+        /**
+         * Option label.
+         */
         label: { type: String, required: true },
     },
     computed: {

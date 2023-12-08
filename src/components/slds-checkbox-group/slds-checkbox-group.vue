@@ -21,7 +21,7 @@
                     :key="option.value"
                     :checked="modelValue.includes(option.value)"
                     :label="option.label"
-                    :disabled="option.disabled"
+                    :disabled="option.disabled || disabled"
                     @click="handleClick($event, option)"
                 />
             </slot>
@@ -42,11 +42,11 @@
 
 <script lang="ts">
 import SldsFormElement from "../slds-form-element/slds-form-element.vue"
+import SldsCheckboxGroupOption from "../slds-checkbox-group/slds-checkbox-group-option.vue"
 import { defineComponent, type PropType } from "vue"
+import { type ValidationError } from "../slds-form-element/validation-error"
 import { type CheckboxGroupOption } from "./checkbox-group-option"
 import { EVENTS } from "../../constants"
-import SldsCheckboxGroupOption from "../slds-checkbox-group/slds-checkbox-group-option.vue"
-import type { ValidationError } from "../slds-form-element/validation-error"
 
 export default defineComponent ({
     name: "SldsCheckboxGroup",

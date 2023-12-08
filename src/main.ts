@@ -8,6 +8,7 @@ export * from "./constants"
 
 export type { AccordionSection } from "./components/slds-accordion/accordion-section"
 export type { Breadcrumb } from "./components/slds-breadcrumbs/breadcrumb"
+export type { CheckboxGroupOption } from "./components/slds-checkbox-group/checkbox-group-option"
 export type { CheckboxButtonGroupOption } from "./components/slds-checkbox-button-group/checkbox-button-group-option"
 export type { DataTableColumn } from "./components/slds-data-table/data-table-column"
 export type { DropdownOption } from "./components/slds-dropdown/dropdown-option"
