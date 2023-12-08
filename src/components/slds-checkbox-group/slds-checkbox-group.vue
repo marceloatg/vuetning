@@ -15,18 +15,16 @@
 
         <!-- Default slot -->
         <template #default>
-            <div class="slds-checkbox_button-group">
-                <slot>
-                    <slds-checkbox-button-option
-                        v-for="option in options"
-                        :key="option.value"
-                        :checked="modelValue.includes(option.value)"
-                        :label="option.label"
-                        :disabled="option.disabled"
-                        @click="handleClick($event, option)"
-                    />
-                </slot>
-            </div>
+            <slot>
+                <slds-checkbox-group-option
+                    v-for="option in options"
+                    :key="option.value"
+                    :checked="modelValue.includes(option.value)"
+                    :label="option.label"
+                    :disabled="option.disabled || disabled"
+                    @click="handleClick($event, option)"
+                />
+            </slot>
         </template>
 
         <!-- Inline help -->
@@ -43,20 +41,17 @@
 </template>
 
 <script lang="ts">
-import SldsCheckboxButtonOption from "./slds-checkbox-button-option.vue"
 import SldsFormElement from "../slds-form-element/slds-form-element.vue"
-import { EVENTS } from "../../constants"
-import { type CheckboxButtonGroupOption } from "./checkbox-button-group-option"
+import SldsCheckboxGroupOption from "../slds-checkbox-group/slds-checkbox-group-option.vue"
 import { defineComponent, type PropType } from "vue"
-import type { ValidationError } from "../slds-form-element/validation-error"
+import { type ValidationError } from "../slds-form-element/validation-error"
+import { type CheckboxGroupOption } from "./checkbox-group-option"
+import { EVENTS } from "../../constants"
 
-export default defineComponent({
-    name: "SldsCheckboxButtonGroup",
+export default defineComponent ({
+    name: "SldsCheckboxGroup",
 
-    components: {
-        SldsCheckboxButtonOption,
-        SldsFormElement,
-    },
+    components: { SldsCheckboxGroupOption, SldsFormElement },
 
     props: {
         disabled: Boolean,
@@ -76,25 +71,25 @@ export default defineComponent({
 
         modelValue: { type: Array as PropType<string[]>, default: () => [] },
 
-        options: { type: Array as PropType<CheckboxButtonGroupOption[]>, default: () => [] },
+        options: { type: Array as PropType<CheckboxGroupOption[]>, default: () => [] },
 
         required: Boolean,
-
-        tooltip: String,
 
         /**
          * Indicates whether the input is stacked among other inputs.
          */
         stacked: Boolean,
+
+        tooltip: String,
     },
 
     methods: {
         /**
-         * Handles the click event on the checkbox button.
+         * Handles the click event on the checkbox group.
          * @param event The fired event.
          * @param option The clicked option.
          */
-        handleClick(event: Event, option: CheckboxButtonGroupOption): void {
+        handleClick(event: Event, option: CheckboxGroupOption): void {
             if (!event || this.disabled || option.disabled) {
                 event.preventDefault()
                 return
@@ -111,3 +106,4 @@ export default defineComponent({
     },
 })
 </script>
+
