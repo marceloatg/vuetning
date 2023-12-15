@@ -18,6 +18,8 @@ export { default as SldsCheckboxButtonOption } from "./slds-checkbox-button-grou
 export { default as SldsCheckboxGroup } from "./slds-checkbox-group/slds-checkbox-group.vue"
 export { default as SldsCheckboxGroupOption } from "./slds-checkbox-group/slds-checkbox-group-option.vue"
 export { default as SldsCheckboxOutput } from "./slds-checkbox-output/slds-checkbox-output.vue"
+export { default as SldsCheckboxOutputGroup } from "./slds-checkbox-output-group/slds-checkbox-output-group.vue"
+export { default as SldsCheckboxOutputGroupOption } from "./slds-checkbox-output-group/slds-checkbox-output-group-option.vue"
 export { default as SldsCheckboxToggle } from "./slds-checkbox-toggle/slds-checkbox-toggle.vue"
 export { default as SldsColumn } from "./slds-grid/slds-column.vue"
 export { default as SldsColumnGrid } from "./slds-grid/slds-column-grid.vue"
