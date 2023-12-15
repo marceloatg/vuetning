@@ -1,5 +1,15 @@
 <template>
 
+    <!-- Checkbox output group -->
+    <example-container class="slds-m-bottom_medium">
+        <slds-checkbox-output-group
+            :value="values"
+            :options="options1"
+            label="alo"
+        />
+        value: {{ values }}
+    </example-container>
+
     <!-- Checkbox group -->
     <example-container class="slds-m-bottom_medium">
         <slds-checkbox-group
@@ -428,11 +438,13 @@ import SldsGrid from "../../src/components/slds-grid/slds-grid.vue"
 import SldsColumn from "../../src/components/slds-grid/slds-column.vue"
 import SldsInput from "../../src/components/slds-input/slds-input.vue"
 import SldsCheckboxGroup from "../../src/components/slds-checkbox-group/slds-checkbox-group.vue"
+import SldsCheckboxOutputGroup from "../../src/components/slds-checkbox-output-group/slds-checkbox-output-group.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsCheckboxOutputGroup,
         SldsCheckboxGroup,
         SldsInput,
         SldsColumn,
