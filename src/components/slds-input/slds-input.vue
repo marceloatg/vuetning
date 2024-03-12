@@ -9,6 +9,11 @@
         v-bind="formElementAttributes"
     >
 
+        <!-- Label -->
+        <template v-if="$slots.label" #label>
+            <slot name="label"/>
+        </template>
+
         <!-- Tooltip -->
         <template v-if="$slots.tooltip" #tooltip>
             <slot name="tooltip"/>

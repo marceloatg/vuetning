@@ -2,8 +2,10 @@
     <div :class="formElementClassNames">
 
         <!-- Label -->
-        <slds-form-element-label v-if="label" :input-id="inputId" :required="required">
-            {{ label }}
+        <slds-form-element-label v-if="hasLabel" :input-id="inputId" :required="required">
+            <slot name="label">
+                {{ label }}
+            </slot>
         </slds-form-element-label>
 
         <!-- Icon -->
@@ -83,6 +85,7 @@ export default defineComponent({
 
         /**
          * Input label.
+         * When using the label slot this prop is ignored.
          */
         label: String,
 
@@ -156,6 +159,13 @@ export default defineComponent({
 
             const hasInlineHelp = Boolean(this.help || this.$slots.help)
             return Boolean(!this.hasErrorMessages && hasInlineHelp)
+        },
+
+        /**
+         * Indicates whether this form element has a label.
+         */
+        hasLabel(): boolean {
+            return Boolean(this.label || this.$slots.label)
         },
 
         /**
