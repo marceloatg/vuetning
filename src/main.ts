@@ -4,6 +4,8 @@ import "./assets/styles/main.scss"
 import * as components from "./components"
 import * as stencils from "./stencils"
 
+export * as components from "./components"
+export * as stencils from "./stencils"
 export * from "./constants"
 
 export type { AccordionSection } from "./components/slds-accordion/accordion-section"
@@ -14,6 +16,7 @@ export type { DataTableColumn } from "./components/slds-data-table/data-table-co
 export type { DropdownOption } from "./components/slds-dropdown/dropdown-option"
 export type { GlobalNavigationTab } from "./components/slds-global-navigation/global-navigation-tab"
 export type { GlobalNavigationSubTab } from "./components/slds-global-navigation/global-navigation-sub-tab"
+export type { Option } from "./components/commons/option"
 export type { PageHeaderDropdownOption } from "./components/slds-page-header/page-header-dropdown-option"
 export type { Tab } from "./components/slds-tabs/tab"
 export type { WideRadioGroupOption } from "./components/slds-wide-radio-group/wide-radio-group-option"
