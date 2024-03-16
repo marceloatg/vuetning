@@ -1,4 +1,6 @@
-export interface WideRadioGroupOption {
+import type { Option } from "@/components/commons/option"
+
+export interface WideRadioGroupOption extends Option {
     /**
      * Wide radio group option optional description to be displayed bellow the label.
      */
