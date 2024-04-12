@@ -1,13 +1,10 @@
-import { type App } from "vue"
-import "./assets/styles/main.scss"
-
+import type { App } from "vue"
 import * as components from "./components"
 import * as stencils from "./stencils"
+import "./assets/styles/main.scss"
 
-export * as components from "./components"
-export * as stencils from "./stencils"
+export default { install }
 export * from "./constants"
-
 export type { AccordionSection } from "./components/slds-accordion/accordion-section"
 export type { Breadcrumb } from "./components/slds-breadcrumbs/breadcrumb"
 export type { CheckboxGroupOption } from "./components/slds-checkbox-group/checkbox-group-option"
@@ -20,8 +17,6 @@ export type { Option } from "./components/commons/option"
 export type { PageHeaderDropdownOption } from "./components/slds-page-header/page-header-dropdown-option"
 export type { Tab } from "./components/slds-tabs/tab"
 export type { WideRadioGroupOption } from "./components/slds-wide-radio-group/wide-radio-group-option"
-
-export default { install }
 
 interface ComponentDictionary {
     [key: string]: any

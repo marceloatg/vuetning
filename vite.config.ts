@@ -1,25 +1,24 @@
-import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
+import { defineConfig } from "vite"
 import { resolve } from "path"
 
 export default defineConfig({
+    plugins: [vue()],
     build: {
         lib: {
             entry: resolve(__dirname, "src/main.ts"),
             name: "Vuetning",
-            formats: ["es"],
-            fileName: (format) => `vuetning.${format}.js`,
+            fileName: (format) => `vuetning.${format}.js`
         },
         rollupOptions: {
             external: ["vue"],
             output: {
+                assetFileNames: "vuetning.[ext]",
+                exports: "named",
                 globals: {
-                    vue: "Vue",
-                },
-            },
-        },
-    },
-    plugins: [
-        vue(),
-    ],
+                    vue: "Vue"
+                }
+            }
+        }
+    }
 })

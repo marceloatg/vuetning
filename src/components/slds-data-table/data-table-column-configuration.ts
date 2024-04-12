@@ -1,6 +1,23 @@
 import { v4 as newId } from "uuid"
 
 export class DataTableColumnConfiguration {
+    id: string
+    type: string
+    label?: string
+    fieldName?: string
+    width?: number
+    hasCopyButton: boolean
+    isResizable: boolean
+    sortable: boolean
+    sortBy?: string
+    hasMenu: boolean
+    typeAttributes?: any
+    sortedAscending: boolean
+    sortedDescending: boolean
+    fullWidth?: number
+    offsetLeft?: number
+    left?: number
+
     constructor(column) {
         this.id = newId()
         this.type = (column.type != null) ? column.type : "text"
