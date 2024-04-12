@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import ExampleContainer from "./example-container.vue"
-import SldsAccordion from "../slds-accordion/slds-accordion.vue"
+import SldsAccordion from "../../src/components/slds-accordion/slds-accordion.vue"
 import SldsAccordionSection from "../../src/components/slds-accordion/slds-accordion-section.vue"
 import { defineComponent } from "vue"
 import { AccordionSection } from "../../src/components/slds-accordion/accordion-section"

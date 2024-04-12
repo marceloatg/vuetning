@@ -1,4 +1,4 @@
-import type { Option } from "@/components/commons/option"
+import type { Option } from "../commons/option"
 
 export interface CheckboxGroupOption extends Option {
     /**
