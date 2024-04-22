@@ -8,17 +8,16 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, "src/main.ts"),
             name: "Vuetning",
-            fileName: (format) => `vuetning.${format}.js`
+            fileName: (format) => `vuetning.${format}.js`,
         },
         rollupOptions: {
             external: ["vue"],
             output: {
-                assetFileNames: "vuetning.[ext]",
                 exports: "named",
                 globals: {
-                    vue: "Vue"
-                }
-            }
-        }
-    }
+                    vue: "Vue",
+                },
+            },
+        },
+    },
 })
