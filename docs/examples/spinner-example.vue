@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import ExampleContainer from "./example-container.vue"
-import SldsSpinner from "../slds-spinner/slds-spinner.vue"
+import SldsSpinner from "../../src/components/slds-spinner/slds-spinner.vue"
 import { defineComponent } from "vue"
 
 export default defineComponent({

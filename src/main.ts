@@ -1,27 +1,16 @@
-import { type App } from "vue"
+/**
+ * Imports MUST respect this order, otherwise the css imported from main will have a higher priority
+ * over the scoped css from components, making them not apply correctly.
+ */
 import "./assets/styles/main.scss"
 
+import type { App } from "vue"
 import * as components from "./components"
 import * as stencils from "./stencils"
 
-export * as components from "./components"
-export * as stencils from "./stencils"
-export * from "./constants"
-
-export type { AccordionSection } from "./components/slds-accordion/accordion-section"
-export type { Breadcrumb } from "./components/slds-breadcrumbs/breadcrumb"
-export type { CheckboxGroupOption } from "./components/slds-checkbox-group/checkbox-group-option"
-export type { CheckboxButtonGroupOption } from "./components/slds-checkbox-button-group/checkbox-button-group-option"
-export type { DataTableColumn } from "./components/slds-data-table/data-table-column"
-export type { DropdownOption } from "./components/slds-dropdown/dropdown-option"
-export type { GlobalNavigationTab } from "./components/slds-global-navigation/global-navigation-tab"
-export type { GlobalNavigationSubTab } from "./components/slds-global-navigation/global-navigation-sub-tab"
-export type { Option } from "./components/commons/option"
-export type { PageHeaderDropdownOption } from "./components/slds-page-header/page-header-dropdown-option"
-export type { Tab } from "./components/slds-tabs/tab"
-export type { WideRadioGroupOption } from "./components/slds-wide-radio-group/wide-radio-group-option"
-
 export default { install }
+export * from "./constants"
+export * from "./components/types"
 
 interface ComponentDictionary {
     [key: string]: any
