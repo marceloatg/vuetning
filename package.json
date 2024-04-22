@@ -9,7 +9,7 @@
             "import": "./dist/vuetning.es.js",
             "require": "./dist/vuetning.umd.js"
         },
-        "./style.css": "./dist/vuetning.css"
+        "./style.css": "./dist/style.css"
     },
     "files": [
         "dist",
@@ -24,7 +24,7 @@
         "type-check": "vue-tsc --noEmit --composite false"
     },
     "dependencies": {
-        "@formkit/auto-animate": "^0.8.1",
+        "@formkit/auto-animate": "^0.8.2",
         "@vueuse/components": "^10.9.0",
         "@vueuse/core": "^10.9.0",
         "gsap": "^3.12.5",
@@ -32,7 +32,7 @@
         "numeral": "^2.0.6",
         "scrollparent": "^2.1.0",
         "uuid": "^9.0.1",
-        "vue": "^3.4.21",
+        "vue": "^3.4.23",
         "vue-observe-visibility": "^2.0.0-alpha.1"
     },
     "devDependencies": {
@@ -43,14 +43,14 @@
         "@vue/eslint-config-typescript": "^13.0.0",
         "@vue/tsconfig": "^0.5.1",
         "eslint": "^8.57.0",
-        "eslint-plugin-vue": "^9.24.1",
+        "eslint-plugin-vue": "^9.25.0",
         "npm-run-all2": "^6.1.2",
-        "postcss": "^8.4.35",
-        "postcss-prefix-selector": "^1.16.0",
-        "sass": "^1.74.1",
+        "postcss": "^8.4.38",
+        "postcss-prefix-selector": "^1.16.1",
+        "sass": "^1.75.0",
         "typescript": "~5.4.0",
-        "vite": "^5.2.8",
-        "vitepress": "^1.1.0",
-        "vue-tsc": "^2.0.12"
+        "vite": "^5.2.10",
+        "vitepress": "^1.1.3",
+        "vue-tsc": "^2.0.13"
     }
 }

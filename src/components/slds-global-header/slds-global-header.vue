@@ -14,7 +14,13 @@
 
                         <slds-column>
                             <div v-if="title" class="slds-global-header__title custom-logo">
+
                                 <span>{{ title }}</span>
+
+                                <span v-if="badge" class="slds-badge">
+                                    {{ badge }}
+                                </span>
+
                             </div>
                         </slds-column>
 
@@ -23,7 +29,13 @@
                     <div v-else class="slds-global-header__logo">
 
                         <div v-if="title" class="slds-global-header__title">
+
                             <span>{{ title }}</span>
+
+                            <span v-if="badge" class="slds-badge">
+                                {{ badge }}
+                            </span>
+
                         </div>
 
                         <span class="slds-assistive-text">
@@ -58,9 +70,12 @@ import SldsColumn from "../slds-grid/slds-column.vue"
 
 export default defineComponent({
     name: "SldsGlobalHeader",
+
     components: { SldsColumn, SldsGrid },
 
     props: {
+        badge: String,
+
         logoAssistiveText: String,
 
         noLogo: Boolean,
@@ -88,6 +103,13 @@ export default defineComponent({
             }
         }
     }
+}
+
+.slds-badge {
+    color: #444;
+    margin: 0 .25rem;
+    padding-top: .125rem;
+    padding-bottom: .125rem;
 }
 
 </style>
