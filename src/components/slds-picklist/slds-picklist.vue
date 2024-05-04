@@ -55,6 +55,7 @@
                     <slds-dropdown
                         :focused-option="focusedOption"
                         :is-open="isOpen"
+                        :length="length"
                         :options="options"
                         :selected-option="selectedOption"
                         :show-spinner="showSpinner"

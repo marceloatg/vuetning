@@ -99,6 +99,7 @@
                         :filter="filter"
                         :focused-option="focusedOption"
                         :is-open="isOpen"
+                        :length="length"
                         :options="filteredOptions"
                         :selected-option="selectedOption"
                         :show-spinner="showSpinner"
