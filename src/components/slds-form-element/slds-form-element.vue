@@ -31,16 +31,16 @@
         </div>
 
         <!-- Inline help -->
-        <div v-if="hasInlineHelp" class="slds-form-element__help">
+        <div v-if="hasInlineHelp" class="slds-form-element__help" data-testid="help">
             <slot name="help">
                 {{ help }}
             </slot>
         </div>
 
         <!-- Error messages -->
-        <div v-if="hasErrorMessages" class="slds-form-element__help">
+        <div v-if="hasErrorMessages" class="slds-form-element__help" data-testid="errors">
             <slot name="error">
-                <p v-for="error of errors" :key="error.$uid">
+                <p v-for="error of errors" :key="error.$uid" data-testid="error">
                     {{ error.$message }}
                 </p>
             </slot>
