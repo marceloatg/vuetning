@@ -32,7 +32,7 @@
 
         <!-- Spinner -->
         <span v-if="showSpinner">
-            <span class="slds-spinner slds-spinner_x-small" :class="spinnerClassNames">
+            <span :class="spinnerClassNames" data-testid="spinner">
                 <span class="slds-spinner__dot-a"/>
                 <span class="slds-spinner__dot-b"/>
             </span>
@@ -185,7 +185,7 @@ export default defineComponent({
          * The CSS class names for the spinner.
          */
         spinnerClassNames(): string {
-            let classNames = ""
+            let classNames = "slds-spinner slds-spinner_x-small"
 
             // Spinner theme
             if (this.showSpinner && (this.brand || this.destructive || this.success)) classNames += " slds-spinner-white"
