@@ -1,5 +1,14 @@
 <template>
 
+    <!-- Datepicker -->
+    <example-container class="slds-m-bottom_medium">
+        <slds-datepicker
+            v-model="foo"
+            label="Date"
+        />
+        value: {{ foo }}
+    </example-container>
+
     <!-- Checkbox output group -->
     <example-container class="slds-m-bottom_medium">
         <slds-checkbox-output-group
@@ -26,7 +35,7 @@
 
             <slds-column size="1/2">
                 <slds-input
-                    v-model="test"
+                    v-model="value"
                     label="Test"
                     required
                     stacked
@@ -439,11 +448,13 @@ import SldsColumn from "../../src/components/slds-grid/slds-column.vue"
 import SldsInput from "../../src/components/slds-input/slds-input.vue"
 import SldsCheckboxGroup from "../../src/components/slds-checkbox-group/slds-checkbox-group.vue"
 import SldsCheckboxOutputGroup from "../../src/components/slds-checkbox-output-group/slds-checkbox-output-group.vue"
+import SldsDatepicker from "../../src/components/slds-datepicker/slds-datepicker.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsDatepicker,
         SldsCheckboxOutputGroup,
         SldsCheckboxGroup,
         SldsInput,
@@ -475,6 +486,8 @@ export default {
 
     data() {
         return {
+            foo: null,
+
             activeTab: "details",
 
             activeScopedTab: "first",
