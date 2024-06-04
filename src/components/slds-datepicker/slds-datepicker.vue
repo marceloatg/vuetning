@@ -36,105 +36,108 @@
                     />
 
                     <!-- Calendar -->
-                    <div
-                        v-if="isOpen"
-                        aria-hidden="false"
-                        class="slds-datepicker slds-dropdown slds-dropdown_left"
-                        role="dialog"
-                    >
-                        <div class="slds-datepicker__filter slds-grid">
+                    <transition :name="dropdownAnimation">
+                        <div
+                            v-if="isOpen"
+                            aria-hidden="false"
+                            class="slds-datepicker slds-dropdown slds-dropdown_left"
+                            role="dialog"
+                        >
 
-                            <div class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
+                            <div class="slds-datepicker__filter slds-grid">
 
-                                <!-- Previous month button -->
-                                <div class="slds-align-middle">
-                                    <slds-button-icon
-                                        assistive-text="Previous Month"
-                                        icon-name="utility:left"
-                                        @click="handlePreviousMonth"
-                                    />
+                                <div class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
+
+                                    <!-- Previous month button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Previous Month"
+                                            icon-name="utility:left"
+                                            @click="handlePreviousMonth"
+                                        />
+                                    </div>
+
+                                    <!-- Current month label -->
+                                    <h2
+                                        id="defaultPicker-month"
+                                        aria-atomic="false"
+                                        aria-live="polite"
+                                        class="slds-align-middle"
+                                    >
+                                        {{ currentMonthName }}
+                                    </h2>
+
+                                    <!-- Next month button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Next Month"
+                                            icon-name="utility:right"
+                                            @click="handleNextMonth"
+                                        />
+                                    </div>
+
                                 </div>
 
-                                <!-- Current month label -->
-                                <h2
-                                    id="defaultPicker-month"
-                                    aria-atomic="false"
-                                    aria-live="polite"
-                                    class="slds-align-middle"
-                                >
-                                    {{ currentMonthName }}
-                                </h2>
+                                <div class="slds-shrink-none">
 
-                                <!-- Next month button -->
-                                <div class="slds-align-middle">
-                                    <slds-button-icon
-                                        assistive-text="Next Month"
-                                        icon-name="utility:right"
-                                        @click="handleNextMonth"
-                                    />
+                                    <label class="slds-assistive-text" for="defaultPicker_select">
+                                        Pick a Year
+                                    </label>
+
+                                    <div class="slds-select_container">
+                                        <select id="defaultPicker_select" class="slds-select" @change="handleYearChange">
+                                            <option
+                                                v-for="year in yearOptions"
+                                                :key="year"
+                                                :selected="year === currentYear"
+                                            >
+                                                {{ year }}
+                                            </option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
                             </div>
 
-                            <div class="slds-shrink-none">
+                            <table aria-multiselectable="true" class="slds-datepicker__month" role="grid">
 
-                                <label class="slds-assistive-text" for="defaultPicker_select">
-                                    Pick a Year
-                                </label>
+                                <thead>
 
-                                <div class="slds-select_container">
-                                    <select id="defaultPicker_select" class="slds-select" @change="handleYearChange">
-                                        <option
-                                            v-for="year in yearOptions"
-                                            :key="year"
-                                            :selected="year === currentYear"
+                                    <tr id="defaultPicker-weekdays">
+                                        <th v-for="day in weekDays" :key="day" scope="col">
+                                            <abbr>{{ day }}</abbr>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr v-for="(week, weekIndex) in calendarDays" :key="weekIndex">
+                                        <td
+                                            v-for="day in week"
+                                            :key="day.date"
+                                            :class="{
+                                                'slds-day_adjacent-month': day.isAdjacent,
+                                                'slds-is-today': isToday(day),
+                                                'slds-is-selected': isSelected(day)
+                                            }"
+                                            @click="handleClickDay(day)"
                                         >
-                                            {{ year }}
-                                        </option>
-                                    </select>
-                                </div>
+                                            <span class="slds-day">{{ day.date }}</span>
+                                        </td>
+                                    </tr>
 
-                            </div>
+                                </tbody>
+
+                            </table>
+
+                            <slds-button class="slds-align_absolute-center slds-text-link" @click="handleClickToday">
+                                Today
+                            </slds-button>
 
                         </div>
-
-                        <table aria-multiselectable="true" class="slds-datepicker__month" role="grid">
-
-                            <thead>
-
-                                <tr id="defaultPicker-weekdays">
-                                    <th v-for="day in weekDays" :key="day" scope="col">
-                                        <abbr>{{ day }}</abbr>
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                <tr v-for="(week, weekIndex) in calendarDays" :key="weekIndex">
-                                    <td
-                                        v-for="day in week"
-                                        :key="day.date"
-                                        :class="{
-                                            'slds-day_adjacent-month': day.isAdjacent,
-                                            'slds-is-today': isToday(day),
-                                            'slds-is-selected': isSelected(day)
-                                        }"
-                                        @click="handleClickDay(day)"
-                                    >
-                                        <span class="slds-day">{{ day.date }}</span>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                        <slds-button class="slds-align_absolute-center slds-text-link" @click="handleClickToday">
-                            Today
-                        </slds-button>
-
-                    </div>
+                    </transition>
 
                 </div>
             </div>
@@ -150,7 +153,7 @@ import { ValidationError } from "../slds-form-element/validation-error"
 import SldsIcon from "../slds-icon/slds-icon.vue"
 import { vOnClickOutside } from "@vueuse/components"
 import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
-import moment from "moment"
+import moment from "moment/min/moment-with-locales"
 import SldsButton from "../slds-button/slds-button.vue"
 import { EVENTS } from "../../constants"
 
@@ -179,6 +182,8 @@ export default defineComponent({
          * Picklist label.
          */
         label: String,
+
+        locale: { type: String, default: "en" },
 
         /**
          * The value of the date picker.
@@ -211,7 +216,7 @@ export default defineComponent({
             /**
              * Input value.
              */
-            inputValue: this.modelValue || "",
+            inputValue: this.modelValue ? moment(this.modelValue).format("ll") : "",
 
             /**
              * Indicates whether the dropdown is open.
@@ -221,7 +226,7 @@ export default defineComponent({
             /**
              * Selected date.
              */
-            selectedDate: this.modelValue ? moment(this.modelValue, "D of MMMM of YYYY") : null,
+            selectedDate: this.modelValue ? moment(this.modelValue).format("ll") : null,
 
             /**
              * Today.
@@ -292,9 +297,16 @@ export default defineComponent({
     },
 
     watch: {
+        locale(newLocale) {
+            moment.locale(newLocale)
+            this.generateCalendarDays()
+        },
+
         modelValue(newValue) {
-            this.inputValue = newValue || ""
-            this.selectedDate = newValue ? moment(newValue, "D of MMMM of YYYY") : null
+            if (newValue) {
+                this.inputValue = moment(newValue).format("ll") || ""
+                this.selectedDate = moment(newValue)
+            }
         },
 
         selectedDate(newValue) {
@@ -302,6 +314,10 @@ export default defineComponent({
                 this.generateCalendarDays()
             }
         },
+    },
+
+    beforeCreate() {
+        moment.locale(this.locale)
     },
 
     created() {
@@ -397,23 +413,15 @@ export default defineComponent({
          * Handles the blur event on the input.
          */
         handleBlur(): void {
-            const dateRegex = /^\d{1,2} of \w+ of \d{4}$/
+            const parsedDate = moment(this.inputValue, "ll", true)
 
-            if (!dateRegex.test(this.inputValue)) {
+            if (!parsedDate.isValid()) {
                 this.clearInput()
             }
             else
             {
-                const parsedDate = moment(this.inputValue, "D of MMMM of YYYY", true)
-
-                if (!parsedDate.isValid()) {
-                    this.clearInput()
-                }
-                else
-                {
-                    this.selectedDate = parsedDate
-                    this.displayDate = parsedDate.clone()
-                }
+                this.selectedDate = parsedDate
+                this.displayDate = parsedDate.clone()
             }
         },
 
@@ -434,30 +442,21 @@ export default defineComponent({
                 }
             }
 
-            this.inputValue = selectedDate.format("D of MMMM of YYYY")
+            this.inputValue = selectedDate.format("ll")
             this.selectedDate = selectedDate
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.inputValue)
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, selectedDate.format())
 
-            this.hideDropdown()
-        },
-
-        /**
-         * Handles the click event on the input.
-         */
-        async handleClickInput(): Promise<void> {
-            if (this.disabled) return
-
-            await this.focusOnInputAsync()
+            setTimeout(() => this.hideDropdown(), 200)
         },
 
         /**
          * Handles on click today button.
          */
         handleClickToday(): void {
-            this.inputValue = this.today.clone().format("D of MMMM of YYYY")
+            this.inputValue = this.today.clone().format("ll")
             this.selectedDate = this.today.clone()
             this.displayDate = this.today.clone()
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.inputValue)
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.selectedDate.format())
 
             this.hideDropdown()
         },
@@ -477,7 +476,7 @@ export default defineComponent({
         handleInput(event: Event): void {
             const target = event.target as HTMLInputElement
             this.inputValue = target.value
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.inputValue)
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, moment(this.inputValue).format())
 
             this.hideDropdown()
         },
@@ -541,15 +540,19 @@ export default defineComponent({
          * Show the dropdown and set the display date.
          */
         showDropdown(): void {
-            if (this.selectedDate) this.displayDate = this.selectedDate.clone()
-            else this.displayDate = moment()
+            if (this.selectedDate) {
+                this.displayDate = this.selectedDate.clone()
+                //this.inputValue = this.selectedDate.clone().format("ll")
+            }
+            else {
+                this.displayDate = moment()
+                this.inputValue = ""
+            }
 
+            this.generateCalendarDays()
             this.isOpen = true
         },
     },
 })
 </script>
 
-<style scoped lang="scss">
-
-</style>
