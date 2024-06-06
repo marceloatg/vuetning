@@ -27,15 +27,31 @@
                         @blur="handleBlur"
                         @click="showDropdown"
                         @input="handleInput"
-                        @focus="handleFocusInput"
                     >
 
-                    <!-- Event icon -->
-                    <slds-icon
-                        class="slds-input__icon slds-input__icon_right"
-                        icon-name="utility:event"
-                        x-small
-                    />
+                    <!-- Icons -->
+                    <transition name="fade">
+
+                        <!-- Clear button -->
+                        <slds-button-icon
+                            v-if="showClearButton"
+                            bare
+                            class="slds-input__icon slds-input__icon_right"
+                            icon-name="utility:clear"
+                            tabindex="-1"
+                            title="Clear"
+                            @click.prevent="handleClickClear"
+                        />
+
+                        <!-- Event icon -->
+                        <slds-icon
+                            v-else
+                            class="slds-input__icon slds-input__icon_right"
+                            icon-name="utility:event"
+                            x-small
+                        />
+
+                    </transition>
 
                     <!-- Calendar -->
                     <transition :name="dropdownAnimation">
@@ -282,7 +298,7 @@ export default defineComponent({
         /**
          * The value of the date picker.
          */
-        modelValue: String,
+        modelValue: Date,
 
         /**
          * Indicates whether this label's picklist is required.
@@ -310,7 +326,7 @@ export default defineComponent({
             /**
              * Display date.
              */
-            displayDate: moment(),
+            displayDate: moment.utc(),
 
             /**
              * Valid date formats.
@@ -323,7 +339,7 @@ export default defineComponent({
             /**
              * Input value.
              */
-            inputValue: this.modelValue ? moment(this.modelValue).format("ll") : "",
+            inputValue: this.modelValue ? moment.utc(this.modelValue).format("ll") : null,
 
             /**
              * Indicates whether the dropdown is open.
@@ -338,7 +354,7 @@ export default defineComponent({
             /**
              * Selected date.
              */
-            selectedDate: this.modelValue ? moment(this.modelValue).format("ll") : null,
+            selectedDate: this.modelValue ? moment.utc(this.modelValue).format("ll") : null,
 
             /**
              * Selected month.
@@ -353,7 +369,7 @@ export default defineComponent({
             /**
              * Today.
              */
-            today: moment(),
+            today: moment.utc(),
 
             /**
              * Views.
@@ -436,7 +452,7 @@ export default defineComponent({
          * Indicates whether the input is showing its clear button.
          */
         showClearButton(): boolean {
-            return Boolean(this.modelValue && this.modelValue.length > 0 && !this.disabled)
+            return Boolean(this.inputValue && this.inputValue.length > 0 && !this.disabled)
         },
 
         /**
@@ -466,7 +482,7 @@ export default defineComponent({
         /**
          * Formatted weekdays.
          */
-        weekDays(): string[] {
+        weekDays(): Array<string> {
             return moment.weekdaysShort()
         },
     },
@@ -479,8 +495,8 @@ export default defineComponent({
 
         modelValue(newValue) {
             if (newValue) {
-                this.inputValue = moment(newValue).format("ll") || ""
-                this.selectedDate = moment(newValue)
+                this.inputValue = moment.utc(newValue).format("ll") || null
+                this.selectedDate = moment.utc(newValue)
             }
         },
 
@@ -505,8 +521,9 @@ export default defineComponent({
          * Clear the input.
          */
         clearInput(): void {
-            this.inputValue = ""
+            this.inputValue = null
             this.selectedDate = null
+
             this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.inputValue)
         },
 
@@ -593,14 +610,15 @@ export default defineComponent({
         },
 
         /**
-         * Handles the click event from the clear button.
+         * Handles clicking the clear button.
          */
         handleClickClear(): void {
-            this.selectedDate = null
-            this.displayDate = null
-            this.inputValue = null
+            this.displayDate = moment.utc()
+            this.selectedYear = null
+            this.selectedMonth = null
 
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
+            this.clearInput()
+            this.hideDropdown()
 
             const input = this.$refs.input as HTMLInputElement
             input.focus()
@@ -628,7 +646,7 @@ export default defineComponent({
             this.selectedMonth = selectedDate.month()
             this.selectedYear = selectedDate.year()
 
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, selectedDate.format())
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, new Date(selectedDate.format()))
             setTimeout(() => this.hideDropdown(), 200)
         },
 
@@ -642,17 +660,9 @@ export default defineComponent({
             this.selectedMonth = this.selectedDate.month()
             this.selectedYear = this.selectedDate.year()
 
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.selectedDate.format())
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, new Date(this.selectedDate.format()))
 
             this.hideDropdown()
-        },
-
-        /**
-         * Handles the focus event on the write input.
-         */
-        handleFocusInput(event: Event): void {
-            const target = event.target as HTMLInputElement
-            this.inputValue = target.value
         },
 
         /**
@@ -670,10 +680,8 @@ export default defineComponent({
                 this.selectedYear = parsedDate.year()
                 this.selectedMonth = parsedDate.month()
 
-                this.$emit(EVENTS.UPDATE_MODEL_VALUE, moment(this.selectedDate).format())
+                this.$emit(EVENTS.UPDATE_MODEL_VALUE, new Date(moment.utc(this.selectedDate).format()))
             }
-
-            //this.hideDropdown()
         },
 
         /**
@@ -704,7 +712,7 @@ export default defineComponent({
          * Handles the previous month button.
          */
         handlePreviousMonth(): void {
-            this.displayDate = moment(this.displayDate).subtract(1, "month")
+            this.displayDate = moment.utc(this.displayDate).subtract(1, "month")
             this.generateCalendarDays()
         },
 
@@ -712,7 +720,7 @@ export default defineComponent({
          * Handles the previous year button.
          */
         handlePreviousYear(): void {
-            this.displayDate = moment(this.displayDate).subtract(1, "year")
+            this.displayDate = moment.utc(this.displayDate).subtract(1, "year")
             this.generateCalendarDays()
         },
 
@@ -800,8 +808,8 @@ export default defineComponent({
                 this.inputValue = this.selectedDate.clone().format("ll")
             }
             else {
-                this.displayDate = moment()
-                this.inputValue = ""
+                this.displayDate = moment.utc()
+                this.inputValue = null
             }
 
             this.generateCalendarDays()
