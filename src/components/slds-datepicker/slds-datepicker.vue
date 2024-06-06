@@ -19,13 +19,15 @@
                         :id="slotProps['inputId']"
                         ref="input"
                         class="slds-input"
+                        :disabled="disabled"
                         type="text"
                         role="textbox"
                         tabindex="0"
                         :value="inputValue"
-                        @input="handleInput"
-                        @click="showDropdown"
                         @blur="handleBlur"
+                        @click="showDropdown"
+                        @input="handleInput"
+                        @focus="handleFocusInput"
                     >
 
                     <!-- Event icon -->
@@ -44,9 +46,11 @@
                             role="dialog"
                         >
 
+                            <!-- Calendar headers -->
                             <div class="slds-datepicker__filter slds-grid">
 
-                                <div class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
+                                <!-- Calendar -->
+                                <div v-if="currentView === 'calendar'" class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
 
                                     <!-- Previous month button -->
                                     <div class="slds-align-middle">
@@ -57,15 +61,19 @@
                                         />
                                     </div>
 
-                                    <!-- Current month label -->
-                                    <h2
-                                        id="defaultPicker-month"
-                                        aria-atomic="false"
-                                        aria-live="polite"
-                                        class="slds-align-middle"
-                                    >
-                                        {{ currentMonthName }}
-                                    </h2>
+                                    <!-- Current month -->
+                                    <a v-if="currentView === 'calendar'" class="slds-align-middle" @click="switchToMonthView">
+                                        <slds-text heading-small>
+                                            {{ currentMonthName }}
+                                        </slds-text>
+                                    </a>
+
+                                    <!-- Current year -->
+                                    <a v-if="currentView === 'calendar'" class="slds-align-middle" @click="switchToYearView">
+                                        <slds-text heading-small>
+                                            {{ currentYear }}
+                                        </slds-text>
+                                    </a>
 
                                     <!-- Next month button -->
                                     <div class="slds-align-middle">
@@ -78,29 +86,68 @@
 
                                 </div>
 
-                                <div class="slds-shrink-none">
+                                <!-- Months -->
+                                <div v-else-if="currentView === 'months'" class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
 
-                                    <label class="slds-assistive-text" for="defaultPicker_select">
-                                        Pick a Year
-                                    </label>
+                                    <!-- Previous month button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Previous Month"
+                                            icon-name="utility:left"
+                                            @click="handlePreviousYear"
+                                        />
+                                    </div>
 
-                                    <div class="slds-select_container">
-                                        <select id="defaultPicker_select" class="slds-select" @change="handleYearChange">
-                                            <option
-                                                v-for="year in yearOptions"
-                                                :key="year"
-                                                :selected="year === currentYear"
-                                            >
-                                                {{ year }}
-                                            </option>
-                                        </select>
+                                    <!-- Current year -->
+                                    <a class="slds-align-middle" @click="switchToYearView">
+                                        <slds-text heading-small>
+                                            {{ currentYear }}
+                                        </slds-text>
+                                    </a>
+
+                                    <!-- Next month button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Next Month"
+                                            icon-name="utility:right"
+                                            @click="handleNextYear"
+                                        />
+                                    </div>
+
+                                </div>
+
+                                <!-- Years -->
+                                <div v-else-if="currentView === 'years'" class="slds-datepicker__filter_month slds-grid slds-grid_align-spread slds-grow">
+
+                                    <!-- Previous year button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Previous Month"
+                                            icon-name="utility:left"
+                                            @click="handlePreviousYearRange"
+                                        />
+                                    </div>
+
+                                    <!-- Current year range -->
+                                    <slds-text v-if="currentView === 'years'" class="slds-align-middle" heading-small>
+                                        {{ yearRangeHeader }}
+                                    </slds-text>
+
+                                    <!-- Next year button -->
+                                    <div class="slds-align-middle">
+                                        <slds-button-icon
+                                            assistive-text="Next Month"
+                                            icon-name="utility:right"
+                                            @click="handleNextYearRange"
+                                        />
                                     </div>
 
                                 </div>
 
                             </div>
 
-                            <table aria-multiselectable="true" class="slds-datepicker__month" role="grid">
+                            <!-- Calendar table -->
+                            <table v-if="currentView === 'calendar'" class="slds-datepicker__month" role="grid">
 
                                 <thead>
 
@@ -120,7 +167,7 @@
                                             :class="{
                                                 'slds-day_adjacent-month': day.isAdjacent,
                                                 'slds-is-today': isToday(day),
-                                                'slds-is-selected': isSelected(day)
+                                                'slds-is-selected': dayIsSelected(day)
                                             }"
                                             @click="handleClickDay(day)"
                                         >
@@ -132,7 +179,45 @@
 
                             </table>
 
-                            <slds-button class="slds-align_absolute-center slds-text-link" @click="handleClickToday">
+                            <!-- Month table -->
+                            <table v-else-if="currentView === 'months'" class="slds-datepicker__month" role="grid">
+                                <tbody>
+                                    <tr v-for="(row, rowIndex) in monthRows" :key="rowIndex">
+                                        <td
+                                            v-for="(month, monthIndex) in row"
+                                            :key="monthIndex"
+                                            class="slds-m-around_large"
+                                            :class="{'slds-is-selected': isSelectedMonth(month.index)}"
+                                            @click="selectMonth(month.index)"
+                                        >
+                                            <span class="slds-day"> {{ month.name }} </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Year table -->
+                            <table v-else-if="currentView === 'years'" class="slds-datepicker__year" role="grid">
+                                <tbody>
+                                    <tr v-for="(row, rowIndex) in yearRows" :key="rowIndex">
+                                        <td
+                                            v-for="year in row"
+                                            :key="year"
+                                            :class="{'slds-is-selected': isSelectedYear(year)}"
+                                            @click="selectYear(year)"
+                                        >
+                                            <span class="slds-day">{{ year }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Today button -->
+                            <slds-button
+                                v-if="currentView === 'calendar'"
+                                class="slds-align_absolute-center slds-text-link"
+                                @click="handleClickToday"
+                            >
                                 Today
                             </slds-button>
 
@@ -156,17 +241,23 @@ import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
 import moment from "moment/min/moment-with-locales"
 import SldsButton from "../slds-button/slds-button.vue"
 import { EVENTS } from "../../constants"
+import SldsText from "../slds-text/slds-text.vue"
 
 export default defineComponent({
     name: "slds-datepicker",
 
-    components: { SldsButton, SldsButtonIcon, SldsIcon, SldsFormElement },
+    components: { SldsText, SldsButton, SldsButtonIcon, SldsIcon, SldsFormElement },
 
     directives: {
         ClickOutside: vOnClickOutside,
     },
 
     props: {
+        /**
+         * Indicates whether the datepicker is disabled.
+         */
+        disabled: Boolean,
+
         /**
          * Array of error objects from vuelidate.
          */
@@ -183,6 +274,9 @@ export default defineComponent({
          */
         label: String,
 
+        /**
+         * Locale.
+         */
         locale: { type: String, default: "en" },
 
         /**
@@ -209,9 +303,22 @@ export default defineComponent({
             calendarDays: [] as Array<Array<{ date: number; isAdjacent: boolean }>>,
 
             /**
+             * Current view.
+             */
+            currentView: "calendar",
+
+            /**
              * Display date.
              */
             displayDate: moment(),
+
+            /**
+             * Valid date formats.
+             */
+            formats: [
+                "MM/DD/YYYY",
+                "ll",
+            ],
 
             /**
              * Input value.
@@ -224,9 +331,24 @@ export default defineComponent({
             isOpen: false,
 
             /**
+             * Month short names.
+             */
+            monthShortNames: moment.monthsShort(),
+
+            /**
              * Selected date.
              */
             selectedDate: this.modelValue ? moment(this.modelValue).format("ll") : null,
+
+            /**
+             * Selected month.
+             */
+            selectedMonth: null as unknown as number,
+
+            /**
+             * Selected year.
+             */
+            selectedYear: null as unknown as number,
 
             /**
              * Today.
@@ -234,9 +356,23 @@ export default defineComponent({
             today: moment(),
 
             /**
-             * Year options.
+             * Views.
              */
-            yearOptions: [],
+            views: {
+                calendar: "calendar",
+                months: "months",
+                years: "years",
+            },
+
+            /**
+             * Year range start.
+             */
+            yearRangeStart: 0,
+
+            /**
+             * Year range end.
+             */
+            yearRangeEnd: 0,
         }
     },
 
@@ -255,7 +391,7 @@ export default defineComponent({
         /**
          * Formatted current month name.
          */
-        currentMonthName() {
+        currentMonthName(): string {
             return this.displayDate.format("MMMM")
         },
 
@@ -286,6 +422,45 @@ export default defineComponent({
             }
 
             return attributes
+        },
+
+        /**
+         * Month rows.
+         */
+        monthRows(): Array<any> {
+            const months = this.monthShortNames.map((name: string, index: number) => ({ name, index }))
+            return [months.slice(0, 3), months.slice(3, 6), months.slice(6, 9), months.slice(9, 12)]
+        },
+
+        /**
+         * Indicates whether the input is showing its clear button.
+         */
+        showClearButton(): boolean {
+            return Boolean(this.modelValue && this.modelValue.length > 0 && !this.disabled)
+        },
+
+        /**
+         * Year range header.
+         */
+        yearRangeHeader(): string {
+            return `${this.yearRangeStart} - ${this.yearRangeEnd}`
+        },
+
+        /**
+         * Year rows.
+         */
+        yearRows(): Array<number> {
+            const years = []
+            for (let i = this.yearRangeStart; i <= this.yearRangeEnd; i++) {
+                years.push(i)
+            }
+
+            const rows = []
+            for (let i = 0; i < years.length; i += 2) {
+                rows.push([years[i], years[i + 1]])
+            }
+
+            return rows
         },
 
         /**
@@ -321,28 +496,28 @@ export default defineComponent({
     },
 
     created() {
-        this.buildYearOptions()
         this.generateCalendarDays()
+        this.initYearRange()
     },
 
     methods: {
         /**
-         * Build year options.
-         */
-        buildYearOptions(): void {
-            const startYear = this.currentYear - 100
-            const endYear = this.currentYear + 100
-
-            this.yearOptions = Array.from({ length: endYear - startYear + 1 }, (_, index) => startYear + index)
-        },
-
-        /**
          * Clear the input.
          */
-        clearInput() {
+        clearInput(): void {
             this.inputValue = ""
             this.selectedDate = null
             this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.inputValue)
+        },
+
+        /**
+         * Verifies if the day is selected.
+         * @param day
+         */
+        dayIsSelected(day: { date: number; isAdjacent: boolean }): boolean {
+            return this.selectedDate &&
+                (this.selectedDate.isSame(this.displayDate.clone().date(day.date), "day") &&
+                    !day.isAdjacent)
         },
 
         /**
@@ -361,7 +536,6 @@ export default defineComponent({
             const startOfMonth = this.displayDate.clone().startOf("month")
             const endOfMonth = this.displayDate.clone().endOf("month")
 
-            // Dias do mês anterior
             const startDayOfWeek = startOfMonth.day()
             const daysFromPrevMonth = []
 
@@ -372,14 +546,12 @@ export default defineComponent({
                 }
             }
 
-            // Dias do mês atual
             const daysFromCurrentMonth = []
             for (let i = 0; i < endOfMonth.date(); i++) {
                 const day = startOfMonth.clone().add(i, "days")
                 daysFromCurrentMonth.push({ date: day.date(), isAdjacent: false })
             }
 
-            // Dias do próximo mês
             const endDayOfWeek = endOfMonth.day()
             const daysFromNextMonth = []
             if (endDayOfWeek < 6) {
@@ -391,7 +563,6 @@ export default defineComponent({
 
             const allDays = [...daysFromPrevMonth, ...daysFromCurrentMonth, ...daysFromNextMonth]
 
-            // Garantir que haja sempre 42 dias (6 semanas)
             const totalDays = 42
             const extraDaysNeeded = totalDays - allDays.length
             if (extraDaysNeeded > 0) {
@@ -412,17 +583,27 @@ export default defineComponent({
         /**
          * Handles the blur event on the input.
          */
-        handleBlur(): void {
-            const parsedDate = moment(this.inputValue, "ll", true)
+        handleBlur(event: Event): void {
+            const target = event.target as HTMLInputElement
+            const parsedDate = moment(target.value, this.formats, true)
 
             if (!parsedDate.isValid()) {
                 this.clearInput()
             }
-            else
-            {
-                this.selectedDate = parsedDate
-                this.displayDate = parsedDate.clone()
-            }
+        },
+
+        /**
+         * Handles the click event from the clear button.
+         */
+        handleClickClear(): void {
+            this.selectedDate = null
+            this.displayDate = null
+            this.inputValue = null
+
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
+
+            const input = this.$refs.input as HTMLInputElement
+            input.focus()
         },
 
         /**
@@ -444,8 +625,10 @@ export default defineComponent({
 
             this.inputValue = selectedDate.format("ll")
             this.selectedDate = selectedDate
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, selectedDate.format())
+            this.selectedMonth = selectedDate.month()
+            this.selectedYear = selectedDate.year()
 
+            this.$emit(EVENTS.UPDATE_MODEL_VALUE, selectedDate.format())
             setTimeout(() => this.hideDropdown(), 200)
         },
 
@@ -456,6 +639,9 @@ export default defineComponent({
             this.inputValue = this.today.clone().format("ll")
             this.selectedDate = this.today.clone()
             this.displayDate = this.today.clone()
+            this.selectedMonth = this.selectedDate.month()
+            this.selectedYear = this.selectedDate.year()
+
             this.$emit(EVENTS.UPDATE_MODEL_VALUE, this.selectedDate.format())
 
             this.hideDropdown()
@@ -476,9 +662,18 @@ export default defineComponent({
         handleInput(event: Event): void {
             const target = event.target as HTMLInputElement
             this.inputValue = target.value
-            this.$emit(EVENTS.UPDATE_MODEL_VALUE, moment(this.inputValue).format())
 
-            this.hideDropdown()
+            const parsedDate = moment(this.inputValue, this.formats, true)
+            if (parsedDate.isValid()) {
+                this.selectedDate = parsedDate
+                this.displayDate = parsedDate
+                this.selectedYear = parsedDate.year()
+                this.selectedMonth = parsedDate.month()
+
+                this.$emit(EVENTS.UPDATE_MODEL_VALUE, moment(this.selectedDate).format())
+            }
+
+            //this.hideDropdown()
         },
 
         /**
@@ -490,6 +685,22 @@ export default defineComponent({
         },
 
         /**
+         * Handles the next year button.
+         */
+        handleNextYear(): void {
+            this.displayDate = moment(this.displayDate).add(1, "year")
+            this.generateCalendarDays()
+        },
+
+        /**
+         * Handles the next year range.
+         */
+        handleNextYearRange(): void {
+            this.yearRangeStart += 10
+            this.yearRangeEnd += 10
+        },
+
+        /**
          * Handles the previous month button.
          */
         handlePreviousMonth(): void {
@@ -498,15 +709,19 @@ export default defineComponent({
         },
 
         /**
-         * Handles the year change.
-         * @param event
+         * Handles the previous year button.
          */
-        handleYearChange(event: Event): void {
-            const target = event.target as HTMLSelectElement
-            const selectedYear = parseInt(target.value, 10)
-            this.displayDate = moment(this.displayDate).year(selectedYear)
-
+        handlePreviousYear(): void {
+            this.displayDate = moment(this.displayDate).subtract(1, "year")
             this.generateCalendarDays()
+        },
+
+        /**
+         * Handles the previous year range.
+         */
+        handlePreviousYearRange(): void {
+            this.yearRangeStart -= 10
+            this.yearRangeEnd -= 10
         },
 
         /**
@@ -514,16 +729,18 @@ export default defineComponent({
          */
         hideDropdown(): void {
             this.isOpen = false
+            this.currentView = this.views.calendar
+
+            this.initYearRange()
         },
 
         /**
-         * Verifies if the day is selected.
-         * @param day
+         * Initializes the current year range.
          */
-        isSelected(day: { date: number; isAdjacent: boolean }): boolean {
-            return this.selectedDate &&
-                (this.selectedDate.isSame(this.displayDate.clone().date(day.date), "day") &&
-                !day.isAdjacent)
+        initYearRange(): void {
+            const currentYear = this.currentYear
+            this.yearRangeStart = currentYear - (currentYear % 10)
+            this.yearRangeEnd = this.yearRangeStart + 9
         },
 
         /**
@@ -537,12 +754,50 @@ export default defineComponent({
         },
 
         /**
+         * Verifies if the month is selected.
+         * @param index
+         */
+        isSelectedMonth(index: number): boolean {
+            return this.selectedMonth === index && this.selectedYear === this.displayDate.year()
+        },
+
+        /**
+         * Verifies if the year is selected.
+         * @param year
+         */
+        isSelectedYear(year: number): boolean {
+            return this.selectedYear === year
+        },
+
+        /**
+         * Select the clicked month.
+         * @param monthIndex
+         */
+        selectMonth(monthIndex: number): void {
+            this.displayDate = this.displayDate.clone().month(monthIndex)
+            this.currentView = this.views.calendar
+
+            this.generateCalendarDays()
+        },
+
+        /**
+         * Select the clicked year.
+         * @param year
+         */
+        selectYear(year: number): void {
+            this.displayDate = this.displayDate.clone().year(year)
+            this.currentView = this.views.months
+        },
+
+        /**
          * Show the dropdown and set the display date.
          */
         showDropdown(): void {
+            if (this.isOpen) return
+
             if (this.selectedDate) {
                 this.displayDate = this.selectedDate.clone()
-                //this.inputValue = this.selectedDate.clone().format("ll")
+                this.inputValue = this.selectedDate.clone().format("ll")
             }
             else {
                 this.displayDate = moment()
@@ -552,7 +807,34 @@ export default defineComponent({
             this.generateCalendarDays()
             this.isOpen = true
         },
+
+        /**
+         * Switch the view to month.
+         */
+        switchToMonthView(): void {
+            this.currentView = this.views.months
+        },
+
+        /**
+         * Switch the view to year.
+         */
+        switchToYearView(): void {
+            this.currentView = this.views.years
+        },
     },
 })
 </script>
+
+<style>
+
+.slds-datepicker {
+    width: 17.709rem;
+}
+
+.slds-datepicker__month,
+.slds-datepicker__year {
+    width: 100%;
+}
+
+</style>
 
