@@ -5,7 +5,6 @@
         <slds-datepicker
             v-model="foo"
             label="Date"
-            locale="pt-br"
         />
         value: {{ foo }}
     </example-container>
