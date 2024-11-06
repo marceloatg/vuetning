@@ -1,33 +1,8 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
-        <slds-button-group
-            :dropdown-options="dropdownOptions"
-        >
+        <slds-button-group :dropdown-options="dropdownOptions">
             <slds-button
-                disabled
-                label="foo"
-                neutral
-            />
-        </slds-button-group>
-    </example-container>
-
-    <example-container class="slds-m-bottom_medium">
-        <slds-button-group
-            :dropdown-options="dropdownOptions"
-            @delete="foo"
-        >
-            <slds-button
-                label="foo"
-                neutral
-            />
-            <slds-button
-                disabled
-                label="foo"
-                neutral
-            />
-            <slds-button
-                disabled
                 label="foo"
                 neutral
             />
@@ -486,13 +461,11 @@ import SldsCheckboxGroup from "../../src/components/slds-checkbox-group/slds-che
 import SldsCheckboxOutputGroup from "../../src/components/slds-checkbox-output-group/slds-checkbox-output-group.vue"
 import SldsSvg from "../../src/components/slds-svg/slds-svg.vue"
 import SldsButtonGroup from "../../src/components/slds-button-group/slds-button-group.vue"
-import SldsButtonIcon from "../../src/components/slds-button-icon/slds-button-icon.vue"
 
 export default {
     name: "test",
 
     components: {
-        SldsButtonIcon,
         SldsButtonGroup,
         SldsSvg,
         SldsCheckboxOutputGroup,
@@ -683,10 +656,6 @@ export default {
                 message: newId(),
                 subject: "A title test1",
             })
-        },
-
-        foo() {
-            console.log(1)
         },
     },
 }
