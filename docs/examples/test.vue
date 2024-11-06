@@ -1,5 +1,26 @@
 <template>
 
+    <example-container class="slds-m-bottom_medium">
+        <slds-button-group :dropdown-options="dropdownOptions">
+            <slds-button
+                label="foo"
+                neutral
+            />
+        </slds-button-group>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <slds-menu
+            :options="dropdownOptions"
+        />
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <span class="slds-icon_container slds-icon-utility-add slds-current-color" @click="foo">
+            <slds-svg class="slds-icon slds-icon_x-small slds-cursor_not-allowed" icon="utility:add"/>
+        </span>
+    </example-container>
+
     <!-- Checkbox output group -->
     <example-container class="slds-m-bottom_medium">
         <slds-checkbox-output-group
@@ -421,8 +442,7 @@ import SldsMenu from "../../src/components/slds-menu/slds-menu.vue"
 import SldsCheckboxButtonGroup from "../../src/components/slds-checkbox-button-group/slds-checkbox-button-group.vue"
 import SldsVerticalNavigation from "../../src/components/slds-vertical-navigation/slds-vertical-navigation.vue"
 import SldsVerticalNavigationItem from "../../src/components/slds-vertical-navigation/slds-vertical-navigation-item.vue"
-import SldsVerticalNavigationSection
-    from "../../src/components/slds-vertical-navigation/slds-vertical-navigation-section.vue"
+import SldsVerticalNavigationSection from "../../src/components/slds-vertical-navigation/slds-vertical-navigation-section.vue"
 import SldsTabs from "../../src/components/slds-tabs/slds-tabs.vue"
 import SldsPanel from "../../src/components/slds-panel/slds-panel.vue"
 import SldsScopedTabs from "../../src/components/slds-scoped-tabs/slds-scoped-tabs.vue"
@@ -439,11 +459,15 @@ import SldsColumn from "../../src/components/slds-grid/slds-column.vue"
 import SldsInput from "../../src/components/slds-input/slds-input.vue"
 import SldsCheckboxGroup from "../../src/components/slds-checkbox-group/slds-checkbox-group.vue"
 import SldsCheckboxOutputGroup from "../../src/components/slds-checkbox-output-group/slds-checkbox-output-group.vue"
+import SldsSvg from "../../src/components/slds-svg/slds-svg.vue"
+import SldsButtonGroup from "../../src/components/slds-button-group/slds-button-group.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsButtonGroup,
+        SldsSvg,
         SldsCheckboxOutputGroup,
         SldsCheckboxGroup,
         SldsInput,
@@ -476,6 +500,17 @@ export default {
     data() {
         return {
             activeTab: "details",
+
+            dropdownOptions: [
+                {
+                    label: "Cancel",
+                    value: "cancel",
+                },
+                {
+                    label: "Delete",
+                    value: "delete",
+                },
+            ],
 
             activeScopedTab: "first",
 
