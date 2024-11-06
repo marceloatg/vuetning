@@ -31,7 +31,6 @@
 import { defineComponent, PropType } from "vue"
 import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
 import SldsButtonGroupDropdown from "./slds-button-group-dropdown.vue"
-import HasDropdownMixin from "../../mixins/has-dropdown-mixin.ts"
 import { vOnClickOutside } from "@vueuse/components"
 import { DropdownOption } from "../slds-dropdown/dropdown-option.ts"
 
@@ -44,10 +43,6 @@ export default defineComponent({
         ClickOutside: vOnClickOutside,
     },
 
-    mixins: [
-        HasDropdownMixin,
-    ],
-
     props: {
         /**
          * Indicates whether this component is disabled.
@@ -58,6 +53,15 @@ export default defineComponent({
          * Dropdown options.
          */
         dropdownOptions: { type: Array as PropType<DropdownOption[]>, default: () => [] as DropdownOption[] },
+    },
+
+    data() {
+        return {
+            /**
+             * Indicates whether the dropdown is open.
+             */
+            isOpen: false,
+        }
     },
 
     computed: {
@@ -74,12 +78,8 @@ export default defineComponent({
          * Handles the click event on the button.
          */
         handleClickButton(): void {
-            if (this.isOpen) {
-                this.hideDropdown()
-            }
-            else if (!this.disabled) {
-                this.showDropdown()
-            }
+            if (this.isOpen) this.hideDropdown()
+            else if (!this.disabled) this.showDropdown()
         },
 
         /**
@@ -88,7 +88,9 @@ export default defineComponent({
          */
         handleClickOption(option: DropdownOption): void {
             if (this.disabled || option.disabled) return
-            this.selectOption(option)
+
+            this.$emit(option.value!)
+            this.hideDropdown()
         },
 
         /**
@@ -99,14 +101,17 @@ export default defineComponent({
         },
 
         /**
-         * Selects an option.
-         * @param selectedOption Selected option.
+         * Hides the dropdown.
          */
-        selectOption(selectedOption: DropdownOption): void {
-            this.$emit(selectedOption.value!)
-            this.hideDropdown()
+        hideDropdown(): void {
+            this.isOpen = false
+        },
 
-            this.clearFocusedOption()
+        /**
+         * Shows the dropdown.
+         */
+        showDropdown(): void {
+            this.isOpen = true
         },
     },
 })
