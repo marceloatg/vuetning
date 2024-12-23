@@ -60,6 +60,7 @@ export { default as SldsScopedNotification } from "./slds-scoped-notification/sl
 export { default as SldsScopedTabs } from "./slds-scoped-tabs/slds-scoped-tabs.vue"
 export { default as SldsSpinner } from "./slds-spinner/slds-spinner.vue"
 export { default as SldsSpinnerContainer } from "./slds-spinner/slds-spinner-container.vue"
+export { default as SldsSvg } from "./slds-svg/slds-svg.vue"
 export { default as SldsTab } from "./slds-tabs/slds-tab.vue"
 export { default as SldsTabContent } from "./slds-tabs/slds-tab-content.vue"
 export { default as SldsTabs } from "./slds-tabs/slds-tabs.vue"

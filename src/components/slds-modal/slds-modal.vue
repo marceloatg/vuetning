@@ -8,7 +8,7 @@
 
         <!-- Modal -->
         <transition appear :name="transitionName">
-            <section tabindex="-1" :class="modalClassNames">
+            <section tabindex="-1" :class="modalClassNames" v-bind="modalAttributes">
                 <div class="slds-modal__container">
 
                     <!-- Header -->
@@ -84,10 +84,18 @@ export default defineComponent({
 
     computed: {
         /**
-         * Transition name, if any.
+         * Bindable modal attributes.
          */
-        transitionName(): string {
-            return this.noAnimation ? "" : "blow-up"
+        modalAttributes(): Record<string, unknown> {
+            const attributes: Record<string, unknown> = {}
+
+            for (const attribute in this.$attrs) {
+                if (attribute.startsWith("data-") || attribute === "class") {
+                    attributes[attribute] = this.$attrs[attribute]
+                }
+            }
+
+            return attributes
         },
 
         /**
@@ -138,6 +146,13 @@ export default defineComponent({
             if (this.headerClass && this.headerClass.length > 0) classNames += this.headerClass
 
             return classNames
+        },
+
+        /**
+         * Transition name, if any.
+         */
+        transitionName(): string {
+            return this.noAnimation ? "" : "blow-up"
         },
     },
 
