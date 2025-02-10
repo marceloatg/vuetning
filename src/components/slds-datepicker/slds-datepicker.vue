@@ -12,7 +12,7 @@
         <!-- Default slot -->
         <template #default="slotProps">
             <div v-click-outside="hideDropdown" :class="containerClassNames">
-                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                <div class="slds-input-has-icon slds-input-has-icon_right">
 
                     <!-- Input -->
                     <input
@@ -397,7 +397,7 @@ export default defineComponent({
          * The CSS class names for the container.
          */
         containerClassNames(): string {
-            let classNames = "slds-form-element slds-dropdown-trigger slds-dropdown-trigger_click"
+            let classNames = "slds-full-width slds-dropdown-trigger slds-dropdown-trigger_click"
 
             if (this.isOpen) classNames += " slds-is-open"
 
