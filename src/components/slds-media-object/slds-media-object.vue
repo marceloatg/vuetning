@@ -2,17 +2,17 @@
     <div :class="mediaObjectClassNames">
 
         <!-- Figure -->
-        <div v-if="$slots['figure']" :class="figureClassNames">
+        <div v-if="$slots['figure']" :class="figureClassNames" data-testid="mediaObjectFigure">
             <slot name="figure"/>
         </div>
 
         <!-- Body -->
-        <div :class="bodyClassNames">
+        <div :class="bodyClassNames" data-testid="mediaObjectBody">
             <slot/>
         </div>
 
         <!-- Figure reverse -->
-        <div v-if="$slots['figure-reverse']" :class="figureReverseClassNames">
+        <div v-if="$slots['figure-reverse']" :class="figureReverseClassNames" data-testid="mediaObjectFigureReverse">
             <slot name="figure-reverse"/>
         </div>
 

@@ -1,6 +1,63 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
+        <slds-page-header title="Test">
+            <template #actions>
+                Foo
+            </template>
+        </slds-page-header>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <slds-media-object class="slds-m-bottom_small">
+
+            <template #figure>
+                <slds-icon icon-name="utility:diamond" small/>
+            </template>
+
+            <template #default>
+
+                <slds-text heading-small>
+                    FFFF
+                </slds-text>
+
+                <slds-text>
+                    BBBB
+                </slds-text>
+
+            </template>
+
+        </slds-media-object>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <slds-card icon-name="standard:account">
+
+            <template #title>
+                Foo
+            </template>
+
+            <template #actions>
+                <slds-button-group :dropdown-options="options">
+                    <slds-button
+                        label="Bar"
+                        brand
+                    />
+                </slds-button-group>
+            </template>
+
+            <template #default>
+                Bar
+            </template>
+
+            <template #footer>
+                Foo
+            </template>
+
+        </slds-card>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
         <slds-button-group :dropdown-options="dropdownOptions">
             <slds-button
                 label="foo"
@@ -23,10 +80,26 @@
 
     <!-- Datepicker -->
     <example-container class="slds-m-bottom_medium">
-        <slds-datepicker
-            v-model="foo"
-            label="Date"
-        />
+        <slds-grid>
+
+            <slds-column size="1/2">
+                <slds-datepicker
+                    v-model="foo"
+                    label="Date"
+                    stacked
+                />
+            </slds-column>
+
+            <slds-column size="1/2">
+                <slds-datepicker
+                    v-model="foo"
+                    label="Date"
+                    stacked
+                />
+            </slds-column>
+
+        </slds-grid>
+
         value: {{ foo }}
     </example-container>
 
@@ -471,11 +544,21 @@ import SldsCheckboxOutputGroup from "../../src/components/slds-checkbox-output-g
 import SldsSvg from "../../src/components/slds-svg/slds-svg.vue"
 import SldsButtonGroup from "../../src/components/slds-button-group/slds-button-group.vue"
 import SldsDatepicker from "../../src/components/slds-datepicker/slds-datepicker.vue"
+import SldsCard from "../../src/components/slds-card/slds-card.vue"
+import SldsIcon from "../../src/components/slds-icon/slds-icon.vue"
+import SldsText from "../../src/components/slds-text/slds-text.vue"
+import SldsMediaObject from "../../src/components/slds-media-object/slds-media-object.vue"
+import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsPageHeader,
+        SldsText,
+        SldsIcon,
+        SldsMediaObject,
+        SldsCard,
         SldsButtonGroup,
         SldsSvg,
         SldsDatepicker,

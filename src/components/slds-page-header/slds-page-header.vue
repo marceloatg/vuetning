@@ -6,7 +6,7 @@
         <div class="slds-page-header__row">
 
             <!-- Title -->
-            <div class="slds-page-header__col-title">
+            <div class="slds-page-header__col-title" data-testid="pageHeaderTitle">
                 <slds-media-object>
 
                     <!-- Figure -->
@@ -112,7 +112,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="slds-page-header__col-actions">
+            <div class="slds-page-header__col-actions" data-testid="pageHeaderActions">
                 <div class="slds-page-header__controls">
                     <slot name="actions"/>
                 </div>
@@ -121,7 +121,7 @@
         </div>
 
         <!-- Lower row -->
-        <div v-if="objectHome || relatedList" class="slds-page-header__row">
+        <div v-if="objectHome || relatedList" class="slds-page-header__row" data-testid="pageHeaderControls">
             <template v-if="meta || $slots.controls">
 
                 <!-- Meta -->
@@ -147,7 +147,7 @@
 
         <!-- Details row -->
         <div v-if="recordHome" class="slds-page-header__row slds-page-header__row_gutters">
-            <div class="slds-page-header__col-details">
+            <div class="slds-page-header__col-details" data-testid="pageHeaderDetails">
                 <ul class="slds-page-header__detail-row">
                     <slot name="details"/>
                 </ul>
