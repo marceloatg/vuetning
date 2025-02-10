@@ -7,12 +7,17 @@
 
                 <!-- Figure -->
                 <div v-if="iconName" class="slds-media__figure">
-                    <slds-icon small :icon-name="iconName" :icon-class="iconClass"/>
+                    <slds-icon
+                        data-testid="cardIcon"
+                        :icon-class="iconClass"
+                        :icon-name="iconName"
+                        small
+                    />
                 </div>
 
                 <!-- Title -->
                 <div class="slds-media__body">
-                    <h2 class="slds-card__header-title slds-truncate">
+                    <h2 class="slds-card__header-title slds-truncate" data-testid="cardTitle">
                         <slot name="title">
                             <span v-if="title">
                                 {{ title }}
@@ -22,7 +27,7 @@
                 </div>
 
                 <!-- Actions -->
-                <div v-if="$slots.actions" class="slds-no-flex">
+                <div v-if="$slots.actions" class="slds-no-flex" data-testid="cardActions">
                     <slot name="actions"/>
                 </div>
 
