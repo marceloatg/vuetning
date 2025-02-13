@@ -243,7 +243,10 @@ export default defineComponent({
             if (!(event instanceof KeyboardEvent) || event.key !== KEYS.ESCAPE) return
 
             event.stopPropagation()
-            if (event.key === KEYS.ESCAPE) this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
+            if (event.key === KEYS.ESCAPE) {
+                if (this.modelValue === null) this.$emit(EVENTS.CLOSE)
+                else this.$emit(EVENTS.UPDATE_MODEL_VALUE, null)
+            }
         },
     },
 })
