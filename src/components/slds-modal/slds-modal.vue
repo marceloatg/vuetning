@@ -12,7 +12,7 @@
                 <div class="slds-modal__container">
 
                     <!-- Header -->
-                    <header :class="modalHeaderClassNames">
+                    <header :class="modalHeaderClassNames" data-testid="modalHeader">
 
                         <!-- Close button -->
                         <slds-button-icon
@@ -29,12 +29,12 @@
                     </header>
 
                     <!-- Content -->
-                    <div :class="modalContentClassNames">
+                    <div :class="modalContentClassNames" data-testid="modalContent">
                         <slot name="content"/>
                     </div>
 
                     <!-- Footer -->
-                    <footer v-if="$slots.footer" :class="modalFooterClassNames">
+                    <footer v-if="$slots.footer" :class="modalFooterClassNames" data-testid="modalFooter">
                         <slot name="footer"/>
                     </footer>
 
