@@ -1,27 +1,6 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
-        <slds-modal>
-
-            <template #header>
-                TEST
-            </template>
-
-            <template #content>
-                <slds-input
-                    v-model="value"
-                    label="Test"
-                />
-            </template>
-
-            <template #footer>
-                test
-            </template>
-
-        </slds-modal>
-    </example-container>
-
-    <example-container class="slds-m-bottom_medium">
         <slds-page-header title="Test">
             <template #actions>
                 Foo
@@ -570,13 +549,11 @@ import SldsIcon from "../../src/components/slds-icon/slds-icon.vue"
 import SldsText from "../../src/components/slds-text/slds-text.vue"
 import SldsMediaObject from "../../src/components/slds-media-object/slds-media-object.vue"
 import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
-import SldsModal from "../../src/components/slds-modal/slds-modal.vue"
 
 export default {
     name: "test",
 
     components: {
-        SldsModal,
         SldsPageHeader,
         SldsText,
         SldsIcon,
