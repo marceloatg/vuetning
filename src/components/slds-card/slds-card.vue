@@ -35,12 +35,12 @@
         </div>
 
         <!-- Body -->
-        <div :class="bodyClassNames">
+        <div :class="bodyClassNames" data-testid="cardBody">
             <slot/>
         </div>
 
         <!-- Footer -->
-        <footer v-if="$slots.footer" :class="footerClassNames">
+        <footer v-if="$slots.footer" :class="footerClassNames" data-testid="cardFooter">
             <slot name="footer"/>
         </footer>
 
