@@ -31,6 +31,7 @@ export { default as SldsDatepicker } from "./slds-datepicker/slds-datepicker.vue
 export { default as SldsDatetimeOutput } from "./slds-datetime-output/slds-datetime-output.vue"
 export { default as SldsDuelingPicklist } from "./slds-dueling-picklist/slds-dueling-picklist.vue"
 export { default as SldsExpandableSection } from "./slds-expandable-section/slds-expandable-section.vue"
+export { default as SldsFormElement } from "./slds-form-element/slds-form-element.vue"
 export { default as SldsGlobalAction } from "./slds-global-header/slds-global-action.vue"
 export { default as SldsGlobalActionAvatar } from "./slds-global-header/slds-global-action-avatar.vue"
 export { default as SldsGlobalActionFavorites } from "./slds-global-header/slds-global-action-favorites.vue"
