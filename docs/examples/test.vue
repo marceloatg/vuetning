@@ -1,6 +1,11 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
+        <slds-radio-group v-model="bar" label="Foo" :options="options4"/>
+        Foo: {{ bar }}
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
         <slds-page-header title="Test">
             <template #actions>
                 Foo
@@ -549,11 +554,13 @@ import SldsIcon from "../../src/components/slds-icon/slds-icon.vue"
 import SldsText from "../../src/components/slds-text/slds-text.vue"
 import SldsMediaObject from "../../src/components/slds-media-object/slds-media-object.vue"
 import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
+import SldsRadioGroup from "../../src/components/slds-radio-group/slds-radio-group.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsRadioGroup,
         SldsPageHeader,
         SldsText,
         SldsIcon,
@@ -731,6 +738,17 @@ export default {
                 { label: "Italian", value: "it" },
                 { label: "Japanese", value: "ja" },
             ],
+
+            options4: [
+                { label: "English", value: "en", description: "Lorem ipsum dolor sit amet." },
+                { label: "German", value: "de", description: "Lorem ipsum dolor sit amet." },
+                { label: "Spanish", value: "es", description: "Lorem ipsum dolor sit amet." },
+                { label: "French", value: "fr" },
+                { label: "Italian", value: "it" },
+                { label: "Japanese", value: "ja" },
+            ],
+
+            bar: null,
         }
     },
 
