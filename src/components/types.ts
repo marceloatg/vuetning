@@ -8,5 +8,6 @@ export type { GlobalNavigationTab } from "./slds-global-navigation/global-naviga
 export type { GlobalNavigationSubTab } from "./slds-global-navigation/global-navigation-sub-tab"
 export type { Option } from "./commons/option"
 export type { PageHeaderDropdownOption } from "./slds-page-header/page-header-dropdown-option"
+export type { ValidationError } from "./slds-form-element/validation-error.ts"
 export type { Tab } from "./slds-tabs/tab"
 export type { WideRadioGroupOption } from "./slds-wide-radio-group/wide-radio-group-option"
