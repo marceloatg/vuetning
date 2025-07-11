@@ -1,6 +1,16 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
+        <slds-progress-bar
+            :current="3"
+            progress-label="Complete"
+            :total="10"
+            radius
+            large
+        />
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
         <slds-radio-group v-model="bar" label="Foo" :options="options4"/>
         Foo: {{ bar }}
     </example-container>
@@ -555,11 +565,13 @@ import SldsText from "../../src/components/slds-text/slds-text.vue"
 import SldsMediaObject from "../../src/components/slds-media-object/slds-media-object.vue"
 import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
 import SldsRadioGroup from "../../src/components/slds-radio-group/slds-radio-group.vue"
+import SldsProgressBar from "../../src/components/slds-progress-bar/slds-progress-bar.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsProgressBar,
         SldsRadioGroup,
         SldsPageHeader,
         SldsText,
@@ -774,3 +786,4 @@ export default {
     },
 }
 </script>
+
