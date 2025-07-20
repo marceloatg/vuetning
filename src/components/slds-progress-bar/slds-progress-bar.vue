@@ -8,8 +8,13 @@
             </span>
 
             <span aria-hidden="true">
-                <strong>
-                    {{ progress }}% {{ progressLabel }}
+
+                <span v-if="error">
+                    Error
+                </span>
+
+                <strong v-else>
+                    {{ proportion }}
                 </strong>
             </span>
 
@@ -49,6 +54,11 @@ export default defineComponent({
             type: Number,
             required: true,
         },
+
+        /**
+         * Indicates when the progress bar should be in error mode.
+         */
+        error: Boolean,
 
         /**
          * Label.
@@ -92,13 +102,30 @@ export default defineComponent({
          * Indicates when the progress bar thickness should be x-small.
          */
         xSmall: Boolean,
+
+        /**
+         * Indicates when the progress bar should be in warning mode.
+         */
+        warning: Boolean,
     },
 
     computed: {
         /**
-         * Indicates the progress percentage.
+         * Proportion of current to total, normalized to a 100-base scale.
+         */
+        proportion(): string {
+            if (!Number.isFinite(this.current) || !Number.isFinite(this.total) || this.total === 0) return
+
+            const value = (this.current / this.total) * 100
+            return `${Math.round(value)}/100`
+        },
+
+        /**
+         * The progress percentage.
          */
         progress(): number {
+            if (!Number.isFinite(this.current) || !Number.isFinite(this.total) || this.total === 0) return 0
+
             const percent = (this.current / this.total) * 100
             return Math.min(Math.max(Math.round(percent), 0), 100)
         },
@@ -117,6 +144,7 @@ export default defineComponent({
             let classNames = "slds-progress-bar"
 
             if (this.radius) classNames += " slds-progress-bar_circular"
+            if (this.error) classNames += " error"
             if (this.large) classNames += " slds-progress-bar_large"
             else if (this.medium) classNames += " slds-progress-bar_medium"
             else if (this.small) classNames += " slds-progress-bar_small"
@@ -132,9 +160,25 @@ export default defineComponent({
             let classNames = "slds-progress-bar__value"
 
             if (this.current === this.total || this.current > this.total) classNames += " slds-progress-bar__value_success"
+            if (this.error) classNames += " slds-progress-bar__value_error"
+            else if (this.warning)  classNames += " slds-progress-bar__value_warning"
 
             return classNames
         },
     },
 })
 </script>
+
+<style scoped lang="scss">
+
+.slds-progress-bar__value_error {
+    background: #EA001E;
+    width: 100% !important;
+}
+
+.slds-progress-bar__value_warning {
+    background: #FE9339;
+    width: 100% !important;
+}
+
+</style>
