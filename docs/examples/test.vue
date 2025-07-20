@@ -3,7 +3,16 @@
     <example-container class="slds-m-bottom_medium">
         <slds-progress-bar
             :current="3"
-            progress-label="Complete"
+            :total="asdasdasd"
+            radius
+            large
+            warning
+        />
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <slds-progress-bar
+            :current="2"
             :total="10"
             radius
             large
