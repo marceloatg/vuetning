@@ -1,9 +1,51 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
+        <h3 class="slds-text-heading_small slds-m-bottom_medium">
+            Vertical Tabs with Navigation
+        </h3>
+        <slds-vertical-tabs
+            :tabs="options6"
+            :active="selectedTab"
+            @click-tab="handleClick"
+        >
+            <template #content>
+                <div class="slds-p-around_medium">
+                    <h4>Selected Tab: {{ selectedTab }}</h4>
+                    <p>Content for the selected tab would go here.</p>
+                </div>
+            </template>
+
+            <template #en>
+                FOO
+            </template>
+
+        </slds-vertical-tabs>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <h3 class="slds-text-heading_small slds-m-bottom_medium">
+            Vertical Tabs with Navigation
+        </h3>
+        <slds-vertical-tabs
+            :tabs="options5"
+            :active="selectedTab"
+            no-content
+            @click-tab="handleClick"
+        >
+            <template #content>
+                <div class="slds-p-around_medium">
+                    <h4>Selected Tab: {{ selectedTab }}</h4>
+                    <p>Content for the selected tab would go here.</p>
+                </div>
+            </template>
+        </slds-vertical-tabs>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
         <slds-progress-bar
             :current="3"
-            :total="asdasdasd"
+            :total="3"
             radius
             large
             warning
@@ -575,11 +617,13 @@ import SldsMediaObject from "../../src/components/slds-media-object/slds-media-o
 import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
 import SldsRadioGroup from "../../src/components/slds-radio-group/slds-radio-group.vue"
 import SldsProgressBar from "../../src/components/slds-progress-bar/slds-progress-bar.vue"
+import SldsVerticalTabs from "../../src/components/slds-vertical-tabs/slds-vertical-tabs.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsVerticalTabs,
         SldsProgressBar,
         SldsRadioGroup,
         SldsPageHeader,
@@ -624,6 +668,8 @@ export default {
             foo: null,
 
             activeTab: "details",
+
+            selectedTab: "en",
 
             dropdownOptions: [
                 {
@@ -769,6 +815,25 @@ export default {
                 { label: "Japanese", value: "ja" },
             ],
 
+            options5: [
+                { label: "English", description: "United States", name: "en", leftIcon: "utility:world" },
+                { label: "German", description: "Deutschland", name: "de", leftIcon: "utility:world" },
+                { label: "Spanish", name: "es", leftIcon: "utility:world" },
+                { label: "French", description: "France", name: "fr", leftIcon: "utility:world" },
+                { label: "Italian", description: "Italia", name: "it", leftIcon: "utility:world" },
+                { label: "Portuguese", description: "Brasil", name: "pt", leftIcon: "utility:world", rightIcon: "utility:success" },
+                { label: "Japanese", description: "日本", name: "ja", leftIcon: "utility:world" },
+                { label: "Chinese", description: "中国", name: "zh", leftIcon: "utility:world" },
+                { label: "Russian", description: "Россия", name: "ru", leftIcon: "utility:world" },
+                { label: "Arabic", description: "العربية", name: "ar", leftIcon: "utility:world", rightIcon: "utility:warning" },
+            ],
+
+            options6: [
+                { label: "Deployment 1344aeca", description: "0Af8800000LNfpdCAD", name: "en", leftIcon: "utility:world" },
+                { label: "Spanish", name: "es", leftIcon: "utility:world" },
+                { label: "Portuguese", description: "0Af8800000LNfpdCAD", name: "pt", leftIcon: "utility:world", rightIcon: "utility:success" },
+            ],
+
             bar: null,
         }
     },
@@ -791,6 +856,10 @@ export default {
                 message: newId(),
                 subject: "A title test1",
             })
+        },
+
+        handleClick(tabName) {
+            this.selectedTab = tabName
         },
     },
 }
