@@ -14,7 +14,7 @@
                 <slds-icon :icon-name="leftIconName" x-small/>
             </span>
 
-            <!-- Content (Label + Description) -->
+            <!-- Content -->
             <div class="slds-vertical-tabs__content">
 
                 <!-- Label -->
@@ -49,6 +49,11 @@ export default defineComponent({
 
     props: {
         /**
+         * Tab description (optional, appears below label).
+         */
+        description: String,
+
+        /**
          * Indicates when this vertical tab is active.
          */
         isActive: Boolean,
@@ -59,19 +64,14 @@ export default defineComponent({
         label: { type: String, required: true },
 
         /**
-         * Tab description (optional, appears below label).
+         * Left icon name.
          */
-        description: String,
+        leftIconName: String,
 
         /**
          * Tab name.
          */
         name: { type: String, required: true },
-
-        /**
-         * Left icon name.
-         */
-        leftIconName: String,
 
         /**
          * Right icon name.
@@ -86,18 +86,17 @@ export default defineComponent({
         tabClassNames(): string {
             let classNames = "slds-vertical-tabs__nav-item"
 
-            if (this.isActive) classNames += " slds-is-active"
+            if (this.isActive) classNames += " slds-is-active slds-has-focus"
 
             return classNames
         },
 
         /**
-         * Tab index.
+         * Tab index for accessibility.
          */
         tabIndex(): number {
             return this.isActive ? 0 : -1
         },
-
     },
 })
 </script>

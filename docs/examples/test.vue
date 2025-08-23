@@ -17,7 +17,7 @@
                 </div>
             </template>
         </slds-vertical-tabs>
-    </example-container> -->
+    </example-container>
 
     <example-container class="slds-m-bottom_medium" style="height: 500px">
 
@@ -52,6 +52,56 @@
                 <div class="slds-p-around_medium" style="height: 400px">
                     <h4>Selected Tab: {{ selectedTab }}</h4>
                     <p>Content for the selected tab would go here.</p>
+                </div>
+            </template>
+        </slds-vertical-tabs>
+    </example-container>-->
+
+    <!-- Vertical Tabs with Keyboard Navigation Demo -->
+    <example-container class="slds-m-bottom_medium">
+        <h3 class="slds-text-heading_small slds-m-bottom_medium">
+            Vertical Tabs - Keyboard Navigation Demo
+        </h3>
+        <div class="slds-box slds-box_x-small slds-m-bottom_medium">
+            <p><strong>Keyboard Instructions:</strong></p>
+            <ul class="slds-list_dotted">
+                <li>Use <kbd>Arrow Up/Down</kbd> to navigate between tabs</li>
+                <li>Use <kbd>Tab</kbd> to move focus into tab content</li>
+                <li>Use <kbd>Shift+Tab</kbd> from first element in panel to return to tab</li>
+                <li>Use <kbd>Enter</kbd> or <kbd>Space</kbd> to activate a tab</li>
+            </ul>
+        </div>
+        <slds-vertical-tabs
+            :tabs="options5"
+            :active="selectedTab"
+            @click-tab="handleClick"
+        >
+            <template #en>
+                <div class="slds-p-around_medium">
+                    <h4>English Content ({{ selectedTab }})</h4>
+                    <p>This content demonstrates keyboard navigation. Try using Tab to focus this content area.</p>
+                    <slds-button neutral label="Focusable Button 1" class="slds-m-right_small"/>
+                    <slds-button brand label="Focusable Button 2"/>
+                    <br><br>
+                    <slds-input label="Focusable Input" stacked/>
+                </div>
+            </template>
+            <template #de>
+                <div class="slds-p-around_medium">
+                    <h4>German Content ({{ selectedTab }})</h4>
+                    <p>Dieser Inhalt demonstriert die Tastaturnavigation.</p>
+                    <slds-button neutral label="Deutscher Button"/>
+                    <br><br>
+                    <slds-text-area label="Text Area" rows="3"/>
+                </div>
+            </template>
+            <template #es>
+                <div class="slds-p-around_medium">
+                    <h4>Spanish Content ({{ selectedTab }})</h4>
+                    <p>Este contenido demuestra la navegación por teclado.</p>
+                    <slds-button brand label="Botón Español"/>
+                    <br><br>
+                    <slds-checkbox label="Checkbox Example"/>
                 </div>
             </template>
         </slds-vertical-tabs>

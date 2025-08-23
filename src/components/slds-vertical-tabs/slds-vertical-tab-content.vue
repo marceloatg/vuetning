@@ -3,7 +3,8 @@
         :id="`vertical-tab-content-${name}`"
         :class="contentClassNames"
         role="tabpanel"
-        :aria-labelledby="`${name}__nav`"
+        :aria-labelledby="`vertical-tab-${name}__nav`"
+        :tabindex="isActive ? 0 : -1"
     >
         <slot/>
     </div>
