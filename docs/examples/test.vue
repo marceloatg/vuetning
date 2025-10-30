@@ -1,9 +1,22 @@
 <template>
 
     <example-container class="slds-m-bottom_medium">
+        <slds-button-group brand :dropdown-options="options">
+            <slds-button brand label="Foo"/>
+        </slds-button-group>
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
+        <slds-data-table
+            :columns="test2"
+            :rows="test3"
+        />
+    </example-container>
+
+    <example-container class="slds-m-bottom_medium">
         <slds-progress-bar
             :current="3"
-            :total="asdasdasd"
+            :total="3"
             radius
             large
             warning
@@ -575,11 +588,13 @@ import SldsMediaObject from "../../src/components/slds-media-object/slds-media-o
 import SldsPageHeader from "../../src/components/slds-page-header/slds-page-header.vue"
 import SldsRadioGroup from "../../src/components/slds-radio-group/slds-radio-group.vue"
 import SldsProgressBar from "../../src/components/slds-progress-bar/slds-progress-bar.vue"
+import SldsDataTable  from "../../src/components/slds-data-table/slds-data-table.vue"
 
 export default {
     name: "test",
 
     components: {
+        SldsDataTable,
         SldsProgressBar,
         SldsRadioGroup,
         SldsPageHeader,
@@ -770,6 +785,34 @@ export default {
             ],
 
             bar: null,
+
+            test2: [
+                { fieldName: "status", label: "Status", type: "badge" },
+                { fieldName: "description", label: "Description", type: "text" },
+            ],
+
+            test3: [
+                {
+                    id: 1,
+                    description: "open",
+                    status: {
+                        color: "success",
+                        icon: "utility:success",
+                        label: "Open",
+                        sortBy: "open",
+                    } ,
+                },
+                {
+                    id: 2,
+                    description: "closed",
+                    status: {
+                        color: "lightest",
+                        icon: "utility:success",
+                        label: "Open",
+                        sortBy: "open",
+                    } ,
+                },
+            ],
         }
     },
 
