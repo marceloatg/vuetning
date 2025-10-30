@@ -11,7 +11,9 @@
 
             <slds-button-icon
                 bordered
+                :brand="brand"
                 :disabled="disabled"
+                :inverse="inverse"
                 icon-name="utility:down"
                 @click="handleClickButton"
             />
@@ -45,6 +47,11 @@ export default defineComponent({
 
     props: {
         /**
+         * Indicates whether the button has the brand theme.
+         */
+        brand: Boolean,
+
+        /**
          * Indicates whether this component is disabled.
          */
         disabled: Boolean,
@@ -53,6 +60,11 @@ export default defineComponent({
          * Dropdown options.
          */
         dropdownOptions: { type: Array as PropType<DropdownOption[]>, default: () => [] as DropdownOption[] },
+
+        /**
+         * Indicates whether the button has the inverse theme.
+         */
+        inverse: Boolean,
     },
 
     data() {

@@ -135,7 +135,6 @@
                                                 <slds-svg
                                                     :icon="getFieldValue(column, item).icon"
                                                     class="slds-icon slds-icon_xx-small"
-                                                    style="margin-top: -4px;"
                                                 />
                                             </span>
                                         </span>{{ getFieldValue(column, item).label }}
