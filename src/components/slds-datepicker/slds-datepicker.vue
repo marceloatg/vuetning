@@ -354,7 +354,7 @@ export default defineComponent({
             /**
              * Selected date.
              */
-            selectedDate: this.modelValue ? moment.utc(this.modelValue).format("ll") : null,
+            selectedDate: this.modelValue ? moment.utc(this.modelValue) : null,
 
             /**
              * Selected month.

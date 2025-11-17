@@ -636,7 +636,7 @@ export default {
 
     data() {
         return {
-            foo: null,
+            foo: new Date(),
 
             activeTab: "details",
 
