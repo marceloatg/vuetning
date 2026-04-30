@@ -15,14 +15,18 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "outDir": "dist",
+        "rootDir": "./src",
         "declaration": true,
         "allowSyntheticDefaultImports": true
+    },
+    "vueCompilerOptions": {
+        "strictTemplates": false
     },
     "include": [
         "src/**/*.ts",
         "src/**/*.d.ts",
         "src/**/*.tsx",
-        "src/components/*.vue"
+        "src/**/*.vue"
     ],
     "references": [
         {

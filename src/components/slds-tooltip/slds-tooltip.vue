@@ -324,7 +324,8 @@ export default defineComponent({
          * Hides the tooltip.
          * @param element Tooltip wrapper element.
          */
-        hideTooltip(element: HTMLElement): void {
+        hideTooltip(el: Element): void {
+            const element = el as HTMLElement
             element.style.opacity = "0"
             element.style.transition = "transform 300ms, opacity 150ms"
 
@@ -337,9 +338,10 @@ export default defineComponent({
 
         /**
          * Shows the tooltip.
-         * @param element Tooltip wrapper element.
+         * @param el Tooltip wrapper element.
          */
-        showTooltip(element: HTMLElement): void {
+        showTooltip(el: Element): void {
+            const element = el as HTMLElement
             element.style.opacity = "1"
             element.style.transform = "translate(0, 0)"
             element.style.transition = "transform 300ms, opacity 150ms"

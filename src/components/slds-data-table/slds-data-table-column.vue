@@ -200,6 +200,8 @@ export default defineComponent({
         },
 
         resize(delta: number) {
+            if (this.width === undefined) return
+
             // Apply column width validations to delta
             if (this.width + delta < this.minimumWidth) {
                 delta = this.minimumWidth - this.width
@@ -212,6 +214,8 @@ export default defineComponent({
         },
 
         resizing(delta: number) {
+            if (this.width === undefined) return
+
             if (this.width + delta < this.minimumWidth) delta = this.minimumWidth - this.width
             this.resizerTranslation = delta
         },

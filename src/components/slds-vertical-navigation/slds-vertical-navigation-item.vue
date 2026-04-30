@@ -46,7 +46,8 @@ export default defineComponent({
          * Indicates whether this item is active.
          */
         isActive(): boolean {
-            let activeItemName = this.$parent?.active || this.$parent?.$parent?.active || null
+            const parent = this.$parent as { active?: string; $parent?: { active?: string } } | null
+            const activeItemName = parent?.active || parent?.$parent?.active || null
             return this.name === activeItemName
         },
 

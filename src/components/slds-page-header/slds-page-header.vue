@@ -82,11 +82,11 @@
                                         <!-- Dropdown -->
                                         <transition name="dropdown">
                                             <slds-page-header-dropdown
-                                                v-if="$data.$_isOpen"
+                                                v-if="isOpen"
                                                 :value="selectedListView"
-                                                :options="filteredOptions"
-                                                :focused-option="focusedOption"
-                                                :loading="loading"
+                                                :options="(filteredOptions as unknown as PageHeaderDropdownOption[])"
+                                                :focused-option="focusedOption?.value"
+                                                :show-spinner="showSpinner"
                                                 @click="onClickOption"
                                                 @mouseover="onMouseOverOption"
                                             >
@@ -165,6 +165,7 @@ import SldsMediaObject from "../slds-media-object/slds-media-object.vue"
 import SldsPageHeaderDropdown from "../slds-page-header/slds-page-header-dropdown.vue"
 import { defineComponent } from "vue"
 import type { DropdownOption } from "../slds-dropdown/dropdown-option"
+import type { PageHeaderDropdownOption } from "./page-header-dropdown-option"
 
 export default defineComponent({
     name: "SldsPageHeader",

@@ -359,12 +359,12 @@ export default defineComponent({
             /**
              * Selected month.
              */
-            selectedMonth: null as unknown as number,
+            selectedMonth: null as number | null,
 
             /**
              * Selected year.
              */
-            selectedYear: null as unknown as number,
+            selectedYear: null as number | null,
 
             /**
              * Today.
@@ -465,7 +465,7 @@ export default defineComponent({
         /**
          * Year rows.
          */
-        yearRows(): Array<number> {
+        yearRows(): Array<Array<number>> {
             const years = []
             for (let i = this.yearRangeStart; i <= this.yearRangeEnd; i++) {
                 years.push(i)
@@ -532,9 +532,9 @@ export default defineComponent({
          * @param day
          */
         dayIsSelected(day: { date: number; isAdjacent: boolean }): boolean {
-            return this.selectedDate &&
-                (this.selectedDate.isSame(this.displayDate.clone().date(day.date), "day") &&
-                    !day.isAdjacent)
+            return Boolean(this.selectedDate &&
+                this.selectedDate.isSame(this.displayDate.clone().date(day.date), "day") &&
+                !day.isAdjacent)
         },
 
         /**

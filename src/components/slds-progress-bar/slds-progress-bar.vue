@@ -114,7 +114,7 @@ export default defineComponent({
          * Proportion of current to total, normalized to a 100-base scale.
          */
         proportion(): string {
-            if (!Number.isFinite(this.current) || !Number.isFinite(this.total) || this.total === 0) return
+            if (!Number.isFinite(this.current) || !Number.isFinite(this.total) || this.total === 0) return ""
 
             const value = (this.current / this.total) * 100
             return `${Math.round(value)}/100`

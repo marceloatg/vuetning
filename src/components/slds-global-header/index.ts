@@ -1,0 +1,5 @@
+export { default as SldsGlobalAction } from "./slds-global-action.vue"
+export { default as SldsGlobalActionAvatar } from "./slds-global-action-avatar.vue"
+export { default as SldsGlobalActionFavorites } from "./slds-global-action-favorites.vue"
+export { default as SldsGlobalActionNotifications } from "./slds-global-action-notifications.vue"
+export { default as SldsGlobalHeader } from "./slds-global-header.vue"

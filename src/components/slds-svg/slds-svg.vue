@@ -16,14 +16,20 @@
 </template>
 
 <script lang="ts">
-import ActionSprite from "./slds-svg-action-sprite.vue"
-import BrandSprite from "./slds-svg-brand-sprite.vue"
-import CustomSprite from "./slds-svg-custom-sprite.vue"
-import DoctypeSprite from "./slds-svg-doctype-sprite.vue"
-import StandardSprite from "./slds-svg-standard-sprite.vue"
-import UtilitySprite from "./slds-svg-utility-sprite.vue"
+import { defineAsyncComponent, defineComponent } from "vue"
 import { IconUtils } from "../../utils"
-import { defineComponent } from "vue"
+
+// Each SLDS sprite category is ~50–415 KB of inline SVG markup. Loading them
+// statically would force every consumer of <slds-svg> to ship all six sprites
+// up front. defineAsyncComponent defers the import until v-if mounts the
+// matching sprite, so the build emits one lazy chunk per category and the
+// runtime fetches only the categories the user actually renders.
+const ActionSprite = defineAsyncComponent(() => import("./slds-svg-action-sprite.vue"))
+const BrandSprite = defineAsyncComponent(() => import("./slds-svg-brand-sprite.vue"))
+const CustomSprite = defineAsyncComponent(() => import("./slds-svg-custom-sprite.vue"))
+const DoctypeSprite = defineAsyncComponent(() => import("./slds-svg-doctype-sprite.vue"))
+const StandardSprite = defineAsyncComponent(() => import("./slds-svg-standard-sprite.vue"))
+const UtilitySprite = defineAsyncComponent(() => import("./slds-svg-utility-sprite.vue"))
 
 const defaultCategory = "standard"
 const defaultName = "default"
