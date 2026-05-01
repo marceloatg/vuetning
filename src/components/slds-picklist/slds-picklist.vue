@@ -20,6 +20,11 @@
             <div v-click-outside="handleClickOutside" :class="containerClassNames">
                 <div
                     class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                    role="combobox"
+                    :aria-expanded="isOpen"
+                    aria-haspopup="listbox"
+                    :aria-controls="listboxId"
+                    :aria-label="label"
                     @keydown.down.prevent
                     @keydown.up.prevent
                     @keyup.down="handleKeyDown"
@@ -34,7 +39,6 @@
                         <div
                             :id="slotProps['inputId']"
                             :class="inputClassNames"
-                            role="combobox"
                             tabindex="0"
                             @blur="handleBlurInput"
                             @click="handleClickInput"
@@ -53,9 +57,11 @@
 
                     <!-- Dropdown -->
                     <slds-dropdown
+                        :aria-label="label"
                         :focused-option="focusedOption"
                         :is-open="isOpen"
                         :length="length"
+                        :listbox-id="listboxId"
                         :options="options"
                         :selected-option="selectedOption"
                         :show-spinner="showSpinner"
@@ -90,6 +96,8 @@ import { defineComponent, type PropType } from "vue"
 import type { ValidationError } from "../slds-form-element/validation-error"
 import type { DropdownOption } from "../slds-dropdown/dropdown-option"
 import { EVENTS } from "../../constants"
+
+let listboxUid = 0
 
 export default defineComponent({
     name: "SldsPicklist",
@@ -167,6 +175,12 @@ export default defineComponent({
         xxLarge: Boolean,
 
         xxSmall: Boolean,
+    },
+
+    data() {
+        return {
+            listboxId: `slds-picklist-listbox-${++listboxUid}`,
+        }
     },
 
     computed: {

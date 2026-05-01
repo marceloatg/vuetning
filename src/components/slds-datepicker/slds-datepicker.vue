@@ -27,6 +27,7 @@
                         @blur="handleBlur"
                         @click="showDropdown"
                         @input="handleInput"
+                        @keydown.esc.stop.prevent="hideDropdown"
                     >
 
                     <!-- Icons -->
@@ -58,6 +59,7 @@
                         <div
                             v-if="isOpen"
                             aria-hidden="false"
+                            aria-label="Date picker"
                             class="slds-datepicker slds-dropdown slds-dropdown_left"
                             role="dialog"
                         >
@@ -183,7 +185,8 @@
                                             :class="{
                                                 'slds-day_adjacent-month': day.isAdjacent,
                                                 'slds-is-today': isToday(day),
-                                                'slds-is-selected': dayIsSelected(day)
+                                                'slds-is-selected': dayIsSelected(day),
+                                                'slds-is-disabled': isDayDisabled(day)
                                             }"
                                             @click="handleClickDay(day)"
                                         >
@@ -294,6 +297,16 @@ export default defineComponent({
          * Locale.
          */
         locale: { type: String, default: "en" },
+
+        /**
+         * Maximum selectable date. Days after this date are disabled.
+         */
+        maxDate: { type: [Date, String, Object] as PropType<Date | string | moment.Moment | null>, default: null },
+
+        /**
+         * Minimum selectable date. Days before this date are disabled.
+         */
+        minDate: { type: [Date, String, Object] as PropType<Date | string | moment.Moment | null>, default: null },
 
         /**
          * The value of the date picker.
@@ -629,6 +642,8 @@ export default defineComponent({
          * @param day
          */
         handleClickDay(day: { date: number; isAdjacent: boolean }): void {
+            if (this.isDayDisabled(day)) return
+
             const selectedDate = this.displayDate.clone().date(day.date)
 
             if (day.isAdjacent) {
@@ -749,6 +764,44 @@ export default defineComponent({
             const currentYear = this.currentYear
             this.yearRangeStart = currentYear - (currentYear % 10)
             this.yearRangeEnd = this.yearRangeStart + 9
+        },
+
+        /**
+         * Resolves a calendar day to a moment representing its actual date,
+         * accounting for adjacent-month rollover.
+         * @param day The day cell.
+         */
+        resolveDayDate(day: { date: number; isAdjacent: boolean }): moment.Moment {
+            const resolved = this.displayDate.clone().date(day.date)
+
+            if (day.isAdjacent) {
+                if (day.date > 15) resolved.subtract(1, "month")
+                else resolved.add(1, "month")
+            }
+
+            return resolved
+        },
+
+        /**
+         * Verifies if the day is outside the allowed min/max date range.
+         * @param day The day cell.
+         */
+        isDayDisabled(day: { date: number; isAdjacent: boolean }): boolean {
+            if (this.minDate == null && this.maxDate == null) return false
+
+            const resolved = this.resolveDayDate(day)
+
+            if (this.minDate != null) {
+                const min = moment.utc(this.minDate as Date | string | moment.Moment).startOf("day")
+                if (resolved.isBefore(min, "day")) return true
+            }
+
+            if (this.maxDate != null) {
+                const max = moment.utc(this.maxDate as Date | string | moment.Moment).startOf("day")
+                if (resolved.isAfter(max, "day")) return true
+            }
+
+            return false
         },
 
         /**

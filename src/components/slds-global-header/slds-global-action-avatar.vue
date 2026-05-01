@@ -10,7 +10,7 @@
                 @click="handleClick"
             >
                 <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
-                    <img :alt="alt" :src="src" :title="title">
+                    <img :alt="imageAlt" :src="src" :title="title">
                 </span>
             </button>
 
@@ -43,6 +43,19 @@ export default defineComponent({
         return {
             isOpen: false,
         }
+    },
+
+    computed: {
+        /**
+         * Resolved alt text for the avatar image. Falls back to the title or
+         * a sensible default so the <img> always has a non-empty accessible
+         * name even when the consumer omits the `alt` prop.
+         */
+        imageAlt(): string {
+            if (this.alt) return this.alt
+            if (this.title) return this.title
+            return "User avatar"
+        },
     },
 
     methods: {

@@ -34,7 +34,7 @@ import { ObserveVisibility } from "vue-observe-visibility"
 import { supportsPassive } from "./utils"
 import { defineComponent, markRaw, shallowReactive } from "vue"
 // `scrollparent` ships no type declarations and has no `@types/scrollparent` package.
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ 
 // @ts-expect-error untyped third-party module
 import ScrollParent from "scrollparent"
 
@@ -103,15 +103,15 @@ export default defineComponent({
             ready: false,
             scrollLeft: 0,
             totalSize: 0,
-            $_startIndex: 0,
-            $_endIndex: 0,
-            $_views: markRaw(new Map<any, View>()),
-            $_unusedViews: [] as View[],
-            $_scrollAnimationRequest: null as number | null | false,
-            $_lastUpdateScrollPosition: 0,
-            $_prerender: false,
-            $_continuous: false,
-            $_refreshTimout: null as ReturnType<typeof setTimeout> | null,
+            internalStartIndex: 0,
+            internalEndIndex: 0,
+            internalViews: markRaw(new Map<any, View>()),
+            internalUnusedViews: [] as View[],
+            internalScrollAnimationRequest: null as number | null | false,
+            internalLastUpdateScrollPosition: 0,
+            internalPrerender: false,
+            internalContinuous: false,
+            internalRefreshTimout: null as ReturnType<typeof setTimeout> | null,
             listenerTarget: null as (Window | Element | null),
         }
     },
@@ -119,7 +119,7 @@ export default defineComponent({
     computed: {
         mountedViewsThreshold() {
             if (!this.ready) return null
-            return (this.$_endIndex - this.$_startIndex) * 2
+            return (this.internalEndIndex - this.internalStartIndex) * 2
         },
 
         simpleArray() {
@@ -148,14 +148,14 @@ export default defineComponent({
         // In SSR mode, we also prerender the same number of item for the first render
         // to avoid mismatch between server and client templates
         if (this.prerender) {
-            this.$_prerender = true
+            this.internalPrerender = true
             this.updateVisibleItems(false)
         }
     },
 
     mounted() {
         // In SSR mode, render the real number of visible items
-        this.$_prerender = false
+        this.internalPrerender = false
         this.updateVisibleItems(true)
         this.ready = true
     },
@@ -224,16 +224,16 @@ export default defineComponent({
                 return
             }
 
-            if (this.$_scrollAnimationRequest) cancelAnimationFrame(this.$_scrollAnimationRequest as number)
-            this.$_scrollAnimationRequest = requestAnimationFrame(() => {
-                this.$_scrollAnimationRequest = false
+            if (this.internalScrollAnimationRequest) cancelAnimationFrame(this.internalScrollAnimationRequest as number)
+            this.internalScrollAnimationRequest = requestAnimationFrame(() => {
+                this.internalScrollAnimationRequest = false
                 const { continuous } = this.updateVisibleItems(false, true)
 
                 // It seems sometimes chrome doesn't fire scroll event :/
                 // When non continuous scrolling is ending, we force a refresh
                 if (!continuous) {
-                    if (this.$_refreshTimout) clearTimeout(this.$_refreshTimout)
-                    this.$_refreshTimout = setTimeout(this.handleScroll, 100)
+                    if (this.internalRefreshTimout) clearTimeout(this.internalRefreshTimout)
+                    this.internalRefreshTimout = setTimeout(this.handleScroll, 100)
                 }
             })
         },
@@ -284,35 +284,35 @@ export default defineComponent({
         },
 
         unuseView(view: View, fake = false) {
-            const unusedViews = this.$_unusedViews || []
+            const unusedViews = this.internalUnusedViews || []
             unusedViews.push(view)
 
             if (!fake) {
                 view.nr.used = false
                 view.position = -9999
-                this.$_views.delete(view.nr.key)
+                this.internalViews.delete(view.nr.key)
             }
         },
 
+        // eslint-disable-next-line complexity -- ported from vue-virtual-scroller; refactor would risk regressions
         updateVisibleItems(checkItem: boolean, checkPositionDiff = false): { continuous: boolean } {
             const itemSize = this.itemSize
             const keyField = this.simpleArray ? null : this.keyField
             const items = this.items as Array<Record<string, any>>
             const count = items.length
-            const views = this.$_views
-            const unusedViews = this.$_unusedViews
+            const views = this.internalViews
+            const unusedViews = this.internalUnusedViews
             const mountedViews = this.mountedViews
-            //const mountedViewsThreshold = this.mountedViewsThreshold
             let startIndex: number, endIndex: number
-            let totalSize: number = 0
+            let totalSize: number
             let scroll: { originalStart: number; start: number; end: number } | undefined
 
-            if (count && !this.$_prerender) {
+            if (count && !this.internalPrerender) {
                 scroll = this.getScroll()
 
                 // Skip update if user hasn't scrolled enough
                 if (checkPositionDiff) {
-                    const positionDiff = Math.abs(scroll.originalStart - this.$_lastUpdateScrollPosition)
+                    const positionDiff = Math.abs(scroll.originalStart - this.internalLastUpdateScrollPosition)
                     if (itemSize === null && positionDiff < itemSize) {
                         return { continuous: true }
                     }
@@ -322,13 +322,13 @@ export default defineComponent({
             // Sets start index, end index, and total size
             if (!count) {
                 startIndex = endIndex = totalSize = 0
-            } else if (this.$_prerender) {
+            } else if (this.internalPrerender) {
                 startIndex = 0
                 endIndex = this.prerender
                 totalSize = 0
             } else {
                 if (!scroll) return { continuous: false }
-                this.$_lastUpdateScrollPosition = scroll.originalStart
+                this.internalLastUpdateScrollPosition = scroll.originalStart
 
                 const buffer = this.buffer
                 scroll.start -= buffer
@@ -339,8 +339,8 @@ export default defineComponent({
                 endIndex = Math.ceil(scroll.end / itemSize)
 
                 // Bounds
-                startIndex < 0 && (startIndex = 0)
-                endIndex > count && (endIndex = count)
+                if (startIndex < 0) startIndex = 0
+                if (endIndex > count) endIndex = count
 
                 totalSize = count * itemSize
             }
@@ -350,9 +350,9 @@ export default defineComponent({
 
             // ???
             let view: View | undefined
-            const continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex
+            const continuous = startIndex <= this.internalEndIndex && endIndex >= this.internalStartIndex
 
-            if (this.$_continuous !== continuous) {
+            if (this.internalContinuous !== continuous) {
                 if (continuous) {
                     views.clear()
                     unusedViews.splice(0, unusedViews.length)
@@ -361,7 +361,7 @@ export default defineComponent({
                         this.unuseView(view)
                     }
                 }
-                this.$_continuous = continuous
+                this.internalContinuous = continuous
             } else if (continuous) {
                 for (let i = 0, l = mountedViews.length; i < l; i++) {
                     view = mountedViews[i]
@@ -439,7 +439,6 @@ export default defineComponent({
                         view.nr.index = i
                         view.nr.key = key
                         unusedIndex?.push(v + 1)
-                        v++
                     }
                     views.set(key, view)
                 } else {
@@ -451,8 +450,8 @@ export default defineComponent({
                 view.position = i * itemSize
             }
 
-            this.$_startIndex = startIndex
-            this.$_endIndex = endIndex
+            this.internalStartIndex = startIndex
+            this.internalEndIndex = endIndex
 
             if (this.emitUpdate) this.$emit("update", startIndex, endIndex)
 

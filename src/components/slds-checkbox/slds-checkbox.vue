@@ -15,7 +15,7 @@
         <!-- Default slot -->
         <template #default="slotProps">
             <slds-checkbox-option
-                :id="slotProps['input-id']"
+                :input-id="slotProps['input-id']"
                 :value="modelValue"
                 :option="label"
                 :disabled="disabled"

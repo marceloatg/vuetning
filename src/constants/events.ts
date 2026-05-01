@@ -21,6 +21,7 @@ export const EVENTS = {
     MOUSE_OVER: "mouseover",
     MOUSE_OVER_OPTION: "mouse-over-option",
     MOUSE_UP: "mouseup",
+    OPEN: "open",
     PAGE_CHANGED: "pagechanged",
     POST: "post",
     REFRESH: "refresh",

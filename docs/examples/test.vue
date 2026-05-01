@@ -549,7 +549,7 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import { v4 as newId } from "uuid"
 import SldsButton from "../../src/components/slds-button/slds-button.vue"
 import ExampleContainer from "./example-container.vue"

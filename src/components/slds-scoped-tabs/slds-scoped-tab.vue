@@ -1,8 +1,8 @@
 <template>
     <li :class="itemClassNames" role="presentation" :title="label">
         <a
-            :id="`tab-scoped-${name}__item`"
-            :aria-controls="`tab-scoped-${name}`"
+            :id="`scoped-tab-default-${name}__item`"
+            :aria-controls="`scoped-tab-default-${name}`"
             :aria-selected="isActive"
             class="slds-tabs_scoped__link"
             role="tab"

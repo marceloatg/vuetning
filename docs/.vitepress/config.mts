@@ -1,6 +1,5 @@
-// @ts-ignore
 import path from "path"
-import { defineConfig } from 'vitepress'
+import { defineConfig } from "vitepress"
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -9,58 +8,58 @@ export default defineConfig({
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [
-            { text: 'Guide', link: '/' },
-            { text: 'Components', link: '/markdown-examples' }
+            { text: "Guide", link: "/" },
+            { text: "Components", link: "/markdown-examples" },
         ],
 
         sidebar: [
             {
-                text: 'Examples',
+                text: "Examples",
                 items: [
-                    { text: 'Markdown Examples', link: '/markdown-examples' },
-                    { text: 'Runtime API Examples', link: '/api-examples' }
-                ]
+                    { text: "Markdown Examples", link: "/markdown-examples" },
+                    { text: "Runtime API Examples", link: "/api-examples" },
+                ],
             },
             {
-                text: 'General',
+                text: "General",
                 items: [
                     {
-                        text: 'Test',
-                        link: 'general/test',
+                        text: "Test",
+                        link: "general/test",
                     },
                 ],
             },
             {
-                text: 'Components',
+                text: "Components",
                 items: [
                     {
-                        text: 'Accordion',
-                        link: 'components/accordion',
+                        text: "Accordion",
+                        link: "components/accordion",
                     },
                     {
-                        text: 'Spinner',
-                        link: 'components/spinner',
+                        text: "Spinner",
+                        link: "components/spinner",
                     },
                 ],
             },
             {
-                text: 'Stencils',
+                text: "Stencils",
                 items: [],
             },
             {
-                text: 'Templates',
+                text: "Templates",
                 items: [],
             },
         ],
 
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-        ]
+            { icon: "github", link: "https://github.com/vuejs/vitepress" },
+        ],
     },
     vite: {
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, '../../src'),
+                "@": path.resolve(__dirname, "../../src"),
             },
         },
     },

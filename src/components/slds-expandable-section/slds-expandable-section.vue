@@ -110,7 +110,9 @@ export default defineComponent({
             const element = el as HTMLElement
             element.style.overflow = ""
             element.style.height = element.scrollHeight + "px"
-            element.scrollHeight
+            // Reading scrollHeight again forces a synchronous reflow so the
+            // following opacity transition starts from the freshly applied height.
+            void element.scrollHeight
             element.style.opacity = "1"
         },
 

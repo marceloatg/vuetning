@@ -24,6 +24,7 @@
             aria-valuemin="0"
             :aria-valuemax="total"
             :aria-valuenow="current"
+            :aria-label="assistiveText || label"
             :class="progressBarClasses"
             role="progressbar"
         >
@@ -47,6 +48,12 @@ export default defineComponent({
     components: { SldsGrid },
 
     props: {
+        /**
+         * The accessible name for the progress bar (applied as aria-label).
+         * Falls back to `label` when not provided.
+         */
+        assistiveText: String,
+
         /**
          * Current number.
          */

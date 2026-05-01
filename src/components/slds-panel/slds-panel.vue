@@ -1,5 +1,10 @@
 <template>
-    <div aria-hidden="false" :class="panelClassNames">
+    <div
+        aria-hidden="false"
+        :class="panelClassNames"
+        role="region"
+        :aria-label="ariaLabel"
+    >
 
         <!-- Custom header -->
         <div v-if="$slots.header" :class="headerClassNames">
@@ -56,6 +61,12 @@ export default defineComponent({
     components: { SldsButtonIcon },
 
     props: {
+        /**
+         * Accessible name for the panel region. Defaults to "Panel" when no
+         * meaningful title is supplied.
+         */
+        ariaLabel: { type: String, default: "Panel" },
+
         assistiveText: String,
 
         backButton: Boolean,

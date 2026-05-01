@@ -28,7 +28,10 @@ const tsModules = globSync(
         "src/mixins/*.ts",
         "src/utils/*.ts",
     ],
-    { cwd: root },
+    {
+        cwd: root,
+        ignore: ["**/*.test.ts", "**/*.spec.ts"],
+    },
 )
 
 const inputEntries = Object.fromEntries(

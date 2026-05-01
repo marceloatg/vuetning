@@ -5,7 +5,7 @@
         <div ref="container" class="slds-virtual-table_container">
 
             <!-- Header -->
-            <div ref="header" class="slds-virtual-table_header">
+            <div v-if="!hideHeader" ref="header" class="slds-virtual-table_header">
 
                 <!-- Line number header-->
                 <div
@@ -323,6 +323,8 @@ export default defineComponent({
 
         hasSelection: Boolean,
 
+        hideHeader: Boolean,
+
         hideLineNumber: Boolean,
 
         keyField: { type: String, default: "id" },
@@ -616,7 +618,7 @@ export default defineComponent({
 
         onClickCopy(column: DataTableColumnConfiguration, item: DataTableRow) {
             const value = this.getFieldValue(column, item)
-            const $clipboard = (this as unknown as { $clipboard?: (text: string) => void }).$clipboard
+            const $clipboard = (this as unknown as { $clipboard?: (_text: string) => void }).$clipboard
             if (value && value.length && $clipboard) $clipboard(value)
         },
 
@@ -979,6 +981,7 @@ $table-color-hover: #f3f2f2;
     &_container {
         height: 100%;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
+        position: relative;
     }
 
     &_actions {

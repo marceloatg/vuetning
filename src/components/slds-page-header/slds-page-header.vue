@@ -84,7 +84,7 @@
                                             <slds-page-header-dropdown
                                                 v-if="isOpen"
                                                 :value="selectedListView"
-                                                :options="(filteredOptions as unknown as PageHeaderDropdownOption[])"
+                                                :options="pageHeaderDropdownOptions"
                                                 :focused-option="focusedOption?.value"
                                                 :show-spinner="showSpinner"
                                                 @click="onClickOption"
@@ -217,6 +217,15 @@ export default defineComponent({
 
         hasIcon(): boolean {
             return Boolean(!this.relatedList && !!this.iconName)
+        },
+
+        /**
+         * Filtered options narrowed to the dropdown's input shape.
+         * The HasDropdownMixin types `filteredOptions` as `DropdownOption[]`,
+         * but `slds-page-header-dropdown` expects the page-header-specific shape.
+         */
+        pageHeaderDropdownOptions(): PageHeaderDropdownOption[] {
+            return this.filteredOptions as unknown as PageHeaderDropdownOption[]
         },
     },
 

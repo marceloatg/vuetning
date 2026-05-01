@@ -63,7 +63,7 @@ export default defineComponent({
         /**
          * The text label that displays in the pill.
          */
-        label: { Type: String, required: true },
+        label: { type: String, required: true },
 
         /**
          * If present, the does not show the remove button.

@@ -3,6 +3,7 @@
 
         <!-- Input -->
         <input
+            :id="inputId"
             :checked="modelValue === value"
             :disabled="disabled"
             name="radio-group"
@@ -11,7 +12,7 @@
         >
 
         <!-- Faux -->
-        <label class="slds-radio__label">
+        <label class="slds-radio__label" :for="inputId">
 
             <span class="slds-radio_faux"/>
 
@@ -27,6 +28,8 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import { EVENTS } from "../../constants"
+
+let inputUid = 0
 
 export default defineComponent({
     name: "slds-radio-group-option",
@@ -56,6 +59,12 @@ export default defineComponent({
          * Radio option value.
          */
         value: String,
+    },
+
+    data() {
+        return {
+            inputId: `slds-radio-group-option-${++inputUid}`,
+        }
     },
 
     methods: {

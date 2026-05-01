@@ -3,6 +3,7 @@
 
         <!-- Input -->
         <input
+            :id="inputId"
             type="checkbox"
             :checked="checked"
             :disabled="disabled"
@@ -10,7 +11,7 @@
         >
 
         <!-- Faux -->
-        <label class="slds-checkbox__label">
+        <label class="slds-checkbox__label" :for="inputId">
 
             <span class="slds-checkbox_faux"/>
 
@@ -25,6 +26,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
+
+let inputUid = 0
 
 export default defineComponent({
     name: "SldsCheckboxGroupOption",
@@ -45,6 +48,13 @@ export default defineComponent({
          */
         label: { type: String, required: true },
     },
+
+    data() {
+        return {
+            inputId: `slds-checkbox-group-option-${++inputUid}`,
+        }
+    },
+
     computed: {
         /**
          * The CSS class names for the input.

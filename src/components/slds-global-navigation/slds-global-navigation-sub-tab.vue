@@ -27,6 +27,7 @@
                 class="slds-context-bar__icon-action slds-size_1-of-2  slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-p-left_none slds-p-right_none slds-is-open"
             >
                 <slds-button-icon
+                    assistive-text="Actions"
                     icon-name="utility:chevrondown"
                     x-small
                     title="Actions"
@@ -62,6 +63,7 @@
             <!-- Close button -->
             <div class=" slds-p-left_none slds-size_1-of-2 slds-p-right_none">
                 <slds-button-icon
+                    assistive-text="Close"
                     icon-name="utility:close"
                     x-small
                     title="Close"

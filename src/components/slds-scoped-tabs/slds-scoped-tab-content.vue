@@ -1,7 +1,7 @@
 <template>
     <div
         :id="`scoped-tab-default-${name}`"
-        :aria-labelledby="`${name}__item`"
+        :aria-labelledby="`scoped-tab-default-${name}__item`"
         :class="contentClassNames"
         role="tabpanel"
     >

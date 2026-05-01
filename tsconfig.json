@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
+        "target": "ES2022",
         "useDefineForClassFields": true,
         "module": "ESNext",
         "lib": [
-            "ES2020",
+            "ES2022",
             "DOM",
             "DOM.Iterable"
         ],
@@ -27,6 +27,10 @@
         "src/**/*.d.ts",
         "src/**/*.tsx",
         "src/**/*.vue"
+    ],
+    "exclude": [
+        "src/**/*.test.ts",
+        "src/**/*.spec.ts"
     ],
     "references": [
         {

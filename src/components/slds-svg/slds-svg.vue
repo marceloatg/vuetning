@@ -4,8 +4,14 @@
         :class="svgClassNames"
         :viewBox="viewBox"
         :height="height"
+        :aria-label="assistiveText ? assistiveText : undefined"
+        :aria-hidden="assistiveText ? undefined : 'true'"
+        :role="assistiveText ? 'img' : undefined"
         v-bind="dataProperty"
     >
+        <title v-if="assistiveText">
+            {{ assistiveText }}
+        </title>
         <action-sprite v-if="category === 'action'" :id="name"/>
         <brand-sprite v-else-if="category === 'brand'" :id="name"/>
         <custom-sprite v-else-if="category === 'custom'" :id="name"/>
@@ -47,6 +53,14 @@ export default defineComponent({
     },
 
     props: {
+        /**
+         * The accessible name for the SVG. When provided, the rendered <svg>
+         * exposes this string via aria-label and a child <title> element so
+         * assistive technology can announce the icon. When omitted, the SVG
+         * is treated as decorative and hidden from AT via aria-hidden.
+         */
+        assistiveText: { type: String, default: "" },
+
         /**
          * The Lightning Design System name of the icon.
          * Names are written in the format 'utility:down' where 'utility' is the category,

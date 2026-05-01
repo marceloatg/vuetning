@@ -1,5 +1,12 @@
 <template>
-    <div class="trigger-wrapper" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+    <div
+        class="trigger-wrapper"
+        @focusin="handleFocusIn"
+        @focusout="handleFocusOut"
+        @keydown="handleKeyDown"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+    >
 
         <!-- Trigger -->
         <div ref="trigger" class="trigger-wrapper">
@@ -164,6 +171,12 @@ export default defineComponent({
             await this.$nextTick()
             if (this.isVisible) this.positionTooltip()
         },
+
+        isVisible(newValue: boolean, oldValue: boolean) {
+            if (newValue === oldValue) return
+            if (newValue) this.$emit(EVENTS.OPEN)
+            else this.$emit(EVENTS.CLOSE)
+        },
     },
 
     created() {
@@ -193,6 +206,41 @@ export default defineComponent({
             if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
 
             this.mouseEnterTimeout = setTimeout(() => this.isVisible = true, 100)
+        },
+
+        /**
+         * Handler for focusin event.
+         */
+        handleFocusIn(): void {
+            if (this.disabled) return
+            if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
+            if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
+
+            this.mouseEnterTimeout = setTimeout(() => this.isVisible = true, 100)
+        },
+
+        /**
+         * Handler for focusout event.
+         */
+        handleFocusOut(): void {
+            if (this.disabled) return
+            if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
+            if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
+
+            this.mouseLeaveTimeout = setTimeout(() => this.isVisible = false, 100)
+        },
+
+        /**
+         * Handler for keydown event. Closes the tooltip on Escape.
+         * @param event The fired keydown event.
+         */
+        handleKeyDown(event: KeyboardEvent): void {
+            if (event.key !== "Escape") return
+            if (!this.isVisible) return
+            if (this.mouseEnterTimeout) clearTimeout(this.mouseEnterTimeout)
+            if (this.mouseLeaveTimeout) clearTimeout(this.mouseLeaveTimeout)
+
+            this.isVisible = false
         },
 
         /**
@@ -270,7 +318,7 @@ export default defineComponent({
          * @return The calculated left.
          */
         getPopoverLeft(trigger: DOMRect, popover: DOMRect, nubbin: any): number {
-            let popoverLeft = 0
+            let popoverLeft: number
 
             if (this.bottomLeft || this.topLeft) {
                 popoverLeft = trigger.x + (trigger.width / 2) + nubbin.width - popover.width
@@ -299,7 +347,7 @@ export default defineComponent({
          * @return The calculated top.
          */
         getPopoverTop(trigger: DOMRect, popover: DOMRect, nubbin: any): number {
-            let popoverTop = 0
+            let popoverTop: number
 
             if (this.leftTop || this.rightTop) {
                 popoverTop = trigger.y + (trigger.height / 2) - popover.height + nubbin.height

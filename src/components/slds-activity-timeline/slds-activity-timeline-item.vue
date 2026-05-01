@@ -55,7 +55,8 @@
                             v-if="isTask"
                             v-model="checkbox"
                             class="slds-p-right_xx-small slds-p-bottom_xxx-small"
-                            label=""
+                            inline
+                            :label="checkboxAccessibleName"
                         />
 
                         <!-- Tile title (subject) -->
@@ -190,6 +191,15 @@ export default defineComponent({
 
     computed: {
         /**
+         * Accessible name for the task-completion checkbox. Falls back to a
+         * generic label when no subject is supplied so the input is never
+         * unlabeled.
+         */
+        checkboxAccessibleName(): string {
+            return this.subject ? `Mark task complete: ${this.subject}` : "Mark task complete"
+        },
+
+        /**
          * The CSS class names for the item.
          */
         itemClassNames(): string {
@@ -223,7 +233,7 @@ export default defineComponent({
         },
 
         normalizedSubjectIconNames(): string[] {
-            let iconNames = [] as string[]
+            const iconNames = [] as string[]
 
             // Check subjectIcon is empty then returns empty array
             if (!this.subjectIconsNames) return iconNames

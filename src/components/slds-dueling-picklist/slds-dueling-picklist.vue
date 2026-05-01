@@ -20,7 +20,7 @@
                         :aria-disabled="disabled"
                         :class="duelingPicklistClassNames"
                     >
-                        <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="listbox" :aria-label="sourceLabel">
                             <slds-dueling-picklist-option
                                 v-for="option in availableOptions"
                                 :key="option.id"
@@ -39,13 +39,17 @@
 
                     <!-- Move right button -->
                     <slds-button-icon
+                        assistive-text="Move right"
                         icon-name="utility:right"
+                        title="Move right"
                         @click="handleClickToRight"
                     />
 
                     <!-- Move left button -->
                     <slds-button-icon
+                        assistive-text="Move left"
                         icon-name="utility:left"
+                        title="Move left"
                         @click="handleClickToLeft"
                     />
 
@@ -63,7 +67,7 @@
                         :aria-disabled="disabled"
                         :class="duelingPicklistClassNames"
                     >
-                        <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="listbox" :aria-label="selectedLabel">
                             <slds-dueling-picklist-option
                                 v-for="option in selectedOptions"
                                 :key="option.id"
@@ -82,13 +86,17 @@
 
                     <!-- Move up button -->
                     <slds-button-icon
+                        assistive-text="Move up"
                         icon-name="utility:up"
+                        title="Move up"
                         @click="handleClickToUp"
                     />
 
                     <!-- Move down button -->
                     <slds-button-icon
+                        assistive-text="Move down"
                         icon-name="utility:down"
+                        title="Move down"
                         @click="handleClickToDown"
                     />
 
@@ -205,6 +213,13 @@ export default defineComponent({
     },
 
     watch: {
+        modelValue: {
+            deep: true,
+            handler() {
+                this.parseOptions()
+            },
+        },
+
         options: {
             deep: true,
             handler() {
@@ -470,9 +485,30 @@ export default defineComponent({
 
             if (this.options.length === 0) return
 
+            const selectedValues = (this.modelValue || []).map(modelEntry => {
+                const entry = modelEntry as unknown
+                if (entry && typeof entry === "object" && "value" in (entry as Record<string, unknown>)) {
+                    return (entry as Option).value
+                }
+                return entry
+            })
+
+            const optionsByValue = new Map<unknown, Option>()
             for (const option of this.options) {
                 const duelingPicklistOption = option as unknown as Option
-                this.availableOptions.push(duelingPicklistOption)
+                optionsByValue.set(duelingPicklistOption.value, duelingPicklistOption)
+            }
+
+            for (const value of selectedValues) {
+                const matchedOption = optionsByValue.get(value)
+                if (matchedOption) this.selectedOptions.push(matchedOption)
+            }
+
+            for (const option of this.options) {
+                const duelingPicklistOption = option as unknown as Option
+                if (!this.selectedOptions.includes(duelingPicklistOption)) {
+                    this.availableOptions.push(duelingPicklistOption)
+                }
             }
         },
     },
