@@ -111,7 +111,7 @@ export default defineComponent({
             else if (this.medium) classNames += " slds-avatar_medium"
             else if (this.small) classNames += " slds-avatar_small"
             else if (this.xSmall) classNames += " slds-avatar_x-small"
-            else classNames += "slds-avatar_medium"
+            else classNames += " slds-avatar_medium"
 
             // Avatar variant
             if (this.circle) classNames += " slds-avatar_circle"

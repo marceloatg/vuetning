@@ -1,8 +1,8 @@
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
-import Vuetning from '@/main'
-import Theme from 'vitepress/theme'
-import './style.css'
+import { h } from "vue"
+import Vuetning from "@/main"
+import Theme from "vitepress/theme"
+import "./style.css"
 
 export default {
     ...Theme,
@@ -13,5 +13,5 @@ export default {
     },
     enhanceApp({ app }) {
         app.use(Vuetning)
-    }
+    },
 }

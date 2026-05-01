@@ -25,8 +25,10 @@
         >
 
             <slds-button-icon
+                assistive-text="Actions"
                 icon-name="utility:chevrondown"
                 x-small
+                title="Actions"
                 class="slds-button_icon-current-color"
                 @click.stop="toggleDropdown"
             />
@@ -62,6 +64,7 @@
         <!-- Close button -->
         <div class="slds-context-bar__icon-action slds-col_bump-left slds-p-left_none">
             <slds-button-icon
+                assistive-text="Close"
                 icon-name="utility:close"
                 x-small
                 title="Close"

@@ -1,6 +1,10 @@
 <template>
     <li class="slds-dropdown__item" role="presentation">
-        <a role="menuitem" tabindex="0" @click="onClick">
+        <a
+            role="menuitem"
+            tabindex="0"
+            @click.prevent="onClick"
+        >
             <span class="slds-truncate" :title="label">
                 {{ label }}
             </span>

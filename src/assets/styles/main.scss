@@ -1,9 +1,10 @@
+@use "sass:map";
 @use "sass:math";
 
 // Imports
-@import "salesforce-lightning-design-system.min.css";
-@import "animations";
-@import "placeholders";
+@use "salesforce-lightning-design-system.min.css";
+@use "animations";
+@use "placeholders";
 
 html {
     background: none;
@@ -94,7 +95,10 @@ $columns: (1, 2, 3, 4, 5, 6, 7, 8, 12);
 @mixin width($breakpoint: null, $max: false) {
     // Loop through the number of columns for each denominator of our fractions.
     @each $denominator in $columns {
-        $breakpoint-string: if($max, 'max-', '') + $breakpoint + '-';
+        $breakpoint-string: $breakpoint + '-';
+        @if $max {
+            $breakpoint-string: 'max-' + $breakpoint + '-';
+        }
 
         @for $i from 1 through $denominator {
             .slds-#{$breakpoint-string}size_#{$i}-of-#{$denominator} {
@@ -120,8 +124,8 @@ $sizes: (
     'xx-large': 60rem
 );
 
-@each $breakpoint-size in map-keys($breakpoints) {
-    $breakpoint: map-get($breakpoints, $breakpoint-size);
+@each $breakpoint-size in map.keys($breakpoints) {
+    $breakpoint: map.get($breakpoints, $breakpoint-size);
 
     @media (min-width: #{$breakpoint}) {
         .slds-#{$breakpoint-size}-nowrap {

@@ -4,6 +4,7 @@
             <button
                 class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__setup slds-global-actions__item-action"
                 aria-haspopup="true"
+                :aria-label="assistiveText"
                 :title="assistiveText"
             >
 

@@ -1,57 +1,162 @@
 {
     "name": "vuetning",
-    "version": "0.0.0",
+    "version": "0.8.0",
+    "description": "Vue 3 component library implementing the Salesforce Lightning Design System (SLDS).",
     "type": "module",
-    "main": "./dist/vuetning.umd.js",
-    "module": "./dist/vuetning.es.js",
+    "sideEffects": [
+        "**/*.css",
+        "**/*.scss"
+    ],
+    "main": "./dist/main.js",
+    "module": "./dist/main.js",
+    "types": "./dist/main.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/vuetning.es.js",
-            "require": "./dist/vuetning.umd.js",
-            "types": "./dist/main.d.ts"
+            "types": "./dist/main.d.ts",
+            "import": "./dist/main.js"
         },
-        "./style.css": "./dist/style.css"
+        "./styles": {
+            "types": "./dist/styles.d.ts",
+            "import": "./dist/styles.js"
+        },
+        "./resolver": {
+            "types": "./dist/resolver.d.ts",
+            "import": "./dist/resolver.js"
+        },
+        "./style.css": "./dist/assets/styles/main.css",
+        "./components": {
+            "types": "./dist/components/index.d.ts",
+            "import": "./dist/components/index.js"
+        },
+        "./components/types": {
+            "types": "./dist/components/types.d.ts",
+            "import": "./dist/components/types.js"
+        },
+        "./components/*": {
+            "types": "./dist/components/*/index.d.ts",
+            "import": "./dist/components/*/index.js"
+        },
+        "./stencils": {
+            "types": "./dist/stencils/index.d.ts",
+            "import": "./dist/stencils/index.js"
+        },
+        "./stencils/*": {
+            "types": "./dist/stencils/*/index.d.ts",
+            "import": "./dist/stencils/*/index.js"
+        },
+        "./constants": {
+            "types": "./dist/constants/index.d.ts",
+            "import": "./dist/constants/index.js"
+        },
+        "./mixins/*": {
+            "types": "./dist/mixins/*.d.ts",
+            "import": "./dist/mixins/*.js"
+        },
+        "./utils/*": {
+            "types": "./dist/utils/*.d.ts",
+            "import": "./dist/utils/*.js"
+        },
+        "./package.json": "./package.json"
     },
     "files": [
         "dist",
         "src"
     ],
-    "types": "./dist/main.d.ts",
     "scripts": {
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
         "build": "vite build && vue-tsc --emitDeclarationOnly",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+        "build:analyze": "npm run build && open dist/bundle-analysis.html",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:ui": "vitest --ui",
+        "test:coverage": "vitest run --coverage",
+        "test:ssr": "vitest run --config vitest.ssr.config.ts",
         "type-check": "vue-tsc --noEmit --composite false"
     },
-    "dependencies": {
-        "@formkit/auto-animate": "^0.8.2",
-        "@vueuse/components": "^10.9.0",
-        "@vueuse/core": "^10.9.0",
-        "gsap": "^3.12.5",
+    "peerDependencies": {
+        "@formkit/auto-animate": "^0.9.0",
+        "@vueuse/components": "^14.2.1",
+        "@vueuse/core": "^14.2.1",
+        "gsap": "^3.15.0",
         "moment": "^2.30.1",
         "numeral": "^2.0.6",
         "scrollparent": "^2.1.0",
-        "uuid": "^9.0.1",
-        "vue": "^3.4.26",
+        "uuid": "^14.0.0",
+        "vue": "^3.5.33",
         "vue-observe-visibility": "^2.0.0-alpha.1"
     },
+    "peerDependenciesMeta": {
+        "@formkit/auto-animate": {
+            "optional": true
+        },
+        "@vueuse/components": {
+            "optional": true
+        },
+        "@vueuse/core": {
+            "optional": true
+        },
+        "gsap": {
+            "optional": true
+        },
+        "moment": {
+            "optional": true
+        },
+        "numeral": {
+            "optional": true
+        },
+        "scrollparent": {
+            "optional": true
+        },
+        "uuid": {
+            "optional": true
+        },
+        "vue-observe-visibility": {
+            "optional": true
+        }
+    },
     "devDependencies": {
-        "@rushstack/eslint-patch": "^1.10.2",
-        "@tsconfig/node20": "^20.1.4",
-        "@types/node": "^20.12.7",
-        "@vitejs/plugin-vue": "^5.0.4",
-        "@vue/eslint-config-typescript": "^13.0.0",
-        "@vue/tsconfig": "^0.5.1",
-        "eslint": "^8.57.0",
-        "eslint-plugin-vue": "^9.25.0",
-        "npm-run-all2": "^6.1.2",
-        "postcss": "^8.4.38",
-        "postcss-prefix-selector": "^1.16.1",
-        "sass": "^1.76.0",
-        "typescript": "~5.4.0",
-        "vite": "^5.2.11",
-        "vitepress": "^1.1.4",
-        "vue-tsc": "^2.0.13"
+        "@eslint/js": "^10.0.1",
+        "@formkit/auto-animate": "^0.9.0",
+        "@rushstack/eslint-patch": "^1.16.1",
+        "@tsconfig/node22": "^22.0.5",
+        "@types/node": "^25.6.0",
+        "@types/numeral": "^2.0.5",
+        "@vitejs/plugin-vue": "^6.0.6",
+        "@vitest/browser": "^4.1.5",
+        "@vitest/browser-playwright": "^4.1.5",
+        "@vitest/coverage-v8": "^4.1.5",
+        "@vue/eslint-config-typescript": "^14.7.0",
+        "@vue/test-utils": "^2.4.10",
+        "@vue/tsconfig": "^0.9.1",
+        "@vueuse/components": "^14.2.1",
+        "@vueuse/core": "^14.2.1",
+        "axe-core": "^4.11.4",
+        "esbuild": "^0.28.0",
+        "eslint": "^10.2.1",
+        "eslint-plugin-vue": "^10.9.0",
+        "glob": "^11.0.0",
+        "globals": "^17.5.0",
+        "gsap": "^3.15.0",
+        "moment": "^2.30.1",
+        "npm-run-all2": "^8.0.4",
+        "numeral": "^2.0.6",
+        "playwright": "^1.59.1",
+        "postcss": "^8.5.12",
+        "postcss-prefix-selector": "^2.1.1",
+        "rollup-plugin-visualizer": "^7.0.1",
+        "sass": "^1.99.0",
+        "scrollparent": "^2.1.0",
+        "typescript": "~6.0.3",
+        "uuid": "^14.0.0",
+        "vite": "^8.0.10",
+        "vite-plugin-lib-inject-css": "^2.2.2",
+        "vitepress": "^1.6.4",
+        "vitest": "^4.1.5",
+        "vue": "^3.5.33",
+        "vue-observe-visibility": "^2.0.0-alpha.1",
+        "vue-tsc": "^3.2.7"
     }
 }

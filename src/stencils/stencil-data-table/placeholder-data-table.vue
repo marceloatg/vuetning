@@ -16,10 +16,10 @@
     </div>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
+<script lang="ts">
+import { defineComponent } from "vue"
 
-export default {
+export default defineComponent({
     name: "PlaceholderDataTable",
-}
+})
 </script>

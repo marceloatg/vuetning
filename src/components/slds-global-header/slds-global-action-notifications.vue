@@ -4,6 +4,7 @@
             <button
                 class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__notifications slds-global-actions__item-action"
                 title="no new notifications"
+                aria-label="Notifications"
                 aria-live="assertive"
                 aria-atomic="true"
             >

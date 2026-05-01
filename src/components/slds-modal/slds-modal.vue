@@ -8,11 +8,18 @@
 
         <!-- Modal -->
         <transition appear :name="transitionName">
-            <section tabindex="-1" :class="modalClassNames" v-bind="modalAttributes">
+            <section
+                tabindex="-1"
+                :class="modalClassNames"
+                role="dialog"
+                aria-modal="true"
+                :aria-labelledby="headerId"
+                v-bind="modalAttributes"
+            >
                 <div class="slds-modal__container">
 
                     <!-- Header -->
-                    <header :class="modalHeaderClassNames" data-testid="modalHeader">
+                    <header :id="headerId" :class="modalHeaderClassNames" data-testid="modalHeader">
 
                         <!-- Close button -->
                         <slds-button-icon
@@ -53,6 +60,8 @@ import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
 import { EVENTS } from "../../constants"
 import { defineComponent } from "vue"
 
+let headerUid = 0
+
 export default defineComponent({
     name: "SldsModal",
 
@@ -80,6 +89,12 @@ export default defineComponent({
         noAnimation: Boolean,
 
         small: Boolean,
+    },
+
+    data() {
+        return {
+            headerId: `slds-modal-header-${++headerUid}`,
+        }
     },
 
     computed: {

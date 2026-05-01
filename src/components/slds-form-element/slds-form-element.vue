@@ -54,7 +54,7 @@ import SldsFormElementLabel from "./slds-form-element-label.vue"
 import SldsIcon from "../slds-icon/slds-icon.vue"
 import SldsTooltip from "../slds-tooltip/slds-tooltip.vue"
 import { v4 as newId } from "uuid"
-import { defineComponent, VueElement, type PropType } from "vue"
+import { defineComponent, type PropType, type VNode } from "vue"
 import type { ValidationError } from "./validation-error"
 
 export default defineComponent({
@@ -143,12 +143,14 @@ export default defineComponent({
          * Indicates whether this form element has error messages.
          */
         hasErrorMessages(): boolean {
-            if (this.suppressErrors || (!this.$slots.error && this.errors.length === 0)) return false
+            if (this.suppressErrors) return false
+            if (this.errors.length > 0) return true
+            if (!this.$slots.error) return false
 
-            const getErrorNodes = this.$slots.error as Function
-            const errorElements = getErrorNodes() as VueElement[]
+            const errorElements = (this.$slots.error as () => VNode[])()
+            const firstChildren = errorElements[0]?.children as VNode[] | undefined
 
-            return this.errors.length > 0 ? true : Boolean(errorElements[0].children.length > 0)
+            return Boolean(firstChildren && firstChildren.length > 0)
         },
 
         /**

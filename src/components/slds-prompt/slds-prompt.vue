@@ -8,11 +8,17 @@
 
         <!-- Prompt -->
         <transition appear :name="transitionName">
-            <section tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_prompt">
+            <section
+                tabindex="-1"
+                class="slds-modal slds-fade-in-open slds-modal_prompt"
+                role="dialog"
+                aria-modal="true"
+                :aria-labelledby="headerId"
+            >
                 <div class="slds-modal__container">
 
                     <!-- Header -->
-                    <header :class="headerClassNames">
+                    <header :id="headerId" :class="headerClassNames">
                         <slot name="header"/>
                     </header>
 
@@ -41,6 +47,8 @@ import SldsButton from "../slds-button/slds-button.vue"
 import { EVENTS } from "../../constants"
 import { defineComponent } from "vue"
 
+let headerUid = 0
+
 export default defineComponent({
     name: "SldsPrompt",
 
@@ -68,6 +76,12 @@ export default defineComponent({
         successTheme: Boolean,
 
         warningTheme: Boolean,
+    },
+
+    data() {
+        return {
+            headerId: `slds-prompt-header-${++headerUid}`,
+        }
     },
 
     computed: {

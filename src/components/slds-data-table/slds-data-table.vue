@@ -5,7 +5,7 @@
         <div ref="container" class="slds-virtual-table_container">
 
             <!-- Header -->
-            <div ref="header" class="slds-virtual-table_header">
+            <div v-if="!hideHeader" ref="header" class="slds-virtual-table_header">
 
                 <!-- Line number header-->
                 <div
@@ -45,7 +45,7 @@
                     :width="column.width"
                     @resize="onResizeColumn"
                     @expand="onExpandColumn(index, column)"
-                    @sort="(order) => onSort(order, column)"
+                    @sort="(order: string) => onSort(order, column)"
                 />
 
                 <!-- Actions header -->
@@ -282,6 +282,15 @@ import { defineComponent, type PropType } from "vue"
 import type { DataTableColumn } from "./data-table-column"
 import { DataTableColumnConfiguration } from "./data-table-column-configuration"
 
+interface DataTableAction {
+    value: string
+    label?: string
+    icon?: string
+    disabled?: boolean
+}
+
+type DataTableRow = Record<string, any>
+
 const DEFAULT_FIXED_WIDTH = 48
 const DEFAULT_MINIMUM_WIDTH = 100
 const LINE_ACTIONS_WIDTH = 48
@@ -304,7 +313,7 @@ export default defineComponent({
     },
 
     props: {
-        actions: Array,
+        actions: { type: Array as PropType<DataTableAction[]>, default: undefined },
 
         allRowsSelected: Boolean,
 
@@ -314,32 +323,34 @@ export default defineComponent({
 
         hasSelection: Boolean,
 
+        hideHeader: Boolean,
+
         hideLineNumber: Boolean,
 
         keyField: { type: String, default: "id" },
 
-        rows: { type: Array, default: () => [] },
+        rows: { type: Array as PropType<DataTableRow[]>, default: () => [] as DataTableRow[] },
     },
 
     data() {
         return {
             actionMenu: {
-                openedRowId: null,
+                openedRowId: null as string | null,
                 orientation: "top",
                 opacity: 0,
             },
 
-            columnConfigurations: [],
+            columnConfigurations: [] as DataTableColumnConfiguration[],
 
-            currentActions: [],
+            currentActions: [] as DataTableAction[],
 
-            filteredRows: [],
+            filteredRows: [] as DataTableRow[],
 
-            filterTimerId: null,
+            filterTimerId: null as ReturnType<typeof setTimeout> | null,
 
             hasHorizontalOverflow: false,
 
-            rowWidth: null,
+            rowWidth: null as number | null,
 
             ruler: {
                 value: "",
@@ -354,11 +365,11 @@ export default defineComponent({
 
             scrollTop: 0,
 
-            sortedColumnId: null,
+            sortedColumnId: null as string | null,
 
-            sortedOrder: null,
+            sortedOrder: null as string | null,
 
-            tableWidth: null,
+            tableWidth: null as number | null,
         }
     },
 
@@ -385,14 +396,15 @@ export default defineComponent({
 
     watch: {
         filter() {
-            this.$el.querySelector(".slds-virtual-table_body").scrollTop = 0
+            const body = this.$el.querySelector(".slds-virtual-table_body") as HTMLElement | null
+            if (body) body.scrollTop = 0
 
             // Debouncing filtration
             if (this.filterTimerId) clearTimeout(this.filterTimerId)
-            this.filterTimerId = setTimeout(function () {
+            this.filterTimerId = setTimeout(() => {
                 this.filterRows()
                 this.filterTimerId = null
-            }.bind(this), 200)
+            }, 200)
         },
 
         rows() {
@@ -406,7 +418,8 @@ export default defineComponent({
     },
 
     async mounted() {
-        this.$refs.root.style.setProperty("--row-height", `${this.rowHeight}px`)
+        const root = this.$refs.root as HTMLElement
+        root.style.setProperty("--row-height", `${this.rowHeight}px`)
         await this.$nextTick()
 
         this.getScrollbarWidth()
@@ -415,19 +428,18 @@ export default defineComponent({
         this.initializeColumnWidths()
         this.initializeColumnOffsets()
 
-        this.$el
-            .querySelector(".slds-virtual-table_body")
-            .addEventListener("scroll", this.onScrollBody)
+        const body = this.$el.querySelector(".slds-virtual-table_body") as HTMLElement | null
+        body?.addEventListener("scroll", this.onScrollBody)
     },
 
     activated() {
-        this.$el.querySelector(".slds-virtual-table_body").scrollTop = this.scrollTop
+        const body = this.$el.querySelector(".slds-virtual-table_body") as HTMLElement | null
+        if (body) body.scrollTop = this.scrollTop
     },
 
     beforeUnmount() {
-        this.$el
-            .querySelector(".slds-virtual-table_body")
-            .removeEventListener("scroll", this.onScrollBody)
+        const body = this.$el.querySelector(".slds-virtual-table_body") as HTMLElement | null
+        body?.removeEventListener("scroll", this.onScrollBody)
     },
 
     methods: {
@@ -451,20 +463,20 @@ export default defineComponent({
             }
         },
 
-        getFieldValue(column, row) {
+        getFieldValue(column: DataTableColumnConfiguration, row: DataTableRow): any {
             if (column.fieldName == null) return null
 
-            return column.fieldName.split(".").reduce(function (prev, curr) {
+            return column.fieldName.split(".").reduce(function (prev: any, curr: string) {
                 return prev ? prev[curr] : null
             }, row || self)
         },
 
-        getLineNumber(index) {
+        getLineNumber(index: number) {
             return numeral(index + 1).format("0,0")
         },
 
         getScrollbarWidth() {
-            const scroller = this.$el.querySelector(".virtual-scroller")
+            const scroller = this.$el.querySelector(".virtual-scroller") as HTMLElement | null
             if (scroller == null) return
 
             this.hasHorizontalOverflow = scroller.clientWidth < scroller.scrollWidth
@@ -473,18 +485,23 @@ export default defineComponent({
             if (noVerticalOverflow) return
 
             this.scrollbarWidth = scroller.offsetWidth - scroller.clientWidth
-            this.$refs.header.style.setProperty("--scrollbar-width", `${this.scrollbarWidth}px`)
+            const header = this.$refs.header as HTMLElement | undefined
+            header?.style.setProperty("--scrollbar-width", `${this.scrollbarWidth}px`)
         },
 
         getTableWidth() {
-            if (this.$refs.container != null) {
-                this.tableWidth = this.$refs.container.offsetWidth
-                this.$refs.header.style.setProperty("--header-width", `${this.tableWidth}px`)
+            const container = this.$refs.container as HTMLElement | undefined
+            const header = this.$refs.header as HTMLElement | undefined
+            const root = this.$refs.root as HTMLElement | undefined
+
+            if (container != null) {
+                this.tableWidth = container.offsetWidth
+                header?.style.setProperty("--header-width", `${this.tableWidth}px`)
             }
 
-            if (this.$refs.root != null) {
+            if (root != null && this.tableWidth != null) {
                 this.rowWidth = this.tableWidth - this.scrollbarWidth - ROUNDING_ERROR
-                this.$refs.root.style.setProperty("--row-width", `${this.rowWidth}px`)
+                root.style.setProperty("--row-width", `${this.rowWidth}px`)
             }
         },
 
@@ -503,7 +520,7 @@ export default defineComponent({
             for (const column of this.columnConfigurations) {
                 column.offsetLeft = columnLeftSum
                 column.left = columnLeftSum
-                columnLeftSum += column.width
+                columnLeftSum += column.width ?? 0
             }
         },
 
@@ -531,6 +548,8 @@ export default defineComponent({
                 }
             }
 
+            if (this.rowWidth == null) return
+
             const flexibleWidth = Math.floor((this.rowWidth - knownWidth) / unknownWidthColumns)
             let usedWidth = 0
 
@@ -546,61 +565,64 @@ export default defineComponent({
 
             for (const column of this.columnConfigurations) {
                 if (column.isResizable) {
-                    column.width += remainingWidth
+                    column.width = (column.width ?? 0) + remainingWidth
                     break
                 }
             }
         },
 
-        onClickAction(column, item) {
+        onClickAction(column: DataTableColumnConfiguration, item: DataTableRow) {
             if (column.typeAttributes == null) return
             if (column.typeAttributes.action == null) return
 
             this.$emit(column.typeAttributes.action, item)
         },
 
-        async onClickActionMenu(item, index) {
+        async onClickActionMenu(item: DataTableRow, index: number) {
             this.onCloseActionMenu()
             this.actionMenu.openedRowId = item[this.keyField]
-            this.currentActions = this.actions.filter(action => item.actions.includes(action.value))
+            this.currentActions = (this.actions ?? []).filter(action => item.actions.includes(action.value))
 
             await this.$nextTick()
 
             // Adjusting z-index
-            const items = this.$el.querySelectorAll(".virtual-scroller__item-view")
-            for (const item of items) {
-                item.style.zIndex = item.querySelector(`[data-index="${index}"]`)
+            const items = this.$el.querySelectorAll(".virtual-scroller__item-view") as NodeListOf<HTMLElement>
+            for (const itemEl of items) {
+                itemEl.style.zIndex = itemEl.querySelector(`[data-index="${index}"]`)
                     ? "1000"
                     : "0"
             }
 
             // Setting vertical orientation of dropdown
-            const dropdown = this.$refs.dropdown
-            let parent = dropdown.offsetParent
+            const dropdown = this.$refs.dropdown as HTMLElement | undefined
+            if (!dropdown) return
 
-            while (!parent.classList.contains("virtual-scroller")) {
-                parent = parent.offsetParent
+            let parent = dropdown.offsetParent as HTMLElement | null
+
+            while (parent && !parent.classList.contains("virtual-scroller")) {
+                parent = parent.offsetParent as HTMLElement | null
             }
 
-            if (dropdown.getBoundingClientRect().bottom > parent.getBoundingClientRect().bottom) {
+            if (parent && dropdown.getBoundingClientRect().bottom > parent.getBoundingClientRect().bottom) {
                 this.actionMenu.orientation = "bottom"
             }
 
             this.actionMenu.opacity = 1
         },
 
-        onClickButton(column, item) {
+        onClickButton(column: DataTableColumnConfiguration, item: DataTableRow) {
             const button = this.getFieldValue(column, item)
             if (button.action == null) return
             this.$emit(button.action, item)
         },
 
-        onClickCopy(column, item) {
+        onClickCopy(column: DataTableColumnConfiguration, item: DataTableRow) {
             const value = this.getFieldValue(column, item)
-            if (value && value.length) this.$clipboard(value)
+            const $clipboard = (this as unknown as { $clipboard?: (_text: string) => void }).$clipboard
+            if (value && value.length && $clipboard) $clipboard(value)
         },
 
-        onClickSelect(item) {
+        onClickSelect(item: DataTableRow) {
             this.$emit("select", item)
         },
 
@@ -611,7 +633,7 @@ export default defineComponent({
             this.currentActions.splice(0, this.currentActions.length)
         },
 
-        async onExpandColumn(index, column) {
+        async onExpandColumn(index: number, column: DataTableColumnConfiguration) {
             if (column.width === column.fullWidth) return
             const aColumn = column // Enforce atomicity
 
@@ -625,7 +647,9 @@ export default defineComponent({
                 this.ruler.active = true
                 await this.$nextTick()
 
-                const ruler = this.$refs.ruler
+                const ruler = this.$refs.ruler as HTMLElement | undefined
+                if (!ruler) return
+
                 aColumn.fullWidth = (ruler.clientWidth + 24)
                 if (aColumn.hasCopyButton) aColumn.fullWidth += 24
                 if (aColumn.fullWidth < DEFAULT_MINIMUM_WIDTH) aColumn.fullWidth = DEFAULT_MINIMUM_WIDTH
@@ -634,51 +658,61 @@ export default defineComponent({
                 this.ruler.active = false
             }
 
-            const delta = aColumn.fullWidth - aColumn.width
+            const delta = (aColumn.fullWidth ?? 0) - (aColumn.width ?? 0)
             this.onResizeColumn(index, delta)
         },
 
-        onMouseDownAction(action, item) {
+        onMouseDownAction(action: DataTableAction, item: DataTableRow) {
             this.$emit(action.value, item)
             this.onCloseActionMenu()
         },
 
-        onResizeColumn(index, delta) {
-            this.columnConfigurations[index].width += delta
+        onResizeColumn(index: number, delta: number) {
+            const target = this.columnConfigurations[index]
+            if (!target) return
+            target.width = (target.width ?? 0) + delta
 
-            this.tableWidth += delta
-            this.$refs.header.style.setProperty("--header-width", `${this.tableWidth}px`)
+            if (this.tableWidth != null) this.tableWidth += delta
+            const header = this.$refs.header as HTMLElement | undefined
+            header?.style.setProperty("--header-width", `${this.tableWidth}px`)
 
-            this.rowWidth += delta
-            this.$refs.root.style.setProperty("--row-width", `${this.rowWidth}px`)
+            if (this.rowWidth != null) this.rowWidth += delta
+            const root = this.$refs.root as HTMLElement | undefined
+            root?.style.setProperty("--row-width", `${this.rowWidth}px`)
 
             for (++index; index < this.columnConfigurations.length; index++) {
-                this.columnConfigurations[index].left += delta
-                this.columnConfigurations[index].offsetLeft += delta
+                const column = this.columnConfigurations[index]
+                if (!column) continue
+                column.left = (column.left ?? 0) + delta
+                column.offsetLeft = (column.offsetLeft ?? 0) + delta
             }
 
-            const scroller = this.$el.querySelector(".virtual-scroller")
-            this.hasHorizontalOverflow = scroller.clientWidth < scroller.scrollWidth
+            const scroller = this.$el.querySelector(".virtual-scroller") as HTMLElement | null
+            if (scroller) this.hasHorizontalOverflow = scroller.clientWidth < scroller.scrollWidth
         },
 
-        onScrollBody(event) {
+        onScrollBody(event: Event) {
+            const target = event.target as HTMLElement | null
+            if (!target) return
+
             // Handle vertical scroll
-            if (this.scrollTop !== event.target.scrollTop) {
-                this.scrollTop = event.target.scrollTop
+            if (this.scrollTop !== target.scrollTop) {
+                this.scrollTop = target.scrollTop
                 if (this.actionMenu.openedRowId !== null) this.onCloseActionMenu()
                 return
             }
 
             // Handle horizontal scroll
-            if (event.target.scrollLeft === this.scrollLeft) return
-            this.scrollLeft = event.target.scrollLeft
-            this.$refs.header.style.setProperty("--header-offset", `-${event.target.scrollLeft}px`)
+            if (target.scrollLeft === this.scrollLeft) return
+            this.scrollLeft = target.scrollLeft
+            const header = this.$refs.header as HTMLElement | undefined
+            header?.style.setProperty("--header-offset", `-${target.scrollLeft}px`)
 
-            const scroller = this.$el.querySelector(".virtual-scroller")
-            this.scrollArrived = Math.ceil(scroller.scrollLeft) === (scroller.scrollWidth - scroller.clientWidth)
+            const scroller = this.$el.querySelector(".virtual-scroller") as HTMLElement | null
+            if (scroller) this.scrollArrived = Math.ceil(scroller.scrollLeft) === (scroller.scrollWidth - scroller.clientWidth)
         },
 
-        onSort(order, sortedColumn) {
+        onSort(order: string, sortedColumn: DataTableColumnConfiguration) {
             this.sortedOrder = order
             this.sortedColumnId = sortedColumn.id
 
@@ -701,8 +735,10 @@ export default defineComponent({
             this.filterRows()
         },
 
-        sorter(rowA, rowB) {
+        sorter(rowA: DataTableRow, rowB: DataTableRow) {
             const sortedColumn = this.columnConfigurations.find(column => column.id === this.sortedColumnId)
+            if (!sortedColumn) return 0
+
             let a
             let b
 
@@ -710,7 +746,7 @@ export default defineComponent({
                 a = rowA[sortedColumn.sortBy]
                 b = rowB[sortedColumn.sortBy]
             }
-            else {
+            else if (sortedColumn.fieldName != null) {
                 a = rowA[sortedColumn.fieldName]
                 b = rowB[sortedColumn.fieldName]
             }
@@ -945,6 +981,7 @@ $table-color-hover: #f3f2f2;
     &_container {
         height: 100%;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
+        position: relative;
     }
 
     &_actions {

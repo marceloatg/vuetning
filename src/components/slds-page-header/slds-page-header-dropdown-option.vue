@@ -209,7 +209,9 @@ export default defineComponent({
             const searchStrLen = filter.length
             if (searchStrLen === 0) return []
 
-            let startIndex = 0, index, indices = []
+            let startIndex = 0
+            let index
+            const indices: number[] = []
             label = label.toLowerCase()
             filter = filter.toLowerCase()
 

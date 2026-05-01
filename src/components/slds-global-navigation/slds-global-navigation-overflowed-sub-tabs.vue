@@ -1,5 +1,6 @@
 <template>
     <li
+        role="presentation"
         class="slds-sub-tabs__item slds-tabs_default__overflow-button slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
     >
 

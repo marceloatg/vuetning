@@ -51,11 +51,12 @@
     </article>
 </template>
 
-<!--suppress JSValidateTypes -->
-<script>
+<script lang="ts">
+import { defineComponent } from "vue"
+
 import SldsIcon from "../../components/slds-icon/slds-icon.vue"
 
-export default {
+export default defineComponent({
     name: "PlaceholderCard",
 
     components: { SldsIcon },
@@ -63,27 +64,21 @@ export default {
     props: {
         /**
          * The class names to be passed to the icon.
-         *
-         * @type {string}
          */
-        iconClass: [String],
+        iconClass: { type: String, default: "" },
 
         /**
          * The Lightning Design System name of the icon.
          * Names are written in the format 'utility:down' where 'utility' is the category, and 'down' is the specific icon to be displayed.
-         *
-         * @type {string}
          */
-        iconName: String,
+        iconName: { type: String, default: "" },
 
         /**
          * Card title.
-         *
-         * @type {string}
          */
-        title: String,
+        title: { type: String, default: "" },
     },
-}
+})
 </script>
 
 <style scoped lang="scss">
