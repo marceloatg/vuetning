@@ -181,10 +181,10 @@ export default defineComponent({
 
     created() {
         this.isVisible = this.visible
-        window.addEventListener("scroll", this.handleScroll)
     },
 
     mounted() {
+        window.addEventListener(EVENTS.SCROLL, this.handleScroll)
         if (this.isVisible) this.positionTooltip()
     },
 

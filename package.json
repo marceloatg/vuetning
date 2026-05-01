@@ -69,6 +69,7 @@
         "test:watch": "vitest",
         "test:ui": "vitest --ui",
         "test:coverage": "vitest run --coverage",
+        "test:ssr": "vitest run --config vitest.ssr.config.ts",
         "type-check": "vue-tsc --noEmit --composite false"
     },
     "peerDependencies": {
