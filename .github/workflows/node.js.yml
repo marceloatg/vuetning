@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm install --no-audit --no-fund
     - run: npm run lint --if-present
     - name: Install Playwright browsers
       run: npx playwright install --with-deps chromium
