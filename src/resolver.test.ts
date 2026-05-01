@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest"
 
 import * as components from "./components"
-import { componentMap, VuetningResolver } from "./resolver"
+import * as stencils from "./stencils"
+import { componentMap, stencilMap, VuetningResolver } from "./resolver"
 
 describe("VuetningResolver", () => {
     const resolver = VuetningResolver()
@@ -34,11 +35,38 @@ describe("VuetningResolver", () => {
         })
     })
 
+    it("resolves stencils to their stencils/ subpath", () => {
+        expect(resolver.resolve("PlaceholderCard")).toEqual({
+            name: "PlaceholderCard",
+            from: "vuetning/stencils/stencil-card",
+        })
+        expect(resolver.resolve("PlaceholderDataTable")).toEqual({
+            name: "PlaceholderDataTable",
+            from: "vuetning/stencils/stencil-data-table",
+        })
+        expect(resolver.resolve("StencilForm")).toEqual({
+            name: "StencilForm",
+            from: "vuetning/stencils/stencil-form",
+        })
+        expect(resolver.resolve("StencilPageHeader")).toEqual({
+            name: "StencilPageHeader",
+            from: "vuetning/stencils/stencil-page-header",
+        })
+    })
+
     it("respects a custom importPath", () => {
         const customResolver = VuetningResolver({ importPath: "@my/vuetning/components" })
         expect(customResolver.resolve("SldsButton")).toEqual({
             name: "SldsButton",
             from: "@my/vuetning/components/slds-button",
+        })
+    })
+
+    it("respects a custom stencilImportPath", () => {
+        const customResolver = VuetningResolver({ stencilImportPath: "@my/vuetning/stencils" })
+        expect(customResolver.resolve("PlaceholderCard")).toEqual({
+            name: "PlaceholderCard",
+            from: "@my/vuetning/stencils/stencil-card",
         })
     })
 
@@ -53,9 +81,22 @@ describe("VuetningResolver", () => {
         expect(missing).toEqual([])
     })
 
+    it("has an entry for every stencil exported from src/stencils", () => {
+        const exportedNames = Object.keys(stencils)
+        const mapNames = new Set(Object.keys(stencilMap))
+        const missing = exportedNames.filter(name => !mapNames.has(name))
+        expect(missing).toEqual([])
+    })
+
     it("does not declare a subpath for any component that is not exported", () => {
         const exportedNames = new Set(Object.keys(components))
         const orphans = Object.keys(componentMap).filter(name => !exportedNames.has(name))
+        expect(orphans).toEqual([])
+    })
+
+    it("does not declare a subpath for any stencil that is not exported", () => {
+        const exportedNames = new Set(Object.keys(stencils))
+        const orphans = Object.keys(stencilMap).filter(name => !exportedNames.has(name))
         expect(orphans).toEqual([])
     })
 })

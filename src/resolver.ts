@@ -1,7 +1,8 @@
 /**
- * Component-name → subpath map for `unplugin-vue-components`.
- * Must stay in sync with `src/components/index.ts`; the resolver test
- * verifies that every export from the barrel has an entry here.
+ * Component-name → subpath maps for `unplugin-vue-components`.
+ * Both maps must stay in sync with `src/components/index.ts` and
+ * `src/stencils/index.ts`; the resolver test verifies that every export
+ * from each barrel has an entry here.
  */
 export const componentMap: Record<string, string> = {
     SldsAccordion: "slds-accordion",
@@ -88,6 +89,13 @@ export const componentMap: Record<string, string> = {
     SldsWideRadioGroup: "slds-wide-radio-group",
 }
 
+export const stencilMap: Record<string, string> = {
+    PlaceholderCard: "stencil-card",
+    PlaceholderDataTable: "stencil-data-table",
+    StencilForm: "stencil-form",
+    StencilPageHeader: "stencil-page-header",
+}
+
 export interface ComponentInfo {
     name: string
     from: string
@@ -95,15 +103,21 @@ export interface ComponentInfo {
 
 export interface VuetningResolverOptions {
     /**
-     * Override the import path prefix. Defaults to `vuetning/components`.
+     * Override the import path for components. Defaults to `vuetning/components`.
      * Useful for monorepo setups that alias the package locally.
      */
     importPath?: string
+
+    /**
+     * Override the import path for stencils. Defaults to `vuetning/stencils`.
+     */
+    stencilImportPath?: string
 }
 
 /**
  * Resolver for `unplugin-vue-components` that auto-imports vuetning
- * components from their per-component subpaths so tree-shaking still works.
+ * components and stencils from their per-component subpaths so tree-shaking
+ * still works.
  *
  * @example
  * ```ts
@@ -118,12 +132,19 @@ export interface VuetningResolverOptions {
  */
 export function VuetningResolver(options: VuetningResolverOptions = {}) {
     const importPath = options.importPath ?? "vuetning/components"
+    const stencilImportPath = options.stencilImportPath ?? "vuetning/stencils"
     return {
         type: "component" as const,
         resolve(name: string): ComponentInfo | undefined {
-            const subpath = componentMap[name]
-            if (!subpath) return undefined
-            return { name, from: `${importPath}/${subpath}` }
+            const componentSubpath = componentMap[name]
+            if (componentSubpath) {
+                return { name, from: `${importPath}/${componentSubpath}` }
+            }
+            const stencilSubpath = stencilMap[name]
+            if (stencilSubpath) {
+                return { name, from: `${stencilImportPath}/${stencilSubpath}` }
+            }
+            return undefined
         },
     }
 }
