@@ -19,6 +19,10 @@
             "types": "./dist/styles.d.ts",
             "import": "./dist/styles.js"
         },
+        "./resolver": {
+            "types": "./dist/resolver.d.ts",
+            "import": "./dist/resolver.js"
+        },
         "./style.css": "./dist/assets/styles/main.css",
         "./components": {
             "types": "./dist/components/index.d.ts",

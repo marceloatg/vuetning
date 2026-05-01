@@ -1,1 +1,1 @@
-export { default as sldsPicklist } from "./slds-picklist.vue"
+export { default as SldsPicklist } from "./slds-picklist.vue"

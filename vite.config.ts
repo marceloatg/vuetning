@@ -17,6 +17,7 @@ const stencilEntries = globSync("src/stencils/*/*.vue", { cwd: root })
 const tsModules = globSync(
     [
         "src/main.ts",
+        "src/resolver.ts",
         "src/styles.ts",
         "src/components/index.ts",
         "src/components/*/index.ts",
