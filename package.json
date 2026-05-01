@@ -1,6 +1,6 @@
 {
     "name": "vuetning",
-    "version": "0.8.0",
+    "version": "0.0.0",
     "description": "Vue 3 component library implementing the Salesforce Lightning Design System (SLDS).",
     "type": "module",
     "sideEffects": [
