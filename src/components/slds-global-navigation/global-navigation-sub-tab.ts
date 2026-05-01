@@ -3,9 +3,5 @@ export interface GlobalNavigationSubTab {
 
     isActive: boolean
 
-    isMain: boolean
-
     label: string
-
-    name: string
 }
