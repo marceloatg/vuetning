@@ -1,8 +1,8 @@
 export interface Tab {
     /**
-     * Indicates whether this tab has an error icon.
+     * Indicates whether this tab has an error icon. Defaults to false.
      */
-    hasError: boolean
+    hasError?: boolean
 
     /**
      * Tab icon.
