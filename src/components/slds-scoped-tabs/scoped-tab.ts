@@ -1,8 +1,8 @@
 export interface ScopedTab {
     /**
-     * Indicates whether this scoped tab has an error icon.
+     * Indicates whether this scoped tab has an error icon. Defaults to false.
      */
-    hasError: boolean
+    hasError?: boolean
 
     /**
      * Scoped Tab ID
