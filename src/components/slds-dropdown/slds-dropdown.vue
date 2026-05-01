@@ -1,6 +1,12 @@
 <template>
     <transition :name="dropdownAnimation">
-        <div v-if="isOpen" :class="dropdownClassNames" role="listbox">
+        <div
+            v-if="isOpen"
+            :id="listboxId"
+            :class="dropdownClassNames"
+            role="listbox"
+            :aria-label="ariaLabel"
+        >
 
             <slot name="before"/>
 
@@ -72,6 +78,13 @@ export default defineComponent({
     },
 
     props: {
+        /**
+         * Accessible name for the listbox. Required so screen readers can
+         * announce the popup. Consumers (combobox, lookup, picklist) should
+         * pass the field label here.
+         */
+        ariaLabel: { type: String, default: "Options" },
+
         bottomAlignment: Boolean,
 
         centerAlignment: Boolean,
@@ -92,6 +105,12 @@ export default defineComponent({
         isOpen: { type: Boolean, required: true },
 
         length: Number,
+
+        /**
+         * DOM id for the listbox element. Consumers (combobox, lookup,
+         * picklist) reference this via aria-controls on the trigger.
+         */
+        listboxId: String,
 
         /**
          * Picklist options.

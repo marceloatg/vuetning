@@ -21,6 +21,9 @@
                 <div
                     class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
                     role="combobox"
+                    :aria-expanded="isOpen"
+                    aria-haspopup="listbox"
+                    :aria-controls="listboxId"
                     @keydown.down.prevent
                     @keydown.up.prevent
                     @keyup.down="handleKeyDownAsync"
@@ -114,8 +117,9 @@
                             <div
                                 :id="slotProps['inputId']"
                                 ref="input"
-                                aria-expanded="false"
+                                :aria-expanded="isOpen"
                                 aria-haspopup="listbox"
+                                :aria-controls="listboxId"
                                 class="slds-input_faux slds-combobox__input slds-combobox__input-value"
                                 role="combobox"
                                 type="text"
@@ -152,9 +156,11 @@
 
                     <!-- Dropdown -->
                     <slds-dropdown
+                        :aria-label="label"
                         :filter="filter"
                         :focused-option="focusedOption"
                         :is-open="isOpen"
+                        :listbox-id="listboxId"
                         :options="filteredOptions"
                         :selected-option="selectedOption"
                         :show-spinner="showSpinner"
@@ -191,6 +197,8 @@ import { EVENTS } from "../../constants"
 import SldsDropdown from "../slds-dropdown/slds-dropdown.vue"
 import SldsButtonIcon from "../slds-button-icon/slds-button-icon.vue"
 import SldsSpinner from "../slds-spinner/slds-spinner.vue"
+
+let listboxUid = 0
 
 export default defineComponent({
     name: "SldsCombobox",
@@ -270,6 +278,12 @@ export default defineComponent({
         xxLarge: Boolean,
 
         xxSmall: Boolean,
+    },
+
+    data() {
+        return {
+            listboxId: `slds-lookup-listbox-${++listboxUid}`,
+        }
     },
 
     computed: {

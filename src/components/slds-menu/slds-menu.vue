@@ -26,7 +26,8 @@
             :disabled="disabled"
             :title="title"
             :assistive-text="title"
-            aria-haspopup="true"
+            :aria-expanded="isOpen"
+            aria-haspopup="listbox"
             @click="handleClickButton"
             @keyup.enter.stop.prevent
         />

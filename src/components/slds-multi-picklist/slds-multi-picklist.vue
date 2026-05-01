@@ -18,6 +18,11 @@
             <div v-click-outside="handleClickOutside" :class="containerClassNames">
                 <div
                     class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                    role="combobox"
+                    :aria-expanded="isOpen"
+                    aria-haspopup="listbox"
+                    :aria-controls="listboxId"
+                    :aria-label="label"
                     @keydown.down.prevent
                     @keydown.up.prevent
                     @keyup.down="handleKeyDown"
@@ -32,7 +37,6 @@
                         <div
                             :id="slotProps['inputId']"
                             :class="inputClassNames"
-                            role="combobox"
                             tabindex="0"
                             @blur="handleBlurInput"
                             @click="handleClickInput"
@@ -54,7 +58,7 @@
                         <slds-pill
                             v-for="(selectedOption, index) in selectedOptions"
                             :key="index"
-                            :label="selectedOption.label"
+                            :label="selectedOption.label || ''"
                             :non-removable="selectedOption.nonRemovable"
                             :title="selectedOption.label"
                             @remove="handleRemoveOption(selectedOption)"
@@ -63,8 +67,10 @@
 
                     <!-- Dropdown -->
                     <slds-dropdown
+                        :aria-label="label"
                         :focused-option="focusedOption"
                         :is-open="isOpen"
+                        :listbox-id="listboxId"
                         :options="options"
                         :selected-options="selectedOptions"
                         :show-spinner="showSpinner"
@@ -100,6 +106,8 @@ import { vOnClickOutside } from "@vueuse/components"
 import { EVENTS } from "../../constants"
 import type { DropdownOption } from "../slds-dropdown/dropdown-option"
 import type { ValidationError } from "../slds-form-element/validation-error"
+
+let listboxUid = 0
 
 export default defineComponent({
     name: "SldsMultiPicklist",
@@ -172,6 +180,12 @@ export default defineComponent({
         xxLarge: Boolean,
 
         xxSmall: Boolean,
+    },
+
+    data() {
+        return {
+            listboxId: `slds-multi-picklist-listbox-${++listboxUid}`,
+        }
     },
 
     computed: {

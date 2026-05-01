@@ -2,10 +2,10 @@
     <span class="slds-button slds-checkbox_button slds-has-animation" @click="handleClick">
 
         <!-- Input -->
-        <input :checked="checked" type="checkbox">
+        <input :id="inputId" :checked="checked" type="checkbox">
 
         <!-- Faux -->
-        <label :class="labelClassNames">
+        <label :class="labelClassNames" :for="inputId">
             <span class="slds-checkbox_faux">
                 {{ label }}
             </span>
@@ -17,6 +17,8 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
+let inputUid = 0
+
 export default defineComponent({
     name: "SldsCheckboxButtonOption",
 
@@ -26,6 +28,12 @@ export default defineComponent({
         disabled: Boolean,
 
         label: { type: String, required: true },
+    },
+
+    data() {
+        return {
+            inputId: `slds-checkbox-button-option-${++inputUid}`,
+        }
     },
 
     computed: {

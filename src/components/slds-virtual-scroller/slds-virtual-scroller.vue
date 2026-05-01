@@ -20,8 +20,8 @@
                 :key="view.nr.id"
                 :style="ready ? { transform: `translateY(${view.position}px)` } : null"
                 class="virtual-scroller__item-view"
-                @mouseenter="$event.target.classList.add('hover')"
-                @mouseleave="$event.target.classList.remove('hover')"
+                @mouseenter="(e: Event) => (e.target as HTMLElement | null)?.classList.add('hover')"
+                @mouseleave="(e: Event) => (e.target as HTMLElement | null)?.classList.remove('hover')"
             >
                 <slot :item="view.item" :index="view.nr.index" :active="view.nr.used"/>
             </div>
@@ -33,7 +33,23 @@
 import { ObserveVisibility } from "vue-observe-visibility"
 import { supportsPassive } from "./utils"
 import { defineComponent, markRaw, shallowReactive } from "vue"
+// `scrollparent` ships no type declarations and has no `@types/scrollparent` package.
+ 
+// @ts-expect-error untyped third-party module
 import ScrollParent from "scrollparent"
+
+export interface ViewNr {
+    id: number
+    index: number
+    used: boolean
+    key: any
+}
+
+export interface View {
+    item: any
+    position: number
+    nr: ViewNr
+}
 
 let uid = 0
 const ITEMS_LIMIT = 1000
@@ -81,19 +97,29 @@ export default defineComponent({
 
     data() {
         return {
-            hoverKey: null,
-            itemCount: null,
-            mountedViews: [],
+            hoverKey: null as unknown,
+            itemCount: null as number | null,
+            mountedViews: [] as View[],
             ready: false,
             scrollLeft: 0,
             totalSize: 0,
+            internalStartIndex: 0,
+            internalEndIndex: 0,
+            internalViews: markRaw(new Map<any, View>()),
+            internalUnusedViews: [] as View[],
+            internalScrollAnimationRequest: null as number | null | false,
+            internalLastUpdateScrollPosition: 0,
+            internalPrerender: false,
+            internalContinuous: false,
+            internalRefreshTimout: null as ReturnType<typeof setTimeout> | null,
+            listenerTarget: null as (Window | Element | null),
         }
     },
 
     computed: {
         mountedViewsThreshold() {
             if (!this.ready) return null
-            return (this.$_endIndex - this.$_startIndex) * 2
+            return (this.internalEndIndex - this.internalStartIndex) * 2
         },
 
         simpleArray() {
@@ -119,24 +145,17 @@ export default defineComponent({
     },
 
     created() {
-        this.$_startIndex = 0
-        this.$_endIndex = 0
-        this.$_views = new Map()
-        this.$_unusedViews = []
-        this.$_scrollAnimationRequest = null
-        this.$_lastUpdateScrollPosition = 0
-
         // In SSR mode, we also prerender the same number of item for the first render
         // to avoid mismatch between server and client templates
         if (this.prerender) {
-            this.$_prerender = true
+            this.internalPrerender = true
             this.updateVisibleItems(false)
         }
     },
 
     mounted() {
         // In SSR mode, render the real number of visible items
-        this.$_prerender = false
+        this.internalPrerender = false
         this.updateVisibleItems(true)
         this.ready = true
     },
@@ -147,14 +166,16 @@ export default defineComponent({
 
     methods: {
         addListeners() {
-            this.listenerTarget = this.getListenerTarget()
-            this.listenerTarget.addEventListener("scroll", this.handleScroll, supportsPassive ? {
+            const target = this.getListenerTarget()
+            this.listenerTarget = target
+            if (!target) return
+            target.addEventListener("scroll", this.handleScroll, supportsPassive ? {
                 passive: true,
             } : false)
-            this.listenerTarget.addEventListener("resize", this.handleResize)
+            target.addEventListener("resize", this.handleResize)
         },
 
-        addView(mountedViews, index, item, key) {
+        addView(mountedViews: View[], index: number, item: any, key: any): View {
             const nr = markRaw({
                 id: uid++,
                 index,
@@ -196,27 +217,28 @@ export default defineComponent({
             if (this.ready) this.updateVisibleItems(false)
         },
 
-        handleScroll(event) {
-            if (event && event.target.scrollLeft !== this.scrollLeft) {
-                this.scrollLeft = event.target.scrollLeft
+        handleScroll(event?: Event) {
+            const target = event?.target as HTMLElement | undefined
+            if (target && target.scrollLeft !== this.scrollLeft) {
+                this.scrollLeft = target.scrollLeft
                 return
             }
 
-            cancelAnimationFrame(this.$_scrollAnimationRequest)
-            this.$_scrollAnimationRequest = requestAnimationFrame(() => {
-                this.$_scrollAnimationRequest = false
+            if (this.internalScrollAnimationRequest) cancelAnimationFrame(this.internalScrollAnimationRequest as number)
+            this.internalScrollAnimationRequest = requestAnimationFrame(() => {
+                this.internalScrollAnimationRequest = false
                 const { continuous } = this.updateVisibleItems(false, true)
 
                 // It seems sometimes chrome doesn't fire scroll event :/
                 // When non continuous scrolling is ending, we force a refresh
                 if (!continuous) {
-                    clearTimeout(this.$_refreshTimout)
-                    this.$_refreshTimout = setTimeout(this.handleScroll, 100)
+                    if (this.internalRefreshTimout) clearTimeout(this.internalRefreshTimout)
+                    this.internalRefreshTimout = setTimeout(this.handleScroll, 100)
                 }
             })
         },
 
-        handleVisibilityChange(isVisible, entry) {
+        handleVisibilityChange(isVisible: boolean, entry: { boundingClientRect: DOMRect }) {
             if (!this.ready) return
 
             if (isVisible || entry.boundingClientRect.width !== 0 || entry.boundingClientRect.height !== 0) {
@@ -241,13 +263,13 @@ export default defineComponent({
             this.listenerTarget = null
         },
 
-        scrollToItem(index) {
+        scrollToItem(index: number) {
             const { viewport, scrollDirection, scrollDistance } = this.scrollToPosition(index)
-            viewport[scrollDirection] = scrollDistance
+            ;(viewport as unknown as Record<string, number>)[scrollDirection] = scrollDistance
         },
 
-        scrollToPosition(index) {
-            const getPositionOfItem = (index) => {
+        scrollToPosition(index: number) {
+            const getPositionOfItem = (index: number) => {
                 return index * this.itemSize
             }
 
@@ -261,36 +283,36 @@ export default defineComponent({
             }
         },
 
-        unuseView(view, fake = false) {
-            const unusedViews = this.$_unusedViews || []
+        unuseView(view: View, fake = false) {
+            const unusedViews = this.internalUnusedViews || []
             unusedViews.push(view)
 
             if (!fake) {
                 view.nr.used = false
                 view.position = -9999
-                this.$_views.delete(view.nr.key)
+                this.internalViews.delete(view.nr.key)
             }
         },
 
-        updateVisibleItems(checkItem, checkPositionDiff = false) {
+        // eslint-disable-next-line complexity -- ported from vue-virtual-scroller; refactor would risk regressions
+        updateVisibleItems(checkItem: boolean, checkPositionDiff = false): { continuous: boolean } {
             const itemSize = this.itemSize
             const keyField = this.simpleArray ? null : this.keyField
-            const items = this.items
+            const items = this.items as Array<Record<string, any>>
             const count = items.length
-            const views = this.$_views
-            const unusedViews = this.$_unusedViews
+            const views = this.internalViews
+            const unusedViews = this.internalUnusedViews
             const mountedViews = this.mountedViews
-            //const mountedViewsThreshold = this.mountedViewsThreshold
-            let startIndex, endIndex
-            let totalSize
-            let scroll
+            let startIndex: number, endIndex: number
+            let totalSize: number
+            let scroll: { originalStart: number; start: number; end: number } | undefined
 
-            if (count && !this.$_prerender) {
+            if (count && !this.internalPrerender) {
                 scroll = this.getScroll()
 
                 // Skip update if user hasn't scrolled enough
                 if (checkPositionDiff) {
-                    const positionDiff = Math.abs(scroll.originalStart - this.$_lastUpdateScrollPosition)
+                    const positionDiff = Math.abs(scroll.originalStart - this.internalLastUpdateScrollPosition)
                     if (itemSize === null && positionDiff < itemSize) {
                         return { continuous: true }
                     }
@@ -300,12 +322,13 @@ export default defineComponent({
             // Sets start index, end index, and total size
             if (!count) {
                 startIndex = endIndex = totalSize = 0
-            } else if (this.$_prerender) {
+            } else if (this.internalPrerender) {
                 startIndex = 0
                 endIndex = this.prerender
-                totalSize = null
+                totalSize = 0
             } else {
-                this.$_lastUpdateScrollPosition = scroll.originalStart
+                if (!scroll) return { continuous: false }
+                this.internalLastUpdateScrollPosition = scroll.originalStart
 
                 const buffer = this.buffer
                 scroll.start -= buffer
@@ -316,8 +339,8 @@ export default defineComponent({
                 endIndex = Math.ceil(scroll.end / itemSize)
 
                 // Bounds
-                startIndex < 0 && (startIndex = 0)
-                endIndex > count && (endIndex = count)
+                if (startIndex < 0) startIndex = 0
+                if (endIndex > count) endIndex = count
 
                 totalSize = count * itemSize
             }
@@ -326,10 +349,10 @@ export default defineComponent({
             this.totalSize = totalSize
 
             // ???
-            let view
-            const continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex
+            let view: View | undefined
+            const continuous = startIndex <= this.internalEndIndex && endIndex >= this.internalStartIndex
 
-            if (this.$_continuous !== continuous) {
+            if (this.internalContinuous !== continuous) {
                 if (continuous) {
                     views.clear()
                     unusedViews.splice(0, unusedViews.length)
@@ -338,17 +361,19 @@ export default defineComponent({
                         this.unuseView(view)
                     }
                 }
-                this.$_continuous = continuous
+                this.internalContinuous = continuous
             } else if (continuous) {
                 for (let i = 0, l = mountedViews.length; i < l; i++) {
                     view = mountedViews[i]
+                    if (!view) continue
+                    const currentView = view
 
                     if (view.nr.used) {
 
                         // Update view item index
                         if (checkItem) {
                             view.nr.index = items.findIndex(
-                                item => keyField ? item[keyField] === view.item[keyField] : item === view.item,
+                                item => keyField ? item[keyField] === currentView.item[keyField] : item === currentView.item,
                             )
                         }
 
@@ -365,7 +390,7 @@ export default defineComponent({
             }
 
             // ???
-            const unusedIndex = continuous ? null : []
+            const unusedIndex: number[] | null = continuous ? null : []
 
             let item
             let v
@@ -386,7 +411,9 @@ export default defineComponent({
                     if (continuous) {
                         // Reuse existing view
                         if (unusedViews && unusedViews.length) {
-                            view = unusedViews.pop()
+                            const popped = unusedViews.pop()
+                            if (!popped) continue
+                            view = popped
                             view.item = item
                             view.nr.used = true
                             view.nr.index = i
@@ -406,12 +433,12 @@ export default defineComponent({
                         }
 
                         view = unusedViews[v]
+                        if (!view) continue
                         view.item = item
                         view.nr.used = true
                         view.nr.index = i
                         view.nr.key = key
-                        unusedIndex.push(v + 1)
-                        v++
+                        unusedIndex?.push(v + 1)
                     }
                     views.set(key, view)
                 } else {
@@ -423,8 +450,8 @@ export default defineComponent({
                 view.position = i * itemSize
             }
 
-            this.$_startIndex = startIndex
-            this.$_endIndex = endIndex
+            this.internalStartIndex = startIndex
+            this.internalEndIndex = endIndex
 
             if (this.emitUpdate) this.$emit("update", startIndex, endIndex)
 

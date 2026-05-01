@@ -82,11 +82,11 @@
                                         <!-- Dropdown -->
                                         <transition name="dropdown">
                                             <slds-page-header-dropdown
-                                                v-if="$data.$_isOpen"
+                                                v-if="isOpen"
                                                 :value="selectedListView"
-                                                :options="filteredOptions"
-                                                :focused-option="focusedOption"
-                                                :loading="loading"
+                                                :options="pageHeaderDropdownOptions"
+                                                :focused-option="focusedOption?.value"
+                                                :show-spinner="showSpinner"
                                                 @click="onClickOption"
                                                 @mouseover="onMouseOverOption"
                                             >
@@ -165,6 +165,7 @@ import SldsMediaObject from "../slds-media-object/slds-media-object.vue"
 import SldsPageHeaderDropdown from "../slds-page-header/slds-page-header-dropdown.vue"
 import { defineComponent } from "vue"
 import type { DropdownOption } from "../slds-dropdown/dropdown-option"
+import type { PageHeaderDropdownOption } from "./page-header-dropdown-option"
 
 export default defineComponent({
     name: "SldsPageHeader",
@@ -216,6 +217,15 @@ export default defineComponent({
 
         hasIcon(): boolean {
             return Boolean(!this.relatedList && !!this.iconName)
+        },
+
+        /**
+         * Filtered options narrowed to the dropdown's input shape.
+         * The HasDropdownMixin types `filteredOptions` as `DropdownOption[]`,
+         * but `slds-page-header-dropdown` expects the page-header-specific shape.
+         */
+        pageHeaderDropdownOptions(): PageHeaderDropdownOption[] {
+            return this.filteredOptions as unknown as PageHeaderDropdownOption[]
         },
     },
 

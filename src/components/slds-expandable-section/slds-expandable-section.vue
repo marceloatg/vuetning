@@ -95,24 +95,29 @@ export default defineComponent({
     },
 
     methods: {
-        collapse(element: HTMLElement): void {
+        collapse(el: Element): void {
             if (!this.initialized) return
 
+            const element = el as HTMLElement
             element.style.overflow = ""
             element.style.height = "0"
             element.style.opacity = "0"
         },
 
-        expand(element: HTMLElement): void {
+        expand(el: Element): void {
             if (!this.initialized) return
 
+            const element = el as HTMLElement
             element.style.overflow = ""
             element.style.height = element.scrollHeight + "px"
-            element.scrollHeight
+            // Reading scrollHeight again forces a synchronous reflow so the
+            // following opacity transition starts from the freshly applied height.
+            void element.scrollHeight
             element.style.opacity = "1"
         },
 
-        resetHeight(element: HTMLElement): void {
+        resetHeight(el: Element): void {
+            const element = el as HTMLElement
             element.style.height = ""
             element.style.overflow = "initial"
         },

@@ -29,6 +29,8 @@
 import SldsSvg from "../slds-svg/slds-svg.vue"
 import { defineComponent } from "vue"
 
+import type { PropType } from "vue"
+
 export default defineComponent({
     name: "SldsButtonIcon",
 
@@ -83,7 +85,7 @@ export default defineComponent({
         /**
          * Button type.
          */
-        type: { type: String, default: "button" },
+        type: { type: String as PropType<"submit" | "button" | "reset">, default: "button" },
 
         xSmall: Boolean,
 

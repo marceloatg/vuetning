@@ -46,6 +46,8 @@ import PositionableIconMixin from "../../mixins/positionable-icon-mixin"
 import SldsSvg from "../slds-svg/slds-svg.vue"
 import { defineComponent } from "vue"
 
+import type { PropType } from "vue"
+
 export default defineComponent({
     name: "SldsButton",
 
@@ -122,7 +124,7 @@ export default defineComponent({
         /**
          * Button type.
          */
-        type: { type: String, default: "button" },
+        type: { type: String as PropType<"submit" | "button" | "reset">, default: "button" },
     },
 
     computed: {

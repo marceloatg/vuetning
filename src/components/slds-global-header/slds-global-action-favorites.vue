@@ -7,6 +7,7 @@
                 <button
                     class="slds-button slds-button_icon slds-global-actions__favorites-action slds-button_icon slds-button_icon-border slds-button_icon-small"
                     aria-pressed="false"
+                    aria-label="Toggle Favorite"
                     title="Toggle Favorites"
                 >
                     <!-- SVG -->
@@ -22,6 +23,7 @@
                 <!-- View Favorites button -->
                 <button
                     class="slds-button slds-button_icon slds-global-actions__favorites-more slds-button_icon slds-button_icon-border slds-button_icon-small"
+                    aria-label="View Favorites"
                     title="View Favorites"
                 >
                     <!-- SVG -->

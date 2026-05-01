@@ -96,6 +96,7 @@
 
                     <!-- Dropdown -->
                     <slds-dropdown
+                        :aria-label="label"
                         :filter="filter"
                         :focused-option="focusedOption"
                         :is-open="isOpen"

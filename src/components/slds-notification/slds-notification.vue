@@ -26,8 +26,10 @@
 
             <!-- Close Button -->
             <slds-button-icon
+                assistive-text="Close"
                 icon-name="utility:close"
                 bare
+                title="Close"
                 class="slds-notification__close slds-m-around--x-small"
                 @click="onClose"
             />

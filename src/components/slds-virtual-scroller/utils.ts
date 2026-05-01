@@ -5,7 +5,7 @@ if (typeof window !== "undefined") {
     
     try {
         const opts = Object.defineProperty({}, "passive", {
-            // eslint-disable-next-line getter-return
+             
             get() {
                 supportsPassive = true
             },
@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         window.addEventListener("test", null, opts)
-        // eslint-disable-next-line no-empty
-    } catch (e) {
+    } catch {
+        // Feature-detection probe failure is expected when passive is unsupported.
     }
 }

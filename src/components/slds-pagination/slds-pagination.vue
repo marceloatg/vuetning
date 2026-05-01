@@ -2,9 +2,11 @@
     <div class="slds-button-group">
 
         <slds-button-icon
+            assistive-text="Previous page"
             bordered
             :disabled="isInFirstPage || disabled"
             icon-name="utility:chevronleft"
+            title="Previous page"
             @click.stop="handleClickPreviousPage"
         />
 
@@ -19,9 +21,11 @@
         </template>
 
         <slds-button-icon
+            assistive-text="Next page"
             bordered
             :disabled="isInLastPage || disabled"
             icon-name="utility:chevronright"
+            title="Next page"
             @click="handleClickNextPage"
         />
 

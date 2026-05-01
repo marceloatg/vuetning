@@ -11,6 +11,7 @@
             ref="input"
             class="slds-publisher__input slds-textarea slds-text-longform"
             :value="modelValue"
+            :aria-label="textareaAriaLabel"
             v-bind="inputAttributes"
             @focus="handleFocus"
             @input="handleInput"
@@ -48,6 +49,13 @@ export default defineComponent({
     components: { SldsGrid, SldsButton },
 
     props: {
+        /**
+         * Accessible name applied to the underlying <textarea>. Defaults to
+         * the `label` prop when set, otherwise falls back to "Publisher" so
+         * the textarea always exposes a non-empty accessible name to AT.
+         */
+        assistiveText: { type: String, default: "" },
+
         buttonLabel: { type: String, default: "Share" },
 
         label: String,
@@ -82,6 +90,12 @@ export default defineComponent({
             if (this.isActive) classNames += " slds-is-active"
 
             return classNames
+        },
+
+        textareaAriaLabel(): string {
+            if (this.assistiveText) return this.assistiveText
+            if (this.label) return this.label
+            return "Publisher"
         },
     },
 

@@ -52,7 +52,7 @@ export { default as SldsPageHeader } from "./slds-page-header/slds-page-header.v
 export { default as SldsPageHeaderDetail } from "./slds-page-header/slds-page-header-detail.vue"
 export { default as SldsPagination } from "./slds-pagination/slds-pagination.vue"
 export { default as SldsPanel } from "./slds-panel/slds-panel.vue"
-export { default as sldsPicklist } from "./slds-picklist/slds-picklist.vue"
+export { default as SldsPicklist } from "./slds-picklist/slds-picklist.vue"
 export { default as SldsPill } from "./slds-pill/slds-pill.vue"
 export { default as SldsPillContainer } from "./slds-pill/slds-pill-container.vue"
 export { default as SldsProgressBar }  from "./slds-progress-bar/slds-progress-bar.vue"
