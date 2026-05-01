@@ -279,17 +279,10 @@ import SldsVirtualScroller from "../slds-virtual-scroller/slds-virtual-scroller.
 import numeral from "numeral"
 import { vOnClickOutside } from "@vueuse/components"
 import { defineComponent, type PropType } from "vue"
+import type { DataTableAction } from "./data-table-action"
 import type { DataTableColumn } from "./data-table-column"
+import type { DataTableRow } from "./data-table-row"
 import { DataTableColumnConfiguration } from "./data-table-column-configuration"
-
-interface DataTableAction {
-    value: string
-    label?: string
-    icon?: string
-    disabled?: boolean
-}
-
-type DataTableRow = Record<string, any>
 
 const DEFAULT_FIXED_WIDTH = 48
 const DEFAULT_MINIMUM_WIDTH = 100
