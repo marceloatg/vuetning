@@ -1,7 +1,10 @@
 export interface GlobalNavigationTab {
     iconName: string
 
-    isActive: boolean
+    /**
+     * Whether this is the active tab. Defaults to false.
+     */
+    isActive?: boolean
 
     label: string
 }
