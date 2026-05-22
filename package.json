@@ -79,7 +79,7 @@
         "test:ssr": "vitest run --config vitest.ssr.config.ts",
         "type-check": "vue-tsc --noEmit --composite false"
     },
-    "peerDependencies": {
+    "dependencies": {
         "@formkit/auto-animate": "^0.9.0",
         "@vueuse/components": "^14.2.1",
         "@vueuse/core": "^14.2.1",
@@ -88,37 +88,10 @@
         "numeral": "^2.0.6",
         "scrollparent": "^2.1.0",
         "uuid": "^14.0.0",
-        "vue": "^3.5.33",
         "vue-observe-visibility": "^2.0.0-alpha.1"
     },
-    "peerDependenciesMeta": {
-        "@formkit/auto-animate": {
-            "optional": true
-        },
-        "@vueuse/components": {
-            "optional": true
-        },
-        "@vueuse/core": {
-            "optional": true
-        },
-        "gsap": {
-            "optional": true
-        },
-        "moment": {
-            "optional": true
-        },
-        "numeral": {
-            "optional": true
-        },
-        "scrollparent": {
-            "optional": true
-        },
-        "uuid": {
-            "optional": true
-        },
-        "vue-observe-visibility": {
-            "optional": true
-        }
+    "peerDependencies": {
+        "vue": "^3.5.33"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
