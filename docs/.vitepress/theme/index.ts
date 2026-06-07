@@ -1,7 +1,10 @@
 // https://vitepress.dev/guide/custom-theme
+import type { Component } from "vue"
 import { h } from "vue"
-import Vuetning from "@/main"
 import Theme from "vitepress/theme"
+import * as components from "@/components"
+import * as stencils from "@/stencils"
+import "@/styles"
 import "./style.css"
 
 export default {
@@ -12,6 +15,10 @@ export default {
         })
     },
     enhanceApp({ app }) {
-        app.use(Vuetning)
+        // main.ts deliberately does not export components, so register the full
+        // set globally here for the docs pages that reference them in markdown.
+        for (const [name, component] of Object.entries({ ...components, ...stencils })) {
+            app.component(name, component as Component)
+        }
     },
 }
