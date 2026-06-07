@@ -22,7 +22,7 @@
                     :checked="modelValue.includes(option.value)"
                     :label="option.label"
                     :disabled="option.disabled || disabled"
-                    @click="handleClick($event, option)"
+                    @change="handleClick($event, option)"
                 />
             </slot>
         </template>

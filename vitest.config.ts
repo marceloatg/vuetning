@@ -9,6 +9,15 @@ const root = fileURLToPath(new URL(".", import.meta.url))
 
 export default defineConfig({
     plugins: [vue()],
+    // Vite 8.0.14+ has a dep-optimizer regression: when @vue/shared is hoisted
+    // into a shared chunk, the prebundled @vue/test-utils calls
+    // init_shared_esm_bundler() without importing it, so every browser test
+    // file fails to import with "init_shared_esm_bundler is not defined".
+    // Excluding the vue chain from prebundling sidesteps the broken split.
+    // Remove once the optimizer bug is fixed upstream.
+    optimizeDeps: {
+        exclude: ["@vue/test-utils", "@vue/server-renderer", "vue"],
+    },
     resolve: {
         alias: {
             "@": resolve(root, "src"),

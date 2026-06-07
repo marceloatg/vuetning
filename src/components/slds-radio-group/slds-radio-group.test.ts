@@ -32,7 +32,7 @@ describe("SldsRadioGroup", () => {
             props: { label: "Confirm", options: OPTIONS, modelValue: "yes" },
         })
 
-        await wrapper.findAll(".slds-radio")[1].trigger("click")
+        await wrapper.findAll("input")[1].trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeTruthy()
         expect(wrapper.emitted("update:modelValue")![0]).toEqual(["no"])
     })
@@ -129,7 +129,7 @@ describe("SldsRadioGroup", () => {
             props: { label: "Confirm", options: OPTIONS, modelValue: "yes", disabled: true },
         })
 
-        await wrapper.findAll(".slds-radio")[1].trigger("click")
+        await wrapper.findAll("input")[1].trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeFalsy()
     })
 

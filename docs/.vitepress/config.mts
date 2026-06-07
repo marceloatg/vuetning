@@ -57,6 +57,20 @@ export default defineConfig({
         ],
     },
     vite: {
+        build: {
+            // The docs theme intentionally registers the entire component library
+            // globally (see theme/index.ts), so the theme chunk bundles every
+            // component plus gsap/moment/numeral. That eager bundle is expected for
+            // a docs site, so lift the advisory size warning above it.
+            chunkSizeWarningLimit: 1000,
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: "modern-compiler",
+                },
+            },
+        },
         resolve: {
             alias: {
                 "@": path.resolve(__dirname, "../../src"),

@@ -26,7 +26,7 @@ describe("SldsRadioGroupOption", () => {
             props: { label: "Yes", value: "yes", modelValue: "no" },
         })
 
-        await wrapper.find(".slds-radio").trigger("click")
+        await wrapper.find("input").trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeTruthy()
         expect(wrapper.emitted("update:modelValue")![0]).toEqual(["yes"])
     })
