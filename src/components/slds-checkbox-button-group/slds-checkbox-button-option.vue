@@ -2,7 +2,12 @@
     <span class="slds-button slds-checkbox_button slds-has-animation" @click="handleClick">
 
         <!-- Input -->
-        <input :id="inputId" :checked="checked" type="checkbox">
+        <input
+            :id="inputId"
+            :checked="checked"
+            :disabled="disabled"
+            type="checkbox"
+        >
 
         <!-- Faux -->
         <label :class="labelClassNames" :for="inputId">

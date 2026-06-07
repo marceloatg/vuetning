@@ -1,5 +1,5 @@
 <template>
-    <span class="slds-radio" @click="handleClick">
+    <span class="slds-radio">
 
         <!-- Input -->
         <input
@@ -9,6 +9,7 @@
             name="radio-group"
             type="radio"
             :value="value"
+            @change="handleClick"
         >
 
         <!-- Faux -->

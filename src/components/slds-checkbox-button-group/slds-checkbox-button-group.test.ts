@@ -34,7 +34,7 @@ describe("SldsCheckboxButtonGroup", () => {
             props: { label: "Picks", options: OPTIONS, modelValue: [] },
         })
 
-        await wrapper.findAll(".slds-checkbox_button")[0].trigger("click")
+        await wrapper.findAll("input")[0].trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeTruthy()
         expect(wrapper.emitted("update:modelValue")![0]).toEqual([["one"]])
     })
@@ -56,7 +56,7 @@ describe("SldsCheckboxButtonGroup", () => {
             props: { label: "Picks", options: OPTIONS, modelValue: ["one"] },
         })
 
-        await wrapper.findAll(".slds-checkbox_button")[0].trigger("click")
+        await wrapper.findAll("input")[0].trigger("change")
         expect(wrapper.emitted("update:modelValue")![0]).toEqual([[]])
     })
 
