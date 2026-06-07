@@ -26,7 +26,7 @@ describe("SldsCheckbox", () => {
             props: { label: "Active", modelValue: false },
         })
 
-        await wrapper.find(".slds-checkbox").trigger("click")
+        await wrapper.find("input").trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeTruthy()
         expect(wrapper.emitted("update:modelValue")![0]).toEqual([true])
     })
@@ -36,7 +36,7 @@ describe("SldsCheckbox", () => {
             props: { label: "Active", modelValue: false, disabled: true },
         })
 
-        await wrapper.find(".slds-checkbox").trigger("click")
+        await wrapper.find("input").trigger("change")
         expect(wrapper.emitted("update:modelValue")).toBeUndefined()
     })
 
@@ -45,7 +45,7 @@ describe("SldsCheckbox", () => {
             props: { label: "Active", modelValue: true },
         })
 
-        await wrapper.find(".slds-checkbox").trigger("click")
+        await wrapper.find("input").trigger("change")
         expect(wrapper.emitted("update:modelValue")![0]).toEqual([false])
     })
 

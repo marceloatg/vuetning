@@ -20,7 +20,7 @@
                 :option="label"
                 :disabled="disabled"
                 :inline="inline"
-                @click="onClick"
+                @change="onChange"
             />
         </template>
 
@@ -82,7 +82,7 @@ export default defineComponent({
     },
 
     methods: {
-        onClick(): void {
+        onChange(): void {
             if (this.disabled) return
             this.$emit(EVENTS.UPDATE_MODEL_VALUE, !this.modelValue)
         },
